@@ -60,15 +60,15 @@ export const GaugeScene: React.FC<SceneProps> = ({scene, durationInFrames}) => {
           const y1 = yOf(Math.max(min, z.from));
           return (
             <g key={i}>
-              <rect x={BAR_X + 6} y={y0} width={BAR_W - 12} height={y1 - y0} rx={6} fill={C.accent} opacity={danger ? 0.95 : 0.4} />
-              <text x={BAR_X + BAR_W + 24} y={(y0 + y1) / 2 + 12} fill={C.accent} fontFamily={MONO} fontWeight={700} fontSize={34}>
+              <rect x={BAR_X + 6} y={y0} width={BAR_W - 12} height={y1 - y0} rx={6} fill={C.hot} opacity={danger ? 0.95 : 0.4} />
+              <text x={BAR_X + BAR_W + 24} y={(y0 + y1) / 2 + 12} fill={C.hot} fontFamily={MONO} fontWeight={700} fontSize={34}>
                 {z.label}
               </text>
             </g>
           );
         })}
         {/* заполнение до текущего значения */}
-        <rect x={BAR_X + 14} y={ny} width={BAR_W - 28} height={Math.max(0, BOT - 10 - ny)} rx={10} fill={danger ? C.accent : C.paper} opacity={0.9} />
+        <rect x={BAR_X + 14} y={ny} width={BAR_W - 28} height={Math.max(0, BOT - 10 - ny)} rx={10} fill={danger ? C.hot : C.paper} opacity={0.9} />
         {marks.map((m: any, i: number) => (
           <g key={i}>
             <line x1={BAR_X - 16} x2={BAR_X + BAR_W + 16} y1={yOf(m.v)} y2={yOf(m.v)} stroke={C.paper} strokeWidth={4} strokeDasharray="10 8" />
@@ -78,7 +78,7 @@ export const GaugeScene: React.FC<SceneProps> = ({scene, durationInFrames}) => {
           </g>
         ))}
         {/* стрелка */}
-        <path d={`M ${BAR_X + BAR_W + 8} ${ny} l 30 -20 l 0 40 Z`} fill={danger ? C.accent : C.paper} />
+        <path d={`M ${BAR_X + BAR_W + 8} ${ny} l 30 -20 l 0 40 Z`} fill={danger ? C.hot : C.paper} />
       </svg>
 
       <div
@@ -90,7 +90,7 @@ export const GaugeScene: React.FC<SceneProps> = ({scene, durationInFrames}) => {
           fontFamily: SLAM,
           fontWeight: 900,
           fontSize: 150,
-          color: danger ? C.accent : C.paper,
+          color: danger ? C.hot : C.paper,
           fontVariantNumeric: 'tabular-nums',
           opacity: enter,
           whiteSpace: 'nowrap',

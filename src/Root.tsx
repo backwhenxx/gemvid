@@ -1,6 +1,7 @@
 import React from 'react';
 import {Composition, CalculateMetadataFunction} from 'remotion';
 import {Short} from './Short';
+import {Cover} from './Cover';
 import type {Timeline} from './types';
 
 // Демо-таймлайн для `npm run studio` без озвучки
@@ -31,6 +32,16 @@ const calculateMetadata: CalculateMetadataFunction<Props> = ({props}) => ({
 });
 
 export const RemotionRoot: React.FC = () => (
+  <>
+  <Composition
+    id="Cover"
+    component={Cover}
+    width={1080}
+    height={1920}
+    fps={30}
+    durationInFrames={1}
+    defaultProps={{timeline: demo, cover: {lines: ['Под землёй', '*холодильник*'], sub: 'без розетки'}}}
+  />
   <Composition
     id="Short"
     component={Short}
@@ -41,4 +52,5 @@ export const RemotionRoot: React.FC = () => (
     defaultProps={{timeline: demo}}
     calculateMetadata={calculateMetadata}
   />
+  </>
 );

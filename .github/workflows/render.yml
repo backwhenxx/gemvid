@@ -91,7 +91,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           for EP in ${{ steps.eps.outputs.list }}; do
-            gh release create "$EP-${{ github.run_number }}" "out/$EP/$EP.mp4" "out/$EP/preview.jpg" \
+            COVER=""; [ -f "out/$EP/cover.png" ] && COVER="out/$EP/cover.png"
+            gh release create "$EP-${{ github.run_number }}" "out/$EP/$EP.mp4" "out/$EP/preview.jpg" $COVER \
               --title "$EP · сборка ${{ github.run_number }}" \
               --notes "Готовый шортс 1080×1920. Сценарий: episodes/$EP/episode.json"
           done
@@ -108,6 +109,6 @@ jobs:
         run: |
           git config user.name "gemvid-bot"
           git config user.email "actions@github.com"
-          for EP in ${{ steps.eps.outputs.list }}; do git add -f "out/$EP/preview.jpg" "out/$EP/timeline.json" "out/$EP/words.json"; done
+          for EP in ${{ steps.eps.outputs.list }}; do git add -f "out/$EP/preview.jpg" "out/$EP/timeline.json" "out/$EP/words.json"; [ -f "out/$EP/cover.png" ] && git add -f "out/$EP/cover.png"; done
           git commit -m "Рендер: ${{ steps.eps.outputs.list }} [skip ci]" || exit 0
           for i in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 3; done
