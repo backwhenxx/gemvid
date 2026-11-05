@@ -1,0 +1,3 @@
+# Запасная озвучка без ElevenLabs (тяжёлая: torch, без видеокарты медленно)
+chatterbox-tts
+torchaudio
