@@ -1,0 +1,50 @@
+name: Расшифровка аудио
+
+on:
+  workflow_dispatch:
+    inputs:
+      file:
+        description: "Аудио в репо (например, research/x.mp3)"
+        required: true
+      lang:
+        description: "Язык (пусто — определить)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  asr:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: whisper-medium
+      - run: pip install -q -r requirements.txt
+      - name: Распознавание
+        run: |
+          python3 - <<'EOF'
+          import json, os
+          from faster_whisper import WhisperModel
+          f = "${{ inputs.file }}"; lang = "${{ inputs.lang }}" or None
+          m = WhisperModel("medium", device="cpu", compute_type="int8")
+          segs, info = m.transcribe(f, language=lang, word_timestamps=True, condition_on_previous_text=False)
+          out = {"lang": info.language, "duration": info.duration, "segments": []}
+          for s in segs:
+              out["segments"].append({"start": round(s.start, 2), "end": round(s.end, 2), "text": s.text.strip(),
+                                      "words": [{"w": w.word.strip(), "s": round(w.start, 2), "e": round(w.end, 2)} for w in (s.words or [])]})
+          json.dump(out, open(os.path.splitext(f)[0] + ".json", "w"), ensure_ascii=False, indent=1)
+          EOF
+      - name: Результат в репо
+        run: |
+          git config user.name "gemvid-bot"; git config user.email "actions@github.com"
+          F="${{ inputs.file }}"; git add -f "${F%.*}.json"
+          git commit -m "Расшифровка ${F} [skip ci]" && for i in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 3; done
