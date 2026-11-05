@@ -1,0 +1,178 @@
+{
+  "title": "Шахта: чем дышат на глубине километр",
+  "accent": "#FF3B5C",
+  "music": false,
+  "whisper": "medium",
+  "keys": ["шахта", "вентилятор", "вдох", "выдох", "кислород", "метан", "взрыв", "сжати", "шестьдесят", "ледян", "запасной"],
+  "scenes": [
+    {
+      "type": "section",
+      "say": "Шахта.",
+      "props": {"cam": ["intakeTop", "top"], "slam": "*Шахта*", "slamY": 470, "slamSize": 150, "air": false}
+    },
+    {
+      "type": "section",
+      "say": "Километр под землёй — и ни одного окна.",
+      "props": {"cont": true, "cam": ["top", "bottom"], "camDur": 0.75, "air": false, "noWindow": true, "noWindowAt": 0.55}
+    },
+    {
+      "type": "section",
+      "say": "Чем там дышат?",
+      "props": {"cont": true, "cam": ["bottom", "drift"], "air": false, "miner": true, "slam": "Чем там *дышат?*", "slamY": 500, "slamSize": 96}
+    },
+    {
+      "type": "section",
+      "say": "Воздух гонят сверху.",
+      "props": {"cont": true, "cam": ["drift", "whole"], "camDur": 0.8, "miner": true, "airSpeed": 420}
+    },
+    {
+      "type": "fan3d",
+      "say": "На поверхности стоит огромный вентилятор.",
+      "props": {"title": "Огромный *вентилятор*", "kicker": "НА ПОВЕРХНОСТИ"}
+    },
+    {
+      "type": "section",
+      "say": "Он тянет воздух через всю шахту.",
+      "props": {"cam": ["whole", "whole"], "miner": true, "airSpeed": 520, "fanAccent": true}
+    },
+    {
+      "type": "section",
+      "say": "Один ствол — вдох, другой — выдох.",
+      "props": {"cont": true, "cam": ["whole", {"cx": 650, "cy": 700, "s": 0.62}], "miner": true, "airSpeed": 520, "fanAccent": true, "breath": true}
+    },
+    {
+      "type": "slam",
+      "say": "Зачем так мощно?",
+      "props": {"text": "Зачем так *мощно?*"}
+    },
+    {
+      "type": "section",
+      "say": "Первое — люди.",
+      "props": {"cam": ["bottom", "drift"], "miner": true, "kicker": "ПРИЧИНА 1", "slam": "*Люди*", "slamY": 470, "slamSize": 140}
+    },
+    {
+      "type": "gauge",
+      "say": "Кислорода внизу должно быть не меньше двадцати процентов.",
+      "props": {
+        "title": "*Кислород*",
+        "kicker": "В ВОЗДУХЕ ШАХТЫ",
+        "unit": "%",
+        "min": 15,
+        "max": 22,
+        "decimals": 1,
+        "zones": [{"from": 15, "to": 20, "label": "МАЛО"}],
+        "marks": [{"v": 20, "label": "20%"}],
+        "keys": [[0, 16], [0.55, 20.9], [1, 20.9]],
+        "valueLabel": "норма — не меньше 20%"
+      }
+    },
+    {
+      "type": "section",
+      "say": "Второе — уголь. Из него сочится метан.",
+      "props": {
+        "cam": [{"cx": 560, "cy": 1590, "s": 2.6}, {"cx": 560, "cy": 1580, "s": 3.2}],
+        "coal": true,
+        "methane": true,
+        "air": false,
+        "kicker": "ПРИЧИНА 2",
+        "slam": "*Уголь*",
+        "slamY": 450,
+        "slamSize": 130,
+        "labels": [{"text": "метан", "x": 560, "y": 1520, "at": 0.55, "size": 60, "color": "#FF3B5C"}]
+      }
+    },
+    {
+      "type": "gauge",
+      "say": "Пять процентов метана в воздухе — и взрыв.",
+      "props": {
+        "title": "*Метан* в воздухе",
+        "unit": "%",
+        "min": 0,
+        "max": 15,
+        "decimals": 1,
+        "zones": [{"from": 5, "to": 15, "label": "ВЗРЫВ"}],
+        "marks": [{"v": 1, "label": "1%"}],
+        "keys": [[0, 0.3], [0.6, 5.3], [1, 5.3]]
+      }
+    },
+    {
+      "type": "gauge",
+      "say": "Поэтому поток разбавляет его меньше чем до одного процента.",
+      "props": {
+        "cont": true,
+        "title": "*Метан* в воздухе",
+        "unit": "%",
+        "min": 0,
+        "max": 15,
+        "decimals": 1,
+        "zones": [{"from": 5, "to": 15, "label": "ВЗРЫВ"}],
+        "marks": [{"v": 1, "label": "1%"}],
+        "keys": [[0, 5.3], [0.7, 0.8], [1, 0.8]],
+        "valueLabel": "норма — до 1%"
+      }
+    },
+    {
+      "type": "slam",
+      "say": "А третье — самое странное.",
+      "props": {"kicker": "ПРИЧИНА 3", "text": "Самое *странное*"}
+    },
+    {
+      "type": "section",
+      "say": "Воздух, опускаясь вниз, нагревается сам.",
+      "props": {"cam": ["intakeTop", "shaft"], "camDur": 0.9, "parcel": true, "air": false}
+    },
+    {
+      "type": "section",
+      "say": "Просто от сжатия. Плюс градус на каждые сто метров.",
+      "props": {
+        "cont": true,
+        "cam": ["shaft", "whole"],
+        "heat": true,
+        "rulerHeat": true,
+        "airSpeed": 380,
+        "labels": [{"text": "+10° на 1 км", "x": 330, "y": 1600, "dy": 90, "at": 0.8, "size": 60, "color": "#FF3B5C"}]
+      }
+    },
+    {
+      "type": "section",
+      "say": "Самая глубокая шахта мира — в Африке, почти четыре километра.",
+      "props": {"cont": true, "cam": ["whole", "deep"], "camDur": 0.7, "deep": true, "heat": true, "airSpeed": 380}
+    },
+    {
+      "type": "section",
+      "say": "Камень там — шестьдесят шесть градусов.",
+      "props": {"cont": true, "cam": ["deep", "deepBottom"], "camDur": 0.75, "deep": true, "deepFrom": 1, "hot": true, "heat": true, "ourLabel": false}
+    },
+    {
+      "type": "section",
+      "say": "Туда закачивают ледяную кашу, чтобы внизу было хотя бы плюс тридцать.",
+      "props": {
+        "cont": true,
+        "cam": ["deepBottom", {"cx": 1150, "cy": 5300, "s": 0.5}],
+        "camDur": 0.5,
+        "deep": true,
+        "deepFrom": 1,
+        "hot": true,
+        "hotFrom": 1,
+        "ice": true,
+        "heat": true,
+        "ourLabel": false
+      }
+    },
+    {
+      "type": "fan3d",
+      "say": "Поэтому этот вентилятор никогда не останавливают.",
+      "props": {"title": "Не *останавливают*", "kicker": "НИКОГДА"}
+    },
+    {
+      "type": "fan3d",
+      "say": "Рядом всегда стоит второй — запасной.",
+      "props": {"cont": true, "twin": true, "twinFrom": 0.3, "title": "Рядом — *запасной*", "kicker": "ВСЕГДА"}
+    },
+    {
+      "type": "outro",
+      "say": "Подпишись — тут объясняют, как всё устроено.",
+      "props": {}
+    }
+  ]
+}
