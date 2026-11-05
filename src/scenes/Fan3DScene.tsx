@@ -90,12 +90,13 @@ const Scene: React.FC<{twin: boolean; dur: number; twinFrom: number}> = ({twin, 
     // одиночный: облёт и наезд; twin: стартует ровно там, где закончил одиночный, и отъезжает
     const e = easeInOut(p);
     const L = (a0: number, a1: number) => a0 + (a1 - a0) * e;
-    const a = twin ? L(-0.32, -0.26) : L(-0.62, -0.32);
-    const dist = twin ? L(10, 17.5) : L(12.5, 10);
-    const tx = twin ? L(0.8, 3.6) : 0.8;
-    const cyy = twin ? 1.4 : L(0.8, 1.4);
+    const a = twin ? L(-0.4, -0.3) : L(-0.65, -0.4);
+    const dist = twin ? L(17, 22) : L(19, 17);
+    const tx = twin ? L(1.4, 3.8) : 1.4;
+    const cyy = twin ? 2.2 : L(1.6, 2.2);
     camera.position.set(tx + Math.sin(a) * dist, cyy, Math.cos(a) * dist);
-    camera.lookAt(tx, -0.6, 0);
+    // точка взгляда выше центра — вентилятор садится в середину кадра, сверху место под заголовок
+    camera.lookAt(tx, 1.6, 0);
   }, [frame]);
 
   return (

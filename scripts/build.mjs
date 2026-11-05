@@ -118,7 +118,8 @@ const align = () => {
     if (!isNaN(out[i].start)) continue;
     let k = i;
     while (k < out.length && isNaN(out[k].start)) k++;
-    const t0 = i > 0 ? out[i - 1].end : heard[0]?.start ?? 0;
+    // начало фразы, которое распознавание пропустило, растягиваем от начала озвучки
+    const t0 = i > 0 ? out[i - 1].end : 0;
     const t1 = k < out.length ? out[k].start : Math.max(t0 + 0.3 * (k - i), heard[heard.length - 1]?.end ?? voiceDur);
     const step = (t1 - t0) / (k - i);
     for (let q = i; q < k; q++) {

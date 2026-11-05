@@ -9,22 +9,25 @@ import {clamp01, easeInOut} from '../lib/util';
 // Один и тот же мир во всех сценах — камера продолжает движение с того же места.
 // Мир: 1 м = 1,6 ед.; поверхность y=0, глубина 1000 м = y 1600.
 const M = 1.6;
-const SHAFT_IN = 330;
-const SHAFT_OUT = 770;
+const SHAFT_IN = 250;
+const SHAFT_OUT = 830;
+const HW = 30; // полуширина ствола
+const DH = 84; // высота штрека
+const FAN_X = SHAFT_OUT + 95;
 const BOTTOM = 1000 * M;
-const DEEP_X = 1180;
+const DEEP_X = 1280;
 const DEEP_D = 3900 * M;
 
 type Cam = {cx: number; cy: number; s: number};
 const CAMS: Record<string, Cam> = {
-  top: {cx: 560, cy: -110, s: 2.0},
-  whole: {cx: 580, cy: 1000, s: 0.55},
-  bottom: {cx: 550, cy: 1560, s: 2.2},
-  drift: {cx: 550, cy: 1575, s: 3.4},
-  fan: {cx: 880, cy: -110, s: 3.0},
-  shaft: {cx: 360, cy: 800, s: 0.8},
-  intakeTop: {cx: 330, cy: 60, s: 1.7},
-  deep: {cx: 760, cy: 3150, s: 0.165},
+  top: {cx: 560, cy: -60, s: 1.45},
+  whole: {cx: 545, cy: 870, s: 0.52},
+  bottom: {cx: 540, cy: 1520, s: 1.6},
+  drift: {cx: 540, cy: 1560, s: 2.6},
+  fan: {cx: 900, cy: -110, s: 2.6},
+  shaft: {cx: 330, cy: 950, s: 0.8},
+  intakeTop: {cx: 250, cy: 60, s: 1.7},
+  deep: {cx: 780, cy: 3200, s: 0.165},
   deepBottom: {cx: DEEP_X - 60, cy: DEEP_D - 120, s: 1.3},
 };
 const cam = (c: string | Cam): Cam => (typeof c === 'string' ? CAMS[c] ?? CAMS.whole : c);
@@ -33,12 +36,12 @@ const SCREEN_CY = 840;
 // Путь воздуха: сверху в левый ствол → по штреку → вверх по правому → вентилятор → диффузор
 const AIR: [number, number][] = [
   [SHAFT_IN, -320],
-  [SHAFT_IN, BOTTOM - 30],
-  [SHAFT_OUT, BOTTOM - 30],
-  [SHAFT_OUT, -30],
-  [880, -40],
-  [975, -190],
-  [1010, -330],
+  [SHAFT_IN, BOTTOM - DH / 2],
+  [SHAFT_OUT, BOTTOM - DH / 2],
+  [SHAFT_OUT, -45],
+  [FAN_X + 70, -50],
+  [FAN_X + 150, -200],
+  [FAN_X + 190, -360],
 ];
 const segLen = AIR.slice(1).map((p, i) => Math.hypot(p[0] - AIR[i][0], p[1] - AIR[i][1]));
 const AIR_LEN = segLen.reduce((a, b) => a + b, 0);
@@ -96,7 +99,7 @@ export const SectionScene: React.FC<SceneProps> = ({scene, durationInFrames}) =>
   // Частицы воздуха
   const parts: React.ReactNode[] = [];
   if (P.air !== false) {
-    const N = 80;
+    const N = 64;
     const speed = P.airSpeed ?? 340;
     for (let i = 0; i < N; i++) {
       const s = (i / N) * AIR_LEN + t * speed;
@@ -105,7 +108,7 @@ export const SectionScene: React.FC<SceneProps> = ({scene, durationInFrames}) =>
       const inDown = sd < segLen[0];
       const k = heatAir ? (inDown ? clamp01((y + 0) / BOTTOM) : 1) : 0;
       const col = heatAir ? mix('F2EEE6', 'FF3B5C', k) : C.paper;
-      const L = 26;
+      const L = 58;
       parts.push(
         <line
           key={i}
@@ -114,8 +117,8 @@ export const SectionScene: React.FC<SceneProps> = ({scene, durationInFrames}) =>
           x2={x}
           y2={y}
           stroke={col}
-          strokeOpacity={0.9}
-          strokeWidth={4}
+          strokeOpacity={0.95}
+          strokeWidth={6}
           strokeLinecap="round"
           vectorEffect="non-scaling-stroke"
         />,
@@ -128,10 +131,10 @@ export const SectionScene: React.FC<SceneProps> = ({scene, durationInFrames}) =>
   if (P.methane) {
     const dil = P.dilute ? easeInOut(clamp01(frame / (life * 0.7))) : 0;
     for (let i = 0; i < 46; i++) {
-      const x0 = 360 + ((i * 97) % 380);
+      const x0 = SHAFT_IN + 50 + ((i * 97) % (SHAFT_OUT - SHAFT_IN - 100));
       const ph = ((i * 37) % 100) / 100;
       const cyc = (t * 0.6 + ph) % 1;
-      const y = BOTTOM + 8 - cyc * 64;
+      const y = BOTTOM + 8 - cyc * DH;
       const drift = P.dilute ? cyc * 60 * (1 + dil * 3) : 0;
       gas.push(<circle key={i} cx={x0 + drift} cy={y} r={3.2 + (i % 3)} fill={C.accent} opacity={(1 - cyc) * 0.9 * (1 - dil * 0.85)} />);
     }
@@ -144,7 +147,7 @@ export const SectionScene: React.FC<SceneProps> = ({scene, durationInFrames}) =>
     for (let i = 0; i < 60; i++) {
       const yy = -120 + (((i / 60) * (DEEP_D + 120) + t * 900) % (DEEP_D + 120));
       if (yy - -120 > pipeLen) continue;
-      iceBits.push(<rect key={i} x={DEEP_X - 52} y={yy} width={14} height={14} fill={C.ice} transform={`rotate(45 ${DEEP_X - 45} ${yy + 7})`} />);
+      iceBits.push(<rect key={i} x={DEEP_X - 21} y={yy} width={14} height={14} fill={C.ice} transform={`rotate(45 ${DEEP_X - 14} ${yy + 7})`} />);
     }
   }
 
@@ -153,7 +156,7 @@ export const SectionScene: React.FC<SceneProps> = ({scene, durationInFrames}) =>
   let parcelLabel: Label | null = null;
   if (P.parcel) {
     const pp = easeInOut(clamp01(frame / (life * 0.85)));
-    const y = -140 + (BOTTOM - 80 + 140) * pp;
+    const y = -140 + (BOTTOM * 0.8 + 140) * pp;
     const depthM = Math.max(0, y / M);
     const r = 46 - 14 * pp;
     parcel = <ellipse cx={SHAFT_IN} cy={y} rx={r * 1.08} ry={r * (1 - 0.12 * pp)} fill={mix('F2EEE6', 'FF3B5C', pp)} opacity={0.95} />;
@@ -164,16 +167,16 @@ export const SectionScene: React.FC<SceneProps> = ({scene, durationInFrames}) =>
   // Подписи (в экранных координатах, привязаны к точкам мира)
   const labels: Label[] = [...(P.labels ?? [])];
   if (P.breath) {
-    labels.push({text: 'ВДОХ', x: SHAFT_IN, y: -360, at: 0.05, size: 64});
-    labels.push({text: 'ВЫДОХ', x: 1010, y: -360, at: 0.35, size: 64, color: C.accent});
+    labels.push({text: 'ВДОХ', x: SHAFT_IN, y: -400, at: 0.05, size: 64});
+    labels.push({text: 'ВЫДОХ', x: FAN_X + 190, y: -400, at: 0.35, size: 64, color: C.accent});
   }
-  if (P.coal) labels.push({text: 'уголь', x: 700, y: BOTTOM + 40, at: 0.15, size: 34, mono: true, color: C.dim});
-  if (P.deep) labels.push({text: '≈ 4 км', x: DEEP_X, y: deepD, dy: 70, at: 0.55, size: 72, color: C.paper});
+  if (P.coal) labels.push({text: 'уголь', x: SHAFT_OUT - 120, y: BOTTOM + 40, at: 0.15, size: 34, mono: true, color: C.dim});
+  if (P.deep && !P.hot) labels.push({text: '≈ 4 км', x: DEEP_X, y: deepD, dy: 70, at: 0.55, size: 72, color: C.paper});
   if (P.deep && P.ourLabel !== false) labels.push({text: '1 км', x: SHAFT_IN, y: BOTTOM, dy: 70, at: 0.2, size: 56, color: C.dim});
   if (P.hot && !P.ice) labels.push({text: 'камень +66°', x: DEEP_X, y: DEEP_D, dy: -150, at: 0.3, size: 70, color: C.accent});
   if (P.ice) {
     const tA = Math.round(66 - 36 * easeInOut(clamp01((frame / life - 0.45) / 0.45)));
-    labels.push({text: 'ледяная каша', x: DEEP_X - 45, y: DEEP_D - 600, dx: -230, at: 0.1, size: 46, color: C.ice});
+    labels.push({text: 'ледяная каша', x: DEEP_X - 14, y: DEEP_D - 600, dx: -260, at: 0.1, size: 46, color: C.ice});
     labels.push({text: `воздух +${tA}°`, x: DEEP_X, y: DEEP_D, dy: -150, at: 0.0, size: 70, color: tA <= 31 ? C.paper : C.accent});
   }
   if (parcelLabel) labels.push(parcelLabel);
@@ -183,7 +186,7 @@ export const SectionScene: React.FC<SceneProps> = ({scene, durationInFrames}) =>
   const maxD = P.deep || P.hot || P.ice ? 4000 : 1000;
   const step = maxD > 1000 ? 1000 : 200;
   for (let d = step; d <= maxD; d += step) ticks.push({y: d * M, text: `${d >= 1000 ? d / 1000 + ' км' : d + ' м'}`});
-  const rulerX = 150;
+  const rulerX = 90;
 
   // Предмет «окно» + зачёркивание (хук: «ни одного окна»)
   const noWin = P.noWindow ? expoOut(clamp01((frame - (P.noWindowAt ?? 0.35) * life) / 10)) : 0;
@@ -211,17 +214,17 @@ export const SectionScene: React.FC<SceneProps> = ({scene, durationInFrames}) =>
           {Array.from({length: Math.ceil(groundH / 260)}, (_, i) => (
             <rect key={i} x={-strataW} y={i * 260 + 60} width={strataW * 2.5} height={120} fill="#1F1B17" />
           ))}
-          {hot > 0 ? <rect x={-strataW} y={0} width={strataW * 2.5} height={groundH} fill="url(#heat)" opacity={hot} /> : null}
+          {hot > 0 ? <rect x={-strataW} y={0} width={strataW * 2.5} height={groundH} fill="url(#heat)" opacity={hot * (1 - 0.6 * ice)} /> : null}
           {/* угольный пласт */}
           <rect x={-strataW} y={BOTTOM - 2} width={strataW * 2.5} height={44} fill="#08080B" />
           <line x1={-strataW} x2={strataW * 1.5} y1={BOTTOM - 2} y2={BOTTOM - 2} stroke={C.line} strokeWidth={1.5} vectorEffect="non-scaling-stroke" />
           {/* стволы и штрек */}
-          <rect x={SHAFT_IN - 22} y={-6} width={44} height={BOTTOM} fill={C.bg} />
-          <rect x={SHAFT_OUT - 22} y={-6} width={44} height={BOTTOM} fill={C.bg} />
-          <rect x={SHAFT_IN - 22} y={BOTTOM - 62} width={SHAFT_OUT - SHAFT_IN + 44} height={62} fill={C.bg} />
+          <rect x={SHAFT_IN - HW} y={-6} width={HW * 2} height={BOTTOM} fill={C.bg} />
+          <rect x={SHAFT_OUT - HW} y={-6} width={HW * 2} height={BOTTOM} fill={C.bg} />
+          <rect x={SHAFT_IN - HW} y={BOTTOM - DH} width={SHAFT_OUT - SHAFT_IN + HW * 2} height={DH} fill={C.bg} />
           <path
-            d={`M ${SHAFT_IN - 22} 0 L ${SHAFT_IN - 22} ${BOTTOM} L ${SHAFT_OUT + 22} ${BOTTOM} L ${SHAFT_OUT + 22} 0
-                M ${SHAFT_IN + 22} 0 L ${SHAFT_IN + 22} ${BOTTOM - 62} L ${SHAFT_OUT - 22} ${BOTTOM - 62} L ${SHAFT_OUT - 22} 0`}
+            d={`M ${SHAFT_IN - HW} 0 L ${SHAFT_IN - HW} ${BOTTOM} L ${SHAFT_OUT + HW} ${BOTTOM} L ${SHAFT_OUT + HW} 0
+                M ${SHAFT_IN + HW} 0 L ${SHAFT_IN + HW} ${BOTTOM - DH} L ${SHAFT_OUT - HW} ${BOTTOM - DH} L ${SHAFT_OUT - HW} 0`}
             fill="none"
             stroke={C.paper}
             strokeWidth={3}
@@ -231,31 +234,31 @@ export const SectionScene: React.FC<SceneProps> = ({scene, durationInFrames}) =>
           {/* глубокая шахта (Mponeng) */}
           {P.deep || P.hot || P.ice ? (
             <>
-              <rect x={DEEP_X - 22} y={-6} width={44} height={deepD} fill={C.bg} />
-              <path d={`M ${DEEP_X - 22} 0 L ${DEEP_X - 22} ${deepD} L ${DEEP_X + 22} ${deepD} L ${DEEP_X + 22} 0`} fill="none" stroke={C.paper} strokeWidth={3} vectorEffect="non-scaling-stroke" />
+              <rect x={DEEP_X - HW} y={-6} width={HW * 2} height={deepD} fill={C.bg} />
+              <path d={`M ${DEEP_X - HW} 0 L ${DEEP_X - HW} ${deepD} L ${DEEP_X + HW} ${deepD} L ${DEEP_X + HW} 0`} fill="none" stroke={C.paper} strokeWidth={3} vectorEffect="non-scaling-stroke" />
             </>
           ) : null}
           {P.ice ? (
-            <line x1={DEEP_X - 45} y1={-120} x2={DEEP_X - 45} y2={-120 + (DEEP_D + 120) * ice} stroke={C.ice} strokeWidth={3} strokeOpacity={0.6} vectorEffect="non-scaling-stroke" />
+            <line x1={DEEP_X - 14} y1={-120} x2={DEEP_X - 14} y2={-120 + (DEEP_D + 120) * ice} stroke={C.ice} strokeWidth={3} strokeOpacity={0.6} vectorEffect="non-scaling-stroke" />
           ) : null}
           {iceBits}
           {/* поверхность */}
           <line x1={-strataW} x2={strataW * 1.5} y1={0} y2={0} stroke={C.paper} strokeWidth={4} vectorEffect="non-scaling-stroke" />
           {/* копёр над левым стволом */}
-          <path d={`M ${SHAFT_IN - 50} 0 L ${SHAFT_IN} -170 L ${SHAFT_IN + 50} 0 M ${SHAFT_IN - 30} -70 L ${SHAFT_IN + 30} -70`} fill="none" stroke={C.paper} strokeWidth={3} vectorEffect="non-scaling-stroke" />
-          <circle cx={SHAFT_IN} cy={-170} r={16} fill={C.bg} stroke={C.paper} strokeWidth={3} vectorEffect="non-scaling-stroke" />
+          <path d={`M ${SHAFT_IN - 60} 0 L ${SHAFT_IN} -190 L ${SHAFT_IN + 60} 0 M ${SHAFT_IN - 38} -70 L ${SHAFT_IN + 38} -70`} fill="none" stroke={C.paper} strokeWidth={3} vectorEffect="non-scaling-stroke" />
+          <circle cx={SHAFT_IN} cy={-190} r={18} fill={C.bg} stroke={C.paper} strokeWidth={3} vectorEffect="non-scaling-stroke" />
           {/* вентиляторная над правым стволом */}
           <path
-            d={`M ${SHAFT_OUT - 22} -6 L ${SHAFT_OUT - 22} -78 L 910 -78 L 910 -6 M ${SHAFT_OUT + 22} -6 L ${SHAFT_OUT + 22} -30 L 910 -30
-                M 910 -78 L 955 -170 L 1000 -350 M 910 -30 L 960 -70 L 1060 -330`}
+            d={`M ${SHAFT_OUT - HW} -6 L ${SHAFT_OUT - HW} -90 L ${FAN_X + 60} -90 L ${FAN_X + 60} -6 M ${SHAFT_OUT + HW} -6 L ${SHAFT_OUT + HW} -30 L ${FAN_X + 60} -30
+                M ${FAN_X + 60} -90 L ${FAN_X + 120} -190 L ${FAN_X + 160} -380 M ${FAN_X + 60} -30 L ${FAN_X + 130} -80 L ${FAN_X + 230} -360`}
             fill="none"
             stroke={C.paper}
             strokeWidth={3}
             strokeLinejoin="round"
             vectorEffect="non-scaling-stroke"
           />
-          <g transform={`translate(855 -54)`}>
-            <circle r={22} fill={C.bg} stroke={P.fanAccent ? C.accent : C.paper} strokeWidth={3} vectorEffect="non-scaling-stroke" />
+          <g transform={`translate(${FAN_X} -60)`}>
+            <circle r={26} fill={C.bg} stroke={P.fanAccent ? C.accent : C.paper} strokeWidth={3} vectorEffect="non-scaling-stroke" />
             <g transform={`rotate(${fanRot})`}>
               {[0, 90, 180, 270].map((a) => (
                 <path key={a} transform={`rotate(${a})`} d="M 0 0 C 6 -6 14 -12 18 -4 C 14 0 6 2 0 0 Z" fill={P.fanAccent ? C.accent : C.paper} />
@@ -263,7 +266,7 @@ export const SectionScene: React.FC<SceneProps> = ({scene, durationInFrames}) =>
             </g>
           </g>
           {P.twin ? (
-            <g transform="translate(855 -54)">
+            <g transform={`translate(${FAN_X} -60)`}>
               <g transform={`translate(0 -110) scale(${expoOut(clamp01((frame - life * 0.25) / 12))})`}>
                 <circle r={22} fill={C.bg} stroke={C.paper} strokeWidth={3} vectorEffect="non-scaling-stroke" />
                 <g transform={`rotate(${fanRot * 0.15})`}>
@@ -279,7 +282,7 @@ export const SectionScene: React.FC<SceneProps> = ({scene, durationInFrames}) =>
           {parcel}
           {/* горняк в штреке */}
           {P.miner ? (
-            <g transform={`translate(560 ${BOTTOM}) scale(0.9)`}>
+            <g transform={`translate(540 ${BOTTOM}) scale(1.3)`}>
               <circle cx={0} cy={-46} r={8} fill={C.paper} />
               <path d="M -10 -50 Q 0 -62 10 -50 Z" fill={C.accent} />
               <rect x={-2} y={-56} width={4} height={4} fill="#FFE9A8" />
@@ -299,7 +302,7 @@ export const SectionScene: React.FC<SceneProps> = ({scene, durationInFrames}) =>
               return (
                 <g key={i}>
                   <line x1={sx(rulerX) - 10} x2={sx(rulerX) + 10} y1={y} y2={y} stroke={C.paper} strokeOpacity={0.6} strokeWidth={2} />
-                  <text x={sx(rulerX) + 18} y={y + 8} fill={C.dim} fontFamily={MONO} fontSize={24}>
+                  <text x={sx(rulerX) + 18} y={y + 10} fill={C.dim} fontFamily={MONO} fontSize={30}>
                     {tk.text}
                   </text>
                   {P.rulerHeat ? (

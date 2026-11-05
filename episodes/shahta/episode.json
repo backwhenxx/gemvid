@@ -38,7 +38,7 @@
     {
       "type": "section",
       "say": "Один ствол — вдох, другой — выдох.",
-      "props": {"cont": true, "cam": ["whole", {"cx": 650, "cy": 700, "s": 0.62}], "miner": true, "airSpeed": 520, "fanAccent": true, "breath": true}
+      "props": {"cont": true, "cam": ["whole", {"cx": 560, "cy": 820, "s": 0.55}], "miner": true, "airSpeed": 520, "fanAccent": true, "breath": true}
     },
     {
       "type": "slam",
@@ -70,7 +70,7 @@
       "type": "section",
       "say": "Второе — уголь. Из него сочится метан.",
       "props": {
-        "cam": [{"cx": 560, "cy": 1590, "s": 2.6}, {"cx": 560, "cy": 1580, "s": 3.2}],
+        "cam": [{"cx": 540, "cy": 1580, "s": 2.2}, {"cx": 540, "cy": 1570, "s": 2.8}],
         "coal": true,
         "methane": true,
         "air": false,
@@ -78,7 +78,7 @@
         "slam": "*Уголь*",
         "slamY": 450,
         "slamSize": 130,
-        "labels": [{"text": "метан", "x": 560, "y": 1520, "at": 0.55, "size": 60, "color": "#FF3B5C"}]
+        "labels": [{"text": "метан", "x": 540, "y": 1500, "at": 0.55, "size": 60, "color": "#FF3B5C"}]
       }
     },
     {
@@ -130,7 +130,7 @@
         "heat": true,
         "rulerHeat": true,
         "airSpeed": 380,
-        "labels": [{"text": "+10° на 1 км", "x": 330, "y": 1600, "dy": 90, "at": 0.8, "size": 60, "color": "#FF3B5C"}]
+        "labels": [{"text": "+10° на 1 км", "x": 250, "y": 1600, "dy": 90, "at": 0.8, "size": 60, "color": "#FF3B5C"}]
       }
     },
     {
@@ -148,7 +148,7 @@
       "say": "Туда закачивают ледяную кашу, чтобы внизу было хотя бы плюс тридцать.",
       "props": {
         "cont": true,
-        "cam": ["deepBottom", {"cx": 1150, "cy": 5300, "s": 0.5}],
+        "cam": ["deepBottom", {"cx": 1240, "cy": 5300, "s": 0.5}],
         "camDur": 0.5,
         "deep": true,
         "deepFrom": 1,
