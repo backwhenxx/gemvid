@@ -71,26 +71,7 @@ if (flag('--stills')) {
 // Только обложка, без озвучки и рендера видео: node scripts/build.mjs episodes/<имя> --cover-only
 if (flag('--cover-only')) {
   if (!ep.cover) throw new Error('В episode.json нет поля cover');
-  // живые звуки и фон из Openverse (CC0 / общественное достояние)
-const snd = await fetchSounds(ep, log);
-scenes.forEach((s) =>
-  (s.props.sounds ?? []).forEach((x) => {
-    const g = snd[`sfx:${x.q}`];
-    if (g) sfx.push({file: g.file, at: s.start + (x.at ?? 0) * (s.end - s.start), volume: x.volume ?? 0.4});
-  }),
-);
-const ambience = (ep.ambience ?? [])
-  .map((a) => {
-    const g = snd[`amb:${a.q}`];
-    if (!g) return null;
-    const from = scenes[Math.min(a.from ?? 0, scenes.length - 1)].start;
-    const to = scenes[Math.min(a.to ?? scenes.length - 1, scenes.length - 1)].end;
-    return {file: g.file, from, to, volume: a.volume ?? 0.15};
-  })
-  .filter(Boolean);
-fs.writeFileSync(path.join(outDir, 'sounds.json'), JSON.stringify(Object.values(snd), null, 1));
-
-const timeline = {fps: 30, durationInFrames: 30, base: pubBase, voice: null, words: [], scenes: [], sfx: [], music: null, accent: ep.accent ?? '#A9BCCB', palette: ep.palette ?? null};
+  const timeline = {fps: 30, durationInFrames: 30, base: pubBase, voice: null, words: [], scenes: [], sfx: [], music: null, accent: ep.accent ?? '#A9BCCB', palette: ep.palette ?? null};
   const serveUrl = await bundle({entryPoint: path.join(ROOT, 'src/index.ts'), publicDir: path.join(ROOT, 'public')});
   const props = {timeline, cover: ep.cover};
   const comp = await selectComposition({serveUrl, id: 'Cover', inputProps: props, chromiumOptions: {gl: 'swangle'}});
@@ -221,6 +202,25 @@ scenes.forEach((s, i) => {
   if (s.type === 'physics2d' || s.type === 'physics3d') sfx.push({file: 'sfx/pop.wav', at: s.start + 0.6, volume: 0.25});
   (s.props.sfx ?? []).forEach((c) => sfx.push({file: `sfx/${c.file}.wav`, at: s.start + c.at * (s.end - s.start), volume: c.volume ?? 0.35}));
 });
+
+// живые звуки и фон из Openverse (CC0 / общественное достояние)
+const snd = await fetchSounds(ep, log);
+scenes.forEach((s) =>
+  (s.props.sounds ?? []).forEach((x) => {
+    const g = snd[`sfx:${x.q}`];
+    if (g) sfx.push({file: g.file, at: s.start + (x.at ?? 0) * (s.end - s.start), volume: x.volume ?? 0.4});
+  }),
+);
+const ambience = (ep.ambience ?? [])
+  .map((a) => {
+    const g = snd[`amb:${a.q}`];
+    if (!g) return null;
+    const from = scenes[Math.min(a.from ?? 0, scenes.length - 1)].start;
+    const to = scenes[Math.min(a.to ?? scenes.length - 1, scenes.length - 1)].end;
+    return {file: g.file, from, to, volume: a.volume ?? 0.15};
+  })
+  .filter(Boolean);
+fs.writeFileSync(path.join(outDir, 'sounds.json'), JSON.stringify(Object.values(snd), null, 1));
 
 const timeline = {
   fps: FPS,
