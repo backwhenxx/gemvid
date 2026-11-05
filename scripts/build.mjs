@@ -46,6 +46,18 @@ for (const s of ep.scenes) {
 }
 
 const log = (...m) => console.log(`[${slug}]`, ...m);
+
+// Только обложка, без озвучки и рендера видео: node scripts/build.mjs episodes/<имя> --cover-only
+if (flag('--cover-only')) {
+  if (!ep.cover) throw new Error('В episode.json нет поля cover');
+  const timeline = {fps: 30, durationInFrames: 30, base: pubBase, voice: null, words: [], scenes: [], sfx: [], music: null, accent: ep.accent ?? '#A9BCCB', palette: ep.palette ?? null};
+  const serveUrl = await bundle({entryPoint: path.join(ROOT, 'src/index.ts'), publicDir: path.join(ROOT, 'public')});
+  const props = {timeline, cover: ep.cover};
+  const comp = await selectComposition({serveUrl, id: 'Cover', inputProps: props, chromiumOptions: {gl: 'swangle'}});
+  await renderStill({composition: comp, serveUrl, inputProps: props, output: path.join(outDir, 'cover.png'), chromiumOptions: {gl: 'swangle'}});
+  log('обложка → out/' + slug + '/cover.png');
+  process.exit(0);
+}
 const sh = (cmd, a) => execFileSync(cmd, a, {stdio: ['ignore', 'inherit', 'inherit']});
 
 // ---------- текст ----------
@@ -180,6 +192,7 @@ const timeline = {
   music: ep.music === false ? null : {file: 'music/pad.wav', volume: ep.musicVolume ?? 0.1},
   accent: ep.accent ?? '#FF3D8B',
   keys: ep.keys ?? [],
+  palette: ep.palette ?? null,
   brand: ep.brand !== false,
 };
 fs.writeFileSync(path.join(outDir, 'timeline.json'), JSON.stringify(timeline, null, 1));

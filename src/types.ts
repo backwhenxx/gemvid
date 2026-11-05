@@ -37,4 +37,5 @@ export type Timeline = {
   accent: string;
   keys?: string[]; // слова, которые в субтитрах подсвечиваются акцентом
   brand?: boolean; // пузырь «ШТА?!» в углу (по умолчанию да)
+  palette?: Record<string, string>; // переопределение цветов темы
 };

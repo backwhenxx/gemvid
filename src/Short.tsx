@@ -3,7 +3,7 @@ import {AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame, useVideoConf
 import type {Timeline, TimedScene} from './types';
 import {Captions} from './components/Captions';
 import {BrandMark, Grain, Vignette} from './components/Brand';
-import {C, expoOut} from './lib/theme';
+import {C, applyPalette, expoOut} from './lib/theme';
 import {HookScene} from './scenes/HookScene';
 import {NumberScene} from './scenes/NumberScene';
 import {Model3DScene} from './scenes/Model3DScene';
@@ -62,6 +62,7 @@ const BrandUntil: React.FC<{until: number}> = ({until}) => {
 
 export const Short: React.FC<{timeline: Timeline}> = ({timeline}) => {
   const {fps} = useVideoConfig();
+  applyPalette(timeline.palette);
   const {scenes, base, accent} = timeline;
   const outro = scenes.find((s) => s.type === 'outro');
 

@@ -4,12 +4,13 @@ import type {Timeline, TimedScene} from './types';
 import {SectionScene} from './scenes/SectionScene';
 import {BrandMark, Grain, Vignette} from './components/Brand';
 import {Accented} from './components/Accented';
-import {BODY, C, SLAM} from './lib/theme';
+import {BODY, C, SLAM, applyPalette} from './lib/theme';
 
 // Обложка (= первый кадр в ленте): заголовок в верхней трети, под ним мир ролика, низ пустой
 export type CoverSpec = {lines: string[]; sub?: string; bg?: Record<string, any>};
 
 export const Cover: React.FC<{timeline: Timeline; cover: CoverSpec}> = ({timeline, cover}) => {
+  applyPalette(timeline.palette);
   const bgScene: TimedScene = {
     type: 'section',
     start: 0,
