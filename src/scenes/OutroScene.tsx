@@ -19,7 +19,7 @@ export const OutroScene: React.FC<SceneProps> = ({scene}) => {
     <AbsoluteFill style={{backgroundColor: C.bg}}>
       <div style={{position: 'absolute', top: 620, left: '50%', transform: `translate(-50%, -50%) scale(${0.7 + 0.3 * bubble})`, opacity: bubble}}>
         <div style={{position: 'relative', background: C.paper, color: C.bg, fontFamily: SLAM, fontWeight: 900, fontSize: 150, padding: '36px 84px', borderRadius: 110}}>
-          ШТА<span style={{color: C.accent}}>?!</span>
+          ШТА<span style={{color: C.brand}}>?!</span>
           <div
             style={{
               position: 'absolute',

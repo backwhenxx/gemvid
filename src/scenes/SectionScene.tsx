@@ -107,7 +107,7 @@ export const SectionScene: React.FC<SceneProps> = ({scene, durationInFrames}) =>
       const sd = ((s % AIR_LEN) + AIR_LEN) % AIR_LEN;
       const inDown = sd < segLen[0];
       const k = heatAir ? (inDown ? clamp01((y + 0) / BOTTOM) : 1) : 0;
-      const col = heatAir ? mix('F2EEE6', 'FF3B5C', k) : C.paper;
+      const col = heatAir ? mix('F2EEE6', 'FFA040', k) : C.paper;
       const L = 58;
       parts.push(
         <line
@@ -136,7 +136,7 @@ export const SectionScene: React.FC<SceneProps> = ({scene, durationInFrames}) =>
       const cyc = (t * 0.6 + ph) % 1;
       const y = BOTTOM + 8 - cyc * DH;
       const drift = P.dilute ? cyc * 60 * (1 + dil * 3) : 0;
-      gas.push(<circle key={i} cx={x0 + drift} cy={y} r={3.2 + (i % 3)} fill={C.accent} opacity={(1 - cyc) * 0.9 * (1 - dil * 0.85)} />);
+      gas.push(<circle key={i} cx={x0 + drift} cy={y} r={3.2 + (i % 3)} fill={C.hot} opacity={(1 - cyc) * 0.9 * (1 - dil * 0.85)} />);
     }
   }
 
@@ -159,9 +159,9 @@ export const SectionScene: React.FC<SceneProps> = ({scene, durationInFrames}) =>
     const y = -140 + (BOTTOM * 0.8 + 140) * pp;
     const depthM = Math.max(0, y / M);
     const r = 46 - 14 * pp;
-    parcel = <ellipse cx={SHAFT_IN} cy={y} rx={r * 1.08} ry={r * (1 - 0.12 * pp)} fill={mix('F2EEE6', 'FF3B5C', pp)} opacity={0.95} />;
+    parcel = <ellipse cx={SHAFT_IN} cy={y} rx={r * 1.08} ry={r * (1 - 0.12 * pp)} fill={mix('F2EEE6', 'FFA040', pp)} opacity={0.95} />;
     const temp = Math.round(depthM / 100);
-    parcelLabel = {text: `+${temp}°`, x: SHAFT_IN, y, dx: 110, size: 64, color: mix('F2EEE6', 'FF3B5C', pp), mono: false};
+    parcelLabel = {text: `+${temp}°`, x: SHAFT_IN, y, dx: 110, size: 64, color: mix('F2EEE6', 'FFA040', pp), mono: false};
   }
 
   // Подписи (в экранных координатах, привязаны к точкам мира)
@@ -173,11 +173,11 @@ export const SectionScene: React.FC<SceneProps> = ({scene, durationInFrames}) =>
   if (P.coal) labels.push({text: 'уголь', x: SHAFT_OUT - 120, y: BOTTOM + 40, at: 0.15, size: 34, mono: true, color: C.dim});
   if (P.deep && !P.hot) labels.push({text: '≈ 4 км', x: DEEP_X, y: deepD, dy: 70, at: 0.55, size: 72, color: C.paper});
   if (P.deep && P.ourLabel !== false) labels.push({text: '1 км', x: SHAFT_IN, y: BOTTOM, dy: 70, at: 0.2, size: 56, color: C.dim});
-  if (P.hot && !P.ice) labels.push({text: 'камень +66°', x: DEEP_X, y: DEEP_D, dy: -150, at: 0.3, size: 70, color: C.accent});
+  if (P.hot && !P.ice) labels.push({text: 'камень +66°', x: DEEP_X, y: DEEP_D, dy: -150, at: 0.3, size: 70, color: C.hot});
   if (P.ice) {
     const tA = Math.round(66 - 36 * easeInOut(clamp01((frame / life - 0.45) / 0.45)));
     labels.push({text: 'ледяная каша', x: DEEP_X - 14, y: DEEP_D - 600, dx: -260, at: 0.1, size: 46, color: C.ice});
-    labels.push({text: `воздух +${tA}°`, x: DEEP_X, y: DEEP_D, dy: -150, at: 0.0, size: 70, color: tA <= 31 ? C.paper : C.accent});
+    labels.push({text: `воздух +${tA}°`, x: DEEP_X, y: DEEP_D, dy: -150, at: 0.0, size: 70, color: tA <= 31 ? C.paper : C.hot});
   }
   if (parcelLabel) labels.push(parcelLabel);
 
@@ -204,8 +204,8 @@ export const SectionScene: React.FC<SceneProps> = ({scene, durationInFrames}) =>
             <stop offset="1" stopColor="#1C1C26" />
           </linearGradient>
           <linearGradient id="heat" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0.25" stopColor={C.accent} stopOpacity={0} />
-            <stop offset="1" stopColor={C.accent} stopOpacity={0.55} />
+            <stop offset="0.25" stopColor={C.hot} stopOpacity={0} />
+            <stop offset="1" stopColor={C.hot} stopOpacity={0.45} />
           </linearGradient>
         </defs>
         <g transform={view}>
@@ -284,7 +284,7 @@ export const SectionScene: React.FC<SceneProps> = ({scene, durationInFrames}) =>
           {P.miner ? (
             <g transform={`translate(540 ${BOTTOM}) scale(1.3)`}>
               <circle cx={0} cy={-46} r={8} fill={C.paper} />
-              <path d="M -10 -50 Q 0 -62 10 -50 Z" fill={C.accent} />
+              <path d="M -10 -50 Q 0 -62 10 -50 Z" fill="#FFC94D" />
               <rect x={-2} y={-56} width={4} height={4} fill="#FFE9A8" />
               <path d="M 0 -38 L 0 -14 M 0 -14 L -7 0 M 0 -14 L 7 0 M 0 -32 L -9 -20 M 0 -32 L 9 -22" stroke={C.paper} strokeWidth={4.5} strokeLinecap="round" fill="none" />
             </g>
@@ -306,7 +306,7 @@ export const SectionScene: React.FC<SceneProps> = ({scene, durationInFrames}) =>
                     {tk.text}
                   </text>
                   {P.rulerHeat ? (
-                    <text x={sx(rulerX) + 18} y={y + 44} fill={C.accent} fontFamily={MONO} fontWeight={700} fontSize={30} opacity={hl}>
+                    <text x={sx(rulerX) + 18} y={y + 44} fill={C.hot} fontFamily={MONO} fontWeight={700} fontSize={30} opacity={hl}>
                       +1°
                     </text>
                   ) : null}
@@ -358,7 +358,7 @@ export const SectionScene: React.FC<SceneProps> = ({scene, durationInFrames}) =>
             <rect x={-90} y={-100} width={180} height={200} rx={8} fill={C.bg} stroke={C.paper} strokeWidth={10} />
             <path d="M 0 -100 L 0 100 M -90 -10 L 90 -10" stroke={C.paper} strokeWidth={8} />
             <rect x={-70} y={-82} width={56} height={58} fill="#3a5a8a" opacity={0.5} />
-            <line x1={-120} y1={120} x2={-120 + 240 * strike} y2={120 - 240 * strike} stroke={C.accent} strokeWidth={16} strokeLinecap="round" />
+            <line x1={-120} y1={120} x2={-120 + 240 * strike} y2={120 - 240 * strike} stroke={C.hot} strokeWidth={16} strokeLinecap="round" />
           </svg>
         </div>
       ) : null}

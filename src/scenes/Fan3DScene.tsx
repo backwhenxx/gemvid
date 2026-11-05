@@ -14,6 +14,7 @@ import {H, W, clamp01, easeInOut} from '../lib/util';
 const metal = new THREE.MeshStandardMaterial({color: '#6B6B78', metalness: 0.55, roughness: 0.45, side: THREE.DoubleSide});
 const paperM = new THREE.MeshStandardMaterial({color: C.paper, roughness: 0.6});
 const accentM = new THREE.MeshStandardMaterial({color: C.accent, roughness: 0.5});
+const helmetM = new THREE.MeshStandardMaterial({color: '#FFC94D', roughness: 0.5});
 const bladeM = new THREE.MeshStandardMaterial({color: '#C9C5BD', metalness: 0.3, roughness: 0.4, side: THREE.DoubleSide});
 const concrete = new THREE.MeshStandardMaterial({color: '#2B2B33', roughness: 0.95});
 
@@ -62,7 +63,7 @@ const buildPerson = () => {
   const head = new THREE.Mesh(new THREE.SphereGeometry(0.16, 20, 16), paperM);
   head.position.y = -3 + 1.62;
   g.add(head);
-  const helmet = new THREE.Mesh(new THREE.SphereGeometry(0.18, 20, 12, 0, Math.PI * 2, 0, Math.PI / 2), accentM);
+  const helmet = new THREE.Mesh(new THREE.SphereGeometry(0.18, 20, 12, 0, Math.PI * 2, 0, Math.PI / 2), helmetM);
   helmet.position.y = -3 + 1.66;
   g.add(helmet);
   return g;

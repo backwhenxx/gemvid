@@ -2,14 +2,16 @@ import {loadFont as loadUnbounded} from '@remotion/google-fonts/Unbounded';
 import {loadFont as loadInter} from '@remotion/google-fonts/Inter';
 import {loadFont as loadMono} from '@remotion/google-fonts/JetBrainsMono';
 
-// Фирменный стиль «ШТА?!»: тёмный фон, «бумага», один розовый акцент. Без неона и свечений.
+// Стиль «ШТА?!»: тёмный фон, «бумага», холодный синий акцент, янтарный — только для тепла/опасности. Без неона.
 export const C = {
   bg: '#0E0E12',
   bg2: '#16161D',
   paper: '#F2EEE6',
   dim: '#8A8794',
   line: 'rgba(242,238,230,0.18)',
-  accent: '#FF3B5C',
+  accent: '#5AB0FF', // холодный синий — основной акцент
+  hot: '#FFA040', // янтарный — только тепло и опасность
+  brand: '#FF3B5C', // «?!» в логотипе канала
   ice: '#9BD8FF',
 };
 

@@ -11,7 +11,7 @@ import os from 'node:os';
 import path from 'node:path';
 import {execFileSync} from 'node:child_process';
 import {bundle} from '@remotion/bundler';
-import {renderMedia, selectComposition} from '@remotion/renderer';
+import {renderMedia, renderStill, selectComposition} from '@remotion/renderer';
 import {makeSfx} from './sfx.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
@@ -213,6 +213,14 @@ await renderMedia({
     }
   },
 });
+
+// ---------- обложка ----------
+if (ep.cover) {
+  const coverProps = {timeline, cover: ep.cover};
+  const coverComp = await selectComposition({serveUrl, id: 'Cover', inputProps: coverProps, chromiumOptions: {gl: 'swangle'}});
+  await renderStill({composition: coverComp, serveUrl, inputProps: coverProps, output: path.join(outDir, 'cover.png'), chromiumOptions: {gl: 'swangle'}});
+  log('обложка → out/' + slug + '/cover.png');
+}
 
 // ---------- финал: громкость под YouTube (-14 LUFS) и превью ----------
 const final = path.join(outDir, `${slug}.mp4`);

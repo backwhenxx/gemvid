@@ -18,7 +18,7 @@ export const BrandMark: React.FC = () => (
         letterSpacing: 0.5,
       }}
     >
-      ШТА<span style={{color: C.accent}}>?!</span>
+      ШТА<span style={{color: C.brand}}>?!</span>
       <div
         style={{
           position: 'absolute',
