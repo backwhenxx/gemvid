@@ -1,0 +1,113 @@
+name: Рендер шортса
+
+on:
+  workflow_dispatch:
+    inputs:
+      episode:
+        description: "Папка эпизода в episodes/ (например, demo)"
+        required: true
+        default: demo
+      demo_voice:
+        description: "Тестовый голос espeak, если нет voice.mp3"
+        type: boolean
+        default: false
+  push:
+    branches: [main]
+    paths:
+      - "episodes/**/voice.mp3"
+      - "episodes/**/episode.json"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: render-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Какие эпизоды собирать
+        id: eps
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "list=${{ inputs.episode }}" >> "$GITHUB_OUTPUT"
+          else
+            L=$(git diff --name-only HEAD^ HEAD -- episodes/ | cut -d/ -f2 | sort -u | while read e; do [ -f "episodes/$e/voice.mp3" ] && echo "$e"; done | tr '\n' ' ')
+            echo "list=$L" >> "$GITHUB_OUTPUT"
+          fi
+          echo "Эпизоды: $(grep list "$GITHUB_OUTPUT")"
+
+      - uses: actions/setup-node@v4
+        if: steps.eps.outputs.list != ''
+        with:
+          node-version: 22
+
+      - uses: actions/setup-python@v5
+        if: steps.eps.outputs.list != ''
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Кэш npm и модели Whisper
+        if: steps.eps.outputs.list != ''
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            ~/.cache/huggingface
+          key: deps-${{ hashFiles('package.json', 'requirements.txt') }}
+
+      - name: Системные пакеты (FFmpeg, эмодзи, espeak)
+        if: steps.eps.outputs.list != ''
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-noto-color-emoji espeak-ng > /dev/null
+
+      - name: Зависимости
+        if: steps.eps.outputs.list != ''
+        run: |
+          pip install -q -r requirements.txt
+          npm install --no-audit --no-fund --loglevel=error
+
+      - name: Сборка
+        if: steps.eps.outputs.list != ''
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+        run: |
+          for EP in ${{ steps.eps.outputs.list }}; do
+            node scripts/build.mjs "episodes/$EP" ${{ inputs.demo_voice && '--demo-voice' || '' }}
+          done
+
+      - name: Видео в Releases (скачать можно с телефона)
+        if: steps.eps.outputs.list != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for EP in ${{ steps.eps.outputs.list }}; do
+            gh release create "$EP-${{ github.run_number }}" "out/$EP/$EP.mp4" "out/$EP/preview.jpg" \
+              --title "$EP · сборка ${{ github.run_number }}" \
+              --notes "Готовый шортс 1080×1920. Сценарий: episodes/$EP/episode.json"
+          done
+
+      - uses: actions/upload-artifact@v4
+        if: steps.eps.outputs.list != ''
+        with:
+          name: shorts-${{ github.run_number }}
+          path: out/
+          retention-days: 14
+
+      - name: Превью и тайминги обратно в репо
+        if: steps.eps.outputs.list != ''
+        run: |
+          git config user.name "gemvid-bot"
+          git config user.email "actions@github.com"
+          for EP in ${{ steps.eps.outputs.list }}; do git add -f "out/$EP/preview.jpg" "out/$EP/timeline.json" "out/$EP/words.json"; done
+          git commit -m "Рендер: ${{ steps.eps.outputs.list }} [skip ci]" || exit 0
+          for i in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 3; done
