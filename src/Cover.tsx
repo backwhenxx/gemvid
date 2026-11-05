@@ -16,18 +16,19 @@ export const Cover: React.FC<{timeline: Timeline; cover: CoverSpec}> = ({timelin
     start: 0,
     end: 10,
     say: '',
-    props: cover.bg ?? {cam: [{cx: 545, cy: 292, s: 0.48}, {cx: 545, cy: 292, s: 0.48}], miner: true, ruler: false},
+    props: cover.bg ?? {cam: [{cx: 545, cy: -200, s: 0.4}, {cx: 545, cy: -200, s: 0.4}], miner: true, ruler: false},
   };
   const longest = Math.max(...cover.lines.map((l) => l.replace(/\*/g, '').length), 1);
-  const fs = Math.min(128, Math.floor(960 / (longest * 0.8)));
+  // Unbounded широкий: ~1 em на букву, строка не должна переноситься
+  const fs = Math.min(118, Math.floor(940 / (longest * 1.0)));
   return (
     <AbsoluteFill style={{backgroundColor: C.bg}}>
       <SectionScene scene={bgScene} prev={null} base={timeline.base} accent={C.accent} durationInFrames={300} />
-      <AbsoluteFill style={{background: `linear-gradient(180deg, ${C.bg} 0%, ${C.bg}EE 22%, ${C.bg}00 38%, ${C.bg}00 70%, ${C.bg} 86%)`}} />
-      <div style={{position: 'absolute', left: 60, right: 60, top: 230, textAlign: 'center'}}>
+      <AbsoluteFill style={{background: `linear-gradient(180deg, ${C.bg} 0%, ${C.bg}F0 30%, ${C.bg}00 46%, ${C.bg}00 72%, ${C.bg} 86%)`}} />
+      <div style={{position: 'absolute', left: 60, right: 60, top: 290, textAlign: 'center'}}>
         <div style={{fontFamily: SLAM, fontWeight: 900, fontSize: fs, lineHeight: 1.04, color: C.paper, textTransform: 'uppercase'}}>
           {cover.lines.map((l, i) => (
-            <div key={i}>
+            <div key={i} style={{whiteSpace: 'nowrap'}}>
               <Accented text={l} accent={C.accent} />
             </div>
           ))}
