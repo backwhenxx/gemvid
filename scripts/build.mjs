@@ -13,6 +13,7 @@ import {execFileSync} from 'node:child_process';
 import {bundle} from '@remotion/bundler';
 import {renderMedia, renderStill, selectComposition} from '@remotion/renderer';
 import {makeSfx} from './sfx.mjs';
+import {fetchSounds} from './sounds.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const args = process.argv.slice(2);
@@ -50,7 +51,26 @@ const log = (...m) => console.log(`[${slug}]`, ...m);
 // Только обложка, без озвучки и рендера видео: node scripts/build.mjs episodes/<имя> --cover-only
 if (flag('--cover-only')) {
   if (!ep.cover) throw new Error('В episode.json нет поля cover');
-  const timeline = {fps: 30, durationInFrames: 30, base: pubBase, voice: null, words: [], scenes: [], sfx: [], music: null, accent: ep.accent ?? '#A9BCCB', palette: ep.palette ?? null};
+  // живые звуки и фон из Openverse (CC0 / общественное достояние)
+const snd = await fetchSounds(ep, log);
+scenes.forEach((s) =>
+  (s.props.sounds ?? []).forEach((x) => {
+    const g = snd[`sfx:${x.q}`];
+    if (g) sfx.push({file: g.file, at: s.start + (x.at ?? 0) * (s.end - s.start), volume: x.volume ?? 0.4});
+  }),
+);
+const ambience = (ep.ambience ?? [])
+  .map((a) => {
+    const g = snd[`amb:${a.q}`];
+    if (!g) return null;
+    const from = scenes[Math.min(a.from ?? 0, scenes.length - 1)].start;
+    const to = scenes[Math.min(a.to ?? scenes.length - 1, scenes.length - 1)].end;
+    return {file: g.file, from, to, volume: a.volume ?? 0.15};
+  })
+  .filter(Boolean);
+fs.writeFileSync(path.join(outDir, 'sounds.json'), JSON.stringify(Object.values(snd), null, 1));
+
+const timeline = {fps: 30, durationInFrames: 30, base: pubBase, voice: null, words: [], scenes: [], sfx: [], music: null, accent: ep.accent ?? '#A9BCCB', palette: ep.palette ?? null};
   const serveUrl = await bundle({entryPoint: path.join(ROOT, 'src/index.ts'), publicDir: path.join(ROOT, 'public')});
   const props = {timeline, cover: ep.cover};
   const comp = await selectComposition({serveUrl, id: 'Cover', inputProps: props, chromiumOptions: {gl: 'swangle'}});
@@ -194,6 +214,7 @@ const timeline = {
   accent: ep.accent ?? '#FF3D8B',
   keys: ep.keys ?? [],
   palette: ep.palette ?? null,
+  ambience,
   captionStyle: ep.captionStyle ?? 'karaoke',
   brand: ep.brand !== false,
 };
