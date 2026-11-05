@@ -43,8 +43,8 @@ const CAMS: Record<string, Cam> = {
   zig: {pos: [6, 15, 6], look: [1, -1.8, -13]},
   cat: {pos: [1.6, 0.6, 2.8], look: [-1.2, 0.2, -2]},
   final: {pos: [4.5, 4.5, 11], look: [-0.4, -2.6, -6]},
-  zigFinal: {pos: [3.6, 4.3, 7.8], look: [1.2, -2.6, -6.5]},
-  zigFinalWide: {pos: [5.5, 6.8, 12.5], look: [1.6, -2.8, -9]},
+  zigFinal: {pos: [2.2, 0.6, 9.5], look: [1.7, -3.1, -2]},
+  zigFinalWide: {pos: [3.8, 2.6, 13.5], look: [1.8, -2.9, -4]},
   finalWide: {pos: [6, 7.5, 16], look: [0, -2.4, -9]},
 };
 const cam = (c: string | Cam) => (typeof c === 'string' ? CAMS[c] ?? CAMS.trench : c);
