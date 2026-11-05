@@ -9,6 +9,12 @@ import {FONT} from '../lib/util';
 
 // Хук: крупная фраза влетает по буквам (Anime.js), под ней подпись, фон — шейдер + частицы.
 // props: text ("слова *акцент*"), sub?
+// Размер шрифта: самое длинное слово должно влезть в строку 940px
+const hookFont = (text: string) => {
+  const longest = Math.max(...text.replace(/\*/g, '').split(/\s+/).map((w) => w.length), 1);
+  return Math.max(64, Math.min(128, Math.floor(940 / (longest * 0.86)), text.length > 34 ? 104 : 128));
+};
+
 export const HookScene: React.FC<SceneProps> = ({scene, accent, durationInFrames}) => {
   const {text = '', sub = ''} = scene.props;
   const frame = useCurrentFrame();
@@ -64,7 +70,7 @@ export const HookScene: React.FC<SceneProps> = ({scene, accent, durationInFrames
             top: 520,
             fontFamily: FONT,
             fontWeight: 900,
-            fontSize: text.length > 34 ? 104 : 128,
+            fontSize: hookFont(text),
             lineHeight: 1.04,
             color: '#fff',
             textAlign: 'center',

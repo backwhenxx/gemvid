@@ -56,7 +56,7 @@ export const Captions: React.FC<{words: Word[]; accent: string}> = ({words, acce
           display: 'flex',
           flexWrap: 'wrap',
           justifyContent: 'center',
-          gap: '0 22px',
+          gap: '0 0',
           fontFamily: FONT,
           fontWeight: 900,
           fontSize: 92,
@@ -76,8 +76,9 @@ export const Captions: React.FC<{words: Word[]; accent: string}> = ({words, acce
                 WebkitTextStroke: '10px #000',
                 paintOrder: 'stroke fill',
                 textShadow: active ? `0 0 28px ${accent}` : '0 6px 18px rgba(0,0,0,0.6)',
-                transform: active ? 'scale(1.08)' : 'none',
+                transform: active ? 'scale(1.05)' : 'none',
                 display: 'inline-block',
+                margin: '0 0.22em',
               }}
             >
               {w.text.replace(/[,;:]$/, '')}
