@@ -2,17 +2,22 @@ import {loadFont as loadUnbounded} from '@remotion/google-fonts/Unbounded';
 import {loadFont as loadInter} from '@remotion/google-fonts/Inter';
 import {loadFont as loadMono} from '@remotion/google-fonts/JetBrainsMono';
 
-// Стиль «ШТА?!»: тёмный фон, «бумага», холодный синий акцент, янтарный — только для тепла/опасности. Без неона.
+// Стиль «ШТА?!»: нейтральный научный — тёмный фон, «бумага», приглушённый стальной акцент, янтарный только для тепла/опасности. Без неона.
 export const C = {
   bg: '#0E0E12',
   bg2: '#16161D',
   paper: '#F2EEE6',
   dim: '#8A8794',
   line: 'rgba(242,238,230,0.18)',
-  accent: '#5AB0FF', // холодный синий — основной акцент
-  hot: '#FFA040', // янтарный — только тепло и опасность
+  accent: '#A9BCCB', // приглушённый серо-стальной — основной акцент
+  hot: '#E3A35F', // мягкий янтарный — только тепло и опасность
   brand: '#FF3B5C', // «?!» в логотипе канала
   ice: '#9BD8FF',
+};
+
+// Палитру можно переопределить в episode.json → "palette": {"accent": "#…", "hot": "#…"}
+export const applyPalette = (p?: Partial<typeof C> | null) => {
+  if (p) Object.assign(C, p);
 };
 
 export const {fontFamily: SLAM} = loadUnbounded('normal', {weights: ['700', '900'], subsets: ['cyrillic', 'latin']});

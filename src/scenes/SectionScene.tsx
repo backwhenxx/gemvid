@@ -107,7 +107,7 @@ export const SectionScene: React.FC<SceneProps> = ({scene, durationInFrames}) =>
       const sd = ((s % AIR_LEN) + AIR_LEN) % AIR_LEN;
       const inDown = sd < segLen[0];
       const k = heatAir ? (inDown ? clamp01((y + 0) / BOTTOM) : 1) : 0;
-      const col = heatAir ? mix('F2EEE6', 'FFA040', k) : C.paper;
+      const col = heatAir ? mix('F2EEE6', C.hot.slice(1), k) : C.paper;
       const L = 58;
       parts.push(
         <line
@@ -159,9 +159,9 @@ export const SectionScene: React.FC<SceneProps> = ({scene, durationInFrames}) =>
     const y = -140 + (BOTTOM * 0.8 + 140) * pp;
     const depthM = Math.max(0, y / M);
     const r = 46 - 14 * pp;
-    parcel = <ellipse cx={SHAFT_IN} cy={y} rx={r * 1.08} ry={r * (1 - 0.12 * pp)} fill={mix('F2EEE6', 'FFA040', pp)} opacity={0.95} />;
+    parcel = <ellipse cx={SHAFT_IN} cy={y} rx={r * 1.08} ry={r * (1 - 0.12 * pp)} fill={mix('F2EEE6', C.hot.slice(1), pp)} opacity={0.95} />;
     const temp = Math.round(depthM / 100);
-    parcelLabel = {text: `+${temp}°`, x: SHAFT_IN, y, dx: 110, size: 64, color: mix('F2EEE6', 'FFA040', pp), mono: false};
+    parcelLabel = {text: `+${temp}°`, x: SHAFT_IN, y, dx: 110, size: 64, color: mix('F2EEE6', C.hot.slice(1), pp), mono: false};
   }
 
   // Подписи (в экранных координатах, привязаны к точкам мира)
