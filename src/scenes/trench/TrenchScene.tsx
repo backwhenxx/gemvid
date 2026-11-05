@@ -38,9 +38,9 @@ const CAMS: Record<string, Cam> = {
   dugout: {pos: [0, -5.6, 6.6], look: [0, -5.9, -2]},
   dugoutClose: {pos: [0.4, -5.7, 4.6], look: [0, -6, -2]},
   bucket: {pos: [10, 2.4, 6], look: [6, 0.6, -8]},
-  aerial: {pos: [0.5, 30, 2], look: [0, 0, -24]},
-  aerialHigh: {pos: [1, 62, 6], look: [0, 0, -48]},
-  zig: {pos: [2, 26, 4], look: [1, 0, -20]},
+  aerial: {pos: [5, 19, 7], look: [0.5, -1.5, -16]},
+  aerialHigh: {pos: [7, 40, 12], look: [1, -1, -42]},
+  zig: {pos: [6, 15, 6], look: [1, -1.8, -13]},
   cat: {pos: [1.6, 0.6, 2.8], look: [-1.2, 0.2, -2]},
   final: {pos: [4.5, 4.5, 11], look: [-0.4, -2.6, -6]},
   zigFinal: {pos: [3.6, 4.3, 7.8], look: [1.2, -2.6, -6.5]},
@@ -102,11 +102,11 @@ const zigPts = (() => {
 
 // ---------- зигзаг в разрезе (финал) ----------
 const ZC = {w: 0.62, dug: 3.6, floor: -6.8, ceil: -4.4};
-const zigPath = (): [number, number][] => {
+const zigPath = (maxLen = 60): [number, number][] => {
   const pts: [number, number][] = [[0, 0]];
   let z = 0;
   let left = true;
-  while (z > -60) {
+  while (z > -maxLen) {
     z -= 4.5;
     pts.push([left ? 0 : 1.8, z]);
     pts.push([left ? 1.8 : 0, z]);
@@ -134,9 +134,9 @@ const offsetPath = (pts: [number, number][], side: number, w: number) => {
     return [p[0] + w * (same ? n1[0] : n1[0] + n2[0]), p[1] + w * (same ? n1[1] : n1[1] + n2[1])] as [number, number];
   });
 };
-const buildZigCut = (m: Record<string, any>) => {
+const buildZigCut = (m: Record<string, any>, maxLen = 60, upTo = 9999, withDugout = true) => {
   const g = new THREE.Group();
-  const pts = zigPath();
+  const pts = zigPath(maxLen).slice(0, Math.max(2, upTo));
   const zEnd = pts[pts.length - 1][1];
   const L = offsetPath(pts, 1, ZC.w);
   const R = offsetPath(pts, -1, ZC.w);
@@ -148,6 +148,12 @@ const buildZigCut = (m: Record<string, any>) => {
   };
   g.add(slab([[-60, 0], ...L, [-60, zEnd]]));
   g.add(slab([...R, [60, zEnd], [60, 0]]));
+  if (!withDugout) {
+    const fl = new THREE.Mesh(new THREE.PlaneGeometry(140, 200), m.side);
+    fl.rotation.x = -Math.PI / 2;
+    fl.position.set(0, -DEPTH, -90);
+    g.add(fl);
+  }
   // нижний слой с лестницей и блиндажом
   const low = new THREE.Shape();
   low.moveTo(-60, -DEPTH);
@@ -163,10 +169,11 @@ const buildZigCut = (m: Record<string, any>) => {
   hole.lineTo(ZC.dug + 2, ZC.floor);
   hole.lineTo(1.6, ZC.floor);
   hole.closePath();
-  low.holes.push(hole);
+  if (withDugout) low.holes.push(hole);
   const lowGeo = new THREE.ExtrudeGeometry(low, {depth: LEN, bevelEnabled: false});
   lowGeo.translate(0, 0, -LEN);
   g.add(new THREE.Mesh(lowGeo, [m.earth, m.side]));
+  if (withDugout) {
   // задние стенки лестницы и блиндажа
   g.add(new THREE.Mesh(box(0.0, 2.0, ZC.floor, -DEPTH, -1.3, -1.25), m.room));
   g.add(new THREE.Mesh(box(1.6, ZC.dug + 2, ZC.floor, ZC.ceil, -4.05, -4.0), m.room));
@@ -195,6 +202,7 @@ const buildZigCut = (m: Record<string, any>) => {
   const light = new THREE.PointLight('#ffcf8a', 3.2, 7, 1.5);
   light.position.set(ZC.dug + 0.2, ZC.floor + 1.2, -2.2);
   g.add(light);
+  }
   // внутри канала: обшивка, мостки, ступень, мешки по кромкам
   for (let i = 0; i < pts.length - 1; i++) {
     const [x0, z0] = pts[i];
@@ -209,6 +217,36 @@ const buildZigCut = (m: Record<string, any>) => {
     });
   }
   g.add(new THREE.Mesh(box(-ZC.w + 0.03, -ZC.w + 0.45, -DEPTH, -DEPTH + 0.8, -4.4, -0.02), m.wood)); // стрелковая ступень
+  return g;
+};
+
+// ---------- вид сверху: прямой окоп и ходы сообщения, вырезанные в земле ----------
+const COMMS = [-70, -42, -16];
+const buildNetwork = (m: Record<string, any>, cp: number) => {
+  const g = new THREE.Group();
+  const outer = new THREE.Shape([new THREE.Vector2(-60, 10), new THREE.Vector2(60, 10), new THREE.Vector2(60, -150), new THREE.Vector2(-60, -150)]);
+  const hole: [number, number][] = [[-WALL, 8], [-WALL, -140], [WALL, -140]];
+  const lens = COMMS.map((_, i) => 26 * clamp01(cp * 1.5 - (COMMS.length - 1 - i) * 0.2));
+  COMMS.forEach((zc, i) => {
+    const len = lens[i];
+    if (len < 0.05) return;
+    hole.push([WALL, zc - 0.55], [WALL + len, zc - 0.55], [WALL + len, zc + 0.55], [WALL, zc + 0.55]);
+  });
+  hole.push([WALL, 8]);
+  outer.holes.push(new THREE.Path(hole.map(([x, z]) => new THREE.Vector2(x, z))));
+  const geo = new THREE.ExtrudeGeometry(outer, {depth: DEPTH, bevelEnabled: false});
+  geo.rotateX(Math.PI / 2);
+  g.add(new THREE.Mesh(geo, [m.mud, m.side]));
+  const fl = new THREE.Mesh(new THREE.PlaneGeometry(140, 170), m.side);
+  fl.rotation.x = -Math.PI / 2;
+  fl.position.set(0, -DEPTH, -70);
+  g.add(fl);
+  COMMS.forEach((zc, i) => {
+    const len = lens[i];
+    for (let x = WALL + 0.5; x < WALL + len - 0.3; x += 1.1)
+      [zc - 0.85, zc + 0.85].forEach((z) => g.add(new THREE.Mesh(box(x - 0.45, x + 0.45, 0, 0.24, z - 0.22, z + 0.22), m.bag)));
+    for (let x = WALL + 0.2; x < WALL + len - 0.1; x += 0.35) g.add(new THREE.Mesh(box(x - 0.05, x + 0.05, -DEPTH + 0.08, -DEPTH + 0.12, zc - 0.4, zc + 0.4), m.wood));
+  });
   return g;
 };
 
@@ -359,8 +397,7 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
     const add = (o: THREE.Object3D) => dyn.add(o);
     const rr = rng(77);
 
-    const zig = range(P.zigzag, p, P.zigDur ?? 0.6, P.zigDelay ?? 0);
-    const dig = P.zigzag !== undefined && P.zigzag !== false ? 0 : range(P.dig ?? 1, p, P.digDur ?? 0.6, P.digDelay ?? 0);
+    const dig = range(P.dig ?? 1, p, P.digDur ?? 0.6, P.digDelay ?? 0);
     const walls = range(P.revet, p, P.revetDur ?? 0.6, P.revetDelay ?? 0);
     const dug = range(P.dugout, p, 0.4, P.dugoutDelay ?? 0);
     const D = DEPTH * dig;
@@ -376,8 +413,18 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
       });
     }
 
+    // --- вид сверху: настоящие канавы с глубиной
+    const cm = range(P.comms, p, 0.6, P.commsDelay ?? 0);
+    if (P.aerialNet) add(cached(`net${Math.round(cm * 40)}`, () => buildNetwork(m, Math.round(cm * 40) / 40)));
+    const zig = range(P.zigzag, p, P.zigDur ?? 0.6, P.zigDelay ?? 0);
+    const ZIG_N = zigPath(110).length;
+    if (P.zigzag !== undefined && P.zigzag !== false) {
+      const upTo = Math.max(2, Math.round(zig * ZIG_N));
+      add(cached(`zigA${upTo}`, () => buildZigCut(m, 110, upTo, false)));
+    }
+
     // --- земля с выемкой
-    if (!P.zigCut) {
+    if (!P.zigCut && !P.aerialNet && (P.zigzag === undefined || P.zigzag === false)) {
     const gkey = `g${dig.toFixed(3)}_${walls > 0 ? 1 : 0}_${dug > 0 ? 1 : 0}`;
     add(
       cached(gkey, () => {
@@ -583,18 +630,6 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
       });
     }
 
-    // --- ходы сообщения назад (вид сверху) — тёмные полосы с мешками по краям
-    const cm = range(P.comms, p, 0.6, P.commsDelay ?? 0);
-    if (cm > 0) {
-      [-16, -42, -70].forEach((z, i) => {
-        const len = 26 * clamp01(cm * 1.5 - i * 0.2);
-        if (len <= 0.1) return;
-        add(new THREE.Mesh(box(1.2, 1.2 + len, -0.02, 0.012, z - 0.55, z + 0.55), m.channel));
-        for (let x = 1.6; x < 1.2 + len; x += 1.1)
-          [z - 0.75, z + 0.75].forEach((zz) => add(new THREE.Mesh(box(x - 0.4, x + 0.4, 0, 0.28, zz - 0.2, zz + 0.2), m.bag)));
-      });
-    }
-
     // --- взрыв, летящий по прямому окопу
     const bl = range(P.blastLine, p, 0.45, P.blastDelay ?? 0.15);
     if (bl > 0 && bl < 1.02) {
@@ -607,44 +642,19 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
       add(glow);
     }
 
-    // --- зигзаг (вид сверху): канал, мешки по краям, мостки, солдаты
-    if (zig > 0) {
-      const segs = zigPts.length - 1;
-      const shown = Math.floor(zig * segs);
-      add(
-        cached(`zig${shown}`, () => {
-          const g = new THREE.Group();
-          for (let i = 0; i < shown; i++) {
-            const [x0, z0] = zigPts[i];
-            const [x1, z1] = zigPts[i + 1];
-            const xa = Math.min(x0, x1) - 0.6;
-            const xb = Math.max(x0, x1) + 0.6;
-            const za = Math.min(z0, z1) - 0.6;
-            const zb = Math.max(z0, z1) + 0.6;
-            g.add(new THREE.Mesh(box(xa, xb, -0.02, 0.012, za, zb), m.channel));
-            if (x0 === x1) {
-              for (let z = zb - 0.3; z > za + 0.3; z -= 0.6) g.add(new THREE.Mesh(box(x0 - 0.35, x0 + 0.35, 0.013, 0.03, z - 0.05, z + 0.05), m.wood));
-              [xa - 0.25, xb + 0.25].forEach((x) => {
-                for (let z = zb - 0.4; z > za; z -= 1.0) g.add(new THREE.Mesh(box(x - 0.22, x + 0.22, 0, 0.3, z - 0.42, z + 0.42), m.bag));
-              });
-            }
-          }
-          return g;
-        }),
-      );
-    }
     // взрыв в одном колене зигзага — не проходит за угол
     const zb = range(P.zigBlast, p, 0.5, P.zigBlastDelay ?? 0.1);
     if (zb > 0) {
-      const [x, z] = zigPts[7];
+      const zp = zigPath(110);
+      const [x, z] = zp[4];
       const flash = new THREE.Mesh(new THREE.SphereGeometry(1, 16, 12), m.fire);
       const fk = clamp01(zb * 3);
       flash.scale.setScalar(0.4 + 1.6 * fk);
-      flash.position.set(x, 0.6, z + 2.2);
+      flash.position.set(x, -0.6, z + 2.2);
       if (zb < 0.45) add(flash);
       const smoke = new THREE.Mesh(new THREE.SphereGeometry(1, 16, 12), m.smokeBall);
       smoke.scale.setScalar(0.5 + 2.4 * easeInOut(zb));
-      smoke.position.set(x, 1 + 2 * zb, z + 2.2);
+      smoke.position.set(x, 0.2 + 2.6 * zb, z + 2.2);
       add(smoke);
     }
 
