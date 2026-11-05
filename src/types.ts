@@ -13,7 +13,8 @@ export type SceneType =
   | 'section'
   | 'gauge'
   | 'fan3d'
-  | 'slam';
+  | 'slam'
+  | 'dam';
 
 export type TimedScene = {
   type: SceneType;
@@ -38,4 +39,5 @@ export type Timeline = {
   keys?: string[]; // слова, которые в субтитрах подсвечиваются акцентом
   brand?: boolean; // пузырь «ШТА?!» в углу (по умолчанию да)
   palette?: Record<string, string>; // переопределение цветов темы
+  captionStyle?: 'karaoke' | 'word'; // word — по одному слову по центру
 };

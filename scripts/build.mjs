@@ -161,7 +161,8 @@ scenesIn.forEach((s, i) => {
 });
 const last = scenes[scenes.length - 1];
 if (last.type === 'outro') last.end = Math.max(last.end, last.start + 2.2);
-else scenes.push({type: 'outro', start: voiceEnd, end: voiceEnd + 2.0, say: '', props: {}});
+else if (ep.autoOutro !== false) scenes.push({type: 'outro', start: voiceEnd, end: voiceEnd + 2.0, say: '', props: {}});
+else last.end = voiceEnd + (ep.tail ?? 1.2);
 const total = scenes[scenes.length - 1].end;
 
 // ---------- звуки ----------
@@ -193,6 +194,7 @@ const timeline = {
   accent: ep.accent ?? '#FF3D8B',
   keys: ep.keys ?? [],
   palette: ep.palette ?? null,
+  captionStyle: ep.captionStyle ?? 'karaoke',
   brand: ep.brand !== false,
 };
 fs.writeFileSync(path.join(outDir, 'timeline.json'), JSON.stringify(timeline, null, 1));

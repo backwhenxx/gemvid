@@ -17,6 +17,8 @@ import {SectionScene} from './scenes/SectionScene';
 import {GaugeScene} from './scenes/GaugeScene';
 import {Fan3DScene} from './scenes/Fan3DScene';
 import {SlamScene} from './scenes/SlamScene';
+import {DamScene} from './scenes/dam/DamScene';
+import {WordCaptions} from './components/WordCaptions';
 
 export type SceneProps = {
   scene: TimedScene;
@@ -40,6 +42,7 @@ const REGISTRY: Record<string, React.FC<SceneProps>> = {
   gauge: GaugeScene,
   fan3d: Fan3DScene,
   slam: SlamScene,
+  dam: DamScene,
 };
 
 // Переход «рост из точки»: новая сцена раскрывается кругом поверх предыдущей. Без кроссфейдов.
@@ -86,7 +89,11 @@ export const Short: React.FC<{timeline: Timeline}> = ({timeline}) => {
       <Vignette />
       <Grain />
       {timeline.brand === false ? null : <BrandUntil until={outro ? outro.start : 1e9} />}
-      <Captions words={timeline.words} keys={timeline.keys} hideFrom={outro ? outro.start : undefined} />
+      {timeline.captionStyle === 'word' ? (
+        <WordCaptions words={timeline.words} />
+      ) : (
+        <Captions words={timeline.words} keys={timeline.keys} hideFrom={outro ? outro.start : undefined} />
+      )}
 
       {timeline.voice ? <Audio src={staticFile(`${base}/${timeline.voice}`)} /> : null}
       {timeline.music ? <Audio src={staticFile(timeline.music.file)} volume={timeline.music.volume} loop /> : null}
