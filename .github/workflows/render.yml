@@ -19,6 +19,10 @@ on:
         description: "Только подобрать звуки (проверка)"
         type: boolean
         default: false
+      stills:
+        description: "Только стоп-кадры сцен (проверка картинки)"
+        type: boolean
+        default: false
   push:
     branches: [main]
     paths:
@@ -82,7 +86,7 @@ jobs:
       - name: Зависимости
         if: steps.eps.outputs.list != ''
         run: |
-          [ "${{ inputs.cover_only }}" = "true" ] || pip install -q -r requirements.txt
+          [ "${{ inputs.cover_only }}" = "true" ] || [ "${{ inputs.stills }}" = "true" ] || pip install -q -r requirements.txt
           npm install --no-audit --no-fund --loglevel=error
 
       - name: Сборка
@@ -92,7 +96,7 @@ jobs:
         run: |
           for EP in ${{ steps.eps.outputs.list }}; do
             if [ "${{ inputs.sounds_only }}" = "true" ]; then node scripts/sounds.mjs "episodes/$EP"; continue; fi
-            node scripts/build.mjs "episodes/$EP" ${{ inputs.demo_voice && '--demo-voice' || '' }} ${{ inputs.cover_only && '--cover-only' || '' }}
+            node scripts/build.mjs "episodes/$EP" ${{ inputs.demo_voice && '--demo-voice' || '' }} ${{ inputs.cover_only && '--cover-only' || '' }} ${{ inputs.stills && '--stills' || '' }}
           done
 
       - name: Видео в Releases (скачать можно с телефона)
@@ -102,6 +106,7 @@ jobs:
         run: |
           for EP in ${{ steps.eps.outputs.list }}; do
             [ "${{ inputs.sounds_only }}" = "true" ] && exit 0
+            [ "${{ inputs.stills }}" = "true" ] && exit 0
             FILES=""; for f in "out/$EP/$EP.mp4" "out/$EP/preview.jpg" "out/$EP/cover.png"; do [ -f "$f" ] && FILES="$FILES $f"; done
             gh release create "$EP-${{ github.run_number }}" $FILES \
               --title "$EP · сборка ${{ github.run_number }}" \
@@ -120,6 +125,6 @@ jobs:
         run: |
           git config user.name "gemvid-bot"
           git config user.email "actions@github.com"
-          for EP in ${{ steps.eps.outputs.list }}; do for f in preview.jpg timeline.json words.json cover.png sounds.json; do [ -f "out/$EP/$f" ] && git add -f "out/$EP/$f"; done; done
+          for EP in ${{ steps.eps.outputs.list }}; do for f in preview.jpg timeline.json words.json cover.png sounds.json stills.jpg; do [ -f "out/$EP/$f" ] && git add -f "out/$EP/$f"; done; done
           git commit -m "Рендер: ${{ steps.eps.outputs.list }} [skip ci]" || exit 0
           for i in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 3; done

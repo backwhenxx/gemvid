@@ -1,0 +1,763 @@
+{
+ "title": "Как построить окоп",
+ "music": false,
+ "whisper": "medium",
+ "captionStyle": "word",
+ "autoOutro": false,
+ "cover": {
+  "lines": [
+   "Как построить",
+   "*окоп*"
+  ],
+  "sub": "в котором можно выжить",
+  "trench": {
+   "water": 1,
+   "boards": 1,
+   "revet": 1,
+   "step": 1,
+   "parapet": 1,
+   "dugout": 1,
+   "homely": true,
+   "cam": [
+    "final",
+    "final"
+   ],
+   "hero": {
+    "at": [
+     0.3,
+     -1.68,
+     -3.2
+    ],
+    "pose": "stand",
+    "rotY": -0.5
+   }
+  }
+ },
+ "ambience": [
+  {
+   "q": "rain on mud",
+   "from": 1,
+   "to": 6,
+   "volume": 0.16
+  },
+  {
+   "q": "distant artillery rumble",
+   "from": 0,
+   "to": 22,
+   "volume": 0.1
+  }
+ ],
+ "scenes": [
+  {
+   "type": "trench",
+   "say": "Выкопай канаву поперёк поля и запрыгни в неё — у тебя окоп.",
+   "props": {
+    "dig": [
+     0,
+     1
+    ],
+    "digDur": 0.6,
+    "clods": true,
+    "cam": [
+     "field",
+     "trench"
+    ],
+    "camDur": 0.9,
+    "hero": {
+     "from": [
+      2.2,
+      0,
+      -4
+     ],
+     "to": [
+      0,
+      -2.3,
+      -4
+     ],
+     "pose": "walk",
+     "dur": 0.85,
+     "rotY": -0.4
+    },
+    "sounds": [
+     {
+      "q": "shovel digging dirt",
+      "at": 0.1,
+      "volume": 0.35
+     }
+    ]
+   }
+  },
+  {
+   "type": "trench",
+   "say": "Но первый же дождь её заливает, и ты стоишь по колено в холодной грязи.",
+   "props": {
+    "cont": true,
+    "rain": true,
+    "water": [
+     0,
+     1
+    ],
+    "waterDur": 0.6,
+    "cam": [
+     "trench",
+     "trenchLow"
+    ],
+    "hero": {
+     "at": [
+      0,
+      -2.3,
+      -3.6
+     ],
+     "pose": "stand"
+    }
+   }
+  },
+  {
+   "type": "trench",
+   "say": "Поэтому кладёшь деревянные настилы на маленьких ножках, чтобы вода текла под ними.",
+   "props": {
+    "cont": true,
+    "rain": true,
+    "water": 1,
+    "boards": [
+     0,
+     1
+    ],
+    "boardsDur": 0.55,
+    "cam": [
+     "trenchLow",
+     "boards"
+    ],
+    "hero": {
+     "from": [
+      0,
+      -1.68,
+      -9
+     ],
+     "to": [
+      0,
+      -1.68,
+      -3.4
+     ],
+     "pose": "walk",
+     "dur": 1,
+     "rotY": 0
+    },
+    "sounds": [
+     {
+      "q": "wooden planks drop",
+      "at": 0.3,
+      "volume": 0.35
+     }
+    ]
+   }
+  },
+  {
+   "type": "trench",
+   "say": "Это мостки.",
+   "props": {
+    "cont": true,
+    "rain": true,
+    "water": 1,
+    "boards": 1,
+    "cam": [
+     "boards",
+     "boardsClose"
+    ],
+    "hero": {
+     "from": [
+      0,
+      -1.68,
+      -3.4
+     ],
+     "to": [
+      0,
+      -1.68,
+      -2.6
+     ],
+     "pose": "walk",
+     "rotY": 0
+    }
+   }
+  },
+  {
+   "type": "trench",
+   "say": "Но земляные стенки раскисают и сползают прямо на тебя.",
+   "props": {
+    "cont": true,
+    "rain": true,
+    "water": 1,
+    "boards": 1,
+    "slide": true,
+    "cam": [
+     "boardsClose",
+     "wall"
+    ],
+    "hero": {
+     "at": [
+      0,
+      -1.68,
+      -3
+     ],
+     "pose": "crouch"
+    },
+    "sounds": [
+     {
+      "q": "mud slide",
+      "at": 0.2,
+      "volume": 0.35
+     }
+    ]
+   }
+  },
+  {
+   "type": "trench",
+   "say": "Поэтому их держат мешками с песком и досками.",
+   "props": {
+    "cont": true,
+    "rain": true,
+    "water": 1,
+    "boards": 1,
+    "revet": [
+     0,
+     1
+    ],
+    "revetDur": 0.7,
+    "cam": [
+     "wall",
+     "wallTop"
+    ],
+    "hero": {
+     "at": [
+      0.2,
+      -1.68,
+      -3.5
+     ],
+     "pose": "stand"
+    }
+   }
+  },
+  {
+   "type": "trench",
+   "say": "Но окоп такой глубокий, что из него ничего не видно.",
+   "props": {
+    "cont": true,
+    "water": 1,
+    "boards": 1,
+    "revet": 1,
+    "cam": [
+     "wallTop",
+     "trench"
+    ],
+    "hero": {
+     "at": [
+      0,
+      -1.68,
+      -3.2
+     ],
+     "pose": "stand",
+     "rotY": -0.6
+    }
+   }
+  },
+  {
+   "type": "trench",
+   "say": "Поэтому строишь ступеньку, чтобы на неё вставать, а сверху выкладываешь мешки с песком...",
+   "props": {
+    "cont": true,
+    "water": 1,
+    "boards": 1,
+    "revet": 1,
+    "step": [
+     0,
+     1
+    ],
+    "parapet": [
+     0,
+     1
+    ],
+    "parapetDelay": 0.5,
+    "cam": [
+     "trench",
+     "step"
+    ],
+    "hero": {
+     "from": [
+      0,
+      -1.68,
+      -3.2
+     ],
+     "to": [
+      -0.7,
+      -1.5,
+      -3.1
+     ],
+     "pose": "walk",
+     "dur": 0.45,
+     "rotY": -1.57
+    }
+   }
+  },
+  {
+   "type": "trench",
+   "say": "с маленькой щелью, чтобы смотреть.",
+   "props": {
+    "cont": true,
+    "water": 1,
+    "boards": 1,
+    "revet": 1,
+    "step": 1,
+    "parapet": 1,
+    "cam": [
+     "step",
+     "parapet"
+    ],
+    "hero": {
+     "at": [
+      -0.7,
+      -1.5,
+      -3.1
+     ],
+     "pose": "aim",
+     "rotY": -1.57
+    }
+   }
+  },
+  {
+   "type": "trench",
+   "say": "Это стрелковая ступень.",
+   "props": {
+    "cont": true,
+    "water": 1,
+    "boards": 1,
+    "revet": 1,
+    "step": 1,
+    "parapet": 1,
+    "cam": [
+     "parapet",
+     "stepClose"
+    ],
+    "hero": {
+     "at": [
+      -0.7,
+      -1.5,
+      -3.1
+     ],
+     "pose": "aim",
+     "rotY": -1.57
+    }
+   }
+  },
+  {
+   "type": "trench",
+   "say": "Но враг тоже видит тебя через эту щель.",
+   "props": {
+    "cont": true,
+    "water": 1,
+    "boards": 1,
+    "revet": 1,
+    "step": 1,
+    "parapet": 1,
+    "bullet": true,
+    "bulletAt": 0.5,
+    "cam": [
+     "enemyView",
+     "enemyView"
+    ],
+    "hero": {
+     "at": [
+      -0.7,
+      -1.5,
+      -3.1
+     ],
+     "pose": "aim",
+     "rotY": -1.57
+    },
+    "sounds": [
+     {
+      "q": "bullet whizz",
+      "at": 0.48,
+      "volume": 0.45
+     }
+    ]
+   }
+  },
+  {
+   "type": "trench",
+   "say": "Поэтому смотришь через высокий ящик с двумя зеркалами — и голову не высовываешь.",
+   "props": {
+    "cont": true,
+    "water": 1,
+    "boards": 1,
+    "revet": 1,
+    "step": 1,
+    "parapet": 1,
+    "periscope": [
+     0,
+     1
+    ],
+    "cam": [
+     "stepClose",
+     "periscope"
+    ],
+    "hero": {
+     "at": [
+      -0.35,
+      -1.68,
+      -2.2
+     ],
+     "pose": "peek",
+     "rotY": -1.57
+    }
+   }
+  },
+  {
+   "type": "trench",
+   "say": "Это перископ. Но когда начинают бить большие пушки — спрятаться негде.",
+   "props": {
+    "cont": true,
+    "water": 1,
+    "boards": 1,
+    "revet": 1,
+    "step": 1,
+    "parapet": 1,
+    "periscope": 1,
+    "shells": true,
+    "cam": [
+     "periscope",
+     "fieldWide"
+    ],
+    "camDur": 0.7,
+    "hero": {
+     "at": [
+      -0.35,
+      -1.68,
+      -2.2
+     ],
+     "pose": "crouch",
+     "rotY": -1.57
+    },
+    "sounds": [
+     {
+      "q": "artillery explosion",
+      "at": 0.35,
+      "volume": 0.4
+     }
+    ]
+   }
+  },
+  {
+   "type": "trench",
+   "say": "Поэтому глубоко под землёй копают комнату с крышей из брёвен и земли.",
+   "props": {
+    "cont": true,
+    "water": 1,
+    "boards": 1,
+    "revet": 1,
+    "step": 1,
+    "parapet": 1,
+    "dugout": [
+     0,
+     1
+    ],
+    "dugoutDelay": 0.25,
+    "cam": [
+     "fieldWide",
+     "dugout"
+    ],
+    "camDur": 0.8
+   }
+  },
+  {
+   "type": "trench",
+   "say": "Это блиндаж. Но каждое ведро еды приходится тащить через открытое поле.",
+   "props": {
+    "cont": true,
+    "water": 1,
+    "boards": 1,
+    "revet": 1,
+    "step": 1,
+    "parapet": 1,
+    "dugout": 1,
+    "shells": true,
+    "cam": [
+     "dugoutClose",
+     "bucket"
+    ],
+    "camDur": 0.55,
+    "hero": {
+     "from": [
+      12,
+      0,
+      -3
+     ],
+     "to": [
+      5,
+      0,
+      -11
+     ],
+     "pose": "carry",
+     "rotY": -2.5
+    },
+    "sounds": [
+     {
+      "q": "artillery explosion",
+      "at": 0.6,
+      "volume": 0.35
+     }
+    ]
+   }
+  },
+  {
+   "type": "trench",
+   "say": "Поэтому копают ещё окопы — назад, чтобы ходить к передовой незаметно.",
+   "props": {
+    "cont": true,
+    "water": 1,
+    "boards": 1,
+    "revet": 1,
+    "step": 1,
+    "parapet": 1,
+    "dugout": 1,
+    "comms": [
+     0,
+     1
+    ],
+    "cam": [
+     "bucket",
+     "aerial"
+    ],
+    "camDur": 0.6
+   }
+  },
+  {
+   "type": "trench",
+   "say": "И если сложить все окопы этой войны в одну линию, они обогнут всю Землю.",
+   "props": {
+    "cont": true,
+    "water": 1,
+    "boards": 1,
+    "revet": 1,
+    "step": 1,
+    "parapet": 1,
+    "dugout": 1,
+    "comms": 1,
+    "banner": "Вокруг всей Земли",
+    "bannerAt": 0.6,
+    "cam": [
+     "aerial",
+     "aerialHigh"
+    ]
+   }
+  },
+  {
+   "type": "trench",
+   "say": "Но один взрыв в прямом окопе летит по всей линии.",
+   "props": {
+    "cont": true,
+    "water": 1,
+    "boards": 1,
+    "revet": 1,
+    "step": 1,
+    "parapet": 1,
+    "comms": 1,
+    "blastLine": [
+     0,
+     1
+    ],
+    "cam": [
+     "aerialHigh",
+     "aerial"
+    ],
+    "camDur": 0.4,
+    "sounds": [
+     {
+      "q": "explosion fire whoosh",
+      "at": 0.15,
+      "volume": 0.45
+     }
+    ]
+   }
+  },
+  {
+   "type": "trench",
+   "say": "Поэтому окоп копают зигзагом.",
+   "props": {
+    "cont": true,
+    "zigzag": [
+     0,
+     1
+    ],
+    "zigDur": 0.8,
+    "cam": [
+     "aerial",
+     "zig"
+    ]
+   }
+  },
+  {
+   "type": "trench",
+   "say": "И этот зигзаг — не кривые руки. Так задумано.",
+   "props": {
+    "cont": true,
+    "zigzag": 1,
+    "cam": [
+     "zig",
+     "zig"
+    ],
+    "crew": [
+     {
+      "at": [
+       0,
+       0,
+       -2.5
+      ]
+     },
+     {
+      "at": [
+       1.8,
+       0,
+       -9
+      ],
+      "rotY": 1
+     },
+     {
+      "at": [
+       0,
+       0,
+       -15.5
+      ]
+     },
+     {
+      "at": [
+       1.8,
+       0,
+       -22
+      ],
+      "rotY": -1
+     }
+    ]
+   }
+  },
+  {
+   "type": "trench",
+   "say": "Взрыв не умеет поворачивать за угол — он останавливается на следующем изгибе.",
+   "props": {
+    "cont": true,
+    "zigzag": 1,
+    "zigBlast": [
+     0,
+     1
+    ],
+    "cam": [
+     "zig",
+     {
+      "pos": [
+       3,
+       20,
+       -6
+      ],
+      "look": [
+       1,
+       0,
+       -22
+      ]
+     }
+    ],
+    "crew": [
+     {
+      "at": [
+       0,
+       0,
+       -2.5
+      ]
+     },
+     {
+      "at": [
+       1.8,
+       0,
+       -9
+      ],
+      "rotY": 1
+     },
+     {
+      "at": [
+       0,
+       0,
+       -15.5
+      ]
+     }
+    ],
+    "sounds": [
+     {
+      "q": "artillery explosion",
+      "at": 0.1,
+      "volume": 0.45
+     }
+    ]
+   }
+  },
+  {
+   "type": "trench",
+   "say": "Добавь чайник, письма из дома и кота, который отвечает за крыс.",
+   "props": {
+    "water": 1,
+    "boards": 1,
+    "revet": 1,
+    "step": 1,
+    "parapet": 1,
+    "dugout": 1,
+    "homely": true,
+    "cam": [
+     "cat",
+     "cat"
+    ],
+    "hero": {
+     "at": [
+      0.3,
+      -1.68,
+      -3.2
+     ],
+     "pose": "stand",
+     "rotY": -0.5
+    },
+    "sounds": [
+     {
+      "q": "cat meow",
+      "at": 0.75,
+      "volume": 0.35
+     }
+    ]
+   }
+  },
+  {
+   "type": "trench",
+   "say": "Поздравляю! Ты построил окоп. Подпишись.",
+   "props": {
+    "cont": true,
+    "water": 1,
+    "boards": 1,
+    "revet": 1,
+    "step": 1,
+    "parapet": 1,
+    "dugout": 1,
+    "homely": true,
+    "cam": [
+     "final",
+     "finalWide"
+    ],
+    "hero": {
+     "at": [
+      0.3,
+      -1.68,
+      -3.2
+     ],
+     "pose": "stand",
+     "rotY": -0.5
+    },
+    "banner": "Окоп построен!",
+    "bannerAt": 0.15
+   }
+  }
+ ]
+}
