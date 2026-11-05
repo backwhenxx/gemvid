@@ -199,6 +199,17 @@ const DamWorld: React.FC<{P: DamProps; life: number}> = ({P, life}) => {
 
   // динамические объекты держим в одной группе и пересобираем каждый кадр (геометрия простая)
   const dyn = useMemo(() => new THREE.Group(), []);
+  // кэш неизменных объектов: не пересобираем их каждый кадр (рендер в разы быстрее)
+  const cache = useMemo(() => new Map<string, THREE.Object3D>(), []);
+  const cached = <T extends THREE.Object3D>(key: string, make: () => T): T => {
+    let o = cache.get(key) as T | undefined;
+    if (!o) {
+      o = make();
+      o.traverse((c) => (c.userData.cached = true));
+      cache.set(key, o);
+    }
+    return o;
+  };
 
   useLayoutEffect(() => {
     scene.background = W0.sky;
@@ -215,7 +226,7 @@ const DamWorld: React.FC<{P: DamProps; life: number}> = ({P, life}) => {
     // очистка прошлого кадра
     dyn.children.slice().forEach((c: any) => {
       dyn.remove(c);
-      c.geometry?.dispose?.();
+      if (!c.userData.cached) c.geometry?.dispose?.();
     });
     const add = (o: THREE.Object3D) => dyn.add(o);
 
@@ -226,8 +237,8 @@ const DamWorld: React.FC<{P: DamProps; life: number}> = ({P, life}) => {
     const hasDam = D.H > 0.05;
     if (hasDam) {
       // плотина уходит в склон берега, чтобы не было видно её торца
-      const dam = new THREE.Mesh(extrude(trapShape(D), -ZB + 16, ZB - 16), m.gravel);
-      add(dam);
+      const key = `dam${D.B.toFixed(3)}_${D.b.toFixed(3)}_${D.H.toFixed(3)}`;
+      add(cached(key, () => new THREE.Mesh(extrude(trapShape(D), -ZB + 16, ZB - 16), m.gravel)));
     }
 
     // --- падающие комья земли (начало) и смыв
@@ -295,11 +306,12 @@ const DamWorld: React.FC<{P: DamProps; life: number}> = ({P, life}) => {
       }
       s.closePath();
       const zBack = ZB - L * (18 / 8.5) - 0.5; // вода заходит на склон берега
-      add(new THREE.Mesh(extrude(s, -zBack - 0.02, zBack + 0.01), m.water));
+      const key = `w${L.toFixed(3)}_${D.B.toFixed(3)}_${D.H.toFixed(3)}`;
+      add(cached(key, () => new THREE.Mesh(extrude(s, -zBack - 0.02, zBack + 0.01), m.water)));
     }
     // нижний бьеф
     if (hasDam && L <= D.H + 0.5) {
-      add(new THREE.Mesh(box(xd(D, 0), 60, 0, 0.45, ZB + 0.01, -0.01), m.water));
+      add(cached(`wd${D.B.toFixed(3)}`, () => new THREE.Mesh(box(xd(D, 0), 60, 0, 0.45, ZB + 0.01, -0.01), m.water)));
     }
     // перелив: плёнка воды по гребню и низовому откосу
     const ov = range(P.overflow, p, P.overflowDur ?? 0.5, P.overflowDelay ?? 0);
@@ -447,6 +459,7 @@ const DamWorld: React.FC<{P: DamProps; life: number}> = ({P, life}) => {
         s.closePath();
         return s;
       };
+      const grow = cached(`spill${!!P.spillWater}`, () => {
       const grow = new THREE.Group();
       grow.add(new THREE.Mesh(extrude(prof2(0.08, 0.4), SZ1 - SZ0, SZ0), m.concrete));
       grow.add(new THREE.Mesh(extrude(prof2(1.0, 1.0), 0.28, SZ0 - 0.28), m.concrete));
@@ -454,6 +467,8 @@ const DamWorld: React.FC<{P: DamProps; life: number}> = ({P, life}) => {
       if (P.spillWater) {
         grow.add(new THREE.Mesh(extrude(prof2(0.36, 0.26), SZ1 - SZ0 - 0.1, SZ0 + 0.05), m.waterFast));
       }
+      return grow;
+      });
       grow.scale.set(1, Math.max(0.001, sp), 1);
       add(grow);
     }
@@ -535,6 +550,7 @@ const DamWorld: React.FC<{P: DamProps; life: number}> = ({P, life}) => {
     const tb = range(P.turbine, p, P.turbineDur ?? 0.5, P.turbineDelay ?? 0);
     if (tb > 0) {
       const X0 = FINAL.B + 1.0;
+      const house = cached('house', () => {
       const house = new THREE.Group();
       house.add(new THREE.Mesh(box(X0, X0 + 3.2, 0, 0.35, -2.6, 0.2), m.concrete));
       house.add(new THREE.Mesh(box(X0, X0 + 3.2, 2.5, 2.9, -2.6, 0.2), m.concrete));
@@ -559,8 +575,11 @@ const DamWorld: React.FC<{P: DamProps; life: number}> = ({P, life}) => {
         rot.add(pv);
       }
       rot.position.set(X0 + 1.6, 1.4, -0.4);
-      rot.rotation.z = -t * 5;
       house.add(rot);
+      house.userData.rot = rot;
+      return house;
+      });
+      house.userData.rot.rotation.z = -t * 5;
       house.scale.set(1, Math.max(0.001, tb), 1);
       add(house);
       // провода к опоре
@@ -628,7 +647,7 @@ export const DamScene: React.FC<SceneProps> = ({scene, durationInFrames}) => {
   const bIn = clamp01((frame - (P.bannerAt ?? 0) * life) / 8);
   return (
     <AbsoluteFill>
-      <ThreeCanvas width={SW} height={SH} camera={{fov: 45, position: [0, 3, 25], near: 0.1, far: 600}} gl={{preserveDrawingBuffer: true, antialias: true, logarithmicDepthBuffer: true}}>
+      <ThreeCanvas width={SW} height={SH} camera={{fov: 45, position: [0, 3, 25], near: 0.5, far: 600}} gl={{preserveDrawingBuffer: true, antialias: false}}>
         <DamWorld P={P} life={life} />
       </ThreeCanvas>
       {P.banner ? (
