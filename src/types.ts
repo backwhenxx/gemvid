@@ -14,7 +14,8 @@ export type SceneType =
   | 'gauge'
   | 'fan3d'
   | 'slam'
-  | 'dam';
+  | 'dam'
+  | 'trench';
 
 export type TimedScene = {
   type: SceneType;

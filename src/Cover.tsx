@@ -3,12 +3,13 @@ import {AbsoluteFill} from 'remotion';
 import type {Timeline, TimedScene} from './types';
 import {SectionScene} from './scenes/SectionScene';
 import {DamScene} from './scenes/dam/DamScene';
+import {TrenchScene} from './scenes/trench/TrenchScene';
 import {BrandMark, Grain, Vignette} from './components/Brand';
 import {Accented} from './components/Accented';
 import {BODY, C, SLAM, applyPalette} from './lib/theme';
 
 // Обложка (= первый кадр в ленте): заголовок в верхней трети, под ним мир ролика, низ пустой
-export type CoverSpec = {lines: string[]; sub?: string; bg?: Record<string, any> | null; dam?: Record<string, any>};
+export type CoverSpec = {lines: string[]; sub?: string; bg?: Record<string, any> | null; dam?: Record<string, any>; trench?: Record<string, any>};
 
 export const Cover: React.FC<{timeline: Timeline; cover: CoverSpec}> = ({timeline, cover}) => {
   applyPalette(timeline.palette);
@@ -24,12 +25,21 @@ export const Cover: React.FC<{timeline: Timeline; cover: CoverSpec}> = ({timelin
   const fs = Math.min(118, Math.floor(940 / (longest * 1.0)));
   return (
     <AbsoluteFill style={{backgroundColor: C.bg}}>
-      {cover.dam ? (
+      {cover.trench ? (
+        <TrenchScene scene={{type: 'trench', start: 0, end: 10, say: '', props: cover.trench}} prev={null} base={timeline.base} accent={C.accent} durationInFrames={300} />
+      ) : cover.dam ? (
         <DamScene scene={{type: 'dam', start: 0, end: 10, say: '', props: cover.dam}} prev={null} base={timeline.base} accent={C.accent} durationInFrames={300} />
       ) : (
         <SectionScene scene={bgScene} prev={null} base={timeline.base} accent={C.accent} durationInFrames={300} />
       )}
-      <AbsoluteFill style={{background: `linear-gradient(180deg, ${C.bg} 0%, ${C.bg}F0 30%, ${C.bg}00 46%, ${C.bg}00 72%, ${C.bg} 86%)`}} />
+      <AbsoluteFill
+        style={{
+          background:
+            cover.dam || cover.trench
+              ? `linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.25) 26%, rgba(0,0,0,0) 40%, rgba(0,0,0,0) 74%, rgba(0,0,0,0.55) 100%)`
+              : `linear-gradient(180deg, ${C.bg} 0%, ${C.bg}F0 30%, ${C.bg}00 46%, ${C.bg}00 72%, ${C.bg} 86%)`,
+        }}
+      />
       <div style={{position: 'absolute', left: 60, right: 60, top: 290, textAlign: 'center'}}>
         <div style={{fontFamily: SLAM, fontWeight: 900, fontSize: fs, lineHeight: 1.04, color: C.paper, textTransform: 'uppercase'}}>
           {cover.lines.map((l, i) => (

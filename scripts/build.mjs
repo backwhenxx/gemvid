@@ -48,6 +48,26 @@ for (const s of ep.scenes) {
 
 const log = (...m) => console.log(`[${slug}]`, ...m);
 
+// Стоп-кадры всех сцен без озвучки (быстрая проверка картинки): --stills
+if (flag('--stills')) {
+  const SD = 3;
+  const scenesS = ep.scenes.map((s, i) => ({type: s.type, start: i * SD, end: (i + 1) * SD, say: '', props: s.props ?? {}}));
+  const timeline = {fps: 30, durationInFrames: scenesS.length * SD * 30, base: pubBase, voice: null, words: [], scenes: scenesS, sfx: [], music: null,
+    accent: ep.accent ?? '#A9BCCB', palette: ep.palette ?? null, captionStyle: ep.captionStyle ?? 'karaoke'};
+  const serveUrl = await bundle({entryPoint: path.join(ROOT, 'src/index.ts'), publicDir: path.join(ROOT, 'public')});
+  const inputProps = {timeline};
+  const comp = await selectComposition({serveUrl, id: 'Short', inputProps, chromiumOptions: {gl: 'swangle'}});
+  const dir = path.join(outDir, 'stills');
+  fs.mkdirSync(dir, {recursive: true});
+  for (let i = 0; i < scenesS.length; i++) {
+    const f = Math.round((i * SD + SD * 0.7) * 30);
+    await renderStill({composition: comp, serveUrl, inputProps, frame: f, output: path.join(dir, `${String(i + 1).padStart(2, '0')}.jpg`), imageFormat: 'jpeg', jpegQuality: 80, chromiumOptions: {gl: 'swangle'}});
+    log(`кадр сцены ${i + 1}`);
+  }
+  sh('ffmpeg', ['-y', '-loglevel', 'error', '-pattern_type', 'glob', '-i', path.join(dir, '*.jpg'), '-vf', 'scale=270:-1,tile=8x3', '-frames:v', '1', '-q:v', '4', path.join(outDir, 'stills.jpg')]);
+  process.exit(0);
+}
+
 // Только обложка, без озвучки и рендера видео: node scripts/build.mjs episodes/<имя> --cover-only
 if (flag('--cover-only')) {
   if (!ep.cover) throw new Error('В episode.json нет поля cover');
