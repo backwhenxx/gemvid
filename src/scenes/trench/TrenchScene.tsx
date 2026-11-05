@@ -43,6 +43,8 @@ const CAMS: Record<string, Cam> = {
   zig: {pos: [2, 26, 4], look: [1, 0, -20]},
   cat: {pos: [1.6, 0.6, 2.8], look: [-1.2, 0.2, -2]},
   final: {pos: [4.5, 4.5, 11], look: [-0.4, -2.6, -6]},
+  zigFinal: {pos: [3.6, 4.3, 7.8], look: [1.2, -2.6, -6.5]},
+  zigFinalWide: {pos: [5.5, 6.8, 12.5], look: [1.6, -2.8, -9]},
   finalWide: {pos: [6, 7.5, 16], look: [0, -2.4, -9]},
 };
 const cam = (c: string | Cam) => (typeof c === 'string' ? CAMS[c] ?? CAMS.trench : c);
@@ -97,6 +99,118 @@ const zigPts = (() => {
   }
   return pts;
 })();
+
+// ---------- зигзаг в разрезе (финал) ----------
+const ZC = {w: 0.62, dug: 3.6, floor: -6.8, ceil: -4.4};
+const zigPath = (): [number, number][] => {
+  const pts: [number, number][] = [[0, 0]];
+  let z = 0;
+  let left = true;
+  while (z > -60) {
+    z -= 4.5;
+    pts.push([left ? 0 : 1.8, z]);
+    pts.push([left ? 1.8 : 0, z]);
+    z -= 2.2;
+    pts.push([left ? 1.8 : 0, z]);
+    left = !left;
+  }
+  return pts;
+};
+// смещение осевой линии с прямыми углами: левая (+1) или правая (-1) кромка канала
+const offsetPath = (pts: [number, number][], side: number, w: number) => {
+  const dir = (a: [number, number], b: [number, number]) => {
+    const dx = b[0] - a[0];
+    const dz = b[1] - a[1];
+    const l = Math.hypot(dx, dz) || 1;
+    return [dx / l, dz / l];
+  };
+  const n = (d: number[]) => [d[1] * side, -d[0] * side];
+  return pts.map((p, i) => {
+    const d1 = i > 0 ? dir(pts[i - 1], p) : dir(p, pts[i + 1]);
+    const d2 = i < pts.length - 1 ? dir(p, pts[i + 1]) : d1;
+    const n1 = n(d1);
+    const n2 = n(d2);
+    const same = Math.abs(n1[0] - n2[0]) < 1e-6 && Math.abs(n1[1] - n2[1]) < 1e-6;
+    return [p[0] + w * (same ? n1[0] : n1[0] + n2[0]), p[1] + w * (same ? n1[1] : n1[1] + n2[1])] as [number, number];
+  });
+};
+const buildZigCut = (m: Record<string, any>) => {
+  const g = new THREE.Group();
+  const pts = zigPath();
+  const zEnd = pts[pts.length - 1][1];
+  const L = offsetPath(pts, 1, ZC.w);
+  const R = offsetPath(pts, -1, ZC.w);
+  const slab = (poly: [number, number][]) => {
+    const sh = new THREE.Shape(poly.map(([x, z]) => new THREE.Vector2(x, z)));
+    const geo = new THREE.ExtrudeGeometry(sh, {depth: DEPTH, bevelEnabled: false});
+    geo.rotateX(Math.PI / 2);
+    return new THREE.Mesh(geo, [m.mud, m.earth]);
+  };
+  g.add(slab([[-60, 0], ...L, [-60, zEnd]]));
+  g.add(slab([...R, [60, zEnd], [60, 0]]));
+  // нижний слой с лестницей и блиндажом
+  const low = new THREE.Shape();
+  low.moveTo(-60, -DEPTH);
+  low.lineTo(60, -DEPTH);
+  low.lineTo(60, BOT_Y);
+  low.lineTo(-60, BOT_Y);
+  low.closePath();
+  const hole = new THREE.Path();
+  hole.moveTo(0.05, -DEPTH);
+  hole.lineTo(0.75, -DEPTH);
+  hole.lineTo(1.95, ZC.ceil);
+  hole.lineTo(ZC.dug + 2, ZC.ceil);
+  hole.lineTo(ZC.dug + 2, ZC.floor);
+  hole.lineTo(1.6, ZC.floor);
+  hole.closePath();
+  low.holes.push(hole);
+  const lowGeo = new THREE.ExtrudeGeometry(low, {depth: LEN, bevelEnabled: false});
+  lowGeo.translate(0, 0, -LEN);
+  g.add(new THREE.Mesh(lowGeo, [m.earth, m.side]));
+  // задние стенки лестницы и блиндажа
+  g.add(new THREE.Mesh(box(0.0, 2.0, ZC.floor, -DEPTH, -1.3, -1.25), m.room));
+  g.add(new THREE.Mesh(box(1.6, ZC.dug + 2, ZC.floor, ZC.ceil, -4.05, -4.0), m.room));
+  g.add(new THREE.Mesh(box(1.6, ZC.dug + 2, ZC.floor - 0.05, ZC.floor, -4.0, 0), m.wood));
+  // ступени вниз
+  for (let i = 0; i < 9; i++) {
+    const k = i / 9;
+    const x = lerp(0.45, 1.55, k);
+    const y = lerp(-DEPTH, ZC.floor + 0.45, k);
+    g.add(new THREE.Mesh(box(x - 0.2, x + 0.25, y - 0.5, y - 0.42, -1.25, 0), m.wood));
+  }
+  // брёвна потолка, стол, свеча, ящики
+  for (let x = 1.75; x <= ZC.dug + 1.9; x += 0.42) {
+    const log = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 4, 12), m.darkWood);
+    log.rotation.x = Math.PI / 2;
+    log.position.set(x, ZC.ceil - 0.2, -2);
+    g.add(log);
+  }
+  g.add(new THREE.Mesh(box(ZC.dug - 0.55, ZC.dug + 0.55, ZC.floor + 0.7, ZC.floor + 0.75, -2.9, -2.1), m.wood));
+  g.add(new THREE.Mesh(box(ZC.dug - 0.07, ZC.dug + 0.07, ZC.floor, ZC.floor + 0.7, -2.57, -2.43), m.darkWood));
+  [-1.05, 1.05].forEach((dx) => g.add(new THREE.Mesh(box(ZC.dug + dx - 0.28, ZC.dug + dx + 0.28, ZC.floor, ZC.floor + 0.42, -2.8, -2.2), m.wood)));
+  const fl = new THREE.Mesh(new THREE.SphereGeometry(0.035, 8, 6), m.flame);
+  fl.position.set(ZC.dug + 0.2, ZC.floor + 0.88, -2.5);
+  fl.scale.set(1, 1.6, 1);
+  g.add(fl);
+  const light = new THREE.PointLight('#ffcf8a', 3.2, 7, 1.5);
+  light.position.set(ZC.dug + 0.2, ZC.floor + 1.2, -2.2);
+  g.add(light);
+  // внутри канала: обшивка, мостки, ступень, мешки по кромкам
+  for (let i = 0; i < pts.length - 1; i++) {
+    const [x0, z0] = pts[i];
+    const [x1, z1] = pts[i + 1];
+    if (x0 !== x1) continue;
+    const za = Math.min(z0, z1);
+    const zb = Math.max(z0, z1);
+    [-1, 1].forEach((sd) => g.add(new THREE.Mesh(box(x0 + sd * ZC.w - 0.03, x0 + sd * ZC.w + 0.03, -DEPTH, 0, za, zb), m.room)));
+    for (let z = zb - 0.15; z > za; z -= 0.2) g.add(new THREE.Mesh(box(x0 - 0.45, x0 + 0.45, -DEPTH + 0.08, -DEPTH + 0.12, z - 0.055, z + 0.055), m.wood));
+    [-1, 1].forEach((sd) => {
+      for (let z = zb - 0.55; z > za + 0.2; z -= 1.15) g.add(new THREE.Mesh(box(x0 + sd * (ZC.w + 0.42) - 0.38, x0 + sd * (ZC.w + 0.42) + 0.38, 0, 0.24, z - 0.5, z + 0.5), m.bag));
+    });
+  }
+  g.add(new THREE.Mesh(box(-ZC.w + 0.03, -ZC.w + 0.45, -DEPTH, -DEPTH + 0.8, -4.4, -0.02), m.wood)); // стрелковая ступень
+  return g;
+};
 
 const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
   const frame = useCurrentFrame();
@@ -251,7 +365,19 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
     const dug = range(P.dugout, p, 0.4, P.dugoutDelay ?? 0);
     const D = DEPTH * dig;
 
+    // --- финальный вид: зигзагообразный окоп в разрезе с блиндажом
+    if (P.zigCut) {
+      add(cached('zigCut', () => buildZigCut(m)));
+      [W0.mate1, W0.mate2].forEach((s2, i) => {
+        pose(s2 as Soldier, 'sit', t + i);
+        s2.position.set(ZC.dug + (i ? 1.05 : -1.05), ZC.floor + 0.03, -2.5);
+        s2.rotation.y = i ? -Math.PI / 2 : Math.PI / 2;
+        add(s2);
+      });
+    }
+
     // --- земля с выемкой
+    if (!P.zigCut) {
     const gkey = `g${dig.toFixed(3)}_${walls > 0 ? 1 : 0}_${dug > 0 ? 1 : 0}`;
     add(
       cached(gkey, () => {
@@ -260,6 +386,7 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
         return new THREE.Mesh(geo, [m.earth, m.side]);
       }),
     );
+    }
 
     // --- вода на дне
     const wl = range(P.water, p, P.waterDur ?? 0.5, P.waterDelay ?? 0);
@@ -542,8 +669,7 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
 
     // --- чайник, письма, кот и крысы
     if (P.homely) {
-      add(
-        cached('homely', () => {
+      const hg = cached('homely', () => {
           const g = new THREE.Group();
           const pot = new THREE.Mesh(new THREE.SphereGeometry(0.14, 14, 10), m.black);
           pot.scale.set(1, 0.85, 1);
@@ -588,13 +714,14 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
           cat.rotation.y = -0.6;
           g.add(cat);
           return g;
-        }),
-      );
+        });
+      hg.position.set(P.zigCut ? 0.42 : 0, P.zigCut ? -0.2 : 0, 0);
+      add(hg);
       for (let i = 0; i < 2; i++) {
         const k = (t * 0.35 + i * 0.5) % 1;
         const rat = new THREE.Mesh(new THREE.SphereGeometry(0.06, 8, 6), m.grey);
         rat.scale.set(0.7, 0.6, 1.6);
-        rat.position.set(0.25 - i * 0.4, -DEPTH + 0.66, lerp(-9, -2.2, k));
+        rat.position.set(0.25 - i * 0.4, P.zigCut ? -DEPTH + 0.2 : -DEPTH + 0.66, lerp(P.zigCut ? -4.2 : -9, -2.2, k));
         add(rat);
       }
     }
