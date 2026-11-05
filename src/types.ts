@@ -40,4 +40,5 @@ export type Timeline = {
   brand?: boolean; // пузырь «ШТА?!» в углу (по умолчанию да)
   palette?: Record<string, string>; // переопределение цветов темы
   captionStyle?: 'karaoke' | 'word'; // word — по одному слову по центру
+  ambience?: {file: string; from: number; to: number; volume: number}[]; // фоновые звуки (Openverse)
 };

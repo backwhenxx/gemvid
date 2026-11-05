@@ -97,6 +97,15 @@ export const Short: React.FC<{timeline: Timeline}> = ({timeline}) => {
 
       {timeline.voice ? <Audio src={staticFile(`${base}/${timeline.voice}`)} /> : null}
       {timeline.music ? <Audio src={staticFile(timeline.music.file)} volume={timeline.music.volume} loop /> : null}
+      {(timeline.ambience ?? []).map((a, i) => {
+        const from = Math.round(a.from * fps);
+        const dur = Math.max(1, Math.round(a.to * fps) - from);
+        return (
+          <Sequence key={`amb${i}`} from={from} durationInFrames={dur} name="фон" layout="none">
+            <Audio src={staticFile(a.file)} loop volume={(f) => a.volume * Math.min(1, f / 15, (dur - f) / 15)} />
+          </Sequence>
+        );
+      })}
       {timeline.sfx.map((c, i) => (
         <Sequence key={`sfx${i}`} from={Math.max(0, Math.round(c.at * fps))} name="sfx" layout="none">
           <Audio src={staticFile(c.file)} volume={c.volume} />

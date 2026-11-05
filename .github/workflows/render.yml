@@ -15,6 +15,10 @@ on:
         description: "Только обложка (без видео)"
         type: boolean
         default: false
+      sounds_only:
+        description: "Только подобрать звуки (проверка)"
+        type: boolean
+        default: false
   push:
     branches: [main]
     paths:
@@ -66,6 +70,7 @@ jobs:
           path: |
             ~/.npm
             ~/.cache/huggingface
+            public/snd
           key: deps-${{ hashFiles('package.json', 'requirements.txt') }}
 
       - name: Системные пакеты (FFmpeg, эмодзи, espeak)
@@ -86,6 +91,7 @@ jobs:
           CHROME_PATH: /usr/bin/google-chrome
         run: |
           for EP in ${{ steps.eps.outputs.list }}; do
+            if [ "${{ inputs.sounds_only }}" = "true" ]; then node scripts/sounds.mjs "episodes/$EP"; continue; fi
             node scripts/build.mjs "episodes/$EP" ${{ inputs.demo_voice && '--demo-voice' || '' }} ${{ inputs.cover_only && '--cover-only' || '' }}
           done
 
@@ -95,6 +101,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           for EP in ${{ steps.eps.outputs.list }}; do
+            [ "${{ inputs.sounds_only }}" = "true" ] && exit 0
             FILES=""; for f in "out/$EP/$EP.mp4" "out/$EP/preview.jpg" "out/$EP/cover.png"; do [ -f "$f" ] && FILES="$FILES $f"; done
             gh release create "$EP-${{ github.run_number }}" $FILES \
               --title "$EP · сборка ${{ github.run_number }}" \
@@ -113,6 +120,6 @@ jobs:
         run: |
           git config user.name "gemvid-bot"
           git config user.email "actions@github.com"
-          for EP in ${{ steps.eps.outputs.list }}; do for f in preview.jpg timeline.json words.json cover.png; do [ -f "out/$EP/$f" ] && git add -f "out/$EP/$f"; done; done
+          for EP in ${{ steps.eps.outputs.list }}; do for f in preview.jpg timeline.json words.json cover.png sounds.json; do [ -f "out/$EP/$f" ] && git add -f "out/$EP/$f"; done; done
           git commit -m "Рендер: ${{ steps.eps.outputs.list }} [skip ci]" || exit 0
           for i in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 3; done

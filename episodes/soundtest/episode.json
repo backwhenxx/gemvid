@@ -1,0 +1,13 @@
+{
+  "title": "Проверка подбора звуков (не ролик)",
+  "ambience": [
+    {"q": "river water", "from": 0, "to": 0, "volume": 0.18},
+    {"q": "wind", "from": 0, "to": 0, "volume": 0.12},
+    {"q": "cave ambience", "from": 0, "to": 0, "volume": 0.15}
+  ],
+  "scenes": [
+    {"type": "slam", "say": "", "props": {"text": "тест", "sounds": [
+      {"q": "splash", "at": 0.2}, {"q": "rock fall", "at": 0.5}, {"q": "metal clank", "at": 0.7}, {"q": "drill", "at": 0.8}
+    ]}}
+  ]
+}
