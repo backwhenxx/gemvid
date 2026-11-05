@@ -111,11 +111,12 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
     const m = {
       earth,
       mud: new THREE.MeshStandardMaterial({map: mudT, roughness: 1}),
-      wall: new THREE.MeshStandardMaterial({map: mudT, color: '#9c8466', roughness: 1}),
+      side: new THREE.MeshStandardMaterial({map: mudT, color: '#c9b293', roughness: 1}),
+      wall: new THREE.MeshStandardMaterial({map: mudT, color: '#a58c6c', roughness: 1}),
       bag: new THREE.MeshStandardMaterial({map: burlapTexture(), roughness: 1}),
       wood: new THREE.MeshStandardMaterial({map: woodTexture(), roughness: 0.95}),
       darkWood: new THREE.MeshStandardMaterial({color: '#6a5136', roughness: 1}),
-      water: new THREE.MeshStandardMaterial({map: waterTexture(), color: '#9aa6a8', transparent: true, opacity: 0.78, roughness: 0.2}),
+      water: new THREE.MeshStandardMaterial({map: waterTexture(), color: '#7d8584', transparent: true, opacity: 0.72, roughness: 0.25}),
       puddle: new THREE.MeshStandardMaterial({color: '#aab7c2', roughness: 0.15, metalness: 0.2}),
       tree: new THREE.MeshStandardMaterial({color: '#4a443d', roughness: 1}),
       wire: new THREE.LineBasicMaterial({color: '#3b3836'}),
@@ -130,7 +131,7 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
       paper: new THREE.MeshStandardMaterial({color: '#f1ead8', roughness: 0.9}),
       fire: new THREE.MeshBasicMaterial({color: '#ff8a2a'}),
       flame: new THREE.MeshBasicMaterial({color: '#ffd27a'}),
-      smokeBall: new THREE.MeshStandardMaterial({color: '#3d3f45', roughness: 1, transparent: true, opacity: 0.92}),
+      smokeBall: new THREE.MeshStandardMaterial({color: '#4a4c52', roughness: 1, transparent: true, opacity: 0.7, depthWrite: false}),
       room: new THREE.MeshStandardMaterial({color: '#d9c8a6', roughness: 1}),
       channel: new THREE.MeshStandardMaterial({color: '#3d2f25', roughness: 1}),
       grey: new THREE.MeshStandardMaterial({color: '#7b7672', roughness: 0.9}),
@@ -256,7 +257,7 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
       cached(gkey, () => {
         const geo = new THREE.ExtrudeGeometry(groundShape(dig, walls > 0 ? 1 : 0, dug > 0), {depth: LEN, bevelEnabled: false});
         geo.translate(0, 0, -LEN);
-        return new THREE.Mesh(geo, [m.earth, m.mud]);
+        return new THREE.Mesh(geo, [m.earth, m.side]);
       }),
     );
 
@@ -449,7 +450,7 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
       // солдаты за картами
       [W0.mate1, W0.mate2].forEach((s, i) => {
         pose(s as Soldier, 'sit', t + i);
-        s.position.set(i ? 1.0 : -1.0, -6.9 + 0.48, -2.5);
+        s.position.set(i ? 1.15 : -1.15, -7.33, -2.5);
         s.rotation.y = i ? -Math.PI / 2 : Math.PI / 2;
         add(s);
       });
@@ -515,7 +516,7 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
       flash.position.set(x, 0.6, z + 2.2);
       if (zb < 0.45) add(flash);
       const smoke = new THREE.Mesh(new THREE.SphereGeometry(1, 16, 12), m.smokeBall);
-      smoke.scale.setScalar(0.5 + 3.2 * easeInOut(zb));
+      smoke.scale.setScalar(0.5 + 2.4 * easeInOut(zb));
       smoke.position.set(x, 1 + 2 * zb, z + 2.2);
       add(smoke);
     }
@@ -533,8 +534,8 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
           add(f);
         }
         const s = new THREE.Mesh(new THREE.SphereGeometry(1, 14, 10), m.smokeBall);
-        s.scale.setScalar(0.6 + 2.4 * k);
-        s.position.set(x, 0.6 + 2.2 * k, z);
+        s.scale.setScalar(0.4 + 1.5 * k);
+        s.position.set(x, 0.6 + 2.6 * k, z);
         add(s);
       });
     }
