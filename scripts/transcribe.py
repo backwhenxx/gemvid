@@ -20,9 +20,9 @@ segments, info = model.transcribe(
     a.audio,
     language=a.lang,
     word_timestamps=True,
-    initial_prompt=(a.prompt[:600] or None),
     beam_size=5,
     vad_filter=False,
+    condition_on_previous_text=False,
 )
 words = []
 for s in segments:
