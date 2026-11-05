@@ -1,10 +1,10 @@
 import React, {useMemo} from 'react';
-import {AbsoluteFill, spring, useCurrentFrame, useVideoConfig} from 'remotion';
+import {AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig} from 'remotion';
 import type {Word} from '../types';
-import {FONT} from '../lib/util';
+import {BODY, C, expoOut} from '../lib/theme';
 
-// Субтитры: 1–3 слова, текущее слово подсвечено. Центр блока на y≈1330 —
-// ниже их перекрывает интерфейс YouTube.
+// Караоке-субтитры: по 1–3 слова, будущие — полупрозрачные, сказанные — белые,
+// ключевые слова — акцентом. Центр строки на y≈1330 (ниже перекрывает интерфейс YouTube).
 const CAPTION_Y = 1330;
 const MAX_WORDS = 3;
 const MAX_CHARS = 18;
@@ -26,7 +26,6 @@ const chunkWords = (words: Word[]): Chunk[] => {
     if (/[.!?…,:;—]$/.test(w.text)) flush();
   });
   flush();
-  // Держим фразу на экране до начала следующей (без мигания пустотой на коротких паузах)
   out.forEach((c, i) => {
     const next = out[i + 1];
     c.end = next ? Math.min(Math.max(c.end, next.start), c.end + 0.6) : c.end + 0.4;
@@ -34,51 +33,52 @@ const chunkWords = (words: Word[]): Chunk[] => {
   return out;
 };
 
-export const Captions: React.FC<{words: Word[]; accent: string}> = ({words, accent}) => {
+const norm = (s: string) => s.toLowerCase().replace(/ё/g, 'е').replace(/[^a-zа-я0-9]/g, '');
+
+export const Captions: React.FC<{words: Word[]; keys?: string[]; hideFrom?: number}> = ({words, keys = [], hideFrom}) => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
   const t = frame / fps;
   const chunks = useMemo(() => chunkWords(words), [words]);
+  const keyN = useMemo(() => keys.map(norm), [keys]);
+  if (hideFrom !== undefined && t >= hideFrom) return null;
   const chunk = chunks.find((c) => t >= c.start && t < c.end);
   if (!chunk) return null;
-
-  const pop = spring({frame: frame - Math.round(chunk.start * fps), fps, config: {damping: 14, stiffness: 220}});
+  const inP = expoOut(interpolate(frame, [chunk.start * fps, chunk.start * fps + 6], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}));
 
   return (
     <AbsoluteFill style={{pointerEvents: 'none'}}>
       <div
         style={{
           position: 'absolute',
-          left: 60,
-          right: 60,
+          left: 70,
+          right: 70,
           top: CAPTION_Y,
-          transform: `translateY(-50%) scale(${0.82 + 0.18 * pop})`,
+          transform: `translateY(calc(-50% + ${(1 - inP) * 18}px))`,
+          opacity: inP,
           display: 'flex',
           flexWrap: 'wrap',
           justifyContent: 'center',
-          gap: '0 0',
-          fontFamily: FONT,
-          fontWeight: 900,
-          fontSize: 92,
-          lineHeight: 1.08,
-          textTransform: 'uppercase',
+          fontFamily: BODY,
+          fontWeight: 800,
+          fontSize: 66,
+          lineHeight: 1.12,
           textAlign: 'center',
         }}
       >
         {chunk.words.map((w, i) => {
-          const active = t >= w.start && t < w.end + 0.05;
-          const spoken = t >= w.start;
+          const spoken = t >= w.start - 0.03;
+          const isKey = keyN.some((k) => k && norm(w.text).startsWith(k));
           return (
             <span
               key={i}
               style={{
-                color: active ? '#FFE14D' : spoken ? '#ffffff' : 'rgba(255,255,255,0.85)',
-                WebkitTextStroke: '10px #000',
-                paintOrder: 'stroke fill',
-                textShadow: active ? `0 0 28px ${accent}` : '0 6px 18px rgba(0,0,0,0.6)',
-                transform: active ? 'scale(1.05)' : 'none',
                 display: 'inline-block',
-                margin: '0 0.22em',
+                margin: '0 0.18em',
+                color: isKey && spoken ? C.accent : C.paper,
+                opacity: spoken ? 1 : 0.42,
+                WebkitTextStroke: `9px ${C.bg}`,
+                paintOrder: 'stroke fill',
               }}
             >
               {w.text.replace(/[,;:]$/, '')}

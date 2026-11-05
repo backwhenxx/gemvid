@@ -51,6 +51,11 @@ const SOUNDS = {
     const rev = new Tone.Freeverb({roomSize:0.8, wet:0.3}).toDestination();
     const s = new Tone.PolySynth(Tone.Synth, {oscillator:{type:'sine'}, envelope:{attack:0.002, decay:0.9, sustain:0, release:0.4}}).connect(rev);
     s.triggerAttackRelease(['C6','G6'], 0.5, 0); s.triggerAttackRelease(['E6'], 0.4, 0.06);`],
+  'sfx/tuk.wav': [0.5, `
+    const lp = new Tone.Filter(900, 'lowpass').toDestination();
+    new Tone.MembraneSynth({pitchDecay:0.02, octaves:1.5, envelope:{attack:0.001, decay:0.22, sustain:0, release:0.1}}).connect(lp).triggerAttackRelease(290, 0.1, 0);
+    const ne = new Tone.AmplitudeEnvelope({attack:0.001, decay:0.06, sustain:0, release:0.05}).connect(lp);
+    new Tone.Noise('brown').start(0).connect(ne); ne.triggerAttackRelease(0.03, 0);`],
   'sfx/pop.wav': [0.4, `
     new Tone.Synth({oscillator:{type:'triangle'}, envelope:{attack:0.001, decay:0.12, sustain:0, release:0.05}}).toDestination().triggerAttackRelease('A5', 0.05, 0);`],
   'music/pad.wav': [16, `

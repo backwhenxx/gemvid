@@ -9,7 +9,11 @@ export type SceneType =
   | 'draw'
   | 'image'
   | 'video'
-  | 'outro';
+  | 'outro'
+  | 'section'
+  | 'gauge'
+  | 'fan3d'
+  | 'slam';
 
 export type TimedScene = {
   type: SceneType;
@@ -31,4 +35,6 @@ export type Timeline = {
   sfx: SfxCue[];
   music: {file: string; volume: number} | null;
   accent: string;
+  keys?: string[]; // слова, которые в субтитрах подсвечиваются акцентом
+  brand?: boolean; // пузырь «ШТА?!» в углу (по умолчанию да)
 };

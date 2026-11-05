@@ -153,14 +153,19 @@ const total = scenes[scenes.length - 1].end;
 
 // ---------- звуки ----------
 await makeSfx();
-const sfx = [{file: 'sfx/hit.wav', at: 0, volume: 0.55}];
+const sfx = [{file: 'sfx/tuk.wav', at: 0.05, volume: 0.5}];
 scenes.forEach((s, i) => {
   if (i === 0) return;
-  const prev = scenes[i - 1];
-  if (s.type === 'outro') sfx.push({file: 'sfx/riser.wav', at: Math.max(0, s.start - 1.55), volume: 0.28}, {file: 'sfx/hit.wav', at: s.start, volume: 0.4});
-  else sfx.push({file: 'sfx/whoosh.wav', at: Math.max(0, s.start - 0.15), volume: prev.type === 'image' && s.type === 'image' ? 0.45 : 0.32});
-  if (s.type === 'number') sfx.push({file: 'sfx/ding.wav', at: s.start + Math.min((s.end - s.start) * 0.55, 1.4), volume: 0.35});
+  if (s.type === 'outro') {
+    sfx.push({file: 'sfx/riser.wav', at: Math.max(0, s.start - 1.55), volume: 0.18}, {file: 'sfx/tuk.wav', at: s.start, volume: 0.5});
+    return;
+  }
+  if (!s.props.cont) sfx.push({file: 'sfx/whoosh.wav', at: Math.max(0, s.start - 0.15), volume: 0.22});
+  if (s.type === 'slam' || s.props.slam) sfx.push({file: 'sfx/tuk.wav', at: s.start + 0.05, volume: 0.45});
+  if (s.type === 'gauge') sfx.push({file: 'sfx/tuk.wav', at: s.start + 0.1, volume: 0.3});
+  if (s.type === 'number') sfx.push({file: 'sfx/ding.wav', at: s.start + Math.min((s.end - s.start) * 0.55, 1.4), volume: 0.3});
   if (s.type === 'physics2d' || s.type === 'physics3d') sfx.push({file: 'sfx/pop.wav', at: s.start + 0.6, volume: 0.25});
+  (s.props.sfx ?? []).forEach((c) => sfx.push({file: `sfx/${c.file}.wav`, at: s.start + c.at * (s.end - s.start), volume: c.volume ?? 0.35}));
 });
 
 const timeline = {
@@ -173,6 +178,8 @@ const timeline = {
   sfx,
   music: ep.music === false ? null : {file: 'music/pad.wav', volume: ep.musicVolume ?? 0.1},
   accent: ep.accent ?? '#FF3D8B',
+  keys: ep.keys ?? [],
+  brand: ep.brand !== false,
 };
 fs.writeFileSync(path.join(outDir, 'timeline.json'), JSON.stringify(timeline, null, 1));
 log(`сцен: ${scenes.length}, длительность ${total.toFixed(1)} с`);

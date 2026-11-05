@@ -1,8 +1,9 @@
 import React from 'react';
-import {AbsoluteFill, Audio, Sequence, staticFile, useVideoConfig} from 'remotion';
+import {AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 import type {Timeline, TimedScene} from './types';
 import {Captions} from './components/Captions';
-import {CutFlash} from './components/CutFlash';
+import {BrandMark, Grain, Vignette} from './components/Brand';
+import {C, expoOut} from './lib/theme';
 import {HookScene} from './scenes/HookScene';
 import {NumberScene} from './scenes/NumberScene';
 import {Model3DScene} from './scenes/Model3DScene';
@@ -12,6 +13,10 @@ import {DrawScene} from './scenes/DrawScene';
 import {ImageScene} from './scenes/ImageScene';
 import {VideoScene} from './scenes/VideoScene';
 import {OutroScene} from './scenes/OutroScene';
+import {SectionScene} from './scenes/SectionScene';
+import {GaugeScene} from './scenes/GaugeScene';
+import {Fan3DScene} from './scenes/Fan3DScene';
+import {SlamScene} from './scenes/SlamScene';
 
 export type SceneProps = {
   scene: TimedScene;
@@ -31,32 +36,59 @@ const REGISTRY: Record<string, React.FC<SceneProps>> = {
   image: ImageScene,
   video: VideoScene,
   outro: OutroScene,
+  section: SectionScene,
+  gauge: GaugeScene,
+  fan3d: Fan3DScene,
+  slam: SlamScene,
+};
+
+// Переход «рост из точки»: новая сцена раскрывается кругом поверх предыдущей. Без кроссфейдов.
+const TR = 10;
+const Grow: React.FC<{on: boolean; at: [number, number]; children: React.ReactNode}> = ({on, at, children}) => {
+  const frame = useCurrentFrame();
+  const r = on ? expoOut(frame / TR) * 2300 : 4000;
+  return (
+    <AbsoluteFill style={{backgroundColor: C.bg, clipPath: on && frame < TR ? `circle(${r}px at ${at[0]}px ${at[1]}px)` : undefined}}>
+      {children}
+    </AbsoluteFill>
+  );
+};
+
+const BrandUntil: React.FC<{until: number}> = ({until}) => {
+  const frame = useCurrentFrame();
+  const {fps} = useVideoConfig();
+  return frame / fps < until ? <BrandMark /> : null;
 };
 
 export const Short: React.FC<{timeline: Timeline}> = ({timeline}) => {
   const {fps} = useVideoConfig();
   const {scenes, base, accent} = timeline;
+  const outro = scenes.find((s) => s.type === 'outro');
 
   return (
-    <AbsoluteFill style={{backgroundColor: '#07070c'}}>
+    <AbsoluteFill style={{backgroundColor: C.bg}}>
       {scenes.map((s, i) => {
         const from = Math.round(s.start * fps);
-        const dur = Math.max(1, Math.round(s.end * fps) - from);
-        const C = REGISTRY[s.type] ?? HookScene;
+        const isLast = i === scenes.length - 1;
+        const dur = Math.max(1, Math.round(s.end * fps) - from + (isLast ? 0 : TR));
+        const C2 = REGISTRY[s.type] ?? SlamScene;
+        const grow = i > 0 && !s.props.cont;
         return (
           <Sequence key={i} from={from} durationInFrames={dur} name={`${i + 1}. ${s.type}`}>
-            <C scene={s} prev={scenes[i - 1] ?? null} base={base} accent={accent} durationInFrames={dur} />
+            <Grow on={grow} at={s.props.growAt ?? [540, 860]}>
+              <C2 scene={s} prev={scenes[i - 1] ?? null} base={base} accent={accent} durationInFrames={dur} />
+            </Grow>
           </Sequence>
         );
       })}
 
-      <CutFlash scenes={scenes} />
-      <Captions words={timeline.words} accent={accent} />
+      <Vignette />
+      <Grain />
+      {timeline.brand === false ? null : <BrandUntil until={outro ? outro.start : 1e9} />}
+      <Captions words={timeline.words} keys={timeline.keys} hideFrom={outro ? outro.start : undefined} />
 
       {timeline.voice ? <Audio src={staticFile(`${base}/${timeline.voice}`)} /> : null}
-      {timeline.music ? (
-        <Audio src={staticFile(timeline.music.file)} volume={timeline.music.volume} loop />
-      ) : null}
+      {timeline.music ? <Audio src={staticFile(timeline.music.file)} volume={timeline.music.volume} loop /> : null}
       {timeline.sfx.map((c, i) => (
         <Sequence key={`sfx${i}`} from={Math.max(0, Math.round(c.at * fps))} name="sfx" layout="none">
           <Audio src={staticFile(c.file)} volume={c.volume} />
@@ -65,3 +97,5 @@ export const Short: React.FC<{timeline: Timeline}> = ({timeline}) => {
     </AbsoluteFill>
   );
 };
+
+export type {TimedScene};
