@@ -1,0 +1,540 @@
+{
+ "title": "Куда уходит то, что смыл: септик из трёх камер",
+ "music": false,
+ "whisper": "medium",
+ "captionStyle": "word",
+ "autoOutro": false,
+ "cover": {
+  "lines": [
+   "Куда уходит",
+   "*то, что смыл?*"
+  ],
+  "sub": "септик из трёх камер в разрезе",
+  "septic": {
+   "pipe": 1,
+   "tank": 1,
+   "liquid": 1,
+   "sludge1": 1,
+   "scum": 1,
+   "teesAlways": true,
+   "sludge2": 1,
+   "bacteria": 1,
+   "gas": true,
+   "vent": 1,
+   "gasOut": true,
+   "sludge3": 1,
+   "field": 1,
+   "well": 1,
+   "cam": [
+    "final",
+    "final"
+   ]
+  }
+ },
+ "ambience": [
+  {
+   "q": "birds summer countryside",
+   "from": 0,
+   "to": 15,
+   "volume": 0.12
+  }
+ ],
+ "scenes": [
+  {
+   "type": "septic",
+   "say": "Ты смыл воду в загородном доме. Канализации тут нет. Куда всё ушло?",
+   "props": {
+    "cam": [
+     "house",
+     "houseCut"
+    ],
+    "camDur": 0.85,
+    "flow": true,
+    "pipe": [
+     0,
+     0.35
+    ],
+    "pipeDur": 0.3,
+    "pipeDelay": 0.6,
+    "sounds": [
+     {
+      "q": "toilet flush",
+      "at": 0.05,
+      "volume": 0.45,
+      "len": 3
+     }
+    ]
+   }
+  },
+  {
+   "type": "septic",
+   "say": "Выкопай яму и опусти в неё трубу из дома — у тебя выгребная яма.",
+   "props": {
+    "cont": true,
+    "pit": [
+     0,
+     1
+    ],
+    "pitDur": 0.5,
+    "pipe": [
+     0.35,
+     1
+    ],
+    "pipeDelay": 0.45,
+    "pipeDur": 0.4,
+    "flow": true,
+    "cam": [
+     "houseCut",
+     "pit"
+    ],
+    "camDur": 0.7,
+    "sounds": [
+     {
+      "q": "shovel digging dirt",
+      "at": 0.1,
+      "volume": 0.35
+     }
+    ]
+   }
+  },
+  {
+   "type": "septic",
+   "say": "Но она быстро наполняется... и запах стоит на весь участок.",
+   "props": {
+    "cont": true,
+    "pit": 1,
+    "pipe": 1,
+    "flow": true,
+    "pitFill": [
+     0.1,
+     0.92
+    ],
+    "stink": [
+     0,
+     1
+    ],
+    "stinkDelay": 0.35,
+    "cam": [
+     "pit",
+     "pitWide"
+    ],
+    "sounds": [
+     {
+      "q": "flies buzzing",
+      "at": 0.3,
+      "volume": 0.3,
+      "len": 3
+     }
+    ]
+   }
+  },
+  {
+   "type": "septic",
+   "say": "Поэтому в землю ставят бак из трёх камер. Это септик.",
+   "props": {
+    "cont": true,
+    "pipe": 1,
+    "tank": [
+     0,
+     1
+    ],
+    "tankDur": 0.45,
+    "tankDelay": 0.1,
+    "cam": [
+     "pitWide",
+     "tank"
+    ],
+    "camDur": 0.8,
+    "banner": "3 камеры",
+    "bannerAt": 0.75,
+    "sounds": [
+     {
+      "q": "heavy object thud",
+      "at": 0.4,
+      "volume": 0.35
+     }
+    ]
+   }
+  },
+  {
+   "type": "septic",
+   "say": "В первой камере всё тяжёлое падает на дно. Это ил.",
+   "props": {
+    "pipe": 1,
+    "tank": 1,
+    "liquid": [
+     0,
+     1
+    ],
+    "cont": true,
+    "liquidDur": 0.3,
+    "sludge1": [
+     0,
+     1
+    ],
+    "sludgeDur": 0.7,
+    "sludgeDelay": 0.2,
+    "settle": 1,
+    "flow": true,
+    "cam": [
+     "tank",
+     "ch1"
+    ],
+    "camDur": 0.5
+   }
+  },
+  {
+   "type": "septic",
+   "say": "А жир и мыльная пена всплывают наверх и образуют корку.",
+   "props": {
+    "pipe": 1,
+    "tank": 1,
+    "liquid": 1,
+    "cont": true,
+    "sludge1": 1,
+    "scum": [
+     0,
+     1
+    ],
+    "floatUp": true,
+    "cam": [
+     "ch1",
+     "ch1"
+    ],
+    "sounds": [
+     {
+      "q": "water bubbles",
+      "at": 0.1,
+      "volume": 0.3,
+      "len": 3
+     }
+    ]
+   }
+  },
+  {
+   "type": "septic",
+   "say": "Поэтому выходная труба сделана буквой «Т» — она берёт воду из середины, между илом и коркой.",
+   "props": {
+    "pipe": 1,
+    "tank": 1,
+    "liquid": 1,
+    "sludge1": 1,
+    "scum": 1,
+    "cont": true,
+    "tees": [
+     0,
+     1
+    ],
+    "flow": true,
+    "cam": [
+     "ch1",
+     "tee"
+    ],
+    "camDur": 0.45
+   }
+  },
+  {
+   "type": "septic",
+   "say": "Во второй камере оседает всё, что не успело упасть в первой.",
+   "props": {
+    "pipe": 1,
+    "tank": 1,
+    "liquid": 1,
+    "sludge1": 1,
+    "scum": 1,
+    "cont": true,
+    "teesAlways": true,
+    "sludge2": [
+     0,
+     1
+    ],
+    "settle": 2,
+    "flow": true,
+    "cam": [
+     "tee",
+     "ch2"
+    ],
+    "camDur": 0.4
+   }
+  },
+  {
+   "type": "septic",
+   "say": "А дальше работают бактерии. Без кислорода они съедают грязь и выделяют газ.",
+   "props": {
+    "pipe": 1,
+    "tank": 1,
+    "liquid": 1,
+    "sludge1": 1,
+    "scum": 1,
+    "teesAlways": true,
+    "sludge2": 1,
+    "cont": true,
+    "bacteria": [
+     0,
+     1
+    ],
+    "gas": true,
+    "cam": [
+     "ch2",
+     "bact"
+    ],
+    "camDur": 0.5,
+    "banner": "без кислорода",
+    "bannerAt": 0.35
+   }
+  },
+  {
+   "type": "septic",
+   "say": "Поэтому у септика есть труба вверх — для газа. Это вентиляция.",
+   "props": {
+    "pipe": 1,
+    "tank": 1,
+    "liquid": 1,
+    "sludge1": 1,
+    "scum": 1,
+    "teesAlways": true,
+    "sludge2": 1,
+    "bacteria": 1,
+    "gas": true,
+    "cont": true,
+    "vent": [
+     0,
+     1
+    ],
+    "ventDur": 0.4,
+    "gasOut": true,
+    "cam": [
+     "bact",
+     "vent"
+    ],
+    "camDur": 0.55,
+    "sounds": [
+     {
+      "q": "air hiss",
+      "at": 0.4,
+      "volume": 0.25
+     }
+    ]
+   }
+  },
+  {
+   "type": "septic",
+   "say": "В третьей камере вода уже почти прозрачная. Но очищена она только наполовину.",
+   "props": {
+    "pipe": 1,
+    "tank": 1,
+    "liquid": 1,
+    "sludge1": 1,
+    "scum": 1,
+    "teesAlways": true,
+    "sludge2": 1,
+    "bacteria": 1,
+    "gas": true,
+    "vent": 1,
+    "gasOut": true,
+    "sludge3": 1,
+    "cont": true,
+    "flow": true,
+    "cam": [
+     "vent",
+     "ch3"
+    ],
+    "camDur": 0.5,
+    "banner": "очищено\nлишь наполовину",
+    "bannerAt": 0.6
+   }
+  },
+  {
+   "type": "septic",
+   "say": "Поэтому её не сливают в речку, а пускают под землю — в трубы с дырками, уложенные в щебень.",
+   "props": {
+    "pipe": 1,
+    "tank": 1,
+    "liquid": 1,
+    "sludge1": 1,
+    "scum": 1,
+    "teesAlways": true,
+    "sludge2": 1,
+    "bacteria": 1,
+    "gas": true,
+    "vent": 1,
+    "gasOut": true,
+    "sludge3": 1,
+    "cont": true,
+    "field": [
+     0,
+     1
+    ],
+    "fieldDur": 0.65,
+    "fieldDelay": 0.25,
+    "flow": true,
+    "cam": [
+     "ch3",
+     "field"
+    ],
+    "camDur": 0.5,
+    "sounds": [
+     {
+      "q": "gravel pouring",
+      "at": 0.3,
+      "volume": 0.3
+     }
+    ]
+   }
+  },
+  {
+   "type": "septic",
+   "say": "Это поле фильтрации. Тут работу заканчивает сама земля: бактерии в почве доочищают воду.",
+   "props": {
+    "pipe": 1,
+    "tank": 1,
+    "liquid": 1,
+    "sludge1": 1,
+    "scum": 1,
+    "teesAlways": true,
+    "sludge2": 1,
+    "bacteria": 1,
+    "gas": true,
+    "vent": 1,
+    "gasOut": true,
+    "sludge3": 1,
+    "field": 1,
+    "cont": true,
+    "seep": true,
+    "flow": true,
+    "cam": [
+     "field",
+     "fieldClose"
+    ],
+    "camDur": 0.6
+   }
+  },
+  {
+   "type": "septic",
+   "say": "Но ил на дне копится. Раз в пару лет приезжает машина со шлангом и откачивает его.",
+   "props": {
+    "pipe": 1,
+    "tank": 1,
+    "liquid": 1,
+    "sludge1": 1,
+    "scum": 1,
+    "teesAlways": true,
+    "sludge2": 1,
+    "bacteria": 1,
+    "gas": true,
+    "vent": 1,
+    "gasOut": true,
+    "sludge3": 1,
+    "field": 1,
+    "cont": true,
+    "grow": [
+     0,
+     1
+    ],
+    "truck": [
+     0,
+     1
+    ],
+    "truckDelay": 0.25,
+    "truckDur": 0.3,
+    "hose": [
+     0,
+     1
+    ],
+    "hoseDelay": 0.58,
+    "pump": [
+     0,
+     1
+    ],
+    "pumpDelay": 0.72,
+    "pumpDur": 0.25,
+    "cam": [
+     "fieldClose",
+     "truck"
+    ],
+    "camDur": 0.4,
+    "sounds": [
+     {
+      "q": "diesel truck engine",
+      "at": 0.25,
+      "volume": 0.35,
+      "len": 4
+     },
+     {
+      "q": "suction pump",
+      "at": 0.72,
+      "volume": 0.3,
+      "len": 3
+     }
+    ]
+   }
+  },
+  {
+   "type": "septic",
+   "say": "А колодец с питьевой водой копают не ближе пятидесяти метров от этого поля.",
+   "props": {
+    "pipe": 1,
+    "tank": 1,
+    "liquid": 1,
+    "sludge1": 1,
+    "scum": 1,
+    "teesAlways": true,
+    "sludge2": 1,
+    "bacteria": 1,
+    "gas": true,
+    "vent": 1,
+    "gasOut": true,
+    "sludge3": 1,
+    "field": 1,
+    "cont": true,
+    "truck": 1,
+    "well": [
+     0,
+     1
+    ],
+    "wellDelay": 0.15,
+    "distance": [
+     0,
+     1
+    ],
+    "distanceDelay": 0.35,
+    "cam": [
+     "truck",
+     "well"
+    ],
+    "camDur": 0.45,
+    "banner": "не ближе 50 м",
+    "bannerAt": 0.55
+   }
+  },
+  {
+   "type": "septic",
+   "say": "Поздравляю! Ты построил септик. Подпишись.",
+   "props": {
+    "pipe": 1,
+    "tank": 1,
+    "liquid": 1,
+    "sludge1": 1,
+    "scum": 1,
+    "teesAlways": true,
+    "sludge2": 1,
+    "bacteria": 1,
+    "gas": true,
+    "vent": 1,
+    "gasOut": true,
+    "sludge3": 1,
+    "field": 1,
+    "cont": true,
+    "seep": true,
+    "flow": true,
+    "well": 1,
+    "cam": [
+     "final",
+     "finalWide"
+    ],
+    "banner": "Септик построен!",
+    "bannerAt": 0.1
+   }
+  }
+ ]
+}
