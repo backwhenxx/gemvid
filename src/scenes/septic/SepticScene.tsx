@@ -31,7 +31,7 @@ const FX0 = 6.5;
 const FX1 = 18;
 const FY0 = -1.9;
 const FY1 = -0.75;
-const WELL_X = 40;
+const WELL_X = 30;
 
 type Cam = {pos: [number, number, number]; look: [number, number, number]};
 const CAMS: Record<string, Cam> = {
@@ -51,7 +51,7 @@ const CAMS: Record<string, Cam> = {
   field: {pos: [11.5, 1.4, 14], look: [11.5, -1.2, -1]},
   fieldClose: {pos: [12, -0.8, 6], look: [12, -1.7, -1]},
   truck: {pos: [8, 5, 20], look: [4, 0.2, -4]},
-  well: {pos: [24, 7, 34], look: [26, 0, -5]},
+  well: {pos: [21, 6, 30], look: [23.5, 0, -5]},
   final: {pos: [2, 3.5, 25], look: [2, -0.9, -3]},
   finalWide: {pos: [6, 7, 36], look: [8, -0.8, -5]},
 };
@@ -75,11 +75,12 @@ const strataTexture = () => {
   const [c, g] = cv(512, 1024);
   const bands: [number, string][] = [
     [0, '#3d2a1a'],
-    [0.035, '#4e3520'],
-    [0.09, '#8a5a34'],
-    [0.42, '#9c7044'],
-    [0.62, '#c9a66b'],
-    [1, '#c2a065'],
+    [0.0105, '#4e3520'],
+    [0.027, '#8a5a34'],
+    [0.126, '#9c7044'],
+    [0.186, '#c9a66b'],
+    [0.45, '#b8955c'],
+    [1, '#b8955c'],
   ];
   for (let i = 0; i < bands.length - 1; i++) {
     const [a, col] = bands[i];
@@ -121,7 +122,7 @@ const strataTexture = () => {
   }
   const t = new THREE.CanvasTexture(c);
   t.wrapS = t.wrapT = THREE.RepeatWrapping;
-  t.repeat.set(1 / 8, 1 / 12);
+  t.repeat.set(1 / 8, 1 / 40);
   t.colorSpace = THREE.SRGBColorSpace;
   t.anisotropy = 4;
   return t;
@@ -390,7 +391,7 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
     };
     const g = new THREE.Group();
     // земля сзади (сплошная) и газон сверху
-    const back = new THREE.Mesh(box(-80, 90, -12, 0, ZB, ZF), m.soilSide);
+    const back = new THREE.Mesh(box(-80, 90, -40, 0, ZB, ZF), m.soilSide);
     g.add(back);
     const lawnFar = new THREE.Mesh(new THREE.PlaneGeometry(400, 300), m.lawn);
     lawnFar.rotation.x = -Math.PI / 2;
@@ -474,7 +475,7 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
     const kField = field > 0 ? 1 : 0;
     add(
       cached(`front${kPit}_${tank > 0 ? 1 : 0}_${kField}`, () => {
-        const s = new THREE.Shape([new THREE.Vector2(-80, 0), new THREE.Vector2(90, 0), new THREE.Vector2(90, -12), new THREE.Vector2(-80, -12)]);
+        const s = new THREE.Shape([new THREE.Vector2(-80, 0), new THREE.Vector2(90, 0), new THREE.Vector2(90, -40), new THREE.Vector2(-80, -40)]);
         if (kPit > 0) {
           const d = -3.2 * kPit;
           s.holes.push(new THREE.Path([new THREE.Vector2(-3, 0), new THREE.Vector2(-3.2 + 0.3, d), new THREE.Vector2(2.2, d), new THREE.Vector2(2.5, 0)]));
