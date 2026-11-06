@@ -1,0 +1,1564 @@
+{
+ "fps": 30,
+ "durationInFrames": 2406,
+ "base": "ep/septik",
+ "voice": "voice.mp3",
+ "words": [
+  {
+   "text": "Ты",
+   "start": 0,
+   "end": 0.22
+  },
+  {
+   "text": "смыл",
+   "start": 0.22,
+   "end": 0.58
+  },
+  {
+   "text": "воду",
+   "start": 0.58,
+   "end": 0.88
+  },
+  {
+   "text": "в",
+   "start": 0.88,
+   "end": 1.04
+  },
+  {
+   "text": "загородном",
+   "start": 1.04,
+   "end": 1.54
+  },
+  {
+   "text": "доме.",
+   "start": 1.54,
+   "end": 2.02
+  },
+  {
+   "text": "Канализации",
+   "start": 2.2,
+   "end": 2.82
+  },
+  {
+   "text": "тут",
+   "start": 2.82,
+   "end": 3.08
+  },
+  {
+   "text": "нет.",
+   "start": 3.08,
+   "end": 3.38
+  },
+  {
+   "text": "Куда",
+   "start": 3.64,
+   "end": 3.98
+  },
+  {
+   "text": "всё",
+   "start": 3.98,
+   "end": 4.16
+  },
+  {
+   "text": "ушло?",
+   "start": 4.16,
+   "end": 4.62
+  },
+  {
+   "text": "Выкопай",
+   "start": 4.98,
+   "end": 5.54
+  },
+  {
+   "text": "яму",
+   "start": 5.54,
+   "end": 5.9
+  },
+  {
+   "text": "и",
+   "start": 5.9,
+   "end": 6.12
+  },
+  {
+   "text": "опусти",
+   "start": 6.12,
+   "end": 6.5
+  },
+  {
+   "text": "в",
+   "start": 6.5,
+   "end": 6.6
+  },
+  {
+   "text": "неё",
+   "start": 6.6,
+   "end": 6.8
+  },
+  {
+   "text": "трубу",
+   "start": 6.8,
+   "end": 7.18
+  },
+  {
+   "text": "из",
+   "start": 7.18,
+   "end": 7.44
+  },
+  {
+   "text": "дома",
+   "start": 7.44,
+   "end": 7.66
+  },
+  {
+   "text": "—",
+   "start": 7.66,
+   "end": 7.9
+  },
+  {
+   "text": "у",
+   "start": 7.9,
+   "end": 8.08
+  },
+  {
+   "text": "тебя",
+   "start": 8.08,
+   "end": 8.48
+  },
+  {
+   "text": "выгребная",
+   "start": 8.48,
+   "end": 9.22
+  },
+  {
+   "text": "яма.",
+   "start": 9.22,
+   "end": 9.64
+  },
+  {
+   "text": "Но",
+   "start": 9.88,
+   "end": 10.1
+  },
+  {
+   "text": "она",
+   "start": 10.1,
+   "end": 10.34
+  },
+  {
+   "text": "быстро",
+   "start": 10.34,
+   "end": 10.76
+  },
+  {
+   "text": "наполняется...",
+   "start": 10.76,
+   "end": 11.64
+  },
+  {
+   "text": "и",
+   "start": 11.92,
+   "end": 12.14
+  },
+  {
+   "text": "запах",
+   "start": 12.14,
+   "end": 12.5
+  },
+  {
+   "text": "стоит",
+   "start": 12.5,
+   "end": 12.8
+  },
+  {
+   "text": "на",
+   "start": 12.8,
+   "end": 13.08
+  },
+  {
+   "text": "весь",
+   "start": 13.08,
+   "end": 13.26
+  },
+  {
+   "text": "участок.",
+   "start": 13.26,
+   "end": 13.9
+  },
+  {
+   "text": "Поэтому",
+   "start": 14.04,
+   "end": 14.54
+  },
+  {
+   "text": "в",
+   "start": 14.54,
+   "end": 14.76
+  },
+  {
+   "text": "землю",
+   "start": 14.76,
+   "end": 15.06
+  },
+  {
+   "text": "ставят",
+   "start": 15.06,
+   "end": 15.44
+  },
+  {
+   "text": "бак",
+   "start": 15.44,
+   "end": 15.72
+  },
+  {
+   "text": "из",
+   "start": 15.72,
+   "end": 15.96
+  },
+  {
+   "text": "трёх",
+   "start": 15.96,
+   "end": 16.28
+  },
+  {
+   "text": "камер.",
+   "start": 16.28,
+   "end": 16.72
+  },
+  {
+   "text": "Это",
+   "start": 16.92,
+   "end": 17.42
+  },
+  {
+   "text": "септик.",
+   "start": 17.42,
+   "end": 18.24
+  },
+  {
+   "text": "В",
+   "start": 18.34,
+   "end": 18.56
+  },
+  {
+   "text": "первой",
+   "start": 18.56,
+   "end": 18.9
+  },
+  {
+   "text": "камере",
+   "start": 18.9,
+   "end": 19.3
+  },
+  {
+   "text": "всё",
+   "start": 19.3,
+   "end": 19.56
+  },
+  {
+   "text": "тяжёлое",
+   "start": 19.56,
+   "end": 20.06
+  },
+  {
+   "text": "падает",
+   "start": 20.06,
+   "end": 20.52
+  },
+  {
+   "text": "на",
+   "start": 20.52,
+   "end": 20.76
+  },
+  {
+   "text": "дно.",
+   "start": 20.76,
+   "end": 21
+  },
+  {
+   "text": "Это",
+   "start": 21.22,
+   "end": 21.62
+  },
+  {
+   "text": "ил.",
+   "start": 21.62,
+   "end": 22.08
+  },
+  {
+   "text": "А",
+   "start": 22.22,
+   "end": 22.44
+  },
+  {
+   "text": "жир",
+   "start": 22.44,
+   "end": 22.72
+  },
+  {
+   "text": "и",
+   "start": 22.72,
+   "end": 22.84
+  },
+  {
+   "text": "мыльная",
+   "start": 22.84,
+   "end": 23.3
+  },
+  {
+   "text": "пена",
+   "start": 23.3,
+   "end": 23.64
+  },
+  {
+   "text": "всплывают",
+   "start": 23.64,
+   "end": 24.22
+  },
+  {
+   "text": "наверх",
+   "start": 24.22,
+   "end": 24.76
+  },
+  {
+   "text": "и",
+   "start": 24.76,
+   "end": 24.96
+  },
+  {
+   "text": "образуют",
+   "start": 24.96,
+   "end": 25.44
+  },
+  {
+   "text": "корку.",
+   "start": 25.44,
+   "end": 25.92
+  },
+  {
+   "text": "Поэтому",
+   "start": 26.14,
+   "end": 26.66
+  },
+  {
+   "text": "выходная",
+   "start": 26.66,
+   "end": 27.2
+  },
+  {
+   "text": "труба",
+   "start": 27.2,
+   "end": 27.54
+  },
+  {
+   "text": "сделана",
+   "start": 27.54,
+   "end": 28.02
+  },
+  {
+   "text": "буквой",
+   "start": 28.02,
+   "end": 28.42
+  },
+  {
+   "text": "«Т»",
+   "start": 28.42,
+   "end": 28.74
+  },
+  {
+   "text": "—",
+   "start": 28.74,
+   "end": 28.74
+  },
+  {
+   "text": "она",
+   "start": 28.74,
+   "end": 29.22
+  },
+  {
+   "text": "берёт",
+   "start": 29.22,
+   "end": 29.58
+  },
+  {
+   "text": "воду",
+   "start": 29.58,
+   "end": 29.96
+  },
+  {
+   "text": "из",
+   "start": 29.96,
+   "end": 30.14
+  },
+  {
+   "text": "середины,",
+   "start": 30.14,
+   "end": 30.78
+  },
+  {
+   "text": "между",
+   "start": 30.96,
+   "end": 31.22
+  },
+  {
+   "text": "илом",
+   "start": 31.22,
+   "end": 31.64
+  },
+  {
+   "text": "и",
+   "start": 31.64,
+   "end": 31.92
+  },
+  {
+   "text": "коркой.",
+   "start": 31.92,
+   "end": 32.34
+  },
+  {
+   "text": "Во",
+   "start": 32.72,
+   "end": 32.86
+  },
+  {
+   "text": "второй",
+   "start": 32.86,
+   "end": 33.2
+  },
+  {
+   "text": "камере",
+   "start": 33.2,
+   "end": 33.62
+  },
+  {
+   "text": "оседает",
+   "start": 33.62,
+   "end": 34.24
+  },
+  {
+   "text": "всё,",
+   "start": 34.24,
+   "end": 34.46
+  },
+  {
+   "text": "что",
+   "start": 34.54,
+   "end": 34.7
+  },
+  {
+   "text": "не",
+   "start": 34.7,
+   "end": 34.92
+  },
+  {
+   "text": "успело",
+   "start": 34.92,
+   "end": 35.26
+  },
+  {
+   "text": "упасть",
+   "start": 35.26,
+   "end": 35.66
+  },
+  {
+   "text": "в",
+   "start": 35.66,
+   "end": 35.9
+  },
+  {
+   "text": "первой.",
+   "start": 35.9,
+   "end": 36.22
+  },
+  {
+   "text": "А",
+   "start": 36.4,
+   "end": 36.82
+  },
+  {
+   "text": "дальше",
+   "start": 36.82,
+   "end": 37.12
+  },
+  {
+   "text": "работают",
+   "start": 37.12,
+   "end": 37.66
+  },
+  {
+   "text": "бактерии.",
+   "start": 37.66,
+   "end": 38.26
+  },
+  {
+   "text": "Без",
+   "start": 38.5,
+   "end": 38.76
+  },
+  {
+   "text": "кислорода",
+   "start": 38.76,
+   "end": 39.34
+  },
+  {
+   "text": "они",
+   "start": 39.34,
+   "end": 39.64
+  },
+  {
+   "text": "съедают",
+   "start": 39.64,
+   "end": 40.16
+  },
+  {
+   "text": "грязь",
+   "start": 40.16,
+   "end": 40.54
+  },
+  {
+   "text": "и",
+   "start": 40.54,
+   "end": 40.72
+  },
+  {
+   "text": "выделяют",
+   "start": 40.72,
+   "end": 41.18
+  },
+  {
+   "text": "газ.",
+   "start": 41.18,
+   "end": 41.52
+  },
+  {
+   "text": "Поэтому",
+   "start": 41.8,
+   "end": 42.26
+  },
+  {
+   "text": "у",
+   "start": 42.26,
+   "end": 42.52
+  },
+  {
+   "text": "септика",
+   "start": 42.52,
+   "end": 42.96
+  },
+  {
+   "text": "есть",
+   "start": 42.96,
+   "end": 43.24
+  },
+  {
+   "text": "труба",
+   "start": 43.24,
+   "end": 43.64
+  },
+  {
+   "text": "вверх",
+   "start": 43.64,
+   "end": 44.26
+  },
+  {
+   "text": "—",
+   "start": 44.26,
+   "end": 44.28
+  },
+  {
+   "text": "для",
+   "start": 44.28,
+   "end": 44.48
+  },
+  {
+   "text": "газа.",
+   "start": 44.48,
+   "end": 45.08
+  },
+  {
+   "text": "Это",
+   "start": 45.1,
+   "end": 45.52
+  },
+  {
+   "text": "вентиляция.",
+   "start": 45.52,
+   "end": 46.34
+  },
+  {
+   "text": "В",
+   "start": 46.68,
+   "end": 46.88
+  },
+  {
+   "text": "третьей",
+   "start": 46.88,
+   "end": 47.2
+  },
+  {
+   "text": "камере",
+   "start": 47.2,
+   "end": 47.6
+  },
+  {
+   "text": "вода",
+   "start": 47.6,
+   "end": 47.94
+  },
+  {
+   "text": "уже",
+   "start": 47.94,
+   "end": 48.24
+  },
+  {
+   "text": "почти",
+   "start": 48.24,
+   "end": 48.6
+  },
+  {
+   "text": "прозрачная.",
+   "start": 48.6,
+   "end": 49.28
+  },
+  {
+   "text": "Но",
+   "start": 49.54,
+   "end": 49.76
+  },
+  {
+   "text": "очищена",
+   "start": 49.76,
+   "end": 50.4
+  },
+  {
+   "text": "она",
+   "start": 50.4,
+   "end": 50.66
+  },
+  {
+   "text": "только",
+   "start": 50.66,
+   "end": 51
+  },
+  {
+   "text": "наполовину.",
+   "start": 51,
+   "end": 51.66
+  },
+  {
+   "text": "Поэтому",
+   "start": 51.92,
+   "end": 52.4
+  },
+  {
+   "text": "её",
+   "start": 52.4,
+   "end": 52.64
+  },
+  {
+   "text": "не",
+   "start": 52.64,
+   "end": 52.88
+  },
+  {
+   "text": "сливают",
+   "start": 52.88,
+   "end": 53.3
+  },
+  {
+   "text": "в",
+   "start": 53.3,
+   "end": 53.44
+  },
+  {
+   "text": "речку,",
+   "start": 53.44,
+   "end": 53.82
+  },
+  {
+   "text": "а",
+   "start": 54,
+   "end": 54.12
+  },
+  {
+   "text": "пускают",
+   "start": 54.12,
+   "end": 54.54
+  },
+  {
+   "text": "под",
+   "start": 54.54,
+   "end": 54.86
+  },
+  {
+   "text": "землю",
+   "start": 54.86,
+   "end": 55.22
+  },
+  {
+   "text": "—",
+   "start": 55.22,
+   "end": 55.44
+  },
+  {
+   "text": "в",
+   "start": 55.44,
+   "end": 55.56
+  },
+  {
+   "text": "трубы",
+   "start": 55.56,
+   "end": 55.8
+  },
+  {
+   "text": "с",
+   "start": 55.8,
+   "end": 55.96
+  },
+  {
+   "text": "дырками,",
+   "start": 55.96,
+   "end": 56.4
+  },
+  {
+   "text": "уложенные",
+   "start": 56.52,
+   "end": 57
+  },
+  {
+   "text": "в",
+   "start": 57,
+   "end": 57.22
+  },
+  {
+   "text": "щебень.",
+   "start": 57.22,
+   "end": 57.52
+  },
+  {
+   "text": "Это",
+   "start": 57.52,
+   "end": 58.28
+  },
+  {
+   "text": "поле",
+   "start": 58.28,
+   "end": 58.68
+  },
+  {
+   "text": "фильтрации.",
+   "start": 58.68,
+   "end": 59.4
+  },
+  {
+   "text": "Тут",
+   "start": 59.66,
+   "end": 59.86
+  },
+  {
+   "text": "работу",
+   "start": 59.86,
+   "end": 60.24
+  },
+  {
+   "text": "заканчивает",
+   "start": 60.24,
+   "end": 61
+  },
+  {
+   "text": "сама",
+   "start": 61,
+   "end": 61.32
+  },
+  {
+   "text": "земля:",
+   "start": 61.32,
+   "end": 61.82
+  },
+  {
+   "text": "бактерии",
+   "start": 62.06,
+   "end": 62.58
+  },
+  {
+   "text": "в",
+   "start": 62.58,
+   "end": 62.76
+  },
+  {
+   "text": "почве",
+   "start": 62.76,
+   "end": 63.16
+  },
+  {
+   "text": "доочищают",
+   "start": 63.4,
+   "end": 64
+  },
+  {
+   "text": "воду.",
+   "start": 64,
+   "end": 64.42
+  },
+  {
+   "text": "Но",
+   "start": 64.7,
+   "end": 64.92
+  },
+  {
+   "text": "ил",
+   "start": 64.92,
+   "end": 65.24
+  },
+  {
+   "text": "на",
+   "start": 65.24,
+   "end": 65.46
+  },
+  {
+   "text": "дне",
+   "start": 65.46,
+   "end": 65.72
+  },
+  {
+   "text": "копится.",
+   "start": 65.72,
+   "end": 66.34
+  },
+  {
+   "text": "Раз",
+   "start": 66.74,
+   "end": 66.96
+  },
+  {
+   "text": "в",
+   "start": 66.96,
+   "end": 67.2
+  },
+  {
+   "text": "пару",
+   "start": 67.2,
+   "end": 67.28
+  },
+  {
+   "text": "лет",
+   "start": 67.28,
+   "end": 67.52
+  },
+  {
+   "text": "приезжает",
+   "start": 67.52,
+   "end": 68.1
+  },
+  {
+   "text": "машина",
+   "start": 68.1,
+   "end": 68.5
+  },
+  {
+   "text": "со",
+   "start": 68.5,
+   "end": 68.7
+  },
+  {
+   "text": "шлангом",
+   "start": 68.7,
+   "end": 69.24
+  },
+  {
+   "text": "и",
+   "start": 69.24,
+   "end": 69.48
+  },
+  {
+   "text": "откачивает",
+   "start": 69.48,
+   "end": 70.1
+  },
+  {
+   "text": "его.",
+   "start": 70.1,
+   "end": 70.38
+  },
+  {
+   "text": "А",
+   "start": 70.7,
+   "end": 70.88
+  },
+  {
+   "text": "колодец",
+   "start": 70.88,
+   "end": 71.26
+  },
+  {
+   "text": "с",
+   "start": 71.26,
+   "end": 71.36
+  },
+  {
+   "text": "питьевой",
+   "start": 71.36,
+   "end": 71.8
+  },
+  {
+   "text": "водой",
+   "start": 71.8,
+   "end": 72.16
+  },
+  {
+   "text": "копают",
+   "start": 72.16,
+   "end": 72.64
+  },
+  {
+   "text": "не",
+   "start": 72.64,
+   "end": 72.88
+  },
+  {
+   "text": "ближе",
+   "start": 72.88,
+   "end": 73.22
+  },
+  {
+   "text": "пятидесяти",
+   "start": 73.22,
+   "end": 73.96
+  },
+  {
+   "text": "метров",
+   "start": 73.96,
+   "end": 74.34
+  },
+  {
+   "text": "от",
+   "start": 74.34,
+   "end": 74.62
+  },
+  {
+   "text": "этого",
+   "start": 74.62,
+   "end": 74.9
+  },
+  {
+   "text": "поля.",
+   "start": 74.9,
+   "end": 75.42
+  },
+  {
+   "text": "Поздравляю!",
+   "start": 75.68,
+   "end": 76.32
+  },
+  {
+   "text": "Ты",
+   "start": 76.5,
+   "end": 76.72
+  },
+  {
+   "text": "построил",
+   "start": 76.72,
+   "end": 77.38
+  },
+  {
+   "text": "септик.",
+   "start": 77.38,
+   "end": 78
+  },
+  {
+   "text": "Подпишись.",
+   "start": 78.2,
+   "end": 78.8
+  }
+ ],
+ "scenes": [
+  {
+   "type": "septic",
+   "start": 0,
+   "end": 4.9,
+   "say": "Ты смыл воду в загородном доме. Канализации тут нет. Куда всё ушло?",
+   "props": {
+    "cam": [
+     "house",
+     "houseCut"
+    ],
+    "camDur": 0.85,
+    "flow": true,
+    "pipe": [
+     0,
+     0.35
+    ],
+    "pipeDur": 0.3,
+    "pipeDelay": 0.6,
+    "sounds": [
+     {
+      "q": "toilet flush",
+      "at": 0.05,
+      "volume": 0.45,
+      "len": 3
+     }
+    ]
+   }
+  },
+  {
+   "type": "septic",
+   "start": 4.9,
+   "end": 9.8,
+   "say": "Выкопай яму и опусти в неё трубу из дома — у тебя выгребная яма.",
+   "props": {
+    "cont": true,
+    "pit": [
+     0,
+     1
+    ],
+    "pitDur": 0.5,
+    "pipe": [
+     0.35,
+     1
+    ],
+    "pipeDelay": 0.45,
+    "pipeDur": 0.4,
+    "flow": true,
+    "cam": [
+     "houseCut",
+     "pit"
+    ],
+    "camDur": 0.7,
+    "sounds": [
+     {
+      "q": "shovel digging dirt",
+      "at": 0.1,
+      "volume": 0.35
+     }
+    ]
+   }
+  },
+  {
+   "type": "septic",
+   "start": 9.8,
+   "end": 13.959999999999999,
+   "say": "Но она быстро наполняется... и запах стоит на весь участок.",
+   "props": {
+    "cont": true,
+    "pit": 1,
+    "pipe": 1,
+    "flow": true,
+    "pitFill": [
+     0.1,
+     0.92
+    ],
+    "stink": [
+     0,
+     1
+    ],
+    "stinkDelay": 0.35,
+    "cam": [
+     "pit",
+     "pitWide"
+    ],
+    "sounds": [
+     {
+      "q": "flies buzzing",
+      "at": 0.3,
+      "volume": 0.3,
+      "len": 3
+     }
+    ]
+   }
+  },
+  {
+   "type": "septic",
+   "start": 13.959999999999999,
+   "end": 18.26,
+   "say": "Поэтому в землю ставят бак из трёх камер. Это септик.",
+   "props": {
+    "cont": true,
+    "pipe": 1,
+    "tank": [
+     0,
+     1
+    ],
+    "tankDur": 0.45,
+    "tankDelay": 0.1,
+    "cam": [
+     "pitWide",
+     "tank"
+    ],
+    "camDur": 0.8,
+    "banner": "3 камеры",
+    "bannerAt": 0.75,
+    "sounds": [
+     {
+      "q": "heavy object thud",
+      "at": 0.4,
+      "volume": 0.35
+     }
+    ]
+   }
+  },
+  {
+   "type": "septic",
+   "start": 18.26,
+   "end": 22.14,
+   "say": "В первой камере всё тяжёлое падает на дно. Это ил.",
+   "props": {
+    "pipe": 1,
+    "tank": 1,
+    "liquid": [
+     0,
+     1
+    ],
+    "cont": true,
+    "liquidDur": 0.3,
+    "sludge1": [
+     0,
+     1
+    ],
+    "sludgeDur": 0.7,
+    "sludgeDelay": 0.2,
+    "settle": 1,
+    "flow": true,
+    "cam": [
+     "tank",
+     "ch1"
+    ],
+    "camDur": 0.5
+   }
+  },
+  {
+   "type": "septic",
+   "start": 22.14,
+   "end": 26.060000000000002,
+   "say": "А жир и мыльная пена всплывают наверх и образуют корку.",
+   "props": {
+    "pipe": 1,
+    "tank": 1,
+    "liquid": 1,
+    "cont": true,
+    "sludge1": 1,
+    "scum": [
+     0,
+     1
+    ],
+    "floatUp": true,
+    "cam": [
+     "ch1",
+     "ch1"
+    ],
+    "sounds": [
+     {
+      "q": "water bubbles",
+      "at": 0.1,
+      "volume": 0.3,
+      "len": 3
+     }
+    ]
+   }
+  },
+  {
+   "type": "septic",
+   "start": 26.060000000000002,
+   "end": 32.64,
+   "say": "Поэтому выходная труба сделана буквой «Т» — она берёт воду из середины, между илом и коркой.",
+   "props": {
+    "pipe": 1,
+    "tank": 1,
+    "liquid": 1,
+    "sludge1": 1,
+    "scum": 1,
+    "cont": true,
+    "tees": [
+     0,
+     1
+    ],
+    "flow": true,
+    "cam": [
+     "ch1",
+     "tee"
+    ],
+    "camDur": 0.45
+   }
+  },
+  {
+   "type": "septic",
+   "start": 32.64,
+   "end": 36.32,
+   "say": "Во второй камере оседает всё, что не успело упасть в первой.",
+   "props": {
+    "pipe": 1,
+    "tank": 1,
+    "liquid": 1,
+    "sludge1": 1,
+    "scum": 1,
+    "cont": true,
+    "teesAlways": true,
+    "sludge2": [
+     0,
+     1
+    ],
+    "settle": 2,
+    "flow": true,
+    "cam": [
+     "tee",
+     "ch2"
+    ],
+    "camDur": 0.4
+   }
+  },
+  {
+   "type": "septic",
+   "start": 36.32,
+   "end": 41.72,
+   "say": "А дальше работают бактерии. Без кислорода они съедают грязь и выделяют газ.",
+   "props": {
+    "pipe": 1,
+    "tank": 1,
+    "liquid": 1,
+    "sludge1": 1,
+    "scum": 1,
+    "teesAlways": true,
+    "sludge2": 1,
+    "cont": true,
+    "bacteria": [
+     0,
+     1
+    ],
+    "gas": true,
+    "cam": [
+     "ch2",
+     "bact"
+    ],
+    "camDur": 0.5,
+    "banner": "без кислорода",
+    "bannerAt": 0.35
+   }
+  },
+  {
+   "type": "septic",
+   "start": 41.72,
+   "end": 46.6,
+   "say": "Поэтому у септика есть труба вверх — для газа. Это вентиляция.",
+   "props": {
+    "pipe": 1,
+    "tank": 1,
+    "liquid": 1,
+    "sludge1": 1,
+    "scum": 1,
+    "teesAlways": true,
+    "sludge2": 1,
+    "bacteria": 1,
+    "gas": true,
+    "cont": true,
+    "vent": [
+     0,
+     1
+    ],
+    "ventDur": 0.4,
+    "gasOut": true,
+    "cam": [
+     "bact",
+     "vent"
+    ],
+    "camDur": 0.55,
+    "sounds": [
+     {
+      "q": "air hiss",
+      "at": 0.4,
+      "volume": 0.25
+     }
+    ]
+   }
+  },
+  {
+   "type": "septic",
+   "start": 46.6,
+   "end": 51.84,
+   "say": "В третьей камере вода уже почти прозрачная. Но очищена она только наполовину.",
+   "props": {
+    "pipe": 1,
+    "tank": 1,
+    "liquid": 1,
+    "sludge1": 1,
+    "scum": 1,
+    "teesAlways": true,
+    "sludge2": 1,
+    "bacteria": 1,
+    "gas": true,
+    "vent": 1,
+    "gasOut": true,
+    "sludge3": 1,
+    "cont": true,
+    "flow": true,
+    "cam": [
+     "vent",
+     "ch3"
+    ],
+    "camDur": 0.5,
+    "banner": "очищено\nлишь наполовину",
+    "bannerAt": 0.6
+   }
+  },
+  {
+   "type": "septic",
+   "start": 51.84,
+   "end": 57.440000000000005,
+   "say": "Поэтому её не сливают в речку, а пускают под землю — в трубы с дырками, уложенные в щебень.",
+   "props": {
+    "pipe": 1,
+    "tank": 1,
+    "liquid": 1,
+    "sludge1": 1,
+    "scum": 1,
+    "teesAlways": true,
+    "sludge2": 1,
+    "bacteria": 1,
+    "gas": true,
+    "vent": 1,
+    "gasOut": true,
+    "sludge3": 1,
+    "cont": true,
+    "field": [
+     0,
+     1
+    ],
+    "fieldDur": 0.65,
+    "fieldDelay": 0.25,
+    "flow": true,
+    "cam": [
+     "ch3",
+     "field"
+    ],
+    "camDur": 0.5,
+    "sounds": [
+     {
+      "q": "gravel pouring",
+      "at": 0.3,
+      "volume": 0.3
+     }
+    ]
+   }
+  },
+  {
+   "type": "septic",
+   "start": 57.440000000000005,
+   "end": 64.62,
+   "say": "Это поле фильтрации. Тут работу заканчивает сама земля: бактерии в почве доочищают воду.",
+   "props": {
+    "pipe": 1,
+    "tank": 1,
+    "liquid": 1,
+    "sludge1": 1,
+    "scum": 1,
+    "teesAlways": true,
+    "sludge2": 1,
+    "bacteria": 1,
+    "gas": true,
+    "vent": 1,
+    "gasOut": true,
+    "sludge3": 1,
+    "field": 1,
+    "cont": true,
+    "seep": true,
+    "flow": true,
+    "cam": [
+     "field",
+     "fieldClose"
+    ],
+    "camDur": 0.6
+   }
+  },
+  {
+   "type": "septic",
+   "start": 64.62,
+   "end": 70.62,
+   "say": "Но ил на дне копится. Раз в пару лет приезжает машина со шлангом и откачивает его.",
+   "props": {
+    "pipe": 1,
+    "tank": 1,
+    "liquid": 1,
+    "sludge1": 1,
+    "scum": 1,
+    "teesAlways": true,
+    "sludge2": 1,
+    "bacteria": 1,
+    "gas": true,
+    "vent": 1,
+    "gasOut": true,
+    "sludge3": 1,
+    "field": 1,
+    "cont": true,
+    "grow": [
+     0,
+     1
+    ],
+    "truck": [
+     0,
+     1
+    ],
+    "truckDelay": 0.25,
+    "truckDur": 0.3,
+    "hose": [
+     0,
+     1
+    ],
+    "hoseDelay": 0.58,
+    "pump": [
+     0,
+     1
+    ],
+    "pumpDelay": 0.72,
+    "pumpDur": 0.25,
+    "cam": [
+     "fieldClose",
+     "truck"
+    ],
+    "camDur": 0.4,
+    "sounds": [
+     {
+      "q": "diesel truck engine",
+      "at": 0.25,
+      "volume": 0.35,
+      "len": 4
+     },
+     {
+      "q": "suction pump",
+      "at": 0.72,
+      "volume": 0.3,
+      "len": 3
+     }
+    ]
+   }
+  },
+  {
+   "type": "septic",
+   "start": 70.62,
+   "end": 75.60000000000001,
+   "say": "А колодец с питьевой водой копают не ближе пятидесяти метров от этого поля.",
+   "props": {
+    "pipe": 1,
+    "tank": 1,
+    "liquid": 1,
+    "sludge1": 1,
+    "scum": 1,
+    "teesAlways": true,
+    "sludge2": 1,
+    "bacteria": 1,
+    "gas": true,
+    "vent": 1,
+    "gasOut": true,
+    "sludge3": 1,
+    "field": 1,
+    "cont": true,
+    "truck": 1,
+    "well": [
+     0,
+     1
+    ],
+    "wellDelay": 0.15,
+    "distance": [
+     0,
+     1
+    ],
+    "distanceDelay": 0.35,
+    "cam": [
+     "truck",
+     "well"
+    ],
+    "camDur": 0.45,
+    "banner": "не ближе 50 м",
+    "bannerAt": 0.55
+   }
+  },
+  {
+   "type": "septic",
+   "start": 75.60000000000001,
+   "end": 80.19425,
+   "say": "Поздравляю! Ты построил септик. Подпишись.",
+   "props": {
+    "pipe": 1,
+    "tank": 1,
+    "liquid": 1,
+    "sludge1": 1,
+    "scum": 1,
+    "teesAlways": true,
+    "sludge2": 1,
+    "bacteria": 1,
+    "gas": true,
+    "vent": 1,
+    "gasOut": true,
+    "sludge3": 1,
+    "field": 1,
+    "cont": true,
+    "seep": true,
+    "flow": true,
+    "well": 1,
+    "cam": [
+     "final",
+     "finalWide"
+    ],
+    "banner": "Септик построен!",
+    "bannerAt": 0.1
+   }
+  }
+ ],
+ "sfx": [
+  {
+   "file": "sfx/tuk.wav",
+   "at": 0.05,
+   "volume": 0.5
+  },
+  {
+   "file": "snd/sfx_0abc95879d.wav",
+   "at": 0.24500000000000002,
+   "volume": 0.45
+  },
+  {
+   "file": "snd/sfx_7ab39109e2.wav",
+   "at": 5.390000000000001,
+   "volume": 0.35
+  },
+  {
+   "file": "snd/sfx_46afa63d1f.wav",
+   "at": 11.048,
+   "volume": 0.3
+  },
+  {
+   "file": "snd/sfx_8eeaa4cd60.wav",
+   "at": 15.68,
+   "volume": 0.35
+  },
+  {
+   "file": "snd/sfx_1dac4d0cbb.wav",
+   "at": 22.532,
+   "volume": 0.3
+  },
+  {
+   "file": "snd/sfx_2e7e1549ff.wav",
+   "at": 43.672,
+   "volume": 0.25
+  },
+  {
+   "file": "snd/sfx_e6aa9ffb05.wav",
+   "at": 53.52,
+   "volume": 0.3
+  },
+  {
+   "file": "snd/sfx_df431b0394.wav",
+   "at": 66.12,
+   "volume": 0.35
+  }
+ ],
+ "music": null,
+ "accent": "#FF3D8B",
+ "keys": [],
+ "palette": null,
+ "ambience": [
+  {
+   "file": "snd/amb_96fa83eaea.wav",
+   "from": 0,
+   "to": 80.19425,
+   "volume": 0.12
+  }
+ ],
+ "captionStyle": "word",
+ "brand": true
+}
