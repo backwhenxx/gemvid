@@ -15,7 +15,8 @@ export type SceneType =
   | 'fan3d'
   | 'slam'
   | 'dam'
-  | 'trench';
+  | 'trench'
+  | 'septic';
 
 export type TimedScene = {
   type: SceneType;

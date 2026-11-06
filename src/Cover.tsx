@@ -4,12 +4,13 @@ import type {Timeline, TimedScene} from './types';
 import {SectionScene} from './scenes/SectionScene';
 import {DamScene} from './scenes/dam/DamScene';
 import {TrenchScene} from './scenes/trench/TrenchScene';
+import {SepticScene} from './scenes/septic/SepticScene';
 import {BrandMark, Grain, Vignette} from './components/Brand';
 import {Accented} from './components/Accented';
 import {BODY, C, SLAM, applyPalette} from './lib/theme';
 
 // Обложка (= первый кадр в ленте): заголовок в верхней трети, под ним мир ролика, низ пустой
-export type CoverSpec = {lines: string[]; sub?: string; bg?: Record<string, any> | null; dam?: Record<string, any>; trench?: Record<string, any>};
+export type CoverSpec = {lines: string[]; sub?: string; bg?: Record<string, any> | null; dam?: Record<string, any>; trench?: Record<string, any>; septic?: Record<string, any>};
 
 export const Cover: React.FC<{timeline: Timeline; cover: CoverSpec}> = ({timeline, cover}) => {
   applyPalette(timeline.palette);
@@ -25,7 +26,9 @@ export const Cover: React.FC<{timeline: Timeline; cover: CoverSpec}> = ({timelin
   const fs = Math.min(118, Math.floor(940 / (longest * 1.0)));
   return (
     <AbsoluteFill style={{backgroundColor: C.bg}}>
-      {cover.trench ? (
+      {cover.septic ? (
+        <SepticScene scene={{type: 'septic', start: 0, end: 10, say: '', props: cover.septic}} prev={null} base={timeline.base} accent={C.accent} durationInFrames={300} />
+      ) : cover.trench ? (
         <TrenchScene scene={{type: 'trench', start: 0, end: 10, say: '', props: cover.trench}} prev={null} base={timeline.base} accent={C.accent} durationInFrames={300} />
       ) : cover.dam ? (
         <DamScene scene={{type: 'dam', start: 0, end: 10, say: '', props: cover.dam}} prev={null} base={timeline.base} accent={C.accent} durationInFrames={300} />
@@ -35,7 +38,7 @@ export const Cover: React.FC<{timeline: Timeline; cover: CoverSpec}> = ({timelin
       <AbsoluteFill
         style={{
           background:
-            cover.dam || cover.trench
+            cover.dam || cover.trench || cover.septic
               ? `linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.25) 26%, rgba(0,0,0,0) 40%, rgba(0,0,0,0) 74%, rgba(0,0,0,0.55) 100%)`
               : `linear-gradient(180deg, ${C.bg} 0%, ${C.bg}F0 30%, ${C.bg}00 46%, ${C.bg}00 72%, ${C.bg} 86%)`,
         }}
