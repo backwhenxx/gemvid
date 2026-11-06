@@ -284,25 +284,105 @@ const buildField = (m: Record<string, THREE.Material>, k: number) => {
   return g;
 };
 
+// Ассенизаторская машина (без брендов): кабина спереди (+x), цистерна, катушка шланга сзади (-x).
+// Подъезжает задом к септику — как в жизни.
 const buildTruck = (m: Record<string, THREE.Material>) => {
   const g = new THREE.Group();
-  g.add(new THREE.Mesh(box(-2.6, 2.6, 0.55, 0.85, -0.95, 0.95), m.dark)); // рама
-  g.add(new THREE.Mesh(box(1.7, 3.3, 0.85, 2.6, -1.0, 1.0), m.cab)); // кабина
-  g.add(new THREE.Mesh(box(2.4, 3.32, 1.7, 2.4, -0.85, 0.85), m.window));
-  const tank = new THREE.Mesh(new THREE.CylinderGeometry(1.05, 1.05, 4.0, 28), m.orange);
-  tank.rotation.z = Math.PI / 2;
-  tank.position.set(-0.45, 1.95, 0);
-  g.add(tank);
-  const band = new THREE.Mesh(new THREE.CylinderGeometry(1.07, 1.07, 0.18, 28), m.white);
-  band.rotation.z = Math.PI / 2;
-  band.position.set(-0.45, 1.95, 0);
-  g.add(band);
-  [[-1.8, 1], [-1.8, -1], [0.2, 1], [0.2, -1], [2.5, 1], [2.5, -1]].forEach(([x, z]) => {
-    const w = new THREE.Mesh(new THREE.CylinderGeometry(0.48, 0.48, 0.35, 20), m.tire);
-    w.rotation.x = Math.PI / 2;
-    w.position.set(x, 0.48, z * 0.95);
-    g.add(w);
+  const add = (geo: THREE.BufferGeometry, mat: THREE.Material, pos?: number[], rot?: number[]) => {
+    const o = new THREE.Mesh(geo, mat);
+    if (pos) o.position.set(pos[0], pos[1], pos[2]);
+    if (rot) o.rotation.set(rot[0], rot[1], rot[2]);
+    g.add(o);
+    return o;
+  };
+  // рама и лонжероны
+  add(box(-3.0, 3.1, 0.62, 0.82, -0.55, -0.35), m.dark);
+  add(box(-3.0, 3.1, 0.62, 0.82, 0.35, 0.55), m.dark);
+  add(box(-3.0, 3.1, 0.82, 0.9, -0.9, 0.9), m.dark);
+  // кабина: короб + капот + скос лобового
+  add(box(1.75, 3.0, 0.9, 2.55, -1.0, 1.0), m.cab);
+  add(box(3.0, 3.75, 0.9, 1.75, -0.98, 0.98), m.cab);
+  const roof = add(box(1.75, 2.9, 2.55, 2.68, -0.98, 0.98), m.cab);
+  void roof;
+  // стёкла: лобовое (наклонное), боковые
+  add(new THREE.PlaneGeometry(1.75, 0.78), m.glass, [3.02, 2.12, 0], [0, Math.PI / 2, -0.12]);
+  [-1.005, 1.005].forEach((z) => {
+    const w = add(new THREE.PlaneGeometry(0.85, 0.7), m.glass, [2.45, 2.1, z], [0, z > 0 ? 0 : Math.PI, 0]);
+    void w;
+    // дверь и ручка
+    add(box(1.9, 2.95, 0.98, 1.95, z > 0 ? 1.0 : -1.012, z > 0 ? 1.012 : -1.0), m.doorLine);
+    add(box(2.75, 2.88, 1.62, 1.68, z > 0 ? 1.012 : -1.03, z > 0 ? 1.03 : -1.012), m.chrome);
+    // зеркало
+    add(box(3.0, 3.06, 1.85, 2.2, z * 1.22 - 0.06, z * 1.22 + 0.06), m.dark);
+    add(box(2.9, 3.0, 1.95, 1.99, z > 0 ? 1.0 : -1.22, z > 0 ? 1.22 : -1.0), m.dark);
+    // ступенька
+    add(box(2.05, 2.7, 0.62, 0.68, z > 0 ? 0.95 : -1.15, z > 0 ? 1.15 : -0.95), m.chrome);
   });
+  // решётка радиатора, фары, бампер, номер
+  add(box(3.75, 3.78, 1.0, 1.6, -0.6, 0.6), m.grille);
+  for (let y = 1.07; y < 1.58; y += 0.1) add(box(3.78, 3.8, y, y + 0.03, -0.58, 0.58), m.chrome);
+  [-0.78, 0.78].forEach((z) => {
+    add(new THREE.CylinderGeometry(0.13, 0.13, 0.05, 16), m.headlight, [3.78, 1.32, z], [0, 0, Math.PI / 2]);
+    add(box(3.76, 3.79, 1.05, 1.13, z - 0.12, z + 0.12), m.amber);
+  });
+  add(box(3.7, 3.95, 0.62, 0.92, -1.0, 1.0), m.dark);
+  add(box(3.95, 3.96, 0.7, 0.84, -0.32, 0.32), m.white);
+  // проблесковый маячок и козырёк
+  add(box(2.0, 2.7, 2.68, 2.74, -0.5, 0.5), m.dark);
+  add(new THREE.CylinderGeometry(0.11, 0.13, 0.16, 14), m.amber, [2.35, 2.82, 0]);
+  // выхлопная труба за кабиной
+  add(new THREE.CylinderGeometry(0.06, 0.06, 1.9, 10), m.chrome, [1.62, 1.85, -0.9]);
+  // крылья над колёсами
+  [-1.9, -0.85, 2.55].forEach((x) =>
+    [-1, 1].forEach((sd) => {
+      const f = new THREE.Mesh(new THREE.TorusGeometry(0.6, 0.09, 8, 20, Math.PI), m.dark);
+      f.position.set(x, 0.55, sd * 0.86);
+      g.add(f);
+    }),
+  );
+  // колёса с дисками и гайками
+  [[-1.9], [-0.85], [2.55]].forEach(([x]) =>
+    [-1, 1].forEach((sd) => {
+      add(new THREE.CylinderGeometry(0.5, 0.5, 0.36, 24), m.tire, [x, 0.5, sd * 0.86], [Math.PI / 2, 0, 0]);
+      add(new THREE.CylinderGeometry(0.28, 0.28, 0.02, 20), m.rim, [x, 0.5, sd * 1.045], [Math.PI / 2, 0, 0]);
+      add(new THREE.CylinderGeometry(0.09, 0.09, 0.03, 12), m.chrome, [x, 0.5, sd * 1.06], [Math.PI / 2, 0, 0]);
+      for (let k = 0; k < 6; k++) {
+        const a = (k / 6) * Math.PI * 2;
+        add(new THREE.CylinderGeometry(0.025, 0.025, 0.03, 6), m.chrome, [x + Math.cos(a) * 0.18, 0.5 + Math.sin(a) * 0.18, sd * 1.06], [Math.PI / 2, 0, 0]);
+      }
+    }),
+  );
+  // цистерна: цилиндр + выпуклые днища, белая полоса, люк, лестница, ложементы
+  const TL = 4.1;
+  const TCX = -0.85;
+  add(new THREE.CylinderGeometry(0.98, 0.98, TL, 36), m.orange, [TCX, 1.95, 0], [0, 0, Math.PI / 2]);
+  [-1, 1].forEach((sd) => {
+    const cap = add(new THREE.SphereGeometry(0.98, 28, 14, 0, Math.PI * 2, 0, Math.PI / 2), m.orange, [TCX + (sd * TL) / 2, 1.95, 0]);
+    cap.scale.set(1, 0.32, 1);
+    cap.rotation.z = -sd * (Math.PI / 2);
+  });
+  add(new THREE.CylinderGeometry(0.995, 0.995, 0.22, 36), m.white, [TCX - 0.6, 1.95, 0], [0, 0, Math.PI / 2]);
+  add(new THREE.CylinderGeometry(0.995, 0.995, 0.08, 36), m.white, [TCX + 0.2, 1.95, 0], [0, 0, Math.PI / 2]);
+  [-2.55, 0.85].forEach((x) => add(box(x - 0.12, x + 0.12, 0.9, 1.25, -0.85, 0.85), m.dark));
+  add(new THREE.CylinderGeometry(0.28, 0.28, 0.14, 20), m.orange, [TCX + 0.8, 2.97, 0]);
+  add(new THREE.CylinderGeometry(0.3, 0.3, 0.05, 20), m.chrome, [TCX + 0.8, 3.06, 0]);
+  add(box(TCX - 1.6, TCX + 1.4, 3.0, 3.03, -0.42, -0.38), m.chrome); // поручень
+  [-1.6, -0.6, 0.4, 1.4].forEach((dx) => add(box(TCX + dx - 0.02, TCX + dx + 0.02, 2.88, 3.03, -0.42, -0.38), m.chrome));
+  // лестница сзади
+  [-0.25, 0.25].forEach((z) => add(box(-3.2, -3.16, 0.9, 2.9, z - 0.025, z + 0.025), m.chrome));
+  for (let y = 1.1; y < 2.9; y += 0.3) add(box(-3.2, -3.16, y, y + 0.03, -0.25, 0.25), m.chrome);
+  // задний клапан и катушка шланга
+  add(new THREE.CylinderGeometry(0.15, 0.15, 0.3, 14), m.dark, [-3.15, 1.35, 0.55], [0, 0, Math.PI / 2]);
+  const reel = add(new THREE.CylinderGeometry(0.42, 0.42, 0.5, 24), m.hose, [-2.2, 1.15, 0.9 + 0.2], [Math.PI / 2, 0, 0]);
+  void reel;
+  [-0.25, 0.25].forEach((dz) => add(new THREE.CylinderGeometry(0.5, 0.5, 0.03, 24), m.chrome, [-2.2, 1.15, 1.1 + dz], [Math.PI / 2, 0, 0]));
+  // ящик для инструментов, задние фонари, светоотражатели
+  add(box(-0.4, 0.6, 0.62, 1.0, 0.9, 1.0), m.chrome);
+  [-0.75, 0.75].forEach((z) => {
+    add(box(-3.04, -3.0, 0.9, 1.08, z - 0.15, z + 0.15), m.tail);
+    add(box(-3.04, -3.0, 1.1, 1.18, z - 0.15, z + 0.15), m.white);
+  });
+  for (let x = -2.8; x < 1.5; x += 0.55) add(box(x, x + 0.25, 0.68, 0.76, 0.905, 0.92), m.amber);
   return g;
 };
 
@@ -383,6 +463,13 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
       cab: new THREE.MeshStandardMaterial({color: '#f2f2ee', roughness: 0.5}),
       orange: new THREE.MeshStandardMaterial({color: '#e98a2c', roughness: 0.5, metalness: 0.1}),
       hose: new THREE.MeshStandardMaterial({color: '#2f3a2f', roughness: 0.7}),
+      glass: new THREE.MeshStandardMaterial({color: '#28394a', roughness: 0.08, metalness: 0.6, side: THREE.DoubleSide}),
+      doorLine: new THREE.MeshStandardMaterial({color: '#e4e4df', roughness: 0.5}),
+      grille: new THREE.MeshStandardMaterial({color: '#2a2c30', roughness: 0.6}),
+      headlight: new THREE.MeshStandardMaterial({color: '#fffbe8', emissive: '#fff3c4', emissiveIntensity: 0.6, roughness: 0.1}),
+      amber: new THREE.MeshStandardMaterial({color: '#ffad2e', emissive: '#ff9b1a', emissiveIntensity: 0.35, roughness: 0.3}),
+      tail: new THREE.MeshStandardMaterial({color: '#d0342c', emissive: '#a01a12', emissiveIntensity: 0.4, roughness: 0.3}),
+      rim: new THREE.MeshStandardMaterial({color: '#b9bec4', roughness: 0.25, metalness: 0.75}),
       leaf: new THREE.MeshStandardMaterial({color: '#4f8a3a', roughness: 0.9}),
       trunk: new THREE.MeshStandardMaterial({color: '#6b4a2e', roughness: 1}),
       fence: new THREE.MeshStandardMaterial({color: '#b08a5c', roughness: 0.9}),
@@ -754,8 +841,8 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
           const [a, b] = CH[0];
           const cx = (a + b) / 2;
           const pts = [
-            [x - 2.6, 1.5, -6.5],
-            [x - 4, 0.3, -4.5],
+            [x - 2.2, 1.15, -5.4],
+            [x - 3.4, 0.25, -4.2],
             [cx + 1.5, 0.25, -1.6],
             [cx, 0.3, -1.2],
             [cx, TY1, -0.6],
