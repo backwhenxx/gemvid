@@ -108,5 +108,8 @@
   Солдаты: `sf:f85a4ed8c33a43eca1a7caa45f7acf99_clean` (гимнастёрка, пилотка), `sf:6a104431bcb8400080b79446ec019696_clean` (форма с каской).
 - Знаки государств и армий (звёзды, погоны, петлицы, нашивки) — **убирать** (решение Дениса): `library/patches/<uid>.json`
   (`rects` — закрасить по соседям, `cut` — срезать выпуклый значок по UV), workflow `tex-extract` → смотреть сетку → `tex-patch` → `sf:<uid>_clean`.
+- **Механизмы в разрезе — sand3d (Apache-2.0, поверх Blender)**: программа `library/sand3d/<имя>.py` с `build()`
+  (справочник — `library/sand3d/API.md`, примеры — `washing_machine.py`, `gears.py`), workflow `sand3d` → `s3:<имя>`.
+  Подвижные части (дверцы, барабаны, шестерни) — суставы в glTF extras. Металлу нужен `envMap` (отражения неба), иначе он чёрный.
 - Сцена `stage` (`src/scenes/stage/`, `src/lib/lib3d.ts`): HDRI, земля, `items`, `actors` (путь, анимация,
   ноги на полу по костям ступней), `booms` (взрывы спрайтами), `cam`.
