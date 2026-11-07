@@ -771,10 +771,10 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
       });
       hg.position.set(dx, dy, 0);
       add(hg);
-      W0.kettle.position.set(-0.7 + dx, -DEPTH + 0.8 + dy, -1.2);
+      W0.kettle.position.set(-0.7 + dx, -DEPTH + 0.8 + dy, -2.15);
       add(W0.kettle);
-      W0.cat.position.set(-1.25 + dx, 0.47 + dy, -1.6);
-      W0.cat.rotation.y = 0.9;
+      W0.cat.position.set(-1.15 + dx, 0.47 + dy, -0.95);
+      W0.cat.rotation.y = 0.64; // смотрит в камеру
       add(W0.cat);
       W0.rats.forEach((rt, i) => {
         const k = (t * 0.12 + i * 0.5) % 1;
