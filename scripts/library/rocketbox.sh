@@ -5,11 +5,11 @@ OUT=out/library/rb; mkdir -p $OUT/avatars $OUT/anims
 git clone -q --filter=blob:none --no-checkout https://github.com/microsoft/Microsoft-Rocketbox rb
 cd rb
 git sparse-checkout init --no-cone
-printf '%s\n' '/Assets/Avatars/*/*/Export/*.fbx' '!/Assets/Avatars/*/*/Export/*_facial.fbx' '/Assets/Avatars/*/*/Textures/' \
+printf '%s\n' '/Assets/Avatars/*/*/Export/*.fbx' '!/Assets/Avatars/*/*/Export/*_facial.fbx' '/Assets/Avatars/*/*/Textures/*' '!/Assets/Avatars/*/*/Textures/*_specular*' \
   '/Assets/Animations/all_animations_max_motextr_static/' > .git/info/sparse-checkout
 git checkout -q HEAD
 cd ..
-du -sh rb
+du -sh rb; df -h / | tail -1
 B=blender/blender
 for f in rb/Assets/Avatars/*/*/Export/*.fbx; do
   n=$(basename "$f" .fbx); [ -f "$OUT/avatars/$n.glb" ] && continue
