@@ -1,0 +1,48 @@
+name: Библиотека моделей
+
+on:
+  workflow_dispatch:
+    inputs:
+      what:
+        description: "polyhaven | rocketbox-list | rocketbox"
+        required: true
+        default: polyhaven
+
+permissions:
+  contents: write
+
+jobs:
+  lib:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -q requests pillow
+
+      - name: Poly Haven — каталог и листы превью
+        if: contains(inputs.what, 'polyhaven')
+        run: python scripts/library/polyhaven.py out/library
+
+      - name: Rocketbox — список файлов
+        if: inputs.what == 'rocketbox-list'
+        run: |
+          git clone -q --filter=blob:none --no-checkout https://github.com/microsoft/Microsoft-Rocketbox rb
+          mkdir -p out/library
+          git -C rb ls-tree -r -l HEAD > out/library/rocketbox_tree.txt
+          wc -l out/library/rocketbox_tree.txt; head -50 out/library/rocketbox_tree.txt
+          cat rb/.gitattributes 2>/dev/null || git -C rb show HEAD:.gitattributes 2>/dev/null | head
+
+      - name: Каталог в репо, листы в релиз lib
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p library
+          cp out/library/*.json out/library/*.txt library/ 2>/dev/null || true
+          gh release view lib >/dev/null 2>&1 || gh release create lib --title "Библиотека моделей" --notes "Каталоги, листы превью, сконвертированные модели (CC0/MIT)."
+          ls out/library/*.jpg >/dev/null 2>&1 && gh release upload lib out/library/*.jpg --clobber
+          git config user.name "gemvid-bot"; git config user.email "actions@github.com"
+          git add library; git commit -qm "Библиотека: ${{ inputs.what }} [skip ci]" || exit 0
+          for i in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 3; done
