@@ -52,8 +52,8 @@ const log = (...m) => console.log(`[${slug}]`, ...m);
 // Модели/анимации/текстуры/небо из библиотеки (rb:, rba:, ph:, pht:, phh:) → public/lib
 const libIds = [...collectIds(ep)];
 for (const s of ep.scenes) for (const a of s.props?.actors ?? []) {
-  libIds.push(a.anim ?? 'rba:m_idle_neutral_01');
-  if (a.path) libIds.push(a.walk ?? 'rba:m_walk_neutral_01');
+  if (!String(a.anim ?? '').startsWith('#')) libIds.push(a.anim ?? 'rba:m_idle_neutral_01');
+  if (a.path && !String(a.walk ?? '').startsWith('#')) libIds.push(a.walk ?? 'rba:m_walk_neutral_01');
 }
 if (libIds.length) await fetchLib(libIds, ROOT);
 

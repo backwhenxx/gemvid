@@ -2,6 +2,7 @@
 //   rb:<Аватар>      — человек Rocketbox (MIT), GLB из релиза lib
 //   rba:<анимация>   — анимация Rocketbox (m_walk_neutral_01 …)
 //   ph:<id>          — модель Poly Haven (CC0), glTF 1k
+//   sf:<uid>         — модель Sketchfab (CC0/CC-BY), GLB из релиза lib
 //   pht:<id>         — текстура Poly Haven: diff/nor_gl/rough 1k jpg
 //   phh:<id>         — HDRI Poly Haven 1k (небо + свет)
 // Ищет такие строки в любом месте episode.json.
@@ -9,7 +10,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {execFileSync} from 'node:child_process';
 
-const RE = /^(rb|rba|ph|pht|phh):[\w.-]+$/;
+const RE = /^(rb|rba|ph|pht|phh|sf):[\w.-]+$/;
 export const collectIds = (o, out = new Set()) => {
   if (typeof o === 'string') { if (RE.test(o)) out.add(o); }
   else if (Array.isArray(o)) o.forEach((x) => collectIds(x, out));
@@ -37,6 +38,9 @@ export async function fetchLib(ids, ROOT) {
     if (k === 'rb') {
       const f = path.join(L, 'rb', n + '.glb');
       if (!fs.existsSync(f)) { fs.mkdirSync(path.dirname(f), {recursive: true}); gh(['release', 'download', 'lib', '-p', `rb_${n}.glb`, '-D', path.dirname(f), '--clobber'], ROOT); fs.renameSync(path.join(path.dirname(f), `rb_${n}.glb`), f); }
+    } else if (k === 'sf') {
+      const f = path.join(L, 'sf', n + '.glb');
+      if (!fs.existsSync(f)) { fs.mkdirSync(path.dirname(f), {recursive: true}); gh(['release', 'download', 'lib', '-p', `sf_${n}.glb`, '-D', path.dirname(f), '--clobber'], ROOT); fs.renameSync(path.join(path.dirname(f), `sf_${n}.glb`), f); }
     } else if (k === 'rba') {
       if (!fs.existsSync(path.join(L, 'rba', n + '.glb'))) {
         fs.mkdirSync(L, {recursive: true});

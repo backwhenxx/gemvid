@@ -88,7 +88,9 @@ export class Actor {
   mixer: THREE.AnimationMixer;
   feet: THREE.Object3D[] = [];
   private actions = new Map<string, THREE.AnimationAction>();
+  private own: THREE.AnimationClip[];
   constructor(id: string, opt: {height?: number} = {}) {
+    this.own = getLib<GLTF>(id).animations;
     this.body = SkeletonUtils.clone(getLib<GLTF>(id).scene);
     this.body.traverse((m: any) => {
       if (m.isMesh) { m.castShadow = true; m.receiveShadow = true; m.frustumCulled = false; }
@@ -103,7 +105,9 @@ export class Actor {
   private act(animId: string) {
     let a = this.actions.get(animId);
     if (!a) {
-      const clip = getLib<GLTF>(animId).animations[0];
+      // '#имя' или '#номер' — анимация, встроенная в саму модель (животные со Sketchfab)
+      const k = animId.slice(1);
+      const clip = animId.startsWith('#') ? this.own.find((c) => c.name === k) ?? this.own[+k || 0] : getLib<GLTF>(animId).animations[0];
       a = this.mixer.clipAction(clip);
       a.play();
       this.actions.set(animId, a);
