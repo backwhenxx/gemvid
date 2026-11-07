@@ -75,6 +75,7 @@ jobs:
             ~/.npm
             ~/.cache/huggingface
             public/snd
+            public/lib
           key: deps-${{ hashFiles('package.json', 'requirements.txt') }}
 
       - name: Системные пакеты (FFmpeg, эмодзи, espeak)
@@ -93,6 +94,7 @@ jobs:
         if: steps.eps.outputs.list != ''
         env:
           CHROME_PATH: /usr/bin/google-chrome
+          GH_TOKEN: ${{ github.token }}
         run: |
           for EP in ${{ steps.eps.outputs.list }}; do
             if [ "${{ inputs.sounds_only }}" = "true" ]; then node scripts/sounds.mjs "episodes/$EP"; continue; fi

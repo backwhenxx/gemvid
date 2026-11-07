@@ -1,0 +1,1276 @@
+{
+ "title": "Тест библиотеки",
+ "captionStyle": "word",
+ "autoOutro": false,
+ "scenes": [
+  {
+   "type": "stage",
+   "say": "",
+   "props": {
+    "hdri": "phh:kloofendal_overcast",
+    "envI": 0.9,
+    "bgI": 0.9,
+    "sun": 1.6,
+    "sunDir": [
+     -5,
+     9,
+     6
+    ],
+    "fog": [
+     "#b8bec4",
+     30,
+     140
+    ],
+    "ground": {
+     "tex": "pht:brown_mud_02",
+     "size": 120,
+     "tile": 3,
+     "flat": 10
+    },
+    "items": [
+     {
+      "id": "ph:wooden_military_crate",
+      "at": [
+       1.4,
+       null,
+       -0.6
+      ],
+      "yaw": 20
+     },
+     {
+      "id": "ph:ammo_box",
+      "at": [
+       1.2,
+       null,
+       0.4
+      ],
+      "yaw": -10
+     },
+     {
+      "id": "ph:old_military_crate",
+      "at": [
+       2.3,
+       null,
+       -1.2
+      ],
+      "yaw": 60
+     },
+     {
+      "id": "ph:bolt_action_rifle_7_62",
+      "at": [
+       1.35,
+       0.62,
+       -0.55
+      ],
+      "yaw": 80
+     },
+     {
+      "id": "ph:old_gas_mask",
+      "at": [
+       1.1,
+       null,
+       0.95
+      ],
+      "yaw": 30
+     },
+     {
+      "id": "ph:barrel_stove",
+      "at": [
+       -1.6,
+       null,
+       -0.8
+      ],
+      "yaw": 0
+     },
+     {
+      "id": "ph:pot_enamel_01",
+      "at": [
+       -1.6,
+       0.9,
+       -0.8
+      ],
+      "yaw": 0
+     },
+     {
+      "id": "ph:rusted_spade_01",
+      "at": [
+       -0.9,
+       null,
+       1.2
+      ],
+      "yaw": 110
+     },
+     {
+      "id": "ph:street_rat",
+      "at": [
+       0.5,
+       null,
+       1.6
+      ],
+      "yaw": 200
+     },
+     {
+      "id": "ph:dead_tree_trunk",
+      "at": [
+       -7,
+       null,
+       -12
+      ],
+      "yaw": 40
+     },
+     {
+      "id": "ph:wooden_ladder",
+      "at": [
+       -3.2,
+       null,
+       -2.5
+      ],
+      "yaw": 15
+     },
+     {
+      "id": "ph:boulder_01",
+      "at": [
+       5,
+       null,
+       -9
+      ],
+      "yaw": 0
+     }
+    ],
+    "actors": [
+     {
+      "id": "rb:Military_Male_01",
+      "at": [
+       0,
+       0
+      ],
+      "yaw": 20
+     },
+     {
+      "id": "rb:Military_Male_02",
+      "path": [
+       [
+        -5,
+        -7
+       ],
+       [
+        -0.8,
+        -1.8
+       ],
+       [
+        3.5,
+        3
+       ]
+      ],
+      "speed": 1.2,
+      "start": 0
+     }
+    ],
+    "booms": [
+     {
+      "at": [
+       -9,
+       -20
+      ],
+      "t": 1.8,
+      "size": 2.2
+     },
+     {
+      "at": [
+       7,
+       -14
+      ],
+      "t": 0.4,
+      "size": 1.8
+     }
+    ],
+    "cam": [
+     {
+      "pos": [
+       4.5,
+       2.2,
+       7.5
+      ],
+      "look": [
+       -0.5,
+       1.0,
+       -2
+      ],
+      "fov": 42
+     },
+     {
+      "pos": [
+       4.5,
+       2.2,
+       7.5
+      ],
+      "look": [
+       -0.5,
+       1.0,
+       -2
+      ],
+      "fov": 42
+     }
+    ]
+   }
+  },
+  {
+   "type": "stage",
+   "say": "",
+   "props": {
+    "hdri": "phh:kloofendal_overcast",
+    "envI": 0.9,
+    "bgI": 0.9,
+    "sun": 1.6,
+    "sunDir": [
+     -5,
+     9,
+     6
+    ],
+    "fog": [
+     "#b8bec4",
+     30,
+     140
+    ],
+    "ground": {
+     "tex": "pht:brown_mud_02",
+     "size": 120,
+     "tile": 3,
+     "flat": 10
+    },
+    "items": [
+     {
+      "id": "ph:wooden_military_crate",
+      "at": [
+       1.4,
+       null,
+       -0.6
+      ],
+      "yaw": 20
+     },
+     {
+      "id": "ph:ammo_box",
+      "at": [
+       1.2,
+       null,
+       0.4
+      ],
+      "yaw": -10
+     },
+     {
+      "id": "ph:old_military_crate",
+      "at": [
+       2.3,
+       null,
+       -1.2
+      ],
+      "yaw": 60
+     },
+     {
+      "id": "ph:bolt_action_rifle_7_62",
+      "at": [
+       1.35,
+       0.62,
+       -0.55
+      ],
+      "yaw": 80
+     },
+     {
+      "id": "ph:old_gas_mask",
+      "at": [
+       1.1,
+       null,
+       0.95
+      ],
+      "yaw": 30
+     },
+     {
+      "id": "ph:barrel_stove",
+      "at": [
+       -1.6,
+       null,
+       -0.8
+      ],
+      "yaw": 0
+     },
+     {
+      "id": "ph:pot_enamel_01",
+      "at": [
+       -1.6,
+       0.9,
+       -0.8
+      ],
+      "yaw": 0
+     },
+     {
+      "id": "ph:rusted_spade_01",
+      "at": [
+       -0.9,
+       null,
+       1.2
+      ],
+      "yaw": 110
+     },
+     {
+      "id": "ph:street_rat",
+      "at": [
+       0.5,
+       null,
+       1.6
+      ],
+      "yaw": 200
+     },
+     {
+      "id": "ph:dead_tree_trunk",
+      "at": [
+       -7,
+       null,
+       -12
+      ],
+      "yaw": 40
+     },
+     {
+      "id": "ph:wooden_ladder",
+      "at": [
+       -3.2,
+       null,
+       -2.5
+      ],
+      "yaw": 15
+     },
+     {
+      "id": "ph:boulder_01",
+      "at": [
+       5,
+       null,
+       -9
+      ],
+      "yaw": 0
+     }
+    ],
+    "actors": [
+     {
+      "id": "rb:Military_Male_01",
+      "at": [
+       0,
+       0
+      ],
+      "yaw": 20
+     },
+     {
+      "id": "rb:Military_Male_02",
+      "path": [
+       [
+        -5,
+        -7
+       ],
+       [
+        -0.8,
+        -1.8
+       ],
+       [
+        3.5,
+        3
+       ]
+      ],
+      "speed": 1.2,
+      "start": 0
+     }
+    ],
+    "booms": [
+     {
+      "at": [
+       -9,
+       -20
+      ],
+      "t": 1.8,
+      "size": 2.2
+     },
+     {
+      "at": [
+       7,
+       -14
+      ],
+      "t": 0.4,
+      "size": 1.8
+     }
+    ],
+    "cam": [
+     {
+      "pos": [
+       0.75,
+       1.62,
+       1.35
+      ],
+      "look": [
+       0,
+       1.55,
+       0
+      ],
+      "fov": 30
+     },
+     {
+      "pos": [
+       0.75,
+       1.62,
+       1.35
+      ],
+      "look": [
+       0,
+       1.55,
+       0
+      ],
+      "fov": 30
+     }
+    ]
+   }
+  },
+  {
+   "type": "stage",
+   "say": "",
+   "props": {
+    "hdri": "phh:kloofendal_overcast",
+    "envI": 0.9,
+    "bgI": 0.9,
+    "sun": 1.6,
+    "sunDir": [
+     -5,
+     9,
+     6
+    ],
+    "fog": [
+     "#b8bec4",
+     30,
+     140
+    ],
+    "ground": {
+     "tex": "pht:brown_mud_02",
+     "size": 120,
+     "tile": 3,
+     "flat": 10
+    },
+    "items": [
+     {
+      "id": "ph:wooden_military_crate",
+      "at": [
+       1.4,
+       null,
+       -0.6
+      ],
+      "yaw": 20
+     },
+     {
+      "id": "ph:ammo_box",
+      "at": [
+       1.2,
+       null,
+       0.4
+      ],
+      "yaw": -10
+     },
+     {
+      "id": "ph:old_military_crate",
+      "at": [
+       2.3,
+       null,
+       -1.2
+      ],
+      "yaw": 60
+     },
+     {
+      "id": "ph:bolt_action_rifle_7_62",
+      "at": [
+       1.35,
+       0.62,
+       -0.55
+      ],
+      "yaw": 80
+     },
+     {
+      "id": "ph:old_gas_mask",
+      "at": [
+       1.1,
+       null,
+       0.95
+      ],
+      "yaw": 30
+     },
+     {
+      "id": "ph:barrel_stove",
+      "at": [
+       -1.6,
+       null,
+       -0.8
+      ],
+      "yaw": 0
+     },
+     {
+      "id": "ph:pot_enamel_01",
+      "at": [
+       -1.6,
+       0.9,
+       -0.8
+      ],
+      "yaw": 0
+     },
+     {
+      "id": "ph:rusted_spade_01",
+      "at": [
+       -0.9,
+       null,
+       1.2
+      ],
+      "yaw": 110
+     },
+     {
+      "id": "ph:street_rat",
+      "at": [
+       0.5,
+       null,
+       1.6
+      ],
+      "yaw": 200
+     },
+     {
+      "id": "ph:dead_tree_trunk",
+      "at": [
+       -7,
+       null,
+       -12
+      ],
+      "yaw": 40
+     },
+     {
+      "id": "ph:wooden_ladder",
+      "at": [
+       -3.2,
+       null,
+       -2.5
+      ],
+      "yaw": 15
+     },
+     {
+      "id": "ph:boulder_01",
+      "at": [
+       5,
+       null,
+       -9
+      ],
+      "yaw": 0
+     }
+    ],
+    "actors": [
+     {
+      "id": "rb:Military_Male_01",
+      "at": [
+       0,
+       0
+      ],
+      "yaw": 20
+     },
+     {
+      "id": "rb:Military_Male_02",
+      "path": [
+       [
+        -5,
+        -7
+       ],
+       [
+        -0.8,
+        -1.8
+       ],
+       [
+        3.5,
+        3
+       ]
+      ],
+      "speed": 1.2,
+      "start": 0
+     }
+    ],
+    "booms": [
+     {
+      "at": [
+       -9,
+       -20
+      ],
+      "t": 1.8,
+      "size": 2.2
+     },
+     {
+      "at": [
+       7,
+       -14
+      ],
+      "t": 0.4,
+      "size": 1.8
+     }
+    ],
+    "t0": 1.0,
+    "cam": [
+     {
+      "pos": [
+       2.5,
+       1.3,
+       2.8
+      ],
+      "look": [
+       -1.2,
+       1.0,
+       -2.6
+      ],
+      "fov": 38
+     },
+     {
+      "pos": [
+       2.5,
+       1.3,
+       2.8
+      ],
+      "look": [
+       -1.2,
+       1.0,
+       -2.6
+      ],
+      "fov": 38
+     }
+    ]
+   }
+  },
+  {
+   "type": "stage",
+   "say": "",
+   "props": {
+    "hdri": "phh:kloofendal_overcast",
+    "envI": 0.9,
+    "bgI": 0.9,
+    "sun": 1.6,
+    "sunDir": [
+     -5,
+     9,
+     6
+    ],
+    "fog": [
+     "#b8bec4",
+     30,
+     140
+    ],
+    "ground": {
+     "tex": "pht:brown_mud_02",
+     "size": 120,
+     "tile": 3,
+     "flat": 10
+    },
+    "items": [
+     {
+      "id": "ph:wooden_military_crate",
+      "at": [
+       1.4,
+       null,
+       -0.6
+      ],
+      "yaw": 20
+     },
+     {
+      "id": "ph:ammo_box",
+      "at": [
+       1.2,
+       null,
+       0.4
+      ],
+      "yaw": -10
+     },
+     {
+      "id": "ph:old_military_crate",
+      "at": [
+       2.3,
+       null,
+       -1.2
+      ],
+      "yaw": 60
+     },
+     {
+      "id": "ph:bolt_action_rifle_7_62",
+      "at": [
+       1.35,
+       0.62,
+       -0.55
+      ],
+      "yaw": 80
+     },
+     {
+      "id": "ph:old_gas_mask",
+      "at": [
+       1.1,
+       null,
+       0.95
+      ],
+      "yaw": 30
+     },
+     {
+      "id": "ph:barrel_stove",
+      "at": [
+       -1.6,
+       null,
+       -0.8
+      ],
+      "yaw": 0
+     },
+     {
+      "id": "ph:pot_enamel_01",
+      "at": [
+       -1.6,
+       0.9,
+       -0.8
+      ],
+      "yaw": 0
+     },
+     {
+      "id": "ph:rusted_spade_01",
+      "at": [
+       -0.9,
+       null,
+       1.2
+      ],
+      "yaw": 110
+     },
+     {
+      "id": "ph:street_rat",
+      "at": [
+       0.5,
+       null,
+       1.6
+      ],
+      "yaw": 200
+     },
+     {
+      "id": "ph:dead_tree_trunk",
+      "at": [
+       -7,
+       null,
+       -12
+      ],
+      "yaw": 40
+     },
+     {
+      "id": "ph:wooden_ladder",
+      "at": [
+       -3.2,
+       null,
+       -2.5
+      ],
+      "yaw": 15
+     },
+     {
+      "id": "ph:boulder_01",
+      "at": [
+       5,
+       null,
+       -9
+      ],
+      "yaw": 0
+     }
+    ],
+    "actors": [
+     {
+      "id": "rb:Military_Male_01",
+      "at": [
+       0,
+       0
+      ],
+      "yaw": 20
+     },
+     {
+      "id": "rb:Military_Male_02",
+      "path": [
+       [
+        -5,
+        -7
+       ],
+       [
+        -0.8,
+        -1.8
+       ],
+       [
+        3.5,
+        3
+       ]
+      ],
+      "speed": 1.2,
+      "start": 0
+     }
+    ],
+    "booms": [
+     {
+      "at": [
+       -9,
+       -20
+      ],
+      "t": 1.8,
+      "size": 2.2
+     },
+     {
+      "at": [
+       7,
+       -14
+      ],
+      "t": 0.4,
+      "size": 1.8
+     }
+    ],
+    "cam": [
+     {
+      "pos": [
+       2.2,
+       1.4,
+       3.0
+      ],
+      "look": [
+       1.3,
+       0.4,
+       -0.2
+      ],
+      "fov": 36
+     },
+     {
+      "pos": [
+       2.2,
+       1.4,
+       3.0
+      ],
+      "look": [
+       1.3,
+       0.4,
+       -0.2
+      ],
+      "fov": 36
+     }
+    ]
+   }
+  },
+  {
+   "type": "stage",
+   "say": "",
+   "props": {
+    "hdri": "phh:kloofendal_overcast",
+    "envI": 0.9,
+    "bgI": 0.9,
+    "sun": 1.6,
+    "sunDir": [
+     -5,
+     9,
+     6
+    ],
+    "fog": [
+     "#b8bec4",
+     30,
+     140
+    ],
+    "ground": {
+     "tex": "pht:brown_mud_02",
+     "size": 120,
+     "tile": 3,
+     "flat": 10
+    },
+    "items": [
+     {
+      "id": "ph:wooden_military_crate",
+      "at": [
+       1.4,
+       null,
+       -0.6
+      ],
+      "yaw": 20
+     },
+     {
+      "id": "ph:ammo_box",
+      "at": [
+       1.2,
+       null,
+       0.4
+      ],
+      "yaw": -10
+     },
+     {
+      "id": "ph:old_military_crate",
+      "at": [
+       2.3,
+       null,
+       -1.2
+      ],
+      "yaw": 60
+     },
+     {
+      "id": "ph:bolt_action_rifle_7_62",
+      "at": [
+       1.35,
+       0.62,
+       -0.55
+      ],
+      "yaw": 80
+     },
+     {
+      "id": "ph:old_gas_mask",
+      "at": [
+       1.1,
+       null,
+       0.95
+      ],
+      "yaw": 30
+     },
+     {
+      "id": "ph:barrel_stove",
+      "at": [
+       -1.6,
+       null,
+       -0.8
+      ],
+      "yaw": 0
+     },
+     {
+      "id": "ph:pot_enamel_01",
+      "at": [
+       -1.6,
+       0.9,
+       -0.8
+      ],
+      "yaw": 0
+     },
+     {
+      "id": "ph:rusted_spade_01",
+      "at": [
+       -0.9,
+       null,
+       1.2
+      ],
+      "yaw": 110
+     },
+     {
+      "id": "ph:street_rat",
+      "at": [
+       0.5,
+       null,
+       1.6
+      ],
+      "yaw": 200
+     },
+     {
+      "id": "ph:dead_tree_trunk",
+      "at": [
+       -7,
+       null,
+       -12
+      ],
+      "yaw": 40
+     },
+     {
+      "id": "ph:wooden_ladder",
+      "at": [
+       -3.2,
+       null,
+       -2.5
+      ],
+      "yaw": 15
+     },
+     {
+      "id": "ph:boulder_01",
+      "at": [
+       5,
+       null,
+       -9
+      ],
+      "yaw": 0
+     }
+    ],
+    "actors": [
+     {
+      "id": "rb:Military_Male_01",
+      "at": [
+       0,
+       0
+      ],
+      "yaw": 20
+     },
+     {
+      "id": "rb:Military_Male_02",
+      "path": [
+       [
+        -5,
+        -7
+       ],
+       [
+        -0.8,
+        -1.8
+       ],
+       [
+        3.5,
+        3
+       ]
+      ],
+      "speed": 1.2,
+      "start": 0
+     }
+    ],
+    "booms": [
+     {
+      "at": [
+       -9,
+       -20
+      ],
+      "t": 1.8,
+      "size": 2.2
+     },
+     {
+      "at": [
+       7,
+       -14
+      ],
+      "t": 0.4,
+      "size": 1.8
+     }
+    ],
+    "t0": -0.3,
+    "cam": [
+     {
+      "pos": [
+       3,
+       2.5,
+       8
+      ],
+      "look": [
+       -6,
+       2.5,
+       -18
+      ],
+      "fov": 38
+     },
+     {
+      "pos": [
+       3,
+       2.5,
+       8
+      ],
+      "look": [
+       -6,
+       2.5,
+       -18
+      ],
+      "fov": 38
+     }
+    ]
+   }
+  },
+  {
+   "type": "stage",
+   "say": "",
+   "props": {
+    "hdri": "phh:kloofendal_overcast",
+    "envI": 0.9,
+    "bgI": 0.9,
+    "sun": 1.6,
+    "sunDir": [
+     -5,
+     9,
+     6
+    ],
+    "fog": [
+     "#b8bec4",
+     30,
+     140
+    ],
+    "ground": {
+     "tex": "pht:brown_mud_02",
+     "size": 120,
+     "tile": 3,
+     "flat": 10
+    },
+    "items": [
+     {
+      "id": "ph:wooden_military_crate",
+      "at": [
+       1.4,
+       null,
+       -0.6
+      ],
+      "yaw": 20
+     },
+     {
+      "id": "ph:ammo_box",
+      "at": [
+       1.2,
+       null,
+       0.4
+      ],
+      "yaw": -10
+     },
+     {
+      "id": "ph:old_military_crate",
+      "at": [
+       2.3,
+       null,
+       -1.2
+      ],
+      "yaw": 60
+     },
+     {
+      "id": "ph:bolt_action_rifle_7_62",
+      "at": [
+       1.35,
+       0.62,
+       -0.55
+      ],
+      "yaw": 80
+     },
+     {
+      "id": "ph:old_gas_mask",
+      "at": [
+       1.1,
+       null,
+       0.95
+      ],
+      "yaw": 30
+     },
+     {
+      "id": "ph:barrel_stove",
+      "at": [
+       -1.6,
+       null,
+       -0.8
+      ],
+      "yaw": 0
+     },
+     {
+      "id": "ph:pot_enamel_01",
+      "at": [
+       -1.6,
+       0.9,
+       -0.8
+      ],
+      "yaw": 0
+     },
+     {
+      "id": "ph:rusted_spade_01",
+      "at": [
+       -0.9,
+       null,
+       1.2
+      ],
+      "yaw": 110
+     },
+     {
+      "id": "ph:street_rat",
+      "at": [
+       0.5,
+       null,
+       1.6
+      ],
+      "yaw": 200
+     },
+     {
+      "id": "ph:dead_tree_trunk",
+      "at": [
+       -7,
+       null,
+       -12
+      ],
+      "yaw": 40
+     },
+     {
+      "id": "ph:wooden_ladder",
+      "at": [
+       -3.2,
+       null,
+       -2.5
+      ],
+      "yaw": 15
+     },
+     {
+      "id": "ph:boulder_01",
+      "at": [
+       5,
+       null,
+       -9
+      ],
+      "yaw": 0
+     }
+    ],
+    "actors": [
+     {
+      "id": "rb:Military_Male_01",
+      "at": [
+       0,
+       0
+      ],
+      "yaw": 20
+     },
+     {
+      "id": "rb:Military_Male_02",
+      "path": [
+       [
+        -5,
+        -7
+       ],
+       [
+        -0.8,
+        -1.8
+       ],
+       [
+        3.5,
+        3
+       ]
+      ],
+      "speed": 1.2,
+      "start": 0
+     }
+    ],
+    "booms": [
+     {
+      "at": [
+       -9,
+       -20
+      ],
+      "t": 1.8,
+      "size": 2.2
+     },
+     {
+      "at": [
+       7,
+       -14
+      ],
+      "t": 0.4,
+      "size": 1.8
+     }
+    ],
+    "t0": 1.3,
+    "cam": [
+     {
+      "pos": [
+       3,
+       2.5,
+       8
+      ],
+      "look": [
+       -6,
+       3,
+       -18
+      ],
+      "fov": 38
+     },
+     {
+      "pos": [
+       3,
+       2.5,
+       8
+      ],
+      "look": [
+       -6,
+       3,
+       -18
+      ],
+      "fov": 38
+     }
+    ]
+   }
+  }
+ ]
+}
