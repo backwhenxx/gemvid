@@ -167,6 +167,19 @@ const align = () => {
 };
 const words = tokens.length && heard.length ? align() : [];
 
+// ---------- непрерывность камеры: сцена с cont начинает с конечной камеры предыдущей ----------
+ep.scenes.forEach((s, i) => {
+  const prev = ep.scenes[i - 1];
+  const c = s.props?.cam;
+  const pc = prev?.props?.cam;
+  if (i > 0 && s.props?.cont && Array.isArray(c) && Array.isArray(pc) && prev.type === s.type) {
+    if (JSON.stringify(c[0]) !== JSON.stringify(pc[1])) {
+      log(`камера сцены ${i + 1}: старт подогнан под конец сцены ${i} (был скачок)`);
+      c[0] = pc[1];
+    }
+  }
+});
+
 // ---------- сцены ----------
 const firstWordTime = scenesIn.map((s, i) => {
   const k = tokens.findIndex((t) => t.scene === i);
