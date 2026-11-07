@@ -171,32 +171,55 @@ export const floorAt = (scene: THREE.Object3D, x: number, z: number, fallback = 
   return hit ? hit.point.y : fallback;
 };
 
-/** Взрыв: вспышка, огненное ядро, клубы дыма-спрайтов с текстурой, комья. t — сек от начала. */
+/** Текстуры клубов дыма: фрактальный шум (fbm) с объёмной подсветкой сверху — 4 разных клуба. */
 const smokeTex = (() => {
-  let t: THREE.CanvasTexture | null = null;
+  let t: THREE.CanvasTexture[] | null = null;
   return () => {
     if (t) return t;
-    const c = document.createElement('canvas');
-    c.width = c.height = 256;
-    const g = c.getContext('2d')!;
-    const R = (s: number) => () => ((s = (s * 16807) % 2147483647) / 2147483647);
-    const r = R(7);
-    for (let i = 0; i < 70; i++) {
-      const x = 128 + (r() - 0.5) * 120, y = 128 + (r() - 0.5) * 120, rad = 20 + r() * 50;
-      const gr = g.createRadialGradient(x, y, 0, x, y, rad);
-      const a = 0.12 + r() * 0.1;
-      gr.addColorStop(0, `rgba(255,255,255,${a})`);
-      gr.addColorStop(1, 'rgba(255,255,255,0)');
-      g.fillStyle = gr;
-      g.fillRect(0, 0, 256, 256);
-    }
-    const m = g.getImageData(0, 0, 256, 256);
-    for (let y = 0; y < 256; y++) for (let x = 0; x < 256; x++) {
-      const d = Math.hypot(x - 128, y - 128) / 128;
-      m.data[(y * 256 + x) * 4 + 3] *= Math.max(0, 1 - d * d);
-    }
-    g.putImageData(m, 0, 0);
-    t = new THREE.CanvasTexture(c);
+    t = [11, 23, 37, 51].map((seed) => {
+      const N = 256, G = 16;
+      let s = seed;
+      const r = () => ((s = (s * 16807) % 2147483647) / 2147483647);
+      const grid = Array.from({length: 6}, () => Float32Array.from({length: (G + 1) * (G + 1)}, r));
+      const sm = (x: number) => x * x * (3 - 2 * x);
+      const vn = (o: number, x: number, y: number) => {
+        const n = 4;
+        const gx = (x * n) % G, gy = (y * n) % G;
+        const ix = Math.floor(gx), iy = Math.floor(gy), fx = sm(gx - ix), fy = sm(gy - iy);
+        const g = grid[o], W = G + 1;
+        const v = (i: number, j: number) => g[(j % G) * W + (i % G)];
+        return v(ix, iy) * (1 - fx) * (1 - fy) + v(ix + 1, iy) * fx * (1 - fy) + v(ix, iy + 1) * (1 - fx) * fy + v(ix + 1, iy + 1) * fx * fy;
+      };
+      const fbm = (x: number, y: number) => {
+        let a = 0, w = 0.5, f = 1;
+        for (let o = 0; o < 5; o++) { a += w * vn(o, x * f, y * f); w *= 0.5; f *= 2; }
+        return a;
+      };
+      const D = new Float32Array(N * N);
+      for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+        const u = x / N, v = y / N;
+        const d = Math.hypot(u - 0.5, v - 0.52) * 2;
+        const n = fbm(u * 0.9 + 0.3, v * 0.9 + 0.1);
+        D[y * N + x] = Math.max(0, Math.min(1, (n * 1.35 - d * d * 0.95 - 0.08) * 2.2));
+      }
+      const c = document.createElement('canvas');
+      c.width = c.height = N;
+      const g = c.getContext('2d')!;
+      const img = g.createImageData(N, N);
+      for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+        const i = y * N + x;
+        const dx = D[i] - D[y * N + Math.max(0, x - 2)], dy = D[i] - D[Math.max(0, y - 2) * N + x];
+        // свет сверху-слева: верх клуба светлее, низ и впадины темнее
+        const lit = Math.max(0.35, Math.min(1, 0.72 + (dx * 2.2 + dy * 3.2) + (0.5 - y / N) * 0.35));
+        const k = Math.round(255 * lit);
+        img.data[i * 4] = k; img.data[i * 4 + 1] = k; img.data[i * 4 + 2] = k;
+        img.data[i * 4 + 3] = Math.round(255 * Math.pow(D[i], 0.8));
+      }
+      g.putImageData(img, 0, 0);
+      const tx = new THREE.CanvasTexture(c);
+      tx.colorSpace = THREE.SRGBColorSpace;
+      return tx;
+    });
     return t;
   };
 })();
@@ -228,6 +251,15 @@ export const explosion = (t: number, opt: {seed?: number; size?: number; dust?: 
   let s = (opt.seed ?? 1) * 9301 + 49297;
   const r = () => ((s = (s * 16807) % 2147483647) / 2147483647);
   const tx = smokeTex();
+  const dust = new THREE.Color(opt.dust ?? '#7a6d5e');
+  const puff = (pos: THREE.Vector3, size: number, col: THREE.Color, op: number, rot: number, i: number, blend = THREE.NormalBlending) => {
+    if (op <= 0.01) return;
+    const m = new THREE.SpriteMaterial({map: tx[i % tx.length], color: col, transparent: true, depthWrite: false, opacity: Math.min(1, op), rotation: ((rot % 1) - 0.5) * 0.5, blending: blend}); // свет в текстуре сверху — почти не вращаем
+    const p = new THREE.Sprite(m);
+    p.position.copy(pos);
+    p.scale.setScalar(size);
+    grp.add(p);
+  };
   // вспышка — короткая, маленький свет (без засветки кадра)
   if (t < 0.25) {
     const k = 1 - t / 0.25;
@@ -235,21 +267,42 @@ export const explosion = (t: number, opt: {seed?: number; size?: number; dust?: 
     l.position.y = 0.8 * S;
     grp.add(l);
   }
-  const N = 26;
-  for (let i = 0; i < N; i++) {
-    const a = r() * Math.PI * 2, up = 0.4 + r() * 1.2, sp = 0.5 + r() * 1.5, rot = r() * 6, life = 2.5 + r() * 3;
-    const delay = r() * 0.15;
-    const tt = t - delay;
+  // огненное ядро: доли секунды
+  for (let i = 0; i < 6; i++) {
+    const a = r() * 6.28, k = t / 0.3;
+    if (k > 1) { r(); continue; }
+    puff(new THREE.Vector3(Math.cos(a) * 0.3 * S * k, (0.3 + r() * 0.6) * S * (0.5 + k), Math.sin(a) * 0.3 * S * k), (0.6 + k * 1.2) * S,
+      new THREE.Color('#ffc070').lerp(new THREE.Color('#ff7a2a'), k), (1 - k) * 0.95, a, i, THREE.AdditiveBlending);
+  }
+  // столб земли: узкий тёмный выброс вверх, тормозит и расплывается
+  for (let i = 0; i < 12; i++) {
+    const h = (1.5 + r() * 2.5) * S, dx = (r() - 0.5) * 0.6 * S, dz = (r() - 0.5) * 0.6 * S, life = 2.2 + r() * 1.5, rot = r() * 6;
+    const tt = t - r() * 0.08;
+    if (tt < 0 || tt > life) continue;
+    const e = 1 - Math.pow(1 - Math.min(1, tt / 0.9), 3);
+    const k = tt / life;
+    puff(new THREE.Vector3(dx * (1 + e), h * e - Math.max(0, tt - 1.2) * 0.4 * S, dz * (1 + e)), (0.5 + e * 1.1 + tt * 0.3) * S,
+      dust.clone().multiplyScalar(0.55 + r() * 0.2), Math.min(1, tt / 0.05) * (1 - k * k) * 0.95, rot + tt * 0.2, i);
+  }
+  // клубящееся облако: медленно растёт и поднимается, держится дольше всего
+  for (let i = 0; i < 22; i++) {
+    const a = r() * Math.PI * 2, up = 0.3 + r() * 1.4, sp = 0.4 + r() * 1.3, rot = r() * 6, life = 3.5 + r() * 2.5;
+    const tt = t - 0.05 - r() * 0.25;
     if (tt < 0 || tt > life) continue;
     const k = tt / life;
-    const ease = 1 - Math.pow(1 - Math.min(1, tt / 1.2), 3);
-    const fire = Math.max(0, 1 - tt / 0.35);
-    const col = new THREE.Color(opt.dust ?? '#6f6559').lerp(new THREE.Color('#ffd08a'), fire);
-    const m = new THREE.SpriteMaterial({map: tx, color: col, transparent: true, depthWrite: false, opacity: Math.min(1, tt / 0.06) * (1 - k) * 0.9, rotation: rot + tt * 0.3});
-    const sp_ = new THREE.Sprite(m);
-    sp_.position.set(Math.cos(a) * sp * ease * S, (up * ease * 2.2 + tt * 0.35) * S, Math.sin(a) * sp * ease * S);
-    sp_.scale.setScalar((0.6 + ease * 1.8 + tt * 0.25) * S);
-    grp.add(sp_);
+    const e = 1 - Math.pow(1 - Math.min(1, tt / 1.4), 3);
+    const fire = Math.max(0, 1 - tt / 0.4);
+    const col = dust.clone().multiplyScalar(0.8 + r() * 0.35).lerp(new THREE.Color('#e0a060'), fire * 0.7);
+    puff(new THREE.Vector3(Math.cos(a) * sp * e * S, (up * e * 2 + tt * 0.3) * S, Math.sin(a) * sp * e * S), (0.8 + e * 1.9 + tt * 0.35) * S,
+      col, Math.min(1, tt / 0.1) * (1 - k) * 0.85, rot + tt * 0.15, i + 1);
+  }
+  // пыль по земле: низкое кольцо разлетается в стороны
+  for (let i = 0; i < 10; i++) {
+    const a = (i / 10) * Math.PI * 2 + r() * 0.5, life = 3 + r() * 2, rot = r() * 6;
+    if (t > life) continue;
+    const e = 1 - Math.pow(1 - Math.min(1, t / 1.0), 2);
+    puff(new THREE.Vector3(Math.cos(a) * (0.5 + e * 2.6) * S, 0.25 * S, Math.sin(a) * (0.5 + e * 2.6) * S), (0.7 + e * 1.3) * S,
+      dust.clone().multiplyScalar(0.95), Math.min(1, t / 0.12) * (1 - t / life) * 0.7, rot, i + 2);
   }
   // комья земли: неровные (смещённые вершины), тёмные, падают по баллистике
   const clods = clodGeos();
