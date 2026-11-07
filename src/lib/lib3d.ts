@@ -299,7 +299,7 @@ export const explosion = (t: number, opt: {seed?: number; size?: number; dust?: 
       new THREE.Color('#ffc070').lerp(new THREE.Color('#ff7a2a'), k), (1 - k) * 0.95, a, i, THREE.AdditiveBlending);
   }
   // столб земли: узкий тёмный выброс вверх, тормозит и расплывается
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < 8; i++) {
     const h = (1.5 + r() * 2.5) * S, dx = (r() - 0.5) * 0.6 * S, dz = (r() - 0.5) * 0.6 * S, life = 2.2 + r() * 1.5, rot = r() * 6;
     const tt = t - r() * 0.08;
     if (tt < 0 || tt > life) continue;
@@ -309,7 +309,7 @@ export const explosion = (t: number, opt: {seed?: number; size?: number; dust?: 
       dust.clone().multiplyScalar(0.55 + r() * 0.2), Math.min(1, tt / 0.05) * (1 - k * k) * 0.95, rot + tt * 0.2, i);
   }
   // клубящееся облако: медленно растёт и поднимается, держится дольше всего
-  for (let i = 0; i < 22; i++) {
+  for (let i = 0; i < 15; i++) {
     const a = r() * Math.PI * 2, up = 0.3 + r() * 1.4, sp = 0.4 + r() * 1.3, rot = r() * 6, life = 3.5 + r() * 2.5;
     const tt = t - 0.05 - r() * 0.25;
     if (tt < 0 || tt > life) continue;
@@ -321,8 +321,8 @@ export const explosion = (t: number, opt: {seed?: number; size?: number; dust?: 
       col, Math.min(1, tt / 0.1) * (1 - k) * 0.85, rot + tt * 0.15, i + 1);
   }
   // пыль по земле: низкое кольцо разлетается в стороны
-  for (let i = 0; i < 10; i++) {
-    const a = (i / 10) * Math.PI * 2 + r() * 0.5, life = 3 + r() * 2, rot = r() * 6;
+  for (let i = 0; i < 7; i++) {
+    const a = (i / 7) * Math.PI * 2 + r() * 0.5, life = 3 + r() * 2, rot = r() * 6;
     if (t > life) continue;
     const e = 1 - Math.pow(1 - Math.min(1, t / 1.0), 2);
     puff(new THREE.Vector3(Math.cos(a) * (0.5 + e * 2.6) * S, 0.25 * S, Math.sin(a) * (0.5 + e * 2.6) * S), (0.7 + e * 1.3) * S,
