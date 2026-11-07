@@ -15,7 +15,7 @@ const RB: Record<Part, string> = {
   thighL: 'Bip01 L Thigh', legL: 'Bip01 L Calf', footL: 'Bip01 L Foot', toeL: 'Bip01 L Toe0',
   thighR: 'Bip01 R Thigh', legR: 'Bip01 R Calf', footR: 'Bip01 R Foot', toeR: 'Bip01 R Toe0',
 };
-const norm = (n: string) => n.replace(/^.*[:|]/, '').replace(/^mixamorig_?/i, '').replace(/[_\s.-]+/g, ' ').trim().toLowerCase();
+const norm = (n: string) => n.replace(/_\d+$/, '').replace(/^.*[:|]/, '').replace(/^mixamorig_?/i, '').replace(/[_\s.-]+/g, ' ').trim().toLowerCase();
 
 export const rbBones = (root: THREE.Object3D) => {
   const m = {} as Record<Part, THREE.Bone>;
@@ -31,7 +31,7 @@ export const guessBones = (root: THREE.Object3D) => {
   const all: THREE.Bone[] = [];
   root.traverse((o: any) => o.isBone && all.push(o));
   const side = (n: string): 'L' | 'R' | null =>
-    /\bleft\b|^left|left$|(^| )l( |$)|^l(?=[a-z])/.test(n) ? 'L' : /\bright\b|^right|right$|(^| )r( |$)|^r(?=[a-z])/.test(n) ? 'R' : null;
+    /\bleft\b|(^| )l( |$)/.test(n) ? 'L' : /\bright\b|(^| )r( |$)/.test(n) ? 'R' : null;
   const finger = /thumb|index|middle|ring|pinky|little|finger|digit|nub|end$|twist|roll|helper|ik/;
   const put = (p: Part, b: THREE.Bone) => { if (!m[p]) m[p] = b; };
   for (const b of all) {
