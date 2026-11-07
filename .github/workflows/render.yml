@@ -127,6 +127,6 @@ jobs:
         run: |
           git config user.name "gemvid-bot"
           git config user.email "actions@github.com"
-          for EP in ${{ steps.eps.outputs.list }}; do for f in preview.jpg timeline.json words.json cover.png sounds.json stills.jpg; do [ -f "out/$EP/$f" ] && git add -f "out/$EP/$f"; done; done
+          for EP in ${{ steps.eps.outputs.list }}; do for f in preview.jpg timeline.json words.json cover.png sounds.json stills.jpg stills_big.jpg; do [ -f "out/$EP/$f" ] && git add -f "out/$EP/$f"; done; done
           git commit -m "Рендер: ${{ steps.eps.outputs.list }} [skip ci]" || exit 0
           for i in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 3; done

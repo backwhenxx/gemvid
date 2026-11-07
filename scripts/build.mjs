@@ -74,6 +74,9 @@ if (flag('--stills')) {
     log(`кадр сцены ${i + 1}`);
   }
   execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-pattern_type', 'glob', '-i', path.join(dir, '*.jpg'), '-vf', 'scale=270:-1,tile=8x3', '-frames:v', '1', '-q:v', '4', path.join(outDir, 'stills.jpg')], {stdio: 'inherit'});
+  // крупнее — чтобы рассмотреть детали (людей, животных, предметы)
+  const rows = Math.ceil(scenesS.length / 4);
+  execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-pattern_type', 'glob', '-i', path.join(dir, '*.jpg'), '-vf', `scale=540:-1,tile=4x${rows}`, '-frames:v', '1', '-q:v', '4', path.join(outDir, 'stills_big.jpg')], {stdio: 'inherit'});
   process.exit(0);
 }
 
