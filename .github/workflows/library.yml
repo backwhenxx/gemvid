@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       what:
-        description: "polyhaven | rocketbox-list | rocketbox | sketchfab-search | sketchfab-get | tex-extract | tex-patch"
+        description: "polyhaven | rocketbox-list | rocketbox | sketchfab-search | sketchfab-get | tex-extract | tex-patch | sand3d"
         required: true
         default: polyhaven
       args:
@@ -88,6 +88,19 @@ jobs:
           done
           gh release view lib >/dev/null 2>&1 || gh release create lib --title "Библиотека моделей" --notes "Модели."
           gh release upload lib up/* --clobber
+
+      - name: sand3d — механизмы по программам (library/sand3d/*.py)
+        if: inputs.what == 'sand3d'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python -m venv /tmp/s3 && /tmp/s3/bin/pip install -q sand3d
+          /tmp/s3/bin/python scripts/library/s3d_build.py ${{ inputs.args }}
+          mkdir -p up && for f in out/library/s3/*.glb; do cp "$f" "up/s3_$(basename $f)"; done
+          npm install --no-audit --no-fund --loglevel=error --no-save three puppeteer-core > /dev/null
+          CHROME_PATH=/usr/bin/google-chrome node scripts/library/thumbs.mjs out/library/s3 out/library/s3_got 2>&1 | grep -v PropertyBinding || true
+          gh release view lib >/dev/null 2>&1 || gh release create lib --title "Библиотека моделей" --notes "Модели."
+          gh release upload lib up/s3_*.glb out/library/s3_got_*.jpg --clobber
 
       - uses: actions/cache/restore@v4
         if: inputs.what == 'rocketbox'
