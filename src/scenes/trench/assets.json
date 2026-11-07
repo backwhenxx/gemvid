@@ -15,5 +15,6 @@
  "ammo": "ph:ammo_box",
  "rifle": "ph:bolt_action_rifle_7_62",
  "wire": "sf:0fc98d8e46434291a2811ee51ad1976b",
- "kettle": "ph:metal_jug"
+ "kettle": "sf:8aa09e0ebc064ba188b31048feccd430",
+ "env": "phh:kloofendal_overcast"
 }

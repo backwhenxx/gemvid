@@ -8,7 +8,7 @@ import {H as SH, W as SW, clamp01, easeInOut, rng} from '../../lib/util';
 import {loadFont} from '@remotion/google-fonts/Comfortaa';
 import {cloudTexture, waterTexture} from '../dam/textures';
 import {box, burlapTexture, earthCutTexture, mudTexture, overcastSky, smokeTexture, woodTexture} from './parts';
-import {Actor, clodGeos, explosion, libModel, useLib} from '../../lib/lib3d';
+import {Actor, clodGeos, explosion, getLib, libModel, useLib} from '../../lib/lib3d';
 import A from './assets.json';
 
 const LIB = [...new Set(Object.values(A as Record<string, string>))];
@@ -176,15 +176,30 @@ const buildZigCut = (m: Record<string, any>, maxLen = 60, upTo = 9999, withDugou
   hole.lineTo(ZC.dug + 2, ZC.floor);
   hole.lineTo(1.6, ZC.floor);
   hole.closePath();
-  if (withDugout) low.holes.push(hole);
-  const lowGeo = new THREE.ExtrudeGeometry(low, {depth: LEN, bevelEnabled: false});
-  lowGeo.translate(0, 0, -LEN);
-  const lowM = new THREE.Mesh(lowGeo, [m.earth, m.side]);
-  lowM.userData.floor = true;
-  g.add(lowM);
+  // нижний слой тремя кусками, чтобы выемка не тянулась тоннелем на всю длину (иначе сквозь неё видно небо)
+  const lowPart = (holes: THREE.Path[], z0: number, z1: number) => {
+    const sh = new THREE.Shape(low.getPoints());
+    holes.forEach((h) => sh.holes.push(h));
+    const geo = new THREE.ExtrudeGeometry(sh, {depth: z0 - z1, bevelEnabled: false});
+    geo.translate(0, 0, z1);
+    const lm = new THREE.Mesh(geo, [m.earth, m.side]);
+    lm.userData.floor = true;
+    g.add(lm);
+  };
+  if (withDugout) {
+    const room = new THREE.Path();
+    room.moveTo(1.6, ZC.ceil);
+    room.lineTo(ZC.dug + 2, ZC.ceil);
+    room.lineTo(ZC.dug + 2, ZC.floor);
+    room.lineTo(1.6, ZC.floor);
+    room.closePath();
+    lowPart([hole], 0, -1.25);
+    lowPart([room], -1.25, -4.02);
+    lowPart([], -4.02, -LEN);
+  } else lowPart([], 0, -LEN);
   if (withDugout) {
   // задние стенки лестницы и блиндажа
-  g.add(new THREE.Mesh(box(0.0, 2.0, ZC.floor, -DEPTH, -1.3, -1.25), m.room));
+  g.add(new THREE.Mesh(box(0.0, 2.0, ZC.floor, -DEPTH, -1.27, -1.23), m.room));
   g.add(new THREE.Mesh(box(1.6, ZC.dug + 2, ZC.floor, ZC.ceil, -4.05, -4.0), m.room));
   const zf = new THREE.Mesh(box(1.6, ZC.dug + 2, ZC.floor - 0.03, ZC.floor + 0.02, -4.0, 0), m.wood);
   zf.userData.floor = true;
@@ -194,7 +209,7 @@ const buildZigCut = (m: Record<string, any>, maxLen = 60, upTo = 9999, withDugou
     const k = i / 9;
     const x = lerp(0.45, 1.55, k);
     const y = lerp(-DEPTH, ZC.floor + 0.45, k);
-    const stp = new THREE.Mesh(box(x - 0.2, x + 0.25, y - 0.5, y - 0.42, -1.25, 0), m.wood);
+    const stp = new THREE.Mesh(box(x - 0.2, x + 0.25, y - 0.5, y - 0.42, -1.22, 0), m.wood);
     stp.userData.floor = true;
     g.add(stp);
   }
@@ -415,6 +430,9 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
   useLayoutEffect(() => {
     scene.background = W0.sky;
     scene.fog = new THREE.Fog('#c9cfd6', 60, 260);
+    // отражения и свет неба для реалистичных моделей (металл чайника, кожа, ткань)
+    scene.environment = getLib<THREE.DataTexture>(A.env);
+    scene.environmentIntensity = 0.55;
     scene.add(W0.g);
     scene.add(dyn);
     return () => {
@@ -637,22 +655,26 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
     if (pe > 0) {
       const g = cached('periscope', () => {
         const q = new THREE.Group();
-        const H = 1.75;
-        q.add(new THREE.Mesh(box(-0.07, 0.07, 0, H, -0.07, 0.07), m.wood));
+        const H = 2.35; // голова на ~35 см выше мешков бруствера
+        q.add(new THREE.Mesh(box(-0.08, 0.08, 0, H, -0.08, 0.08), m.wood));
         // верхняя голова: открыта к врагу (-x), внутри зеркало под 45°
-        q.add(new THREE.Mesh(box(-0.075, 0.075, H - 0.2, H + 0.02, -0.075, 0.075), m.darkWood));
-        q.add(new THREE.Mesh(box(-0.078, -0.076, H - 0.17, H - 0.03, -0.055, 0.055), m.black));
-        const mt = new THREE.Mesh(new THREE.PlaneGeometry(0.15, 0.11), m.mirror);
-        mt.position.set(-0.079, H - 0.1, 0);
-        mt.rotation.y = -Math.PI / 2;
+        // голова: открытый верх, зеркало под 45° смотрит на врага и видно сверху
+        q.add(new THREE.Mesh(box(-0.085, 0.085, H - 0.02, H + 0.0, -0.085, 0.085), m.darkWood));
+        q.add(new THREE.Mesh(box(0.06, 0.085, H, H + 0.2, -0.085, 0.085), m.darkWood));
+        [-1, 1].forEach((sd) => q.add(new THREE.Mesh(box(-0.085, 0.085, H, H + 0.2, sd * 0.085 - 0.012, sd * 0.085 + 0.012), m.darkWood)));
+        const mt = new THREE.Mesh(new THREE.PlaneGeometry(0.21, 0.15), m.mirror);
+        mt.position.set(0, H + 0.1, 0);
+        mt.rotation.set(0, Math.PI / 2, 0);
+        mt.rotateX(-Math.PI / 4);
         q.add(mt);
-        // нижнее окно к солдату (+x)
-        const mb = new THREE.Mesh(new THREE.PlaneGeometry(0.11, 0.09), m.mirror);
-        mb.position.set(0.072, 0.28, 0);
+        // нижнее окно на уровне глаз солдата (+x), со вторым зеркалом
+        const ey = 1.45;
+        q.add(new THREE.Mesh(box(0.08, 0.1, ey - 0.08, ey - 0.06, -0.08, 0.08), m.darkWood));
+        q.add(new THREE.Mesh(box(0.08, 0.1, ey + 0.06, ey + 0.08, -0.08, 0.08), m.darkWood));
+        const mb = new THREE.Mesh(new THREE.PlaneGeometry(0.13, 0.11), m.mirror);
+        mb.position.set(0.085, ey, 0);
         mb.rotation.y = Math.PI / 2;
         q.add(mb);
-        q.add(new THREE.Mesh(box(0.07, 0.08, 0.22, 0.23, -0.06, 0.06), m.darkWood));
-        q.add(new THREE.Mesh(box(0.07, 0.08, 0.33, 0.34, -0.06, 0.06), m.darkWood));
         return q;
       });
       g.scale.set(1, pe, 1);
@@ -727,7 +749,7 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
     // --- снаряды в поле
     if (P.shells) {
       [0.2, 0.55, 0.8].forEach((at, i) => {
-        const e = explosion(t - at * fpsT, {seed: 11 + i, size: 1.7, dust: '#6d5c49'});
+        const e = explosion(t - at * fpsT, {seed: 11 + i, size: 1.0, dust: '#6d5c49'});
         e.position.set(4 + i * 3.5, 0, -9 - i * 4);
         add(e);
       });
@@ -802,7 +824,7 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
         const c = new THREE.Mesh(clodGeos()[i % 4], m.wall);
         c.scale.setScalar(0.07 + (i % 3) * 0.025);
         c.userData.cached = true;
-        c.position.set(lerp(0.2, 1.6 + (i % 3) * 0.3, k), -1.4 + Math.sin(k * Math.PI) * 2.2 + k * 1.3, -4 + (i % 4) * 0.25);
+        c.position.set(lerp(0.2, 1.6 + (i % 3) * 0.3, k), -1.2 + Math.sin(k * Math.PI) * 1.4 + k * 1.25, -4 + (i % 4) * 0.25);
         c.rotation.set(k * 6, k * 4, 0);
         if (k < 0.95) add(c);
       }
