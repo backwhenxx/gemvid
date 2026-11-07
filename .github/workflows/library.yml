@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       what:
-        description: "polyhaven | rocketbox-list | rocketbox | sketchfab-search | sketchfab-get"
+        description: "polyhaven | rocketbox-list | rocketbox | sketchfab-search | sketchfab-get | tex-extract | tex-patch"
         required: true
         default: polyhaven
       args:
@@ -65,6 +65,29 @@ jobs:
             mkdir -p out/library/sft && cp out/library/sf_*.glb out/library/sft/ && npm install --no-audit --no-fund --loglevel=error three puppeteer-core --no-save > /dev/null
             CHROME_PATH=/usr/bin/google-chrome node scripts/library/thumbs.mjs out/library/sft out/library/sf_got 2>&1 | grep -v PropertyBinding || true
           fi
+
+      - name: Текстуры моделей — извлечь / убрать знаки
+        if: startsWith(inputs.what, 'tex-')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          npm install --no-audit --no-fund --loglevel=error --no-save @gltf-transform/core@4 @gltf-transform/extensions@4 > /dev/null
+          pip install -q opencv-python-headless numpy
+          mkdir -p out/library up
+          for U in ${{ inputs.args }}; do
+            gh release download lib -p "sf_$U.glb" -D /tmp --clobber
+            node scripts/library/tex.mjs extract /tmp/sf_$U.glb /tmp/tx_$U > /dev/null
+            if [ "${{ inputs.what }}" = "tex-extract" ]; then
+              cp /tmp/tx_$U/textures.json out/library/tx_$U.json
+              for f in /tmp/tx_$U/t*.*; do b=$(basename $f); python -c "import cv2,sys;im=cv2.imread(sys.argv[1]);h,w=im.shape[:2];k=1024/max(h,w);im=cv2.resize(im,(int(w*k),int(h*k)));[cv2.line(im,(int(i*im.shape[1]/10),0),(int(i*im.shape[1]/10),im.shape[0]),(0,255,255),1) or cv2.line(im,(0,int(i*im.shape[0]/10)),(im.shape[1],int(i*im.shape[0]/10)),(0,255,255),1) for i in range(1,10)];cv2.imwrite(sys.argv[2],im,[cv2.IMWRITE_JPEG_QUALITY,85])" $f "up/tx_${U}_${b%.*}.jpg"; done
+            else
+              python scripts/library/patch.py library/patches/$U.json /tmp/tx_$U
+              node scripts/library/tex.mjs replace /tmp/sf_$U.glb /tmp/tx_$U up/sf_${U}_clean.glb
+              for e in $(python -c "import json;print(' '.join(str(x['tex']) for x in json.load(open('library/patches/$U.json'))))"); do f=$(ls /tmp/tx_$U/t$e.*); python -c "import cv2,sys;im=cv2.imread(sys.argv[1]);h,w=im.shape[:2];k=1024/max(h,w);cv2.imwrite(sys.argv[2],cv2.resize(im,(int(w*k),int(h*k))))" $f "up/txc_${U}_t$e.jpg"; done
+            fi
+          done
+          gh release view lib >/dev/null 2>&1 || gh release create lib --title "Библиотека моделей" --notes "Модели."
+          gh release upload lib up/* --clobber
 
       - uses: actions/cache/restore@v4
         if: inputs.what == 'rocketbox'
