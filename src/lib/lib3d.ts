@@ -111,14 +111,38 @@ export class Actor {
     return a;
   }
   /** Поза: одна анимация или смешивание двух (w — вес второй). t — секунды. */
-  pose(anim: string, t: number, mix?: {anim: string; t: number; w: number}) {
+  pose(anim: string, t: number, mix?: {anim: string; t: number; w: number}, inPlace = false) {
     this.actions.forEach((a) => (a.weight = 0));
     const a = this.act(anim);
     a.time = t % a.getClip().duration;
     a.weight = mix ? 1 - mix.w : 1;
     if (mix) { const b = this.act(mix.anim); b.time = mix.t % b.getClip().duration; b.weight = mix.w; }
     this.mixer.update(0);
+    this.body.position.set(0, 0, 0);
+    if (inPlace) {
+      // анимации с ходом (xy): таз всегда над точкой персонажа, двигаем мы сами
+      const p = this.hip();
+      this.body.position.x = -p.x;
+      this.body.position.z = -p.z;
+    }
     return this;
+  }
+  private bip?: THREE.Object3D;
+  private hip() {
+    this.bip ??= this.body.getObjectByName('Bip01') ?? this.body.getObjectByName('Bip01_Pelvis') ?? this.body;
+    this.root.updateMatrixWorld(true);
+    return this.root.worldToLocal(this.bip.getWorldPosition(new THREE.Vector3()));
+  }
+  private speeds = new Map<string, number>();
+  /** Собственная скорость шага анимации (м/с) — чтобы ноги не скользили. */
+  speed(anim: string) {
+    if (!this.speeds.has(anim)) {
+      const d = this.act(anim).getClip().duration;
+      const [x0, z0] = (this.pose(anim, 0), this.hip()).toArray().filter((_, i) => i !== 1);
+      const [x1, z1] = (this.pose(anim, d - 1e-3), this.hip()).toArray().filter((_, i) => i !== 1);
+      this.speeds.set(anim, Math.hypot(x1 - x0, z1 - z0) / d || 1.3);
+    }
+    return this.speeds.get(anim)!;
   }
   /** Поставить так, чтобы нижняя ступня стояла на полу y (после pose и позиции по x/z). */
   stand(floorY: number) {
