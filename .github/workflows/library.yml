@@ -39,6 +39,12 @@ jobs:
         if: inputs.what == 'rocketbox'
         with:
           node-version: 22
+      - uses: actions/cache/restore@v4
+        if: inputs.what == 'rocketbox'
+        with:
+          path: out/library/rb
+          key: rb-${{ hashFiles('scripts/library/rb_convert.py') }}
+          restore-keys: rb-${{ hashFiles('scripts/library/rb_convert.py') }}
       - name: Rocketbox — конвертация (Blender) и превью
         if: inputs.what == 'rocketbox'
         run: |
@@ -49,18 +55,24 @@ jobs:
           mv blender-4.2.3-linux-x64 blender
           sudo apt-get install -y -qq libxi6 libxkbcommon0 libsm6 libgl1 > /dev/null
           bash scripts/library/rocketbox.sh
-          node scripts/library/thumbs.mjs out/library/rb/avatars out/library/rb_avatars
-          mkdir -p out/library/rbt && cp out/library/rb/avatars/Military_Male_0[12].glb out/library/rb/avatars/Male_Adult_01.glb out/library/rbt/
-          POSE_TIMES='[0.3,1.0]' node scripts/library/thumbs.mjs out/library/rbt out/library/rb_test_idle out/library/rb/anims/m_idle_neutral_01.glb
-          POSE_TIMES='[0.2,0.5,0.8]' node scripts/library/thumbs.mjs out/library/rbt out/library/rb_test_walk out/library/rb/anims/m_walk_neutral_01.glb
-          ls out/library/rb/anims | sed 's/.glb//' > out/library/rb_anims.txt
+          cp out/library/rb/anim_kinds.txt out/library/rb_anims.txt
           (cd out/library/rb && zip -qr ../rocketbox-anims.zip anims)
           gh release view lib >/dev/null 2>&1 || gh release create lib --title "Библиотека моделей" --notes "Каталоги, листы превью, модели (CC0/MIT)."
-          for f in out/library/rb/avatars/*.glb; do cp "$f" "out/library/rb_$(basename $f)"; done
-          gh release upload lib out/library/rb_*.glb out/library/rocketbox-anims.zip --clobber
+          mkdir -p up; for f in out/library/rb/avatars/*.glb; do cp "$f" "up/rb_$(basename $f)"; done
+          gh release upload lib up/rb_*.glb out/library/rocketbox-anims.zip --clobber
+          node scripts/library/thumbs.mjs out/library/rb/avatars out/library/rb_avatars 2>&1 | grep -v PropertyBinding || true
+          mkdir -p out/library/rbt && cp out/library/rb/avatars/Military_Male_0[12].glb out/library/rb/avatars/Male_Adult_01.glb out/library/rbt/
+          POSE_TIMES='[0.3,1.0]' node scripts/library/thumbs.mjs out/library/rbt out/library/rb_test_idle out/library/rb/anims/m_idle_neutral_01.glb 2>&1 | grep -v PropertyBinding || true
+          POSE_TIMES='[0.2,0.5,0.8]' node scripts/library/thumbs.mjs out/library/rbt out/library/rb_test_walk out/library/rb/anims/m_walk_neutral_01.glb 2>&1 | grep -v PropertyBinding || true
         env:
           GH_TOKEN: ${{ github.token }}
           CHROME_PATH: /usr/bin/google-chrome
+
+      - uses: actions/cache/save@v4
+        if: always() && inputs.what == 'rocketbox'
+        with:
+          path: out/library/rb
+          key: rb-${{ hashFiles('scripts/library/rb_convert.py') }}-${{ github.run_id }}
 
       - name: Каталог в репо, листы в релиз lib
         env:

@@ -90,7 +90,7 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
       const path: [number, number][] = a.path ?? [a.at, a.at];
       const seg = path.slice(1).map((q, k) => Math.hypot(q[0] - path[k][0], q[1] - path[k][1]));
       const total = seg.reduce((s, x) => s + x, 0);
-      const speed = a.speed ?? 1.25; // м/с
+      const speed = total > 0 ? a.speed ?? A.speed(a.walk ?? 'rba:m_walk_neutral_01') : 1; // м/с — по умолчанию родная скорость анимации
       const t0 = a.start ?? 0;
       const dist = total > 0 ? Math.min(total, Math.max(0, t - t0) * speed) : 0;
       const walking = total > 0 && t > t0 && dist < total;
@@ -103,7 +103,8 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
       A.root.position.set(x, 0, z);
       A.root.rotation.y = yaw + ((a.yawFix ?? 0) * Math.PI) / 180;
       const idleT = t + (a.phase ?? i * 1.7);
-      if (walking) A.pose(a.walk ?? 'rba:m_walk_neutral_01', dist / (a.stride ?? speed));
+      const wk = a.walk ?? 'rba:m_walk_neutral_01';
+      if (walking) A.pose(wk, dist / A.speed(wk), undefined, true);
       else A.pose(a.anim ?? 'rba:m_idle_neutral_01', idleT);
       A.stand(floorAt(W0.g, x, z));
     });
