@@ -12,21 +12,22 @@ TOK = os.environ.get('SKETCHFAB_TOKEN', '').strip()
 FONT = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', 13)
 OK = {'cc0', 'by'}
 
-def search(q, animated):
+def search(q, flags):
     res, url = [], f'{API}/search'
-    params = {'type': 'models', 'q': q, 'downloadable': 'true', 'sort_by': '-likeCount', 'count': 24, 'archives_flavours': 'false'}
-    if animated: params['animated'] = 'true'
+    params = {'type': 'models', 'q': q, 'downloadable': 'true', 'count': 24, 'archives_flavours': 'false'}
+    for f in flags:
+        if f == 'animated': params['animated'] = 'true'
+        elif f: params['categories'] = f
     for lic in ['cc0', 'by']:
         r = S.get(url, params={**params, 'license': lic}, timeout=60).json()
         for m in r.get('results', []): m['_lic'] = lic; res.append(m)
-    res.sort(key=lambda m: -m.get('likeCount', 0))
     return res[:32]
 
 if mode == 'search':
     allm = {}
     for qi, spec in enumerate(args):
-        q, _, flag = spec.partition('|')
-        ms = search(q, flag == 'animated')
+        q, *flags = spec.split('|')
+        ms = search(q, flags)
         T, COLS = 220, 8
         rows = max(1, (len(ms) + COLS - 1) // COLS)
         im = Image.new('RGB', (COLS * T, rows * (T + 34)), (30, 30, 34)); d = ImageDraw.Draw(im)
@@ -35,7 +36,7 @@ if mode == 'search':
             imgs = sorted(m['thumbnails']['images'], key=lambda t: abs(t['width'] - 256))
             try:
                 th = Image.open(io.BytesIO(S.get(imgs[0]['url'], timeout=30).content)).convert('RGB')
-                th = th.resize((T, int(T * th.height / th.width))).crop((0, 0, T, T)); im.paste(th, (x, y))
+                th.thumbnail((T, T)); im.paste(th, (x + (T - th.width) // 2, y + (T - th.height) // 2))
             except Exception as e: print('нет превью', m['uid'], e)
             lic = m['_lic']
             d.text((x + 3, y + T + 1), f"{i+1}. {m['name']}"[:30], fill=(235, 235, 235), font=FONT)
