@@ -82,7 +82,7 @@ jobs:
               for f in /tmp/tx_$U/t[0-9]*.*; do b=$(basename $f); python scripts/library/texprev.py $f "up/tx_${U}_${b%.*}.jpg"; done
             else
               python scripts/library/patch.py library/patches/$U.json /tmp/tx_$U
-              node scripts/library/tex.mjs replace /tmp/sf_$U.glb /tmp/tx_$U up/sf_${U}_clean.glb
+              node scripts/library/tex.mjs replace /tmp/sf_$U.glb /tmp/tx_$U up/sf_${U}_clean.glb library/patches/$U.json
               for e in $(python -c "import json;print(' '.join(str(x['tex']) for x in json.load(open('library/patches/$U.json'))))"); do f=$(ls /tmp/tx_$U/t$e.*); python scripts/library/texprev.py $f "up/txc_${U}_t$e.jpg" nogrid; done
             fi
           done
