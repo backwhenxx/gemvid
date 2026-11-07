@@ -1,1882 +1,1042 @@
 {
-"51e0cc7840c54790bfd674d70dfb6bab": {
-"q": "cat",
+"636b5a7c7e0c400abda269ba382f3252": {
+"q": "ww1 soldier",
 "n": 1,
-"name": "CC0 アリアケギバチ Ariake Stream Catfis, Animation",
-"license": "cc0",
-"author": "ffishAsia-and-floraZia",
-"url": "https://sketchfab.com/3d-models/none-51e0cc7840c54790bfd674d70dfb6bab",
+"name": "City Soldier (outdated)",
+"license": "by",
+"author": "buh-late",
+"url": "https://sketchfab.com/3d-models/none-636b5a7c7e0c400abda269ba382f3252",
 "anims": 1,
-"faces": 28610
+"faces": 44225
 },
-"30d27bf7fb224849b76e208a6eccdb36": {
-"q": "cat",
+"f4bec0e65d66481ea77eccd1bf1b2b76": {
+"q": "ww1 soldier",
 "n": 2,
-"name": "Oiiaioooooiai Cat",
+"name": "Lowpoly WW1 SOLDIER",
 "license": "by",
-"author": "Zhuier",
-"url": "https://sketchfab.com/3d-models/none-30d27bf7fb224849b76e208a6eccdb36",
+"author": "miniponti",
+"url": "https://sketchfab.com/3d-models/none-f4bec0e65d66481ea77eccd1bf1b2b76",
+"anims": 5,
+"faces": 2326
+},
+"dbaaf294eb104e8c88c6e4a1fb2a2402": {
+"q": "ww1 soldier rigged",
+"n": 2,
+"name": "WW1 french robot solider",
+"license": "by",
+"author": "bovos5",
+"url": "https://sketchfab.com/3d-models/none-dbaaf294eb104e8c88c6e4a1fb2a2402",
 "anims": 1,
-"faces": 15774
+"faces": 16562
 },
-"aec25699660043a29595f9572149d1e8": {
-"q": "cat",
-"n": 3,
-"name": "An Animated Cat",
-"license": "by",
-"author": "Evil_Katz",
-"url": "https://sketchfab.com/3d-models/none-aec25699660043a29595f9572149d1e8",
-"anims": 1,
-"faces": 7372
-},
-"b2bd1ee7858444bda366110a2d960386": {
-"q": "cat",
-"n": 4,
-"name": "Toon Cat FREE",
-"license": "by",
-"author": "omabuarts",
-"url": "https://sketchfab.com/3d-models/none-b2bd1ee7858444bda366110a2d960386",
-"anims": 1,
-"faces": 2636
-},
-"e623a618ca344a8393d7ba4d63ec23cf": {
-"q": "cat",
-"n": 5,
-"name": "Bicolor Cat",
-"license": "by",
-"author": "kenchoo",
-"url": "https://sketchfab.com/3d-models/none-e623a618ca344a8393d7ba4d63ec23cf",
-"anims": 1,
-"faces": 8646
-},
-"eccebebd5a60484eaa49036f8a4b6ed7": {
-"q": "cat",
-"n": 6,
-"name": "cat Rigged",
-"license": "by",
-"author": "Vr-cvantorium",
-"url": "https://sketchfab.com/3d-models/none-eccebebd5a60484eaa49036f8a4b6ed7",
-"anims": 3,
-"faces": 794
-},
-"216615de5f91404a90ba0a721e13dd36": {
-"q": "cat",
-"n": 7,
-"name": "Koi Cat",
-"license": "by",
-"author": "radiergummi",
-"url": "https://sketchfab.com/3d-models/none-216615de5f91404a90ba0a721e13dd36",
-"anims": 1,
-"faces": 590834
-},
-"886ac1f9d3664da09b682920de86f73d": {
-"q": "cat",
-"n": 8,
-"name": "Cat Witch",
-"license": "by",
-"author": "AKM_Models",
-"url": "https://sketchfab.com/3d-models/none-886ac1f9d3664da09b682920de86f73d",
-"anims": 1,
-"faces": 18531
-},
-"dfda55ca3d494fcabf96d020b1256447": {
-"q": "cat",
-"n": 9,
-"name": "Animated cat",
-"license": "by",
-"author": "Huh1_",
-"url": "https://sketchfab.com/3d-models/none-dfda55ca3d494fcabf96d020b1256447",
-"anims": 1,
-"faces": 7372
-},
-"de41bd91bcdb4a70a412c377bff03388": {
-"q": "cat",
-"n": 10,
-"name": "Ucat (ЪУЪ Cat or ЪЫЪ Cat)",
-"license": "by",
-"author": "fovlaxcorp",
-"url": "https://sketchfab.com/3d-models/none-de41bd91bcdb4a70a412c377bff03388",
-"anims": 4,
-"faces": 2580
-},
-"4175776146ba4550a8dd643363b7b0aa": {
-"q": "cat",
-"n": 11,
-"name": "Maxwell The cat with bones animation",
-"license": "by",
-"author": "Zhuier",
-"url": "https://sketchfab.com/3d-models/none-4175776146ba4550a8dd643363b7b0aa",
-"anims": 1,
-"faces": 2400
-},
-"a53d88c1dd8e4f84952b0923694901fa": {
-"q": "cat",
-"n": 12,
-"name": "Stretching Cat",
-"license": "by",
-"author": "won1",
-"url": "https://sketchfab.com/3d-models/none-a53d88c1dd8e4f84952b0923694901fa",
-"anims": 1,
-"faces": 242816
-},
-"64470a62d6d74472be0efd6048148fed": {
-"q": "cat",
-"n": 13,
-"name": "cartoon 3D cat",
-"license": "by",
-"author": "berti_buchsbaum",
-"url": "https://sketchfab.com/3d-models/none-64470a62d6d74472be0efd6048148fed",
-"anims": 2,
-"faces": 6629
-},
-"62416ff46cef45599c51dc9bc0b83b43": {
-"q": "cat",
-"n": 14,
-"name": "Black Cat PSX",
-"license": "by",
-"author": "Bonvikt",
-"url": "https://sketchfab.com/3d-models/none-62416ff46cef45599c51dc9bc0b83b43",
-"anims": 4,
-"faces": 466
-},
-"b9579ca17c274a48a1e083da0e909865": {
-"q": "cat",
-"n": 15,
-"name": "Donut Cat ver2!",
-"license": "by",
-"author": "Cresis",
-"url": "https://sketchfab.com/3d-models/none-b9579ca17c274a48a1e083da0e909865",
-"anims": 2,
-"faces": 290112
-},
-"2f28e38cc34540d0aac80958364220cc": {
-"q": "cat",
-"n": 16,
-"name": "bababooey Cat",
-"license": "by",
-"author": "Zhuier",
-"url": "https://sketchfab.com/3d-models/none-2f28e38cc34540d0aac80958364220cc",
-"anims": 1,
-"faces": 7274
-},
-"afec0186c75f447db3ca880427765b25": {
-"q": "cat",
-"n": 17,
-"name": "Tank Cat",
-"license": "by",
-"author": "_madhouse",
-"url": "https://sketchfab.com/3d-models/none-afec0186c75f447db3ca880427765b25",
-"anims": 1,
-"faces": 5622
-},
-"42cc473a1c17467c8f96e47e2a4439de": {
-"q": "cat",
-"n": 18,
-"name": "Wizard Cat",
-"license": "by",
-"author": "ndiecity",
-"url": "https://sketchfab.com/3d-models/none-42cc473a1c17467c8f96e47e2a4439de",
-"anims": 1,
-"faces": 146
-},
-"00ea25ccad8344cbaedc89d70bb75a49": {
-"q": "cat",
-"n": 19,
-"name": "Cartoon Cat",
-"license": "by",
-"author": "Stas_SayHallo",
-"url": "https://sketchfab.com/3d-models/none-00ea25ccad8344cbaedc89d70bb75a49",
-"anims": 1,
-"faces": 68675
-},
-"18e1105c4561474296f31a4bc5f06393": {
-"q": "cat",
-"n": 20,
-"name": "Staring Cat",
-"license": "by",
-"author": "won1",
-"url": "https://sketchfab.com/3d-models/none-18e1105c4561474296f31a4bc5f06393",
-"anims": 1,
-"faces": 119698
-},
-"97913cc5c44e4e6793385b988aac97c1": {
-"q": "cat",
-"n": 21,
-"name": "Just a Hungry Cat",
-"license": "by",
-"author": "CocoJinjo",
-"url": "https://sketchfab.com/3d-models/none-97913cc5c44e4e6793385b988aac97c1",
-"anims": 1,
-"faces": 23498
-},
-"2d1c8b8514684b0a8d1b8203caa01a95": {
-"q": "cat",
+"9c7d34a562464f91b7c7b4482ff0dacc": {
+"q": "wwi british soldier",
 "n": 22,
-"name": "POP CAT",
+"name": "Trench Lighter WW1 Final",
 "license": "by",
-"author": "rukitu",
-"url": "https://sketchfab.com/3d-models/none-2d1c8b8514684b0a8d1b8203caa01a95",
+"author": "crimsonsunbear",
+"url": "https://sketchfab.com/3d-models/none-9c7d34a562464f91b7c7b4482ff0dacc",
 "anims": 1,
-"faces": 1065
+"faces": 7488
 },
-"4a738eaed9d34547a3f5a705a0e37c6a": {
-"q": "cat",
-"n": 23,
-"name": "Cartoon Cat",
+"acc5ab0ec0a946faba7d9cd364302f4e": {
+"q": "ww1 soldier",
+"n": 5,
+"name": "F-series light vehicles (V1)",
 "license": "by",
-"author": "baydinman",
-"url": "https://sketchfab.com/3d-models/none-4a738eaed9d34547a3f5a705a0e37c6a",
-"anims": 25,
-"faces": 4126
-},
-"836312def1b84e588866500a2bf79f0f": {
-"q": "cat",
-"n": 24,
-"name": "Cat [Murdered: Soul Suspect]",
-"license": "by",
-"author": "mark2580",
-"url": "https://sketchfab.com/3d-models/none-836312def1b84e588866500a2bf79f0f",
+"author": "EddyNL",
+"url": "https://sketchfab.com/3d-models/none-acc5ab0ec0a946faba7d9cd364302f4e",
 "anims": 1,
-"faces": 7372
+"faces": 130928
 },
-"97ebeb08abc448ba8f42d19492951465": {
-"q": "cat",
-"n": 25,
-"name": "Loading Cat",
+"eade1c3ce2954b4d8394b291d5aa4a06": {
+"q": "ww1 soldier",
+"n": 6,
+"name": "Chud Circle Dating 2 - Groyper infantry",
 "license": "by",
-"author": "won1",
-"url": "https://sketchfab.com/3d-models/none-97ebeb08abc448ba8f42d19492951465",
+"author": "keirstarmer",
+"url": "https://sketchfab.com/3d-models/none-eade1c3ce2954b4d8394b291d5aa4a06",
 "anims": 1,
-"faces": 42568
+"faces": 59508
 },
-"451b471a2bfa4108839e2d4f167a67c8": {
-"q": "cat realistic",
+"3f672b4d9425400aaca504277e8dcff6": {
+"q": "ww1 soldier",
+"n": 7,
+"name": "surender german soldier with gaz mask",
+"license": "by",
+"author": "matheofrelin3",
+"url": "https://sketchfab.com/3d-models/none-3f672b4d9425400aaca504277e8dcff6",
+"anims": 1,
+"faces": 5403
+},
+"fb96a663fc4a4246a57ca85de3228c00": {
+"q": "ww1 soldier rigged",
 "n": 1,
-"name": "Cat egypt",
+"name": "Polish soldier",
 "license": "by",
-"author": "Sobrom",
-"url": "https://sketchfab.com/3d-models/none-451b471a2bfa4108839e2d4f167a67c8",
+"author": "buh-late",
+"url": "https://sketchfab.com/3d-models/none-fb96a663fc4a4246a57ca85de3228c00",
 "anims": 0,
-"faces": 89760
+"faces": 123061
 },
-"51cc3bfb49b64128aa54ffa29f36d8c1": {
-"q": "cat realistic",
-"n": 2,
-"name": "cat",
+"51e45296b5f44fe39517062f98683212": {
+"q": "ww1 soldier rigged",
+"n": 3,
+"name": "Steampunk Soldier Robot",
 "license": "by",
-"author": "toti.shroom",
-"url": "https://sketchfab.com/3d-models/none-51cc3bfb49b64128aa54ffa29f36d8c1",
+"author": "RoboticModels",
+"url": "https://sketchfab.com/3d-models/none-51e45296b5f44fe39517062f98683212",
+"anims": 0,
+"faces": 279138
+},
+"326c4883a68e46d7bbfea4bc4d72b4e6": {
+"q": "ww1 soldier rigged",
+"n": 4,
+"name": "Low Poly Soldier",
+"license": "by",
+"author": "Dezryelle",
+"url": "https://sketchfab.com/3d-models/none-326c4883a68e46d7bbfea4bc4d72b4e6",
+"anims": 0,
+"faces": 9070
+},
+"6a104431bcb8400080b79446ec019696": {
+"q": "ww1 soldier rigged",
+"n": 5,
+"name": "WW2 Panzergrenadier 2k (CC0)",
+"license": "by",
+"author": "britdawgmasterfunk",
+"url": "https://sketchfab.com/3d-models/none-6a104431bcb8400080b79446ec019696",
+"anims": 0,
+"faces": 27005
+},
+"2108fa9700cd4d37b5c484f72739cce3": {
+"q": "ww1 soldier rigged",
+"n": 6,
+"name": "Renegade X - Nod Soldier",
+"license": "by",
+"author": "Otherspectre",
+"url": "https://sketchfab.com/3d-models/none-2108fa9700cd4d37b5c484f72739cce3",
+"anims": 0,
+"faces": 6744
+},
+"1f7e2e33848542028930296f6147a8fe": {
+"q": "ww1 soldier rigged",
+"n": 7,
+"name": "Lowpoly Nazi Soldier Ww2",
+"license": "by",
+"author": "maxypants2010",
+"url": "https://sketchfab.com/3d-models/none-1f7e2e33848542028930296f6147a8fe",
+"anims": 0,
+"faces": 1290
+},
+"1213683e58b14dd89fd4520489c7b732": {
+"q": "ww1 soldier rigged",
+"n": 8,
+"name": "B.A.R M1918 A2 - GAME READY & RIGGED ⭐",
+"license": "by",
+"author": "peanut_butcher",
+"url": "https://sketchfab.com/3d-models/none-1213683e58b14dd89fd4520489c7b732",
+"anims": 0,
+"faces": 13281
+},
+"f85a4ed8c33a43eca1a7caa45f7acf99": {
+"q": "ww1 soldier rigged",
+"n": 9,
+"name": "WW2 Soviet Uniform",
+"license": "by",
+"author": "tnnv",
+"url": "https://sketchfab.com/3d-models/none-f85a4ed8c33a43eca1a7caa45f7acf99",
+"anims": 0,
+"faces": 26992
+},
+"2f281a00e4f245e9a8dd099b46735644": {
+"q": "ww1 soldier rigged",
+"n": 10,
+"name": "WW2 French Resistent character",
+"license": "by",
+"author": "goldenblack4",
+"url": "https://sketchfab.com/3d-models/none-2f281a00e4f245e9a8dd099b46735644",
+"anims": 0,
+"faces": 115324
+},
+"ae8967ea9ae04c3c9c52712175f87007": {
+"q": "ww1 soldier rigged",
+"n": 11,
+"name": "🎖️ Wolfenstein - Engine [Now the next games...]",
+"license": "by",
+"author": "Hot-Dog_1947",
+"url": "https://sketchfab.com/3d-models/none-ae8967ea9ae04c3c9c52712175f87007",
+"anims": 0,
+"faces": 4983
+},
+"83b339479cde46aaa37b2018c578b49f": {
+"q": "ww1 soldier rigged",
+"n": 12,
+"name": "Jenny Final",
+"license": "by",
+"author": "maddex88",
+"url": "https://sketchfab.com/3d-models/none-83b339479cde46aaa37b2018c578b49f",
+"anims": 0,
+"faces": 161637
+},
+"496bd9f05a714e608a41a24b169937f6": {
+"q": "ww1 soldier rigged",
+"n": 13,
+"name": "Ring - Vikings 3D Prophecy - Episode 18",
+"license": "by",
+"author": "3dbrooklyn",
+"url": "https://sketchfab.com/3d-models/none-496bd9f05a714e608a41a24b169937f6",
+"anims": 0,
+"faces": 989960
+},
+"2943f5966daf4f0a8f3d7a3eb45050ea": {
+"q": "world war 1 soldier",
+"n": 1,
+"name": "Call Of Duty 1 Soldier rig",
+"license": "by",
+"author": "NETHERFIRE.Man",
+"url": "https://sketchfab.com/3d-models/none-2943f5966daf4f0a8f3d7a3eb45050ea",
+"anims": 0,
+"faces": 3247
+},
+"ca6bc7c0c6bd4b3cb18494265a4056fb": {
+"q": "brodie helmet",
+"n": 1,
+"name": "British WW1 Military Helmet (Broken and New)",
+"license": "by",
+"author": "noodlepirate",
+"url": "https://sketchfab.com/3d-models/none-ca6bc7c0c6bd4b3cb18494265a4056fb",
+"anims": 0,
+"faces": 7966
+},
+"6c5d1199886147beb52a901b155888f1": {
+"q": "world war 1 soldier",
+"n": 3,
+"name": "Illuminati Wars - Green Soldier",
+"license": "by",
+"author": "TheRealGlaucus",
+"url": "https://sketchfab.com/3d-models/none-6c5d1199886147beb52a901b155888f1",
+"anims": 0,
+"faces": 306464
+},
+"e7ecc6ff7c8b47fdb0f5961f4357a935": {
+"q": "world war 1 soldier",
+"n": 4,
+"name": "WW1 Goerz Binoculars",
+"license": "by",
+"author": "crazyyuan",
+"url": "https://sketchfab.com/3d-models/none-e7ecc6ff7c8b47fdb0f5961f4357a935",
+"anims": 0,
+"faces": 4872
+},
+"c0a52d59bbff404f9395fccfa6c0048d": {
+"q": "world war 1 soldier",
+"n": 5,
+"name": "Model 17 Eierhandgranate egg hand grenade custom",
+"license": "by",
+"author": "OvidiuBarat",
+"url": "https://sketchfab.com/3d-models/none-c0a52d59bbff404f9395fccfa6c0048d",
+"anims": 0,
+"faces": 24776
+},
+"555cc635573743e596f70414a31f298f": {
+"q": "world war 1 soldier",
+"n": 6,
+"name": "Low-Poly Winchester Model 1897",
+"license": "by",
+"author": "TastyTony",
+"url": "https://sketchfab.com/3d-models/none-555cc635573743e596f70414a31f298f",
+"anims": 0,
+"faces": 5763
+},
+"7c1a2cb7d9e04708af0ff74afcf2682c": {
+"q": "world war 1 soldier",
+"n": 7,
+"name": "Shefford War Memorial",
+"license": "by",
+"author": "mooreheadmodels",
+"url": "https://sketchfab.com/3d-models/none-7c1a2cb7d9e04708af0ff74afcf2682c",
+"anims": 0,
+"faces": 999714
+},
+"ed1d45983081496683acc748951a8ca1": {
+"q": "world war 1 soldier",
+"n": 8,
+"name": "Gottfried Freiherr Von Banfield's Seaplane",
+"license": "by",
+"author": "BadPizza",
+"url": "https://sketchfab.com/3d-models/none-ed1d45983081496683acc748951a8ca1",
+"anims": 0,
+"faces": 3629
+},
+"88e0709be4c7470d840092f1b71d97a2": {
+"q": "world war 1 soldier",
+"n": 9,
+"name": "\"1919\" Renault FT17 (finished & better scan)",
+"license": "by",
+"author": "amac35",
+"url": "https://sketchfab.com/3d-models/none-88e0709be4c7470d840092f1b71d97a2",
+"anims": 0,
+"faces": 4504789
+},
+"bb8b6713100943bf80d50ed3c042d9d9": {
+"q": "world war 1 soldier",
+"n": 10,
+"name": "Low-Poly Berthier Rifle",
+"license": "by",
+"author": "TastyTony",
+"url": "https://sketchfab.com/3d-models/none-bb8b6713100943bf80d50ed3c042d9d9",
+"anims": 0,
+"faces": 2551
+},
+"678a71851b8d436aaf334a76fe782d06": {
+"q": "world war 1 soldier",
+"n": 11,
+"name": "WWI memorial",
+"license": "by",
+"author": "matousekfoto",
+"url": "https://sketchfab.com/3d-models/none-678a71851b8d436aaf334a76fe782d06",
+"anims": 0,
+"faces": 226854
+},
+"0dc5cf7523b245908a655c4ceb1de608": {
+"q": "world war 1 soldier",
+"n": 12,
+"name": "Bohinj railway - Solkan viaduct (EID 1-00673)",
+"license": "by",
+"author": "gregazorz",
+"url": "https://sketchfab.com/3d-models/none-0dc5cf7523b245908a655c4ceb1de608",
+"anims": 0,
+"faces": 3013464
+},
+"1fca6f8d13f348d492563f732f14b020": {
+"q": "world war 1 soldier",
+"n": 13,
+"name": "Penicillin Syringe (MMH.1999.121)",
+"license": "by",
+"author": "TheJohnRylandsLibrary",
+"url": "https://sketchfab.com/3d-models/none-1fca6f8d13f348d492563f732f14b020",
+"anims": 1,
+"faces": 215112
+},
+"5a189982dfdb465da9c040dcf3b98b2c": {
+"q": "world war 1 soldier",
+"n": 14,
+"name": "Coupe-Coupe Sénégalais 1er type",
+"license": "by",
+"author": "WarlooColonel",
+"url": "https://sketchfab.com/3d-models/none-5a189982dfdb465da9c040dcf3b98b2c",
+"anims": 0,
+"faces": 75544
+},
+"7f43e31f5f764738b79c5e8757ef153e": {
+"q": "world war 1 soldier",
+"n": 15,
+"name": "Russian F1 grenade (GAME READY)",
+"license": "by",
+"author": "OakKlein",
+"url": "https://sketchfab.com/3d-models/none-7f43e31f5f764738b79c5e8757ef153e",
+"anims": 0,
+"faces": 13440
+},
+"5a9d83b0cfa0410ab71b0e69529a5073": {
+"q": "world war 1 soldier",
+"n": 16,
+"name": "Download FEAR OF FAITH Latest Version 2027",
+"license": "by",
+"author": "BrainyDoctor4835",
+"url": "https://sketchfab.com/3d-models/none-5a9d83b0cfa0410ab71b0e69529a5073",
+"anims": 0,
+"faces": 77978
+},
+"ac72180565cd4a508edb3eb07d429967": {
+"q": "world war 1 soldier",
+"n": 17,
+"name": "Download FEAR OF FAITH For PC",
+"license": "by",
+"author": "KeyMicrowave5170",
+"url": "https://sketchfab.com/3d-models/none-ac72180565cd4a508edb3eb07d429967",
+"anims": 0,
+"faces": 561259
+},
+"4b6331c78fcc486c9b93ff0ba7fc0507": {
+"q": "world war 1 soldier",
+"n": 18,
+"name": "Download Lost Horizon 2 For PC",
+"license": "by",
+"author": "DueCereal3703",
+"url": "https://sketchfab.com/3d-models/none-4b6331c78fcc486c9b93ff0ba7fc0507",
+"anims": 0,
+"faces": 83768
+},
+"4ce397132b4148b887b613d25c6819d2": {
+"q": "world war 1 soldier",
+"n": 19,
+"name": "Download Lost Horizon 2 For PC",
+"license": "by",
+"author": "DueCereal3703",
+"url": "https://sketchfab.com/3d-models/none-4ce397132b4148b887b613d25c6819d2",
+"anims": 0,
+"faces": 10351
+},
+"c3d6038952914362b897138deda762ef": {
+"q": "wwi british soldier",
+"n": 1,
+"name": "British Army Soldier WW2",
+"license": "by",
+"author": "3djako",
+"url": "https://sketchfab.com/3d-models/none-c3d6038952914362b897138deda762ef",
+"anims": 0,
+"faces": 85486
+},
+"0c4074df89e44c129352ee1a8de9cbd1": {
+"q": "wwi british soldier",
+"n": 2,
+"name": "Britain - Bren Gunner Soldier",
+"license": "by",
+"author": "nimproductions",
+"url": "https://sketchfab.com/3d-models/none-0c4074df89e44c129352ee1a8de9cbd1",
+"anims": 0,
+"faces": 124987
+},
+"ac1b1dfefb654e3fa67f63804e4d9923": {
+"q": "wwi british soldier",
+"n": 3,
+"name": "British - Artillery Gun Loader soldier 3D print",
+"license": "by",
+"author": "nimproductions",
+"url": "https://sketchfab.com/3d-models/none-ac1b1dfefb654e3fa67f63804e4d9923",
+"anims": 0,
+"faces": 73142
+},
+"78e990553cd1484e93163968e1c65383": {
+"q": "wwi british soldier",
+"n": 4,
+"name": "British Soldier",
+"license": "by",
+"author": "siaobai77",
+"url": "https://sketchfab.com/3d-models/none-78e990553cd1484e93163968e1c65383",
 "anims": 0,
 "faces": 49999
 },
-"ae07a741be6944e8ba5e2657069d3aaf": {
-"q": "cat realistic",
-"n": 3,
-"name": "Sleeping Cat On The Bed 1 - 3D scan",
-"license": "by",
-"author": "albentan2012",
-"url": "https://sketchfab.com/3d-models/none-ae07a741be6944e8ba5e2657069d3aaf",
-"anims": 0,
-"faces": 31139
-},
-"6903ae10e89a484aada8830b3215d2c2": {
-"q": "cat realistic",
-"n": 4,
-"name": "Realistic Cheetah - Spotted Big Cat",
-"license": "by",
-"author": "s8819296",
-"url": "https://sketchfab.com/3d-models/none-6903ae10e89a484aada8830b3215d2c2",
-"anims": 0,
-"faces": 1956122
-},
-"66803f2e8461486987d72d116fe2f714": {
-"q": "cat realistic",
-"n": 5,
-"name": "🐉 Realistic Dragon Textures",
-"license": "by",
-"author": "JazzVincent",
-"url": "https://sketchfab.com/3d-models/none-66803f2e8461486987d72d116fe2f714",
-"anims": 0,
-"faces": 19563
-},
-"9cf0d4d9c380433e9ae04b05d2397368": {
-"q": "cat realistic",
+"f3b4fc775a18401aad449587abd6bd6c": {
+"q": "wwi british soldier",
 "n": 6,
-"name": "Realistic Cat 3D Model",
+"name": "Britain - Bren Gunner Soldier With Binoculars",
 "license": "by",
-"author": "picanco.felipe",
-"url": "https://sketchfab.com/3d-models/none-9cf0d4d9c380433e9ae04b05d2397368",
+"author": "nimproductions",
+"url": "https://sketchfab.com/3d-models/none-f3b4fc775a18401aad449587abd6bd6c",
 "anims": 0,
-"faces": 196608
+"faces": 172909
 },
-"baa1120483c844e6bce9744f3f868c63": {
-"q": "cat realistic",
+"f1b355c9fcb0469caa4de1b4a8800c07": {
+"q": "wwi british soldier",
 "n": 7,
-"name": "Cat in Motion 3d model free",
+"name": "Britain - Bren Gunner Walking",
 "license": "by",
-"author": "rt699448",
-"url": "https://sketchfab.com/3d-models/none-baa1120483c844e6bce9744f3f868c63",
+"author": "nimproductions",
+"url": "https://sketchfab.com/3d-models/none-f1b355c9fcb0469caa4de1b4a8800c07",
 "anims": 0,
-"faces": 389612
+"faces": 78248
 },
-"2a76bbc0c45e44fab26f4e5eccbebfe1": {
-"q": "cat realistic",
+"ab94102aec1b4fbbab0f3fb1832d2d2f": {
+"q": "wwi british soldier",
 "n": 8,
-"name": "Cat's Food Pack",
+"name": "Britain - Bren Gunner Running",
 "license": "by",
-"author": "CGpub",
-"url": "https://sketchfab.com/3d-models/none-2a76bbc0c45e44fab26f4e5eccbebfe1",
+"author": "nimproductions",
+"url": "https://sketchfab.com/3d-models/none-ab94102aec1b4fbbab0f3fb1832d2d2f",
 "anims": 0,
-"faces": 91776
+"faces": 122090
 },
-"6d82596b5db94f7b9093814a4a88caa9": {
-"q": "cat realistic",
+"9af571fa416546f08dfc2ba95e604083": {
+"q": "wwi british soldier",
 "n": 9,
-"name": "Bengal Cat",
+"name": "WWII British Soldier",
 "license": "by",
-"author": "ItsKrish7",
-"url": "https://sketchfab.com/3d-models/none-6d82596b5db94f7b9093814a4a88caa9",
+"author": "patromes",
+"url": "https://sketchfab.com/3d-models/none-9af571fa416546f08dfc2ba95e604083",
 "anims": 0,
-"faces": 98498
+"faces": 118002
 },
-"c1465490a7c74d48b599e1d68ff990ef": {
-"q": "cat realistic",
+"056ea0d28f4741108efc04d20dc9681c": {
+"q": "wwi british soldier",
 "n": 10,
-"name": "Curious Cat 3d model free",
+"name": "WW1 British Helmet",
 "license": "by",
-"author": "rt699448",
-"url": "https://sketchfab.com/3d-models/none-c1465490a7c74d48b599e1d68ff990ef",
+"author": "FOXYSCA",
+"url": "https://sketchfab.com/3d-models/none-056ea0d28f4741108efc04d20dc9681c",
 "anims": 0,
-"faces": 214512
+"faces": 11722
 },
-"81a49956c5944279abfb2ccaa791f7d8": {
-"q": "cat realistic",
+"3fa0d937ee76408592f5c1df3bb0bd28": {
+"q": "wwi british soldier",
 "n": 11,
-"name": "Realistic Frog",
+"name": "British & German soldier head || WW1",
 "license": "by",
-"author": "maksroberthut",
-"url": "https://sketchfab.com/3d-models/none-81a49956c5944279abfb2ccaa791f7d8",
+"author": "Joppe_monnens",
+"url": "https://sketchfab.com/3d-models/none-3fa0d937ee76408592f5c1df3bb0bd28",
 "anims": 0,
-"faces": 40294
+"faces": 13492
 },
-"b635eeea2cdd4d22899dc6d3381c3f59": {
-"q": "cat realistic",
+"c825a192098140f2a514c4389312ac2b": {
+"q": "wwi british soldier",
 "n": 12,
-"name": "Cat Scratching Post",
+"name": "Cavalry Officer - WW1 - British - free",
 "license": "by",
-"author": "nickbroad",
-"url": "https://sketchfab.com/3d-models/none-b635eeea2cdd4d22899dc6d3381c3f59",
+"author": "Andywoodhead",
+"url": "https://sketchfab.com/3d-models/none-c825a192098140f2a514c4389312ac2b",
 "anims": 0,
-"faces": 2150
+"faces": 1323020
 },
-"8acd28ca09ba49c2ab64b55e103ea630": {
-"q": "cat realistic",
+"ec9bead0c52b4b11b209ac82929f03b1": {
+"q": "wwi british soldier",
 "n": 13,
-"name": "Cat on carpet",
+"name": "Cavalry (new stl file) charge - WW1 - British",
 "license": "by",
-"author": "LinesJet",
-"url": "https://sketchfab.com/3d-models/none-8acd28ca09ba49c2ab64b55e103ea630",
+"author": "Andywoodhead",
+"url": "https://sketchfab.com/3d-models/none-ec9bead0c52b4b11b209ac82929f03b1",
 "anims": 0,
-"faces": 44741
+"faces": 502336
 },
-"59f1bcc5afc34bc6b70fc50e5340612f": {
-"q": "cat realistic",
+"72e944c726014e948798f84686c45c56": {
+"q": "wwi british soldier",
 "n": 14,
-"name": "Realistic eye",
+"name": "Britain - Bren Gunner Looking Through Binoculars",
 "license": "by",
-"author": "brunx",
-"url": "https://sketchfab.com/3d-models/none-59f1bcc5afc34bc6b70fc50e5340612f",
+"author": "nimproductions",
+"url": "https://sketchfab.com/3d-models/none-72e944c726014e948798f84686c45c56",
 "anims": 0,
-"faces": 7934
+"faces": 63880
 },
-"d7ca14eebaa349eaadc55e61bf9f5bd2": {
-"q": "cat realistic",
+"fe86db64b37f40539fd5135b949fa038": {
+"q": "wwi british soldier",
 "n": 15,
-"name": "Styrofoam Cat Head!",
+"name": "British rifleman WWI",
 "license": "by",
-"author": "inciprocal.com",
-"url": "https://sketchfab.com/3d-models/none-d7ca14eebaa349eaadc55e61bf9f5bd2",
+"author": "pollackMD",
+"url": "https://sketchfab.com/3d-models/none-fe86db64b37f40539fd5135b949fa038",
 "anims": 0,
-"faces": 2500
+"faces": 9608
 },
-"5c31c77904de4e458d434c167ea0f4bc": {
-"q": "cat realistic",
+"81f4cbe70e424ead8a85b47b3cfd8fbb": {
+"q": "wwi british soldier",
 "n": 16,
-"name": "Medium poly Cat In Motion 3d Model Free",
+"name": "British rifleman WWI",
 "license": "by",
-"author": "rt699448",
-"url": "https://sketchfab.com/3d-models/none-5c31c77904de4e458d434c167ea0f4bc",
+"author": "pollackMD",
+"url": "https://sketchfab.com/3d-models/none-81f4cbe70e424ead8a85b47b3cfd8fbb",
 "anims": 0,
-"faces": 18361
+"faces": 9648
 },
-"a4e89f00065f491c94ec8bb51606c12f": {
-"q": "cat realistic",
+"d7d9571d23764282b355924df965c858": {
+"q": "wwi british soldier",
 "n": 17,
-"name": "Cat Tree Ready for your game",
+"name": "Webley Mk. VI",
 "license": "by",
-"author": "Brendan_489",
-"url": "https://sketchfab.com/3d-models/none-a4e89f00065f491c94ec8bb51606c12f",
+"author": "Tuuttipingu",
+"url": "https://sketchfab.com/3d-models/none-d7d9571d23764282b355924df965c858",
 "anims": 0,
-"faces": 14256
+"faces": 4033
 },
-"d85d9b0a11be4a11a09f1193e821a6d9": {
-"q": "cat realistic",
+"9891e15cad0245639cf5f52c5f1f6b7c": {
+"q": "wwi british soldier",
 "n": 18,
-"name": "a_realistic_persion_cat_0702065421_refine_fbx",
+"name": "British Soldier WW2",
 "license": "by",
-"author": "Colorcrafter",
-"url": "https://sketchfab.com/3d-models/none-d85d9b0a11be4a11a09f1193e821a6d9",
+"author": "Crazydud",
+"url": "https://sketchfab.com/3d-models/none-9891e15cad0245639cf5f52c5f1f6b7c",
 "anims": 0,
-"faces": 45996
+"faces": 85480
 },
-"8bd824a72a674e35b8d579790a7d3693": {
-"q": "cat realistic",
+"79f411622ef843faac56f93f93b6a896": {
+"q": "wwi british soldier",
 "n": 19,
-"name": "FREE Cat wizard",
+"name": "Memorial - fallen soldiers WW1/2",
 "license": "by",
-"author": "Axinovium",
-"url": "https://sketchfab.com/3d-models/none-8bd824a72a674e35b8d579790a7d3693",
+"author": "orjansandland",
+"url": "https://sketchfab.com/3d-models/none-79f411622ef843faac56f93f93b6a896",
 "anims": 0,
-"faces": 29999
+"faces": 5174520
 },
-"3da649dd14df43f4966b3a38577262fc": {
-"q": "cat realistic",
+"46815b9e480746b58490aab55dc58c5b": {
+"q": "wwi british soldier",
 "n": 20,
-"name": "Realistic Siamese Cat 3D Model",
+"name": "Webley Mk. VI (Snub)",
 "license": "by",
-"author": "mikaelel",
-"url": "https://sketchfab.com/3d-models/none-3da649dd14df43f4966b3a38577262fc",
+"author": "Tuuttipingu",
+"url": "https://sketchfab.com/3d-models/none-46815b9e480746b58490aab55dc58c5b",
 "anims": 0,
-"faces": 93034
+"faces": 4033
 },
-"fee3aad473b948e4aa932ff9dfd02b0b": {
-"q": "cat realistic",
+"d2f74c5bbb3b42ac908b26697ab2f627": {
+"q": "wwi british soldier",
 "n": 21,
-"name": "Cat-woman",
+"name": "soldier ww1 Great Britain",
 "license": "by",
-"author": "grvideotv",
-"url": "https://sketchfab.com/3d-models/none-fee3aad473b948e4aa932ff9dfd02b0b",
+"author": "malewe24",
+"url": "https://sketchfab.com/3d-models/none-d2f74c5bbb3b42ac908b26697ab2f627",
 "anims": 0,
-"faces": 544090
+"faces": 3844
 },
-"1a3a2a274c2446fe92b1b5df4a980b9b": {
-"q": "cat realistic",
-"n": 22,
-"name": "Watermelon Cat",
-"license": "by",
-"author": "coldsky",
-"url": "https://sketchfab.com/3d-models/none-1a3a2a274c2446fe92b1b5df4a980b9b",
-"anims": 0,
-"faces": 500000
-},
-"30166acff76642a898f117b4b2ed9261": {
-"q": "cat realistic",
+"8d47f2289a7345f486615609738fea3a": {
+"q": "wwi british soldier",
 "n": 23,
-"name": "Sphynx Cat Topology",
+"name": "British Colonial Soldier with Web Gear",
 "license": "by",
-"author": "DreamNoms",
-"url": "https://sketchfab.com/3d-models/none-30166acff76642a898f117b4b2ed9261",
+"author": "CharlieBravo69",
+"url": "https://sketchfab.com/3d-models/none-8d47f2289a7345f486615609738fea3a",
 "anims": 0,
-"faces": 11448
+"faces": 692318
 },
-"aa59ccd1e56543988944d92179c1df8f": {
-"q": "cat realistic",
+"9e538d6146cc4ff0af40eb02d25aeb02": {
+"q": "wwi british soldier",
 "n": 24,
-"name": "Realistic Goomba",
+"name": "Heinkel HE 111 Instrument Panel",
 "license": "by",
-"author": "FredDrabble",
-"url": "https://sketchfab.com/3d-models/none-aa59ccd1e56543988944d92179c1df8f",
+"author": "artfletch",
+"url": "https://sketchfab.com/3d-models/none-9e538d6146cc4ff0af40eb02d25aeb02",
 "anims": 0,
-"faces": 33102
+"faces": 999528
 },
-"594a001c8c8a449986d23d5fb5d2f6cb": {
-"q": "dog",
+"276a01e4b8484fcda02061e073662dc7": {
+"q": "german soldier 1916",
 "n": 1,
-"name": "The Dog Song",
+"name": "Ivan - Soviet Soldier",
 "license": "by",
-"author": "simontiemroth",
-"url": "https://sketchfab.com/3d-models/none-594a001c8c8a449986d23d5fb5d2f6cb",
-"anims": 1,
-"faces": 37458
+"author": "sihagames",
+"url": "https://sketchfab.com/3d-models/none-276a01e4b8484fcda02061e073662dc7",
+"anims": 0,
+"faces": 7435
 },
-"1f56cfbab07e4fe49b5d9e521c82073a": {
-"q": "dog",
+"dbe7921f8a6d41f8829951d31534b493": {
+"q": "german soldier 1916",
 "n": 2,
-"name": "Labrador Dog",
+"name": "WW2 German Helmet Shell - M42",
 "license": "by",
-"author": "kenchoo",
-"url": "https://sketchfab.com/3d-models/none-1f56cfbab07e4fe49b5d9e521c82073a",
-"anims": 1,
-"faces": 52772
+"author": "dr1ttx",
+"url": "https://sketchfab.com/3d-models/none-dbe7921f8a6d41f8829951d31534b493",
+"anims": 0,
+"faces": 8956
 },
-"72331763040e4314b154f84348fe0957": {
-"q": "dog",
+"83203f914a4c46779ca77f0a33cf6056": {
+"q": "german soldier 1916",
 "n": 3,
-"name": "Dog Puppy",
+"name": "Feldmützen M1907/10 Variations",
 "license": "by",
-"author": "kenchoo",
-"url": "https://sketchfab.com/3d-models/none-72331763040e4314b154f84348fe0957",
-"anims": 1,
-"faces": 14844
-},
-"b06341d813b0422d900efb5fd07a7551": {
-"q": "dog",
-"n": 4,
-"name": "Zombie Dog",
-"license": "by",
-"author": "LostModels2025",
-"url": "https://sketchfab.com/3d-models/none-b06341d813b0422d900efb5fd07a7551",
-"anims": 1,
-"faces": 7569
-},
-"af533b732d3b42408cfdbdb6abcb7c94": {
-"q": "dog",
-"n": 5,
-"name": "[Generic Product]Female Dog Furry",
-"license": "by",
-"author": "rhl89ryo",
-"url": "https://sketchfab.com/3d-models/none-af533b732d3b42408cfdbdb6abcb7c94",
-"anims": 1,
-"faces": 105026
-},
-"9abfce885a834399b2c3ccaed51cd474": {
-"q": "dog",
-"n": 6,
-"name": "Animated Dog, Shiba Inu",
-"license": "by",
-"author": "quander",
-"url": "https://sketchfab.com/3d-models/none-9abfce885a834399b2c3ccaed51cd474",
-"anims": 5,
-"faces": 33384
-},
-"b81a69e333304d30ad9455261fe86aab": {
-"q": "dog",
-"n": 7,
-"name": "Baby Dog",
-"license": "by",
-"author": "noahmostafa664",
-"url": "https://sketchfab.com/3d-models/none-b81a69e333304d30ad9455261fe86aab",
-"anims": 5,
-"faces": 33384
-},
-"f604e800dc3d457f999f8284458c9cf1": {
-"q": "dog",
-"n": 8,
-"name": "dog",
-"license": "by",
-"author": "victory_",
-"url": "https://sketchfab.com/3d-models/none-f604e800dc3d457f999f8284458c9cf1",
-"anims": 1,
-"faces": 1384
-},
-"65026a513e3240728b8fc9594902d84b": {
-"q": "dog",
-"n": 9,
-"name": "Dog Idle",
-"license": "by",
-"author": "LostModels2025",
-"url": "https://sketchfab.com/3d-models/none-65026a513e3240728b8fc9594902d84b",
-"anims": 1,
-"faces": 5816
-},
-"414a3970c7674bc0bedbab32350f56b6": {
-"q": "dog",
-"n": 10,
-"name": "Police Dog",
-"license": "by",
-"author": "Chenchanchong",
-"url": "https://sketchfab.com/3d-models/none-414a3970c7674bc0bedbab32350f56b6",
-"anims": 17,
-"faces": 65395
-},
-"21b7336c58a442578ab88fc47233ef11": {
-"q": "dog",
-"n": 11,
-"name": "Dog animated",
-"license": "by",
-"author": "MAXDESIGN",
-"url": "https://sketchfab.com/3d-models/none-21b7336c58a442578ab88fc47233ef11",
-"anims": 1,
-"faces": 11786
-},
-"d9020159339145e6b9ecd5f3d830830f": {
-"q": "dog",
-"n": 12,
-"name": "Animated Dog Sits Rolls Over Shake Paw",
-"license": "by",
-"author": "LasquetiSpice",
-"url": "https://sketchfab.com/3d-models/none-d9020159339145e6b9ecd5f3d830830f",
-"anims": 1,
-"faces": 33384
-},
-"ea4f65eefdf2454aaeb35201973e1afa": {
-"q": "dog",
-"n": 13,
-"name": "dog",
-"license": "by",
-"author": "heyyodd",
-"url": "https://sketchfab.com/3d-models/none-ea4f65eefdf2454aaeb35201973e1afa",
-"anims": 3,
-"faces": 4656
-},
-"747ddf0ca12e4bc882a93c8d09ccbfc7": {
-"q": "dog",
-"n": 14,
-"name": "Dog",
-"license": "by",
-"author": "victory_",
-"url": "https://sketchfab.com/3d-models/none-747ddf0ca12e4bc882a93c8d09ccbfc7",
-"anims": 2,
-"faces": 824
-},
-"a43ed994cafc43ebae92dad0440c246b": {
-"q": "dog",
-"n": 15,
-"name": "Dog from Lamps",
-"license": "by",
-"author": "Flightyfelon",
-"url": "https://sketchfab.com/3d-models/none-a43ed994cafc43ebae92dad0440c246b",
-"anims": 1,
-"faces": 6009
-},
-"31af844f2b794926bda6336487e81951": {
-"q": "dog",
-"n": 16,
-"name": "cartoon dog",
-"license": "by",
-"author": "berti_buchsbaum",
-"url": "https://sketchfab.com/3d-models/none-31af844f2b794926bda6336487e81951",
-"anims": 2,
-"faces": 15692
-},
-"d7bfa8ca8bdd4df08562099ea605d1f2": {
-"q": "dog",
-"n": 17,
-"name": "Farmer Dog",
-"license": "by",
-"author": "AKM_Models",
-"url": "https://sketchfab.com/3d-models/none-d7bfa8ca8bdd4df08562099ea605d1f2",
-"anims": 1,
-"faces": 28080
-},
-"29d328b339024222ab30128c0789928a": {
-"q": "dog",
-"n": 18,
-"name": "Balloon Dog",
-"license": "by",
-"author": "BKG_Studios",
-"url": "https://sketchfab.com/3d-models/none-29d328b339024222ab30128c0789928a",
-"anims": 2,
-"faces": 265090
-},
-"bc5bb600a3684befadf0acba9ea4e6dc": {
-"q": "dog",
-"n": 19,
-"name": "Sausage Dog",
-"license": "by",
-"author": "Rickerson.Martines.Aparecido",
-"url": "https://sketchfab.com/3d-models/none-bc5bb600a3684befadf0acba9ea4e6dc",
-"anims": 1,
-"faces": 15884
-},
-"ec87fabdf4c3434fb03fecb67eeea6cc": {
-"q": "dog",
-"n": 20,
-"name": "Playful Dog",
-"license": "by",
-"author": "mpmramos",
-"url": "https://sketchfab.com/3d-models/none-ec87fabdf4c3434fb03fecb67eeea6cc",
-"anims": 5,
-"faces": 33384
-},
-"33dfba8ad7484b92a31c7d1264cb363a": {
-"q": "dog",
-"n": 21,
-"name": "The Last Dog",
-"license": "by",
-"author": "Thelta",
-"url": "https://sketchfab.com/3d-models/none-33dfba8ad7484b92a31c7d1264cb363a",
-"anims": 1,
+"author": "someobne",
+"url": "https://sketchfab.com/3d-models/none-83203f914a4c46779ca77f0a33cf6056",
+"anims": 0,
 "faces": 1392
 },
-"dfcaac87e240454697919669dcc285ed": {
-"q": "dog",
-"n": 22,
-"name": "Dog (Metel)",
-"license": "by",
-"author": "ajlanaondar0",
-"url": "https://sketchfab.com/3d-models/none-dfcaac87e240454697919669dcc285ed",
-"anims": 4,
-"faces": 1774
-},
-"c7da856f6f434f9fa920fb7c6ec2e7f7": {
-"q": "dog",
-"n": 23,
-"name": "Ms.Dibbles-Dog",
-"license": "by",
-"author": "jorgemayoralasensio.jma",
-"url": "https://sketchfab.com/3d-models/none-c7da856f6f434f9fa920fb7c6ec2e7f7",
-"anims": 1,
-"faces": 10168
-},
-"8f9361ab396e4c21a53bc50a57a740cd": {
-"q": "dog",
-"n": 24,
-"name": "Doggy Meme Dog PS1",
-"license": "by",
-"author": "rukitu",
-"url": "https://sketchfab.com/3d-models/none-8f9361ab396e4c21a53bc50a57a740cd",
-"anims": 1,
-"faces": 526
-},
-"eccf468de31a4cf2bdc8c88a7ab4a8da": {
-"q": "rat",
-"n": 1,
-"name": "Netsuke - curled rat",
-"license": "cc0",
-"author": "artsmia",
-"url": "https://sketchfab.com/3d-models/none-eccf468de31a4cf2bdc8c88a7ab4a8da",
-"anims": 0,
-"faces": 65000
-},
-"847629266c0f442da74fb132f46f3baf": {
-"q": "rat",
-"n": 2,
-"name": "Rat",
-"license": "by",
-"author": "rhcreations",
-"url": "https://sketchfab.com/3d-models/none-847629266c0f442da74fb132f46f3baf",
-"anims": 1,
-"faces": 23060
-},
-"3db3acb4140d4de8bd62a171212bad9c": {
-"q": "rat",
-"n": 3,
-"name": "Black Rat ( Free download )",
-"license": "by",
-"author": "Nestaeric",
-"url": "https://sketchfab.com/3d-models/none-3db3acb4140d4de8bd62a171212bad9c",
-"anims": 12,
-"faces": 31358
-},
-"cba5c3b8a946499083b4adfbb6d568b8": {
-"q": "rat",
+"5718203cfd5746afbdb939ef555c1888": {
+"q": "german soldier 1916",
 "n": 4,
-"name": "Rat Animated",
+"name": "Langemarck 1917 (German)",
 "license": "by",
-"author": "Shintokin",
-"url": "https://sketchfab.com/3d-models/none-cba5c3b8a946499083b4adfbb6d568b8",
-"anims": 1,
-"faces": 3642
+"author": "SidewalkNZ",
+"url": "https://sketchfab.com/3d-models/none-5718203cfd5746afbdb939ef555c1888",
+"anims": 0,
+"faces": 688704
 },
-"801d26d47ebf41baa17055287a82da08": {
-"q": "rat",
+"5baf30a8f70842a4a0ef8c1e615bdaff": {
+"q": "german soldier 1916",
 "n": 5,
-"name": "Rat",
+"name": "Langemarck 1914 (German)",
 "license": "by",
-"author": "NATOVIC_21",
-"url": "https://sketchfab.com/3d-models/none-801d26d47ebf41baa17055287a82da08",
+"author": "SidewalkNZ",
+"url": "https://sketchfab.com/3d-models/none-5baf30a8f70842a4a0ef8c1e615bdaff",
 "anims": 0,
-"faces": 57216
+"faces": 597359
 },
-"59776b2fef0d4782a4dcf7096fbcf205": {
-"q": "rat",
+"9dcbd7d2330b419cb9ebf37ef976da63": {
+"q": "german soldier 1916",
 "n": 6,
-"name": "Rat",
-"license": "by",
-"author": "molayemvand",
-"url": "https://sketchfab.com/3d-models/none-59776b2fef0d4782a4dcf7096fbcf205",
-"anims": 0,
-"faces": 141446
-},
-"f47fd7f41b0943359a9c7683d9bd600f": {
-"q": "rat",
-"n": 7,
-"name": "Rat 🐀 (Test )Free",
-"license": "by",
-"author": "Nyilonelycompany",
-"url": "https://sketchfab.com/3d-models/none-f47fd7f41b0943359a9c7683d9bd600f",
-"anims": 1,
-"faces": 29652
-},
-"5deb007a05a946d28ce6403616f9629b": {
-"q": "rat",
-"n": 8,
-"name": "Rat",
-"license": "by",
-"author": "Artise1",
-"url": "https://sketchfab.com/3d-models/none-5deb007a05a946d28ce6403616f9629b",
-"anims": 4,
-"faces": 1892
-},
-"329684e1e63d4d16bcf519cc9571c1fb": {
-"q": "rat",
-"n": 9,
-"name": "Mutant Rat",
-"license": "by",
-"author": "Mulberry_Bill",
-"url": "https://sketchfab.com/3d-models/none-329684e1e63d4d16bcf519cc9571c1fb",
-"anims": 0,
-"faces": 314600
-},
-"f8f16346224045b6914b83e02c35e0ae": {
-"q": "rat",
-"n": 10,
-"name": "rat",
-"license": "by",
-"author": "Kaspian.Seppanen",
-"url": "https://sketchfab.com/3d-models/none-f8f16346224045b6914b83e02c35e0ae",
-"anims": 0,
-"faces": 2702
-},
-"bc142f713e3e46599e4b4974eebfa846": {
-"q": "rat",
-"n": 11,
-"name": "Low Poly Rat",
-"license": "by",
-"author": "borymaster3",
-"url": "https://sketchfab.com/3d-models/none-bc142f713e3e46599e4b4974eebfa846",
-"anims": 0,
-"faces": 1160
-},
-"68b91d6bdebe4558807dfb052d9f41c9": {
-"q": "rat",
-"n": 12,
-"name": "Cursed Rat",
-"license": "by",
-"author": "LittleWhiteElk",
-"url": "https://sketchfab.com/3d-models/none-68b91d6bdebe4558807dfb052d9f41c9",
-"anims": 0,
-"faces": 6544
-},
-"978e06562faa4c95b842d451ed23338c": {
-"q": "rat",
-"n": 13,
-"name": "Rat",
-"license": "by",
-"author": "Mehrus",
-"url": "https://sketchfab.com/3d-models/none-978e06562faa4c95b842d451ed23338c",
-"anims": 4,
-"faces": 3602
-},
-"395485ed17364b2d844ced32ed03ea82": {
-"q": "rat",
-"n": 14,
-"name": "Bipedal Rat Creature",
-"license": "by",
-"author": "MaksSokolowski",
-"url": "https://sketchfab.com/3d-models/none-395485ed17364b2d844ced32ed03ea82",
-"anims": 0,
-"faces": 12204
-},
-"896e654c7fdc41a78cf554005e3bdfcd": {
-"q": "rat",
-"n": 15,
-"name": "PS1 Rat",
-"license": "by",
-"author": "Neisium",
-"url": "https://sketchfab.com/3d-models/none-896e654c7fdc41a78cf554005e3bdfcd",
-"anims": 0,
-"faces": 284
-},
-"11649d3c4d124bf29b41a59ca1903933": {
-"q": "rat",
-"n": 16,
-"name": "Day 18 - Office Rat",
-"license": "by",
-"author": "Ida..Faber",
-"url": "https://sketchfab.com/3d-models/none-11649d3c4d124bf29b41a59ca1903933",
-"anims": 0,
-"faces": 141354
-},
-"a38d3a0d4d4248f298189be7106d9faa": {
-"q": "rat",
-"n": 17,
-"name": "Bunny Rat Monster",
-"license": "by",
-"author": "dwn76",
-"url": "https://sketchfab.com/3d-models/none-a38d3a0d4d4248f298189be7106d9faa",
-"anims": 1,
-"faces": 1154
-},
-"d643f09f63e0487fae3f4efa939d9852": {
-"q": "rat",
-"n": 18,
-"name": "Fat Rat",
-"license": "by",
-"author": "duz_vr",
-"url": "https://sketchfab.com/3d-models/none-d643f09f63e0487fae3f4efa939d9852",
-"anims": 0,
-"faces": 1914912
-},
-"65df530434624400b030da4579baa4b6": {
-"q": "rat",
-"n": 19,
-"name": "Dorime Rat",
-"license": "by",
-"author": "brushrush",
-"url": "https://sketchfab.com/3d-models/none-65df530434624400b030da4579baa4b6",
-"anims": 1,
-"faces": 2666
-},
-"da1ddc77aee945bcbcd1142fbc2124e1": {
-"q": "rat",
-"n": 20,
-"name": "Stupid Rat",
-"license": "by",
-"author": "happyhead",
-"url": "https://sketchfab.com/3d-models/none-da1ddc77aee945bcbcd1142fbc2124e1",
-"anims": 0,
-"faces": 1024652
-},
-"60c90a84f49543ad9cffd313486cc119": {
-"q": "rat",
-"n": 21,
-"name": "rat",
-"license": "by",
-"author": "thunk3d.scanner",
-"url": "https://sketchfab.com/3d-models/none-60c90a84f49543ad9cffd313486cc119",
-"anims": 0,
-"faces": 2959373
-},
-"890567f125dd4469a87b3330cad10b20": {
-"q": "rat",
-"n": 22,
-"name": "3DMM Rat",
-"license": "by",
-"author": "bepisperfect",
-"url": "https://sketchfab.com/3d-models/none-890567f125dd4469a87b3330cad10b20",
-"anims": 0,
-"faces": 2808
-},
-"59e29d567e06441f80b7cf7b98745f93": {
-"q": "rat",
-"n": 23,
-"name": "The Fat Rat 🐀",
-"license": "by",
-"author": "Raditsys",
-"url": "https://sketchfab.com/3d-models/none-59e29d567e06441f80b7cf7b98745f93",
-"anims": 1,
-"faces": 55090
-},
-"ad49ec9dd2a54a24884e3c5b1ce45b1a": {
-"q": "rat",
-"n": 24,
-"name": "Rat Run",
-"license": "by",
-"author": "LostModels2025",
-"url": "https://sketchfab.com/3d-models/none-ad49ec9dd2a54a24884e3c5b1ce45b1a",
-"anims": 1,
-"faces": 6265
-},
-"6cbd953042a94b88af92f7f9ddb0ba80": {
-"q": "rat",
-"n": 25,
-"name": "Rat 3D model - Scary Rat/Mouse",
-"license": "by",
-"author": "Lahcen.el",
-"url": "https://sketchfab.com/3d-models/none-6cbd953042a94b88af92f7f9ddb0ba80",
-"anims": 0,
-"faces": 998
-},
-"8cda4370170746d393aa311a7c080c50": {
-"q": "sandbag",
-"n": 1,
-"name": "Sandbags",
-"license": "by",
-"author": "Evanz",
-"url": "https://sketchfab.com/3d-models/none-8cda4370170746d393aa311a7c080c50",
-"anims": 0,
-"faces": 5824
-},
-"35f39f3b391040169eb04d9a339d88a5": {
-"q": "sandbag",
-"n": 2,
-"name": "Sandbag Wall - 24MB",
-"license": "by",
-"author": "ahmagh2e",
-"url": "https://sketchfab.com/3d-models/none-35f39f3b391040169eb04d9a339d88a5",
-"anims": 0,
-"faces": 186732
-},
-"07c4a89f45824a52b6c6055b615b11e6": {
-"q": "sandbag",
-"n": 3,
-"name": "Sandbags",
-"license": "by",
-"author": "TurkeyMaster",
-"url": "https://sketchfab.com/3d-models/none-07c4a89f45824a52b6c6055b615b11e6",
-"anims": 0,
-"faces": 60512
-},
-"7d52600a15c747749d845d9f906045cf": {
-"q": "sandbag",
-"n": 4,
-"name": "Sandbag [Low Poly Realist]",
-"license": "by",
-"author": "Islide",
-"url": "https://sketchfab.com/3d-models/none-7d52600a15c747749d845d9f906045cf",
-"anims": 0,
-"faces": 712
-},
-"ead56376605b473693b902df2266d8d2": {
-"q": "sandbag",
-"n": 5,
-"name": "Sandbag",
-"license": "by",
-"author": "xylvnking",
-"url": "https://sketchfab.com/3d-models/none-ead56376605b473693b902df2266d8d2",
-"anims": 0,
-"faces": 4501
-},
-"8560a93adc7d4c8781d45bac09ddf7b9": {
-"q": "sandbag",
-"n": 6,
-"name": "Sandbag",
-"license": "by",
-"author": "capus.design",
-"url": "https://sketchfab.com/3d-models/none-8560a93adc7d4c8781d45bac09ddf7b9",
-"anims": 0,
-"faces": 1878
-},
-"593800671c8e45eca93b8b7c765c0f77": {
-"q": "sandbag",
-"n": 7,
-"name": "Sandbag Barrier (Ready for Unreal Engine)",
-"license": "by",
-"author": "G4AGamingLabs",
-"url": "https://sketchfab.com/3d-models/none-593800671c8e45eca93b8b7c765c0f77",
-"anims": 0,
-"faces": 19975
-},
-"6de05c8525cd4498b4f7f31e7a7c132a": {
-"q": "sandbag",
-"n": 8,
-"name": "Sandbags Corner (Ready for Unreal Engine)",
-"license": "by",
-"author": "G4AGamingLabs",
-"url": "https://sketchfab.com/3d-models/none-6de05c8525cd4498b4f7f31e7a7c132a",
-"anims": 0,
-"faces": 47727
-},
-"169d7e568e594e0780f5742c48a9e3b0": {
-"q": "sandbag",
-"n": 9,
-"name": "Sandbag",
-"license": "by",
-"author": "challe3d",
-"url": "https://sketchfab.com/3d-models/none-169d7e568e594e0780f5742c48a9e3b0",
-"anims": 0,
-"faces": 1412
-},
-"aff19e0501834ccaaf2c178a0f23751e": {
-"q": "sandbag",
-"n": 10,
-"name": "Weathered Sandbag - 2048px²",
-"license": "by",
-"author": "mark-peters",
-"url": "https://sketchfab.com/3d-models/none-aff19e0501834ccaaf2c178a0f23751e",
-"anims": 0,
-"faces": 21568
-},
-"22da0883e5554116827417a2337b1f1c": {
-"q": "sandbag",
-"n": 11,
-"name": "Sandbags or Ricebags",
-"license": "by",
-"author": "BytesCrafter",
-"url": "https://sketchfab.com/3d-models/none-22da0883e5554116827417a2337b1f1c",
-"anims": 0,
-"faces": 2760
-},
-"d1b91b0aab91486e8bc2b3a77402005f": {
-"q": "sandbag",
-"n": 12,
-"name": "Sandbags",
-"license": "by",
-"author": "SGRuLeZ",
-"url": "https://sketchfab.com/3d-models/none-d1b91b0aab91486e8bc2b3a77402005f",
-"anims": 0,
-"faces": 750112
-},
-"1cd530f94d6c4c87a99712e5dae4ce33": {
-"q": "sandbag",
-"n": 13,
-"name": "Sandbags or Ricebags",
-"license": "by",
-"author": "BytesCrafter",
-"url": "https://sketchfab.com/3d-models/none-1cd530f94d6c4c87a99712e5dae4ce33",
-"anims": 0,
-"faces": 520
-},
-"3e814da0420b4ccf941e405edb104778": {
-"q": "sandbag",
-"n": 14,
-"name": "Sandbags Pro",
-"license": "by",
-"author": "00amza",
-"url": "https://sketchfab.com/3d-models/none-3e814da0420b4ccf941e405edb104778",
-"anims": 0,
-"faces": 6204
-},
-"9c18daee3ecf41e995e54998d5cc61c0": {
-"q": "sandbag",
-"n": 15,
-"name": "Urban/Military Sandbag Wall",
-"license": "by",
-"author": "neslihancakmak",
-"url": "https://sketchfab.com/3d-models/none-9c18daee3ecf41e995e54998d5cc61c0",
-"anims": 0,
-"faces": 139872
-},
-"17f28fa711a44f5694a5bcf3a9d96899": {
-"q": "sandbag",
-"n": 16,
-"name": "Sandbags",
-"license": "by",
-"author": "vynatic",
-"url": "https://sketchfab.com/3d-models/none-17f28fa711a44f5694a5bcf3a9d96899",
-"anims": 0,
-"faces": 4992
-},
-"3ee57a6a98a8495f93456135321373a3": {
-"q": "sandbag",
-"n": 17,
-"name": "Sandbag",
-"license": "by",
-"author": "danmou26",
-"url": "https://sketchfab.com/3d-models/none-3ee57a6a98a8495f93456135321373a3",
-"anims": 0,
-"faces": 5256
-},
-"752cf7c1ff0444ba8a9920f6ca2f57b1": {
-"q": "sandbag",
-"n": 18,
-"name": "Sandbag broken photogrammetry",
-"license": "by",
-"author": "deathcow",
-"url": "https://sketchfab.com/3d-models/none-752cf7c1ff0444ba8a9920f6ca2f57b1",
-"anims": 1,
-"faces": 2716
-},
-"6cfe35a826554a9ba4ed9d913acc6961": {
-"q": "sandbag",
-"n": 19,
-"name": "Sandbag German WWI Flag",
-"license": "by",
-"author": "TraianDumbrava",
-"url": "https://sketchfab.com/3d-models/none-6cfe35a826554a9ba4ed9d913acc6961",
-"anims": 0,
-"faces": 1500
-},
-"6ab8f2c7db3d46f49b5b58ae0b686e2e": {
-"q": "sandbag",
-"n": 20,
-"name": "Sandbag Wall 02",
-"license": "by",
-"author": "PieterSnauwaert",
-"url": "https://sketchfab.com/3d-models/none-6ab8f2c7db3d46f49b5b58ae0b686e2e",
-"anims": 0,
-"faces": 1176
-},
-"b5994d5a6a2648e59cf86ea1951bacaf": {
-"q": "sandbag",
-"n": 21,
-"name": "Sandbag Wall 05",
-"license": "by",
-"author": "PieterSnauwaert",
-"url": "https://sketchfab.com/3d-models/none-b5994d5a6a2648e59cf86ea1951bacaf",
-"anims": 0,
-"faces": 756
-},
-"b917a79cdc884eee9d44018c38b4df5e": {
-"q": "sandbag",
-"n": 22,
-"name": "Sandbags",
-"license": "by",
-"author": "usedm",
-"url": "https://sketchfab.com/3d-models/none-b917a79cdc884eee9d44018c38b4df5e",
-"anims": 1,
-"faces": 4860
-},
-"37e48b9c9c9a4056bd0bf1c604b7573a": {
-"q": "sandbag",
-"n": 23,
-"name": "SandBag Group 01",
-"license": "by",
-"author": "capus.design",
-"url": "https://sketchfab.com/3d-models/none-37e48b9c9c9a4056bd0bf1c604b7573a",
-"anims": 0,
-"faces": 4460
-},
-"a5ea125e9d534b54a3185f349da6aabd": {
-"q": "sandbag",
-"n": 24,
-"name": "Sandbag Wall 04",
-"license": "by",
-"author": "PieterSnauwaert",
-"url": "https://sketchfab.com/3d-models/none-a5ea125e9d534b54a3185f349da6aabd",
-"anims": 0,
-"faces": 1176
-},
-"d23cc8cf3a8347398c49a1532dcec114": {
-"q": "barbed wire fence",
-"n": 1,
-"name": "fence - 11MB",
-"license": "by",
-"author": "ahmagh2e",
-"url": "https://sketchfab.com/3d-models/none-d23cc8cf3a8347398c49a1532dcec114",
-"anims": 0,
-"faces": 26790
-},
-"f3bf62b0e9194cdf9a78b334d40f39c7": {
-"q": "barbed wire fence",
-"n": 2,
-"name": "Barbed-wire Fence",
-"license": "by",
-"author": "xansan",
-"url": "https://sketchfab.com/3d-models/none-f3bf62b0e9194cdf9a78b334d40f39c7",
-"anims": 0,
-"faces": 667264
-},
-"a9fd3ae41f744b9bb8becb64180a1231": {
-"q": "barbed wire fence",
-"n": 3,
-"name": "Wire Fence",
-"license": "by",
-"author": "Pixel-bit",
-"url": "https://sketchfab.com/3d-models/none-a9fd3ae41f744b9bb8becb64180a1231",
-"anims": 0,
-"faces": 212
-},
-"f1c1c8e8052a41b7aa10e4a60fa0bcb9": {
-"q": "barbed wire fence",
-"n": 4,
-"name": "Barbed Wire Fence",
-"license": "by",
-"author": "JohnDoe2311",
-"url": "https://sketchfab.com/3d-models/none-f1c1c8e8052a41b7aa10e4a60fa0bcb9",
-"anims": 0,
-"faces": 200
-},
-"576a6a487ee44b3e9707d5b5b68a6c8c": {
-"q": "barbed wire fence",
-"n": 5,
-"name": "Alambre De Puas",
-"license": "by",
-"author": "EdgarGar",
-"url": "https://sketchfab.com/3d-models/none-576a6a487ee44b3e9707d5b5b68a6c8c",
-"anims": 0,
-"faces": 340572
-},
-"55ecdba178e94003856fb2aad45d7a31": {
-"q": "barbed wire fence",
-"n": 6,
-"name": "Barbed Wire",
-"license": "by",
-"author": "CliffUnderside",
-"url": "https://sketchfab.com/3d-models/none-55ecdba178e94003856fb2aad45d7a31",
-"anims": 0,
-"faces": 244574
-},
-"1027d5d4be534034a66b3a6f4c10203b": {
-"q": "barbed wire fence",
-"n": 7,
-"name": "Barbed wire",
-"license": "by",
-"author": "ernest20020509",
-"url": "https://sketchfab.com/3d-models/none-1027d5d4be534034a66b3a6f4c10203b",
-"anims": 0,
-"faces": 50524
-},
-"0fc98d8e46434291a2811ee51ad1976b": {
-"q": "barbed wire fence",
-"n": 8,
-"name": "Barbed Wire",
-"license": "by",
-"author": "DittyDos",
-"url": "https://sketchfab.com/3d-models/none-0fc98d8e46434291a2811ee51ad1976b",
-"anims": 0,
-"faces": 43240
-},
-"b51abfa01a434fe2b619b7d9774c35a5": {
-"q": "barbed wire fence",
-"n": 9,
-"name": "Circular Barbed Wire",
-"license": "by",
-"author": "GameDevMoot",
-"url": "https://sketchfab.com/3d-models/none-b51abfa01a434fe2b619b7d9774c35a5",
-"anims": 0,
-"faces": 4848
-},
-"bd85a8005ff0403cab2f1e9845016b8f": {
-"q": "barbed wire fence",
-"n": 10,
-"name": "Modular Chain Link Fence Set",
-"license": "by",
-"author": "FrodoUndead",
-"url": "https://sketchfab.com/3d-models/none-bd85a8005ff0403cab2f1e9845016b8f",
-"anims": 0,
-"faces": 3100
-},
-"397735ac4f5b4ac9a4b582576315d065": {
-"q": "barbed wire fence",
-"n": 11,
-"name": "chainlink fence (tileable)",
-"license": "by",
-"author": "alsoliman905",
-"url": "https://sketchfab.com/3d-models/none-397735ac4f5b4ac9a4b582576315d065",
-"anims": 0,
-"faces": 460
-},
-"158a6fa9b1b94bb998dd1d64871c434b": {
-"q": "barbed wire fence",
-"n": 12,
-"name": "barbed-wire_fence",
-"license": "by",
-"author": "tech.service.allwe",
-"url": "https://sketchfab.com/3d-models/none-158a6fa9b1b94bb998dd1d64871c434b",
-"anims": 0,
-"faces": 1331648
-},
-"777e50cd6e5d4db99d70bf7b20370f7a": {
-"q": "barbed wire fence",
-"n": 13,
-"name": "Chain link fence pack (low poly game ready)",
-"license": "by",
-"author": "TampaJoey",
-"url": "https://sketchfab.com/3d-models/none-777e50cd6e5d4db99d70bf7b20370f7a",
-"anims": 0,
-"faces": 17554
-},
-"3cb5195d2c6a4e599371284ad8ad1ee7": {
-"q": "barbed wire fence",
-"n": 14,
-"name": "Spanish Civil War Bunker Interior",
+"name": "Spanish Civil War Observatory (Guadarrama)",
 "license": "by",
 "author": "PabloGdeL",
-"url": "https://sketchfab.com/3d-models/none-3cb5195d2c6a4e599371284ad8ad1ee7",
+"url": "https://sketchfab.com/3d-models/none-9dcbd7d2330b419cb9ebf37ef976da63",
 "anims": 0,
-"faces": 899999
+"faces": 800000
 },
-"54ba23d0213f4615b26bbe5ecf18e435": {
-"q": "barbed wire fence",
-"n": 15,
-"name": "Industrial Barbed Wire Fence",
-"license": "by",
-"author": "reaktivniy_pendos",
-"url": "https://sketchfab.com/3d-models/none-54ba23d0213f4615b26bbe5ecf18e435",
-"anims": 0,
-"faces": 1335286
-},
-"d1ba974f1cbb4adfa2354a69f9bb8b24": {
-"q": "barbed wire fence",
-"n": 16,
-"name": "barbed wires and fences",
-"license": "by",
-"author": "Coswalker",
-"url": "https://sketchfab.com/3d-models/none-d1ba974f1cbb4adfa2354a69f9bb8b24",
-"anims": 0,
-"faces": 368
-},
-"6d92369f63bd468480c2632ae505d461": {
-"q": "barbed wire fence",
-"n": 17,
-"name": "Barbed-wire-mesh-fence",
-"license": "by",
-"author": "IanAbenaitwe",
-"url": "https://sketchfab.com/3d-models/none-6d92369f63bd468480c2632ae505d461",
-"anims": 0,
-"faces": 888
-},
-"5be5fac574704d65ac0707aa2f4874f7": {
-"q": "barbed wire fence",
-"n": 18,
-"name": "City Command Post — Intact and Destroyed",
-"license": "by",
-"author": "xFORTUNAx",
-"url": "https://sketchfab.com/3d-models/none-5be5fac574704d65ac0707aa2f4874f7",
-"anims": 0,
-"faces": 117796
-},
-"f1a02a32791a44c8b97b71360abb8e31": {
-"q": "kettle",
-"n": 1,
-"name": "Chinese Kettle",
-"license": "by",
-"author": "tejay21",
-"url": "https://sketchfab.com/3d-models/none-f1a02a32791a44c8b97b71360abb8e31",
-"anims": 0,
-"faces": 35238
-},
-"8e53dadfbcdf4875bc6190545f9f688b": {
-"q": "kettle",
-"n": 2,
-"name": "Vintage Style Kettle",
-"license": "by",
-"author": "AardwolfDigital",
-"url": "https://sketchfab.com/3d-models/none-8e53dadfbcdf4875bc6190545f9f688b",
-"anims": 0,
-"faces": 19872
-},
-"0a1e47c63bf643fd9abdec7517dbd7e1": {
-"q": "kettle",
-"n": 3,
-"name": "Kettle",
-"license": "by",
-"author": "bloooob",
-"url": "https://sketchfab.com/3d-models/none-0a1e47c63bf643fd9abdec7517dbd7e1",
-"anims": 0,
-"faces": 8512
-},
-"198acd95669c46488264b13f6890889e": {
-"q": "kettle",
-"n": 4,
-"name": "Retro Kettle",
-"license": "by",
-"author": "dylanheyes",
-"url": "https://sketchfab.com/3d-models/none-198acd95669c46488264b13f6890889e",
-"anims": 0,
-"faces": 763234
-},
-"65597886b11446c78e39af4fc526d77a": {
-"q": "kettle",
-"n": 5,
-"name": "Glazed Kettle",
-"license": "by",
-"author": "santacruzmah",
-"url": "https://sketchfab.com/3d-models/none-65597886b11446c78e39af4fc526d77a",
-"anims": 0,
-"faces": 290726
-},
-"4be3478caff84ace8dd5d4b90a2923ff": {
-"q": "kettle",
-"n": 6,
-"name": "kettle_samurai",
-"license": "by",
-"author": "grawehill",
-"url": "https://sketchfab.com/3d-models/none-4be3478caff84ace8dd5d4b90a2923ff",
-"anims": 14,
-"faces": 7182
-},
-"0e4d05deac044738a97abe85b8a04df9": {
-"q": "kettle",
+"5ee67a793113415c8b5f8bc98c9e49b5": {
+"q": "german soldier 1916",
 "n": 7,
-"name": "Victorian kettle",
+"name": "Mendeleev Tank Base Mesh",
 "license": "by",
-"author": "pgonarg",
-"url": "https://sketchfab.com/3d-models/none-0e4d05deac044738a97abe85b8a04df9",
+"author": "tankstorm",
+"url": "https://sketchfab.com/3d-models/none-5ee67a793113415c8b5f8bc98c9e49b5",
 "anims": 0,
-"faces": 43574
+"faces": 6114
 },
-"7075f67e22524936ad00939c0ef939ed": {
-"q": "kettle",
-"n": 8,
-"name": "Water Kettle",
-"license": "by",
-"author": "AmarthGul",
-"url": "https://sketchfab.com/3d-models/none-7075f67e22524936ad00939c0ef939ed",
-"anims": 0,
-"faces": 16084
-},
-"403708113816457e9e8e6923e97ed26c": {
-"q": "kettle",
-"n": 9,
-"name": "Kettle_Dirty_clean_2PART_10_MB",
-"license": "by",
-"author": "ahmagh2e",
-"url": "https://sketchfab.com/3d-models/none-403708113816457e9e8e6923e97ed26c",
-"anims": 0,
-"faces": 43408
-},
-"8aa09e0ebc064ba188b31048feccd430": {
-"q": "kettle",
-"n": 10,
-"name": "Steel Kettle",
-"license": "by",
-"author": "Mehrus",
-"url": "https://sketchfab.com/3d-models/none-8aa09e0ebc064ba188b31048feccd430",
-"anims": 0,
-"faces": 19752
-},
-"03bd85bfd69647af9ef8863b865b3ae4": {
-"q": "kettle",
-"n": 11,
-"name": "water kettle",
-"license": "by",
-"author": "rajj91783",
-"url": "https://sketchfab.com/3d-models/none-03bd85bfd69647af9ef8863b865b3ae4",
-"anims": 0,
-"faces": 52500
-},
-"15093d764b56404d9ad2fccddf3534d9": {
-"q": "kettle",
-"n": 12,
-"name": "Kettle",
-"license": "by",
-"author": "rboag1",
-"url": "https://sketchfab.com/3d-models/none-15093d764b56404d9ad2fccddf3534d9",
-"anims": 0,
-"faces": 10962
-},
-"3f646a36c0a142cfa451af70357f4235": {
-"q": "kettle",
-"n": 13,
-"name": "Glass Kettle",
-"license": "by",
-"author": "halilkantarci",
-"url": "https://sketchfab.com/3d-models/none-3f646a36c0a142cfa451af70357f4235",
-"anims": 0,
-"faces": 6288
-},
-"5761be95dcfb46bbaf8e7e87988d20e6": {
-"q": "kettle",
-"n": 14,
-"name": "Kettle",
-"license": "by",
-"author": "ScarboroughMuseums",
-"url": "https://sketchfab.com/3d-models/none-5761be95dcfb46bbaf8e7e87988d20e6",
-"anims": 0,
-"faces": 1399950
-},
-"7689b0f5bd7748ffaaf378ccf977699a": {
-"q": "kettle",
-"n": 15,
-"name": "Soviet Kettle",
-"license": "by",
-"author": "ivapaland",
-"url": "https://sketchfab.com/3d-models/none-7689b0f5bd7748ffaaf378ccf977699a",
-"anims": 0,
-"faces": 4662
-},
-"3e65d8a8cb6740519f753179ff2c14f1": {
-"q": "kettle",
-"n": 16,
-"name": "Kettle",
-"license": "by",
-"author": "simalmaii",
-"url": "https://sketchfab.com/3d-models/none-3e65d8a8cb6740519f753179ff2c14f1",
-"anims": 0,
-"faces": 1006
-},
-"11cbe604d6e8405287af749ea51cf0d3": {
-"q": "kettle",
-"n": 17,
-"name": "Electric Kettle",
-"license": "by",
-"author": "Annelida",
-"url": "https://sketchfab.com/3d-models/none-11cbe604d6e8405287af749ea51cf0d3",
-"anims": 0,
-"faces": 63802
-},
-"0445b3baee4b4a6fb40d7e03be4e8550": {
-"q": "kettle",
-"n": 18,
-"name": "Electrolux electric kettle",
-"license": "by",
-"author": "gorzi90",
-"url": "https://sketchfab.com/3d-models/none-0445b3baee4b4a6fb40d7e03be4e8550",
-"anims": 0,
-"faces": 63552
-},
-"f2477b1e3868442bb06027341e040b99": {
-"q": "kettle",
-"n": 19,
-"name": "Kettle  and grate",
-"license": "by",
-"author": "sinnervoncrawsz",
-"url": "https://sketchfab.com/3d-models/none-f2477b1e3868442bb06027341e040b99",
-"anims": 0,
-"faces": 724678
-},
-"db91b500afba4661b7ad1a6df125c90b": {
-"q": "kettle",
-"n": 20,
-"name": "Kettle",
-"license": "by",
-"author": "alexdouble",
-"url": "https://sketchfab.com/3d-models/none-db91b500afba4661b7ad1a6df125c90b",
-"anims": 0,
-"faces": 810
-},
-"129973ba81fa49b7b2ad9a9d43020d83": {
-"q": "kettle",
-"n": 21,
-"name": "Kettle Bell",
-"license": "by",
-"author": "aqpetteri",
-"url": "https://sketchfab.com/3d-models/none-129973ba81fa49b7b2ad9a9d43020d83",
-"anims": 0,
-"faces": 7084
-},
-"6cb0c6eed05a4681a712dfe0f41b88cc": {
-"q": "kettle",
-"n": 22,
-"name": "Super-speed kettle",
-"license": "by",
-"author": "dannzjs",
-"url": "https://sketchfab.com/3d-models/none-6cb0c6eed05a4681a712dfe0f41b88cc",
-"anims": 0,
-"faces": 82408
-},
-"90cfde2775c04ec48f9bafd98131e808": {
-"q": "kettle",
-"n": 23,
-"name": "PB55 Kettle SM",
-"license": "by",
-"author": "scanimat",
-"url": "https://sketchfab.com/3d-models/none-90cfde2775c04ec48f9bafd98131e808",
-"anims": 0,
-"faces": 4916
-},
-"e3e6139ac56b49f08e06274bd922690d": {
-"q": "kettle",
-"n": 24,
-"name": "Celadon_Kettle",
-"license": "by",
-"author": "KHS_Asset",
-"url": "https://sketchfab.com/3d-models/none-e3e6139ac56b49f08e06274bd922690d",
-"anims": 0,
-"faces": 61674
-},
-"c40541b7d0de408b9d605a6b84d0be0f": {
-"q": "toilet",
-"n": 1,
-"name": "Sci-Fi Toilet Mech",
-"license": "by",
-"author": "EvesStudio2008",
-"url": "https://sketchfab.com/3d-models/none-c40541b7d0de408b9d605a6b84d0be0f",
-"anims": 0,
-"faces": 64513
-},
-"132a8ee2af3a40d39d270fbed3d3666c": {
-"q": "toilet",
+"faca6378c305486e89f3c0fcafb8c98f": {
+"q": "brodie helmet",
 "n": 2,
-"name": "Toilet",
+"name": "Brodie Helmet WW1",
 "license": "by",
-"author": "hippostance",
-"url": "https://sketchfab.com/3d-models/none-132a8ee2af3a40d39d270fbed3d3666c",
+"author": "WarlooColonel",
+"url": "https://sketchfab.com/3d-models/none-faca6378c305486e89f3c0fcafb8c98f",
 "anims": 0,
-"faces": 10492
+"faces": 45584
 },
-"9befba766b7c47fdb134f5d2d6072bc9": {
-"q": "toilet",
+"ba9d7e72feea4457b2872959a351cf22": {
+"q": "brodie helmet",
 "n": 3,
-"name": "Toilet",
+"name": "brodie helmet",
 "license": "by",
-"author": "Pasha.",
-"url": "https://sketchfab.com/3d-models/none-9befba766b7c47fdb134f5d2d6072bc9",
+"author": "memesalah3016",
+"url": "https://sketchfab.com/3d-models/none-ba9d7e72feea4457b2872959a351cf22",
 "anims": 0,
-"faces": 54910
+"faces": 4032
 },
-"c98c73d7b70e4635b8cc01705915aea6": {
-"q": "toilet",
+"f3ee81444e8c443e86ab3ea0e7e08516": {
+"q": "brodie helmet",
 "n": 4,
-"name": "toilet",
+"name": "WW2 British Brodie Helmet",
 "license": "by",
-"author": "motaman",
-"url": "https://sketchfab.com/3d-models/none-c98c73d7b70e4635b8cc01705915aea6",
+"author": "BaBaCorp",
+"url": "https://sketchfab.com/3d-models/none-f3ee81444e8c443e86ab3ea0e7e08516",
 "anims": 0,
-"faces": 11972
+"faces": 416
 },
-"24d1b493899d407780140688abae19bc": {
-"q": "toilet",
+"bbb1f1743a144b9791ba8622485f59f1": {
+"q": "brodie helmet",
 "n": 5,
-"name": "Toilet",
+"name": "Great War helmets",
 "license": "by",
-"author": "Xill",
-"url": "https://sketchfab.com/3d-models/none-24d1b493899d407780140688abae19bc",
+"author": "Volmet",
+"url": "https://sketchfab.com/3d-models/none-bbb1f1743a144b9791ba8622485f59f1",
 "anims": 0,
-"faces": 57572
+"faces": 4490
 },
-"389d5427a1f344c4aa4883ec5a6aaf05": {
-"q": "toilet",
+"7092309d3b0d4ca6bcd4bfeec9640e29": {
+"q": "brodie helmet",
 "n": 6,
-"name": "Dirty Toilet",
+"name": "WW2 headwear (CC0)",
 "license": "by",
-"author": "shedmon",
-"url": "https://sketchfab.com/3d-models/none-389d5427a1f344c4aa4883ec5a6aaf05",
+"author": "britdawgmasterfunk",
+"url": "https://sketchfab.com/3d-models/none-7092309d3b0d4ca6bcd4bfeec9640e29",
 "anims": 0,
-"faces": 3038
+"faces": 625730
 },
-"23f98b3bdabd40d0b1b5ccfba4a8f65b": {
-"q": "toilet",
+"f9cbebb6367e43ac89c5aa47c1d0b64e": {
+"q": "brodie helmet",
 "n": 7,
-"name": "SKIBIDI TOILET BASE (OUTSIDE) SKIBIDI TOILET",
+"name": "WW1 British Brodie",
 "license": "by",
-"author": "farsong0",
-"url": "https://sketchfab.com/3d-models/none-23f98b3bdabd40d0b1b5ccfba4a8f65b",
+"author": "HafizulFikri",
+"url": "https://sketchfab.com/3d-models/none-f9cbebb6367e43ac89c5aa47c1d0b64e",
 "anims": 0,
-"faces": 1539464
+"faces": 1536
 },
-"5139f2a12f9d49b4944ee2c29d0c98fb": {
-"q": "toilet",
+"1eab23b16ca54ce5b08fc7cce47b8135": {
+"q": "brodie helmet",
 "n": 8,
-"name": "Toilet 2",
+"name": "Low poly Brodie helmet",
 "license": "by",
-"author": "Pasha.",
-"url": "https://sketchfab.com/3d-models/none-5139f2a12f9d49b4944ee2c29d0c98fb",
+"author": "alexward479",
+"url": "https://sketchfab.com/3d-models/none-1eab23b16ca54ce5b08fc7cce47b8135",
 "anims": 0,
-"faces": 41180
+"faces": 224
 },
-"8f3c3c244abf4e2fbeb069ec2ca4e7fc": {
-"q": "toilet",
+"13fe570e7eb04b5bb44275e966f2991a": {
+"q": "stahlhelm m16",
+"n": 1,
+"name": "German Stahlhelm m16 (ww1)",
+"license": "by",
+"author": "janovich3D",
+"url": "https://sketchfab.com/3d-models/none-13fe570e7eb04b5bb44275e966f2991a",
+"anims": 0,
+"faces": 27536
+},
+"3ec38868fa9947328e2d0f80a8be51db": {
+"q": "stahlhelm m16",
+"n": 2,
+"name": "Stahlhelm M16 (remake)",
+"license": "by",
+"author": "someobne",
+"url": "https://sketchfab.com/3d-models/none-3ec38868fa9947328e2d0f80a8be51db",
+"anims": 0,
+"faces": 2609
+},
+"793a497f32b84c60b4296daf29659e81": {
+"q": "stahlhelm m16",
+"n": 3,
+"name": "WW2 M35 Stahlhelm",
+"license": "by",
+"author": "SimplyK1",
+"url": "https://sketchfab.com/3d-models/none-793a497f32b84c60b4296daf29659e81",
+"anims": 0,
+"faces": 196940
+},
+"27def5d3634b4c56a4b61b7597743617": {
+"q": "stahlhelm m16",
+"n": 4,
+"name": "WW2 M35 Heer Stahlhelm",
+"license": "by",
+"author": "SimplyK1",
+"url": "https://sketchfab.com/3d-models/none-27def5d3634b4c56a4b61b7597743617",
+"anims": 0,
+"faces": 476056
+},
+"ea7726c90876465ab844b574fd2a8d9b": {
+"q": "stahlhelm m16",
+"n": 5,
+"name": "M35 Stahlhelm Normandy Camo",
+"license": "by",
+"author": "SimplyK1",
+"url": "https://sketchfab.com/3d-models/none-ea7726c90876465ab844b574fd2a8d9b",
+"anims": 0,
+"faces": 366214
+},
+"b975964f04c14e2da5d7e614126092f3": {
+"q": "stahlhelm m16",
+"n": 6,
+"name": "WW2 Stahlhelm M35 Heer",
+"license": "by",
+"author": "SimplyK1",
+"url": "https://sketchfab.com/3d-models/none-b975964f04c14e2da5d7e614126092f3",
+"anims": 0,
+"faces": 334718
+},
+"364113da0ae942eb8cfa1fbee5685984": {
+"q": "smoke",
+"n": 1,
+"name": "Evanescent Smoke",
+"license": "by",
+"author": "Tycho_Magnetic_Anomaly",
+"url": "https://sketchfab.com/3d-models/none-364113da0ae942eb8cfa1fbee5685984",
+"anims": 1,
+"faces": 245832
+},
+"5326a7b4c679491a8cdadc335a88a30c": {
+"q": "smoke",
+"n": 2,
+"name": "Smoke Test",
+"license": "by",
+"author": "Sultan_The2nd",
+"url": "https://sketchfab.com/3d-models/none-5326a7b4c679491a8cdadc335a88a30c",
+"anims": 1,
+"faces": 148774
+},
+"64f0f96fbf5f40ed8d29d95b6f24a7bc": {
+"q": "smoke",
+"n": 3,
+"name": "Smoke Rings",
+"license": "by",
+"author": "Tycho_Magnetic_Anomaly",
+"url": "https://sketchfab.com/3d-models/none-64f0f96fbf5f40ed8d29d95b6f24a7bc",
+"anims": 1,
+"faces": 124740
+},
+"81155acba8ad46b3943dad10b1bb17ad": {
+"q": "smoke",
+"n": 4,
+"name": "Titan Tv Man Smoke :D",
+"license": "by",
+"author": "Nircraft",
+"url": "https://sketchfab.com/3d-models/none-81155acba8ad46b3943dad10b1bb17ad",
+"anims": 4,
+"faces": 660
+},
+"5a2875579a814372b373d33bac8485fb": {
+"q": "smoke",
+"n": 5,
+"name": "Hobbit Pipe W. Smoke",
+"license": "by",
+"author": "TechnoCraft",
+"url": "https://sketchfab.com/3d-models/none-5a2875579a814372b373d33bac8485fb",
+"anims": 1,
+"faces": 106494
+},
+"40b77d61c70a4d2b932bec73ea1a704c": {
+"q": "smoke",
+"n": 6,
+"name": "Smoke",
+"license": "by",
+"author": "Inuciian",
+"url": "https://sketchfab.com/3d-models/none-40b77d61c70a4d2b932bec73ea1a704c",
+"anims": 1,
+"faces": 92
+},
+"d2dc6148098c48ea8c1b3bf1b70528c3": {
+"q": "smoke",
+"n": 7,
+"name": "Smoke",
+"license": "by",
+"author": "guillermot",
+"url": "https://sketchfab.com/3d-models/none-d2dc6148098c48ea8c1b3bf1b70528c3",
+"anims": 1,
+"faces": 96
+},
+"a56b08cf4d6948bdbdd1f7cd7a12d98a": {
+"q": "smoke",
+"n": 8,
+"name": "Destiny 2 Character Bust",
+"license": "by",
+"author": "DanielCardonaArt",
+"url": "https://sketchfab.com/3d-models/none-a56b08cf4d6948bdbdd1f7cd7a12d98a",
+"anims": 1,
+"faces": 75968
+},
+"c5d8cf1eb04a4ad3b0a9ed6262984270": {
+"q": "smoke",
 "n": 9,
-"name": "Toilet_WC_Ground toilet_8MB",
+"name": "Big smoke is sexy",
 "license": "by",
-"author": "ahmagh2e",
-"url": "https://sketchfab.com/3d-models/none-8f3c3c244abf4e2fbeb069ec2ca4e7fc",
-"anims": 0,
-"faces": 7108
+"author": "Sandy_boi",
+"url": "https://sketchfab.com/3d-models/none-c5d8cf1eb04a4ad3b0a9ed6262984270",
+"anims": 1,
+"faces": 2644
 },
-"9a33fecbd62e4614aa2054c54508c427": {
-"q": "toilet",
+"001ad8cdc02840c1a9e25157b07746d2": {
+"q": "smoke",
 "n": 10,
-"name": "Toilet Bases",
+"name": "Smoke Test 60fps",
 "license": "by",
-"author": "bruhdatrippy",
-"url": "https://sketchfab.com/3d-models/none-9a33fecbd62e4614aa2054c54508c427",
-"anims": 0,
-"faces": 7147
+"author": "hg8d",
+"url": "https://sketchfab.com/3d-models/none-001ad8cdc02840c1a9e25157b07746d2",
+"anims": 1,
+"faces": 5880
 },
-"d23169cfb9114eb2883dc454a3e64b76": {
-"q": "toilet",
+"64fa1226edab4177a739495fc5a3ce57": {
+"q": "smoke",
 "n": 11,
-"name": "DJ Toilet",
+"name": "Smoke grenade",
 "license": "by",
-"author": "EMPERORMARK_Legit",
-"url": "https://sketchfab.com/3d-models/none-d23169cfb9114eb2883dc454a3e64b76",
-"anims": 0,
-"faces": 47019
+"author": "vvesy",
+"url": "https://sketchfab.com/3d-models/none-64fa1226edab4177a739495fc5a3ce57",
+"anims": 2,
+"faces": 251584
 },
-"a725f835410b418ab6be823f29caf2a6": {
-"q": "toilet",
+"7e9bfda92ea74b5b8cdd186dfeef547a": {
+"q": "smoke",
 "n": 12,
-"name": "Toilet Paper Holder - 12MB",
+"name": "Smoke Test 30fps",
 "license": "by",
-"author": "ahmagh2e",
-"url": "https://sketchfab.com/3d-models/none-a725f835410b418ab6be823f29caf2a6",
-"anims": 0,
-"faces": 2899
+"author": "hg8d",
+"url": "https://sketchfab.com/3d-models/none-7e9bfda92ea74b5b8cdd186dfeef547a",
+"anims": 1,
+"faces": 5880
 },
-"96e96772a7564df0b417244bd2be33f3": {
-"q": "toilet",
+"2fe075e1e8314b97afa8c652c3d45939": {
+"q": "smoke",
 "n": 13,
-"name": "toilet paper dispenser",
+"name": "Garcello - Smoke 'Em Out Struggle",
 "license": "by",
-"author": "tobei",
-"url": "https://sketchfab.com/3d-models/none-96e96772a7564df0b417244bd2be33f3",
-"anims": 0,
-"faces": 714
+"author": "_flowersnax",
+"url": "https://sketchfab.com/3d-models/none-2fe075e1e8314b97afa8c652c3d45939",
+"anims": 9,
+"faces": 11278
 },
-"da8e76c0c59e491c972b3c755877e6f2": {
-"q": "toilet",
+"89d8562d1ae84ac782b0417b46b911cd": {
+"q": "smoke",
 "n": 14,
-"name": "Plastic toilet cabin",
+"name": "Big smoke",
 "license": "by",
-"author": "yarosha13",
-"url": "https://sketchfab.com/3d-models/none-da8e76c0c59e491c972b3c755877e6f2",
-"anims": 0,
-"faces": 20960
+"author": "Kryph",
+"url": "https://sketchfab.com/3d-models/none-89d8562d1ae84ac782b0417b46b911cd",
+"anims": 1,
+"faces": 2644
 },
-"28d3ef52e38840f4a9dabb4bc2b8c627": {
-"q": "toilet",
+"cb89671c039c4881ad78be306d7236d9": {
+"q": "smoke",
 "n": 15,
-"name": "Stone Toilet",
+"name": "Arcane - #256fes fanart",
 "license": "by",
-"author": "KonoDioDaD",
-"url": "https://sketchfab.com/3d-models/none-28d3ef52e38840f4a9dabb4bc2b8c627",
-"anims": 0,
-"faces": 512
+"author": "masslove",
+"url": "https://sketchfab.com/3d-models/none-cb89671c039c4881ad78be306d7236d9",
+"anims": 1,
+"faces": 858
 },
-"c61d83187be64d8ab89cecea70e20cce": {
-"q": "toilet",
+"ec9d309e728c4577bd06d4c468532b5f": {
+"q": "smoke",
 "n": 16,
-"name": "Toilet",
+"name": "Garcello (Ghost form) - Smoke 'Em Out Struggle",
 "license": "by",
-"author": "drydoctoregg",
-"url": "https://sketchfab.com/3d-models/none-c61d83187be64d8ab89cecea70e20cce",
-"anims": 0,
-"faces": 35482
+"author": "_flowersnax",
+"url": "https://sketchfab.com/3d-models/none-ec9d309e728c4577bd06d4c468532b5f",
+"anims": 6,
+"faces": 10666
 },
-"4052d8590ec34034afe7fe34dae71fba": {
-"q": "toilet",
+"125cea484bf848d1b93ef8852140ffcd": {
+"q": "smoke",
 "n": 17,
-"name": "G-Toilet Arm",
+"name": "smoke",
 "license": "by",
-"author": "Skibidisigmagyatt",
-"url": "https://sketchfab.com/3d-models/none-4052d8590ec34034afe7fe34dae71fba",
-"anims": 0,
-"faces": 95009
+"author": "Mylom",
+"url": "https://sketchfab.com/3d-models/none-125cea484bf848d1b93ef8852140ffcd",
+"anims": 1,
+"faces": 96
 },
-"12407f55edb24dccb5c0bac99c6997d6": {
-"q": "toilet",
+"3339fa4489144fc4a0ac9b64fbf9ec90": {
+"q": "smoke",
 "n": 18,
-"name": "Scout Astro Toilet",
+"name": "smoke",
 "license": "by",
-"author": "EMPERORMARK_Legit",
-"url": "https://sketchfab.com/3d-models/none-12407f55edb24dccb5c0bac99c6997d6",
-"anims": 0,
-"faces": 69261
+"author": "ap-school",
+"url": "https://sketchfab.com/3d-models/none-3339fa4489144fc4a0ac9b64fbf9ec90",
+"anims": 1,
+"faces": 92
 },
-"60d5c1ca1df449229860c1d9df737479": {
-"q": "toilet",
+"4e3af5f8e8e148398e71229fe419a440": {
+"q": "smoke",
 "n": 19,
-"name": "sink Toilet WC - 14MB",
+"name": "Smoke",
 "license": "by",
-"author": "ahmagh2e",
-"url": "https://sketchfab.com/3d-models/none-60d5c1ca1df449229860c1d9df737479",
-"anims": 0,
-"faces": 9706
+"author": "jesusalexanderaguillonrangel",
+"url": "https://sketchfab.com/3d-models/none-4e3af5f8e8e148398e71229fe419a440",
+"anims": 18,
+"faces": 1264
 },
-"ec99a392c7ab40b9a56d421f11362d63": {
-"q": "toilet",
+"fe1f1c0cbb8d4f22a58506a75b02a6a5": {
+"q": "smoke",
 "n": 20,
-"name": "Shrek's toilet",
+"name": "Cartoon Hoonicorn V2 Rigged Blender 3.2+",
 "license": "by",
-"author": "DoniTodorov",
-"url": "https://sketchfab.com/3d-models/none-ec99a392c7ab40b9a56d421f11362d63",
-"anims": 0,
-"faces": 53438
+"author": "Speed12",
+"url": "https://sketchfab.com/3d-models/none-fe1f1c0cbb8d4f22a58506a75b02a6a5",
+"anims": 1,
+"faces": 749846
 },
-"f9d05116be26460ca12d0e0ecfa315ee": {
-"q": "toilet",
+"1f5fbde3d78947b9acdb69b384a4c718": {
+"q": "smoke",
 "n": 21,
-"name": "First Skibidi Toilet",
+"name": "Incense burner",
 "license": "by",
-"author": "ToiletFax",
-"url": "https://sketchfab.com/3d-models/none-f9d05116be26460ca12d0e0ecfa315ee",
-"anims": 0,
-"faces": 3943
+"author": "greta.m",
+"url": "https://sketchfab.com/3d-models/none-1f5fbde3d78947b9acdb69b384a4c718",
+"anims": 1,
+"faces": 4750
 },
-"6569ec929e7f43a0bd9f614b2ce51f0a": {
-"q": "toilet",
+"7470969f445b4ea18a7a0c421661eb9a": {
+"q": "smoke",
 "n": 22,
-"name": "Strider Astro Toilet",
+"name": "Big Smoke Toilet",
 "license": "by",
-"author": "EMPERORMARK_Legit",
-"url": "https://sketchfab.com/3d-models/none-6569ec929e7f43a0bd9f614b2ce51f0a",
-"anims": 0,
-"faces": 26657
+"author": "Skibidi_boom6",
+"url": "https://sketchfab.com/3d-models/none-7470969f445b4ea18a7a0c421661eb9a",
+"anims": 1,
+"faces": 34207
 },
-"448e57880fa744e19e18604e42d64cf3": {
-"q": "toilet",
+"163639f6ef9548869ea52ac8e585fba3": {
+"q": "smoke",
 "n": 23,
-"name": "Simple Toilet Paper 2.0",
+"name": "Popsmoke Woo Dance",
 "license": "by",
-"author": "Blender3D",
-"url": "https://sketchfab.com/3d-models/none-448e57880fa744e19e18604e42d64cf3",
-"anims": 0,
-"faces": 1544
+"author": "ronchoqa",
+"url": "https://sketchfab.com/3d-models/none-163639f6ef9548869ea52ac8e585fba3",
+"anims": 1,
+"faces": 70930
 },
-"868beb5a0e6840d7a1d647a42a5e5a8c": {
-"q": "toilet",
+"833cc5921f4c48bca7caa37efdef8b96": {
+"q": "smoke",
 "n": 24,
-"name": "Toilet",
+"name": "Looper Icon - Smoke",
 "license": "by",
-"author": "SushiKev3d",
-"url": "https://sketchfab.com/3d-models/none-868beb5a0e6840d7a1d647a42a5e5a8c",
-"anims": 0,
-"faces": 2540
+"author": "dimensioneertlof",
+"url": "https://sketchfab.com/3d-models/none-833cc5921f4c48bca7caa37efdef8b96",
+"anims": 1,
+"faces": 972
 }
 }
