@@ -1,0 +1,201 @@
+[
+ {
+  "i": 0,
+  "file": "t0.png",
+  "name": "",
+  "mime": "image/png",
+  "size": [
+   1024,
+   1024
+  ],
+  "used": [
+   "ammopouchesgerman_low:base"
+  ]
+ },
+ {
+  "i": 1,
+  "file": "t1.png",
+  "name": "",
+  "mime": "image/png",
+  "size": [
+   1024,
+   1024
+  ],
+  "used": [
+   "ammopouchesgerman_low:orm",
+   "ammopouchesgerman_low:occlusion"
+  ]
+ },
+ {
+  "i": 2,
+  "file": "t2.png",
+  "name": "",
+  "mime": "image/png",
+  "size": [
+   1024,
+   1024
+  ],
+  "used": [
+   "ammopouchesgerman_low:normal"
+  ]
+ },
+ {
+  "i": 3,
+  "file": "t3.png",
+  "name": "",
+  "mime": "image/png",
+  "size": [
+   1024,
+   1024
+  ],
+  "used": [
+   "helmetm42_low:base"
+  ]
+ },
+ {
+  "i": 4,
+  "file": "t4.png",
+  "name": "",
+  "mime": "image/png",
+  "size": [
+   1024,
+   1024
+  ],
+  "used": [
+   "helmetm42_low:orm",
+   "helmetm42_low:occlusion"
+  ]
+ },
+ {
+  "i": 5,
+  "file": "t5.png",
+  "name": "",
+  "mime": "image/png",
+  "size": [
+   1024,
+   1024
+  ],
+  "used": [
+   "helmetm42_low:normal"
+  ]
+ },
+ {
+  "i": 6,
+  "file": "t6.png",
+  "name": "",
+  "mime": "image/png",
+  "size": [
+   512,
+   512
+  ],
+  "used": [
+   "scrimwire_low:base"
+  ]
+ },
+ {
+  "i": 7,
+  "file": "t7.png",
+  "name": "",
+  "mime": "image/png",
+  "size": [
+   512,
+   512
+  ],
+  "used": [
+   "scrimwire_low:orm"
+  ]
+ },
+ {
+  "i": 8,
+  "file": "t8.png",
+  "name": "",
+  "mime": "image/png",
+  "size": [
+   512,
+   512
+  ],
+  "used": [
+   "scrimwire_low:normal"
+  ]
+ },
+ {
+  "i": 9,
+  "file": "t9.png",
+  "name": "",
+  "mime": "image/png",
+  "size": [
+   1024,
+   1024
+  ],
+  "used": [
+   "scrimleaves_low:base"
+  ]
+ },
+ {
+  "i": 10,
+  "file": "t10.png",
+  "name": "",
+  "mime": "image/png",
+  "size": [
+   1024,
+   1024
+  ],
+  "used": [
+   "scrimleaves_low:orm",
+   "scrimleaves_low:occlusion"
+  ]
+ },
+ {
+  "i": 11,
+  "file": "t11.png",
+  "name": "",
+  "mime": "image/png",
+  "size": [
+   1024,
+   1024
+  ],
+  "used": [
+   "scrimleaves_low:normal"
+  ]
+ },
+ {
+  "i": 12,
+  "file": "t12.png",
+  "name": "",
+  "mime": "image/png",
+  "size": [
+   1024,
+   1024
+  ],
+  "used": [
+   "Material.003:base"
+  ]
+ },
+ {
+  "i": 13,
+  "file": "t13.png",
+  "name": "",
+  "mime": "image/png",
+  "size": [
+   1024,
+   1024
+  ],
+  "used": [
+   "Material.003:orm",
+   "Material.003:occlusion"
+  ]
+ },
+ {
+  "i": 14,
+  "file": "t14.png",
+  "name": "",
+  "mime": "image/png",
+  "size": [
+   1024,
+   1024
+  ],
+  "used": [
+   "Material.003:normal"
+  ]
+ }
+]

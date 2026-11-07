@@ -1,0 +1,132 @@
+[
+ {
+  "i": 0,
+  "file": "t0.png",
+  "name": "",
+  "mime": "image/png",
+  "size": [
+   1024,
+   1024
+  ],
+  "used": [
+   "Body:base"
+  ]
+ },
+ {
+  "i": 1,
+  "file": "t1.png",
+  "name": "",
+  "mime": "image/png",
+  "size": [
+   1024,
+   1024
+  ],
+  "used": [
+   "Body:orm"
+  ]
+ },
+ {
+  "i": 2,
+  "file": "t2.png",
+  "name": "",
+  "mime": "image/png",
+  "size": [
+   1024,
+   1024
+  ],
+  "used": [
+   "Body:normal"
+  ]
+ },
+ {
+  "i": 3,
+  "file": "t3.png",
+  "name": "",
+  "mime": "image/png",
+  "size": [
+   1024,
+   1024
+  ],
+  "used": [
+   "Eyelashes:base"
+  ]
+ },
+ {
+  "i": 4,
+  "file": "t4.png",
+  "name": "",
+  "mime": "image/png",
+  "size": [
+   1024,
+   1024
+  ],
+  "used": [
+   "Clothes:base"
+  ]
+ },
+ {
+  "i": 5,
+  "file": "t5.png",
+  "name": "",
+  "mime": "image/png",
+  "size": [
+   1024,
+   1024
+  ],
+  "used": [
+   "Clothes:orm"
+  ]
+ },
+ {
+  "i": 6,
+  "file": "t6.png",
+  "name": "",
+  "mime": "image/png",
+  "size": [
+   1024,
+   1024
+  ],
+  "used": [
+   "Clothes:normal"
+  ]
+ },
+ {
+  "i": 7,
+  "file": "t7.png",
+  "name": "",
+  "mime": "image/png",
+  "size": [
+   1024,
+   1024
+  ],
+  "used": [
+   "Material.003:base"
+  ]
+ },
+ {
+  "i": 8,
+  "file": "t8.png",
+  "name": "",
+  "mime": "image/png",
+  "size": [
+   1024,
+   1024
+  ],
+  "used": [
+   "Material.003:orm"
+  ]
+ },
+ {
+  "i": 9,
+  "file": "t9.png",
+  "name": "",
+  "mime": "image/png",
+  "size": [
+   1024,
+   1024
+  ],
+  "used": [
+   "Material.003:normal"
+  ]
+ }
+]
