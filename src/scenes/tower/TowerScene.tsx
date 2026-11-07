@@ -89,12 +89,17 @@ const makeTank = (m: Record<string, THREE.Material>, s = 1, staves = 30) => {
     ring.add(st);
   }
   g.add(ring);
+  // обручи из двух половин: передняя прячется вместе с передними клёпками на срезе
+  const hoopsFront = new THREE.Group();
   for (let k = 0; k < 6; k++) {
-    const h = new THREE.Mesh(new THREE.TorusGeometry(TR + 0.08, 0.035, 6, 48), m.hoop);
-    h.rotation.x = Math.PI / 2;
-    h.position.y = 0.25 + k * 0.62;
-    g.add(h);
+    [0, 1].forEach((half) => {
+      const h = new THREE.Mesh(new THREE.TorusGeometry(TR + 0.08, 0.035, 6, 24, Math.PI), m.hoop);
+      h.rotation.x = half ? -Math.PI / 2 : Math.PI / 2; // half=1 — передняя (к зрителю)
+      h.position.y = 0.25 + k * 0.62;
+      (half ? hoopsFront : g).add(h);
+    });
   }
+  g.add(hoopsFront);
   const roof = new THREE.Mesh(new THREE.ConeGeometry(TR + 0.15, 1.1, 30, 1, true), m.cedarDark);
   roof.position.y = TH + 0.55;
   g.add(roof);
@@ -115,7 +120,7 @@ const makeTank = (m: Record<string, THREE.Material>, s = 1, staves = 30) => {
   }
   g.add(legs);
   g.scale.setScalar(s);
-  return {g, ring, roof};
+  return {g, ring, roof, hoopsFront};
 };
 
 const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
@@ -141,9 +146,9 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
       steel: new THREE.MeshStandardMaterial({color: '#4c5258', roughness: 0.6, metalness: 0.1}),
       hoop: new THREE.MeshStandardMaterial({color: '#3a3d40', roughness: 0.5, metalness: 0.2}),
       pipe: new THREE.MeshStandardMaterial({color: '#aeb6bd', roughness: 0.45, metalness: 0.1, side: THREE.DoubleSide}),
-      water: new THREE.MeshStandardMaterial({map: waterTexture(), color: '#bfe2ff', roughness: 0.2, transparent: true, opacity: 0.88}),
-      waterDeep: new THREE.MeshStandardMaterial({color: '#3f86c8', roughness: 0.3, transparent: true, opacity: 0.9}),
-      reserve: new THREE.MeshStandardMaterial({color: '#c85a4a', roughness: 0.3, transparent: true, opacity: 0.85}),
+      water: new THREE.MeshStandardMaterial({map: waterTexture(), color: '#7fb8e8', roughness: 0.2, transparent: true, opacity: 0.9, side: THREE.DoubleSide}),
+      waterDeep: new THREE.MeshStandardMaterial({color: '#3f86c8', roughness: 0.3, transparent: true, opacity: 0.92, side: THREE.DoubleSide}),
+      reserve: new THREE.MeshStandardMaterial({color: '#c85a4a', roughness: 0.3, transparent: true, opacity: 0.9, side: THREE.DoubleSide}),
       glass: new THREE.MeshStandardMaterial({color: '#7fa6c4', roughness: 0.15, metalness: 0.1}),
       frame: new THREE.MeshStandardMaterial({color: '#f4f2ec', roughness: 0.6}),
       arrow: new THREE.MeshBasicMaterial({color: '#ffffff', transparent: true, depthTest: false}),
@@ -295,6 +300,7 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
     });
     (W0.tank.roof.material as THREE.Material).side = THREE.DoubleSide;
     W0.tank.roof.visible = cut < 0.5;
+    W0.tank.hoopsFront.visible = cut < 0.5;
 
     // --- вода в бочке: уровень, слой запаса снизу, поплавок
     const lvl = range(P.level ?? 0.8, p, P.levelDur ?? 1);
@@ -310,6 +316,14 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
         wt.position.set(TX, T0 + 0.1 + res + (H - res) / 2, TZ);
         add(wt);
       }
+      // лицевая плоскость среза воды — видно сразу весь объём
+      const wf = (y0: number, y1: number, mt: THREE.Material) => {
+        const f = new THREE.Mesh(new THREE.PlaneGeometry(2 * (TR - 0.07), y1 - y0), mt);
+        f.position.set(TX, (y0 + y1) / 2, TZ + 0.01);
+        add(f);
+      };
+      wf(T0 + 0.1, T0 + 0.1 + res, resM);
+      if (H > res) wf(T0 + 0.1 + res, T0 + 0.1 + H, m.water);
       // поплавок на рычаге
       const fy = T0 + 0.1 + H + 0.05;
       const ball = new THREE.Mesh(new THREE.SphereGeometry(0.22, 16, 12), m.red);
