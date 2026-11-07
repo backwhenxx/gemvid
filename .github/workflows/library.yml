@@ -4,9 +4,17 @@ on:
   workflow_dispatch:
     inputs:
       what:
-        description: "polyhaven | rocketbox-list | rocketbox"
+        description: "polyhaven | rocketbox-list | rocketbox | sketchfab-search | sketchfab-get"
         required: true
         default: polyhaven
+      args:
+        description: "Для sketchfab: запросы через ; (запрос|animated) или uid через пробел"
+        required: false
+        default: ""
+      sf_token:
+        description: "Токен Sketchfab (если нет секрета SKETCHFAB_TOKEN)"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -36,9 +44,28 @@ jobs:
           cat rb/.gitattributes 2>/dev/null || git -C rb show HEAD:.gitattributes 2>/dev/null | head
 
       - uses: actions/setup-node@v4
-        if: inputs.what == 'rocketbox'
+        if: inputs.what == 'rocketbox' || inputs.what == 'sketchfab-get'
         with:
           node-version: 22
+      - name: Sketchfab
+        if: startsWith(inputs.what, 'sketchfab')
+        env:
+          SECRET_TOK: ${{ secrets.SKETCHFAB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          T="$SECRET_TOK"; [ -z "$T" ] && T=$(jq -r '.inputs.sf_token // ""' "$GITHUB_EVENT_PATH"); echo "::add-mask::$T"
+          export SKETCHFAB_TOKEN="$T"
+          if [ "${{ inputs.what }}" = "sketchfab-search" ]; then
+            IFS=';' read -ra Q <<< "${{ inputs.args }}"; python scripts/library/sketchfab.py search out/library "${Q[@]}"
+          else
+            npm install --no-audit --no-fund --loglevel=error @gltf-transform/cli@4 > /dev/null
+            python scripts/library/sketchfab.py get out/library ${{ inputs.args }}
+            gh release view lib >/dev/null 2>&1 || gh release create lib --title "Библиотека моделей" --notes "Модели (CC0/MIT/CC-BY)."
+            ls out/library/sf_*.glb >/dev/null 2>&1 && gh release upload lib out/library/sf_*.glb --clobber
+            mkdir -p out/library/sft && cp out/library/sf_*.glb out/library/sft/ && npm install --no-audit --no-fund --loglevel=error three puppeteer-core > /dev/null
+            CHROME_PATH=/usr/bin/google-chrome node scripts/library/thumbs.mjs out/library/sft out/library/sf_got 2>&1 | grep -v PropertyBinding || true
+          fi
+
       - uses: actions/cache/restore@v4
         if: inputs.what == 'rocketbox'
         with:
