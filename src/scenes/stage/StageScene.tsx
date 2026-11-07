@@ -1,6 +1,6 @@
 // Реалистичная сцена из библиотеки: HDRI-небо, земля из текстуры Poly Haven, предметы Poly Haven,
 // люди Rocketbox с мокап-анимациями, взрывы спрайтами. Всё задаётся в props сцены.
-import React, {useLayoutEffect, useMemo} from 'react';
+import React, {useLayoutEffect, useMemo, useRef} from 'react';
 import {AbsoluteFill, useCurrentFrame, useVideoConfig} from 'remotion';
 import {ThreeCanvas} from '@remotion/three';
 import {useThree} from '@react-three/fiber';
@@ -77,6 +77,7 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
     return () => void scene.remove(W0.g);
   }, []);
 
+  const first = useRef(true);
   const dyn = useMemo(() => new THREE.Group(), []);
   useLayoutEffect(() => {
     scene.add(dyn);
@@ -127,6 +128,11 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
     if ((camera as THREE.PerspectiveCamera).fov !== fov) {
       (camera as THREE.PerspectiveCamera).fov = fov;
       camera.updateProjectionMatrix();
+    }
+    // мир появился после асинхронной загрузки — кадр ThreeCanvas уже отрисован пустым, рисуем сами
+    if (first.current) {
+      first.current = false;
+      gl.render(scene, camera);
     }
   }, [frame]);
   return null;
