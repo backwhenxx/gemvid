@@ -38,7 +38,8 @@ window.run = async (urls, pose, poseTimes) => {
       if (clip && t !== null) { const mx = new THREE.AnimationMixer(root); mx.clipAction(clip).play(); mx.setTime(t); }
       root.updateMatrixWorld(true);
       const box = new THREE.Box3();
-      let tris = 0, skinned = false;
+      let tris = 0, skinned = false; const bones = [];
+      root.traverse((o) => { if (o.isBone) bones.push(o.name); });
       root.traverse((o) => { if (o.isMesh) { tris += (o.geometry.index ? o.geometry.index.count : o.geometry.attributes.position.count) / 3;
         if (o.isSkinnedMesh) { skinned = true; o.computeBoundingBox?.(); } const b = new THREE.Box3().setFromObject(o, true); box.union(b); } });
       const s = box.getSize(new THREE.Vector3()), c = box.getCenter(new THREE.Vector3());
@@ -46,7 +47,7 @@ window.run = async (urls, pose, poseTimes) => {
       const cam = new THREE.PerspectiveCamera(30, 1, R / 50, R * 20);
       cam.position.set(c.x + R * 1.5, c.y + R * 0.6, c.z + R * 2.6); cam.lookAt(c);
       r.render(sc, cam);
-      Object.assign(info, {size: [s.x, s.y, s.z].map((v) => +v.toFixed(3)), tris: Math.round(tris), skinned, anims: g.animations.map((a) => a.name)});
+      Object.assign(info, {size: [s.x, s.y, s.z].map((v) => +v.toFixed(3)), tris: Math.round(tris), skinned, anims: g.animations.map((a) => a.name), bones});
     } catch (e) { info.error = String(e); r.setClearColor('#600'); r.clear(); }
     const x = (i % COLS) * T, y = Math.floor(i / COLS) * (T + 18);
     ctx.drawImage(r.domElement, x, y);
