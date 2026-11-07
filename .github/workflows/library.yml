@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       what:
-        description: "polyhaven | rocketbox-list | rocketbox | sketchfab-search | sketchfab-get | tex-extract | tex-patch | sand3d"
+        description: "polyhaven | sketchfab-search | sketchfab-get | sand3d | release-clean"
         required: true
         default: polyhaven
       args:
@@ -34,19 +34,6 @@ jobs:
         if: contains(inputs.what, 'polyhaven')
         run: python scripts/library/polyhaven.py out/library
 
-      - name: Rocketbox — список файлов
-        if: inputs.what == 'rocketbox-list'
-        run: |
-          git clone -q --filter=blob:none --no-checkout https://github.com/microsoft/Microsoft-Rocketbox rb
-          mkdir -p out/library
-          git -C rb ls-tree -r -l HEAD > out/library/rocketbox_tree.txt
-          wc -l out/library/rocketbox_tree.txt; head -50 out/library/rocketbox_tree.txt
-          cat rb/.gitattributes 2>/dev/null || git -C rb show HEAD:.gitattributes 2>/dev/null | head
-
-      - uses: actions/setup-node@v4
-        if: inputs.what == 'rocketbox' || inputs.what == 'sketchfab-get'
-        with:
-          node-version: 22
       - name: Sketchfab
         if: startsWith(inputs.what, 'sketchfab')
         env:
@@ -66,29 +53,6 @@ jobs:
             CHROME_PATH=/usr/bin/google-chrome node scripts/library/thumbs.mjs out/library/sft out/library/sf_got 2>&1 | grep -v PropertyBinding || true
           fi
 
-      - name: Текстуры моделей — извлечь / убрать знаки
-        if: startsWith(inputs.what, 'tex-')
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          npm install --no-audit --no-fund --loglevel=error --no-save @gltf-transform/core@4 @gltf-transform/extensions@4 > /dev/null
-          pip install -q opencv-python-headless numpy
-          mkdir -p out/library up
-          for U in ${{ inputs.args }}; do
-            gh release download lib -p "sf_$U.glb" -D /tmp --clobber
-            node scripts/library/tex.mjs extract /tmp/sf_$U.glb /tmp/tx_$U > /dev/null
-            if [ "${{ inputs.what }}" = "tex-extract" ]; then
-              cp /tmp/tx_$U/textures.json out/library/tx_$U.json
-              for f in /tmp/tx_$U/t[0-9]*.*; do b=$(basename $f); python scripts/library/texprev.py $f "up/tx_${U}_${b%.*}.jpg"; done
-            else
-              python scripts/library/patch.py library/patches/$U.json /tmp/tx_$U
-              node scripts/library/tex.mjs replace /tmp/sf_$U.glb /tmp/tx_$U up/sf_${U}_clean.glb library/patches/$U.json
-              for e in $(python -c "import json;print(' '.join(str(x['tex']) for x in json.load(open('library/patches/$U.json'))))"); do f=$(ls /tmp/tx_$U/t$e.*); python scripts/library/texprev.py $f "up/txc_${U}_t$e.jpg" nogrid; done
-            fi
-          done
-          gh release view lib >/dev/null 2>&1 || gh release create lib --title "Библиотека моделей" --notes "Модели."
-          gh release upload lib up/* --clobber
-
       - name: sand3d — механизмы по программам (library/sand3d/*.py)
         if: inputs.what == 'sand3d'
         env:
@@ -102,50 +66,20 @@ jobs:
           gh release view lib >/dev/null 2>&1 || gh release create lib --title "Библиотека моделей" --notes "Модели."
           gh release upload lib up/s3_*.glb out/library/s3_got_*.jpg --clobber
 
-      - uses: actions/cache/restore@v4
-        if: inputs.what == 'rocketbox'
-        with:
-          path: out/library/rb
-          key: rb-${{ hashFiles('scripts/library/rb_convert.py') }}
-          restore-keys: rb-${{ hashFiles('scripts/library/rb_convert.py') }}
-      - name: Rocketbox — конвертация (Blender) и превью
-        if: inputs.what == 'rocketbox'
-        run: |
-          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL /usr/local/share/boost
-          df -h / | tail -1
-          npm install --no-audit --no-fund --loglevel=error
-          F=blender-4.2.3-linux-x64.tar.xz
-          for u in https://download.blender.org/release/Blender4.2/$F https://mirrors.ocf.berkeley.edu/blender/release/Blender4.2/$F https://ftp.halifax.rwth-aachen.de/blender/release/Blender4.2/$F https://mirror.clarkson.edu/blender/release/Blender4.2/$F; do
-            curl -fsSL --retry 3 -o /tmp/$F "$u" && xz -t /tmp/$F && break; echo "не скачалось: $u"; done
-          tar xJf /tmp/$F && rm /tmp/$F
-          mv blender-4.2.3-linux-x64 blender
-          sudo apt-get install -y -qq libxi6 libxkbcommon0 libsm6 libgl1 > /dev/null
-          bash scripts/library/rocketbox.sh
-          cp out/library/rb/anim_kinds.txt out/library/rb_anims.txt
-          (cd out/library/rb && zip -qr ../rocketbox-anims.zip anims)
-          gh release view lib >/dev/null 2>&1 || gh release create lib --title "Библиотека моделей" --notes "Каталоги, листы превью, модели (CC0/MIT)."
-          mkdir -p up; for f in out/library/rb/avatars/*.glb; do cp "$f" "up/rb_$(basename $f)"; done
-          gh release upload lib up/rb_*.glb out/library/rocketbox-anims.zip --clobber
-          node scripts/library/thumbs.mjs out/library/rb/avatars out/library/rb_avatars 2>&1 | grep -v PropertyBinding || true
-          mkdir -p out/library/rbt && cp out/library/rb/avatars/Military_Male_0[12].glb out/library/rb/avatars/Male_Adult_01.glb out/library/rbt/
-          POSE_TIMES='[0.3,1.0]' node scripts/library/thumbs.mjs out/library/rbt out/library/rb_test_idle out/library/rb/anims/m_idle_neutral_01.glb 2>&1 | grep -v PropertyBinding || true
-          POSE_TIMES='[0.2,0.5,0.8]' node scripts/library/thumbs.mjs out/library/rbt out/library/rb_test_walk out/library/rb/anims/m_walk_neutral_01.glb 2>&1 | grep -v PropertyBinding || true
+      - name: Удалить файлы из релиза lib (args — регулярное выражение имён)
+        if: inputs.what == 'release-clean'
         env:
           GH_TOKEN: ${{ github.token }}
-          CHROME_PATH: /usr/bin/google-chrome
-
-      - uses: actions/cache/save@v4
-        if: always() && inputs.what == 'rocketbox'
-        with:
-          path: out/library/rb
-          key: rb-${{ hashFiles('scripts/library/rb_convert.py') }}-${{ github.run_id }}
+          RX: ${{ inputs.args }}
+        run: |
+          gh release view lib --json assets -q '.assets[].name' | grep -E "$RX" | while read n; do gh release delete-asset lib "$n" -y && echo "удалён $n"; done
 
       - name: Каталог в репо, листы в релиз lib
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p library
-          cp out/library/*.json out/library/*.txt library/ 2>/dev/null || true
+          cp out/library/*.json library/ 2>/dev/null || true
           gh release view lib >/dev/null 2>&1 || gh release create lib --title "Библиотека моделей" --notes "Каталоги, листы превью, сконвертированные модели (CC0/MIT)."
           ls out/library/*.jpg >/dev/null 2>&1 && gh release upload lib out/library/*.jpg --clobber
           git config user.name "gemvid-bot"; git config user.email "actions@github.com"

@@ -1,6 +1,4 @@
 // Подкачка ассетов библиотеки по id в public/lib (кэшируется в Actions):
-//   rb:<Аватар>      — человек Rocketbox (MIT), GLB из релиза lib
-//   rba:<анимация>   — анимация Rocketbox (m_walk_neutral_01 …)
 //   ph:<id>          — модель Poly Haven (CC0), glTF 1k
 //   s3:<имя>         — механизм sand3d (library/sand3d/<имя>.py), GLB из релиза lib
 //   sf:<uid>         — модель Sketchfab (CC0/CC-BY), GLB из релиза lib
@@ -11,7 +9,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {execFileSync} from 'node:child_process';
 
-const RE = /^(rb|rba|ph|pht|phh|sf|s3):[\w.-]+$/;
+const RE = /^(ph|pht|phh|sf|s3):[\w.-]+$/;
 export const collectIds = (o, out = new Set()) => {
   if (typeof o === 'string') { if (RE.test(o)) out.add(o); }
   else if (Array.isArray(o)) o.forEach((x) => collectIds(x, out));
@@ -36,24 +34,12 @@ export async function fetchLib(ids, ROOT) {
   const L = path.join(ROOT, 'public/lib');
   for (const id of ids) {
     const [k, n] = id.split(':');
-    if (k === 'rb') {
-      const f = path.join(L, 'rb', n + '.glb');
-      if (!fs.existsSync(f)) { fs.mkdirSync(path.dirname(f), {recursive: true}); gh(['release', 'download', 'lib', '-p', `rb_${n}.glb`, '-D', path.dirname(f), '--clobber'], ROOT); fs.renameSync(path.join(path.dirname(f), `rb_${n}.glb`), f); }
-    } else if (k === 's3') {
+    if (k === 's3') {
       const f = path.join(L, 's3', n + '.glb');
       if (!fs.existsSync(f)) { fs.mkdirSync(path.dirname(f), {recursive: true}); gh(['release', 'download', 'lib', '-p', `s3_${n}.glb`, '-D', path.dirname(f), '--clobber'], ROOT); fs.renameSync(path.join(path.dirname(f), `s3_${n}.glb`), f); }
     } else if (k === 'sf') {
       const f = path.join(L, 'sf', n + '.glb');
       if (!fs.existsSync(f)) { fs.mkdirSync(path.dirname(f), {recursive: true}); gh(['release', 'download', 'lib', '-p', `sf_${n}.glb`, '-D', path.dirname(f), '--clobber'], ROOT); fs.renameSync(path.join(path.dirname(f), `sf_${n}.glb`), f); }
-    } else if (k === 'rba') {
-      if (!fs.existsSync(path.join(L, 'rba', n + '.glb'))) {
-        fs.mkdirSync(L, {recursive: true});
-        gh(['release', 'download', 'lib', '-p', 'rocketbox-anims.zip', '-D', L, '--clobber'], ROOT);
-        execFileSync('unzip', ['-qo', path.join(L, 'rocketbox-anims.zip'), '-d', L]);
-        fs.rmSync(path.join(L, 'rba'), {recursive: true, force: true});
-        fs.renameSync(path.join(L, 'anims'), path.join(L, 'rba'));
-        fs.rmSync(path.join(L, 'rocketbox-anims.zip'));
-      }
     } else if (k === 'ph') {
       const j = (await ph(n)).gltf?.['1k']?.gltf;
       if (!j) throw new Error('нет glTF у ' + n);

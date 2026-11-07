@@ -16,8 +16,7 @@ export type SceneType =
   | 'slam'
   | 'dam'
   | 'trench'
-  | 'septic'
-  | 'stage';
+  | 'septic';
 
 export type TimedScene = {
   type: SceneType;

@@ -20,7 +20,6 @@ import {SlamScene} from './scenes/SlamScene';
 import {DamScene} from './scenes/dam/DamScene';
 import {TrenchScene} from './scenes/trench/TrenchScene';
 import {SepticScene} from './scenes/septic/SepticScene';
-import {StageScene} from './scenes/stage/StageScene';
 import {WordCaptions} from './components/WordCaptions';
 
 export type SceneProps = {
@@ -48,7 +47,6 @@ const REGISTRY: Record<string, React.FC<SceneProps>> = {
   dam: DamScene,
   trench: TrenchScene,
   septic: SepticScene,
-  stage: StageScene,
 };
 
 // Переход «рост из точки»: новая сцена раскрывается кругом поверх предыдущей. Без кроссфейдов.
