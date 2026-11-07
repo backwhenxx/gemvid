@@ -51,6 +51,11 @@ const log = (...m) => console.log(`[${slug}]`, ...m);
 
 // Модели/анимации/текстуры/небо из библиотеки (ph:, pht:, phh:, sf:, s3:) → public/lib
 const libIds = [...collectIds(ep)];
+// мир «бочка на крыше»: текстуры и дома Нью-Йорка
+if (ep.scenes.some((s) => s.type === 'tower') || ep.cover?.tower) {
+  const L = JSON.parse(fs.readFileSync(path.join(ROOT, 'src/scenes/tower/lib.json'), 'utf8'));
+  libIds.push(...Object.values(L.tex), ...L.city);
+}
 if (ep.scenes.some((s) => s.type === 'trench') || ep.cover?.trench) libIds.push(...Object.values(JSON.parse(fs.readFileSync(path.join(ROOT, 'src/scenes/trench/assets.json'), 'utf8'))));
 if (libIds.length) await fetchLib([...new Set(libIds)], ROOT);
 
