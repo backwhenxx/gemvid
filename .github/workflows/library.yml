@@ -79,11 +79,11 @@ jobs:
             node scripts/library/tex.mjs extract /tmp/sf_$U.glb /tmp/tx_$U > /dev/null
             if [ "${{ inputs.what }}" = "tex-extract" ]; then
               cp /tmp/tx_$U/textures.json out/library/tx_$U.json
-              for f in /tmp/tx_$U/t*.*; do b=$(basename $f); python -c "import cv2,sys;im=cv2.imread(sys.argv[1]);h,w=im.shape[:2];k=1024/max(h,w);im=cv2.resize(im,(int(w*k),int(h*k)));[cv2.line(im,(int(i*im.shape[1]/10),0),(int(i*im.shape[1]/10),im.shape[0]),(0,255,255),1) or cv2.line(im,(0,int(i*im.shape[0]/10)),(im.shape[1],int(i*im.shape[0]/10)),(0,255,255),1) for i in range(1,10)];cv2.imwrite(sys.argv[2],im,[cv2.IMWRITE_JPEG_QUALITY,85])" $f "up/tx_${U}_${b%.*}.jpg"; done
+              for f in /tmp/tx_$U/t*.*; do b=$(basename $f); python scripts/library/texprev.py $f "up/tx_${U}_${b%.*}.jpg"; done
             else
               python scripts/library/patch.py library/patches/$U.json /tmp/tx_$U
               node scripts/library/tex.mjs replace /tmp/sf_$U.glb /tmp/tx_$U up/sf_${U}_clean.glb
-              for e in $(python -c "import json;print(' '.join(str(x['tex']) for x in json.load(open('library/patches/$U.json'))))"); do f=$(ls /tmp/tx_$U/t$e.*); python -c "import cv2,sys;im=cv2.imread(sys.argv[1]);h,w=im.shape[:2];k=1024/max(h,w);cv2.imwrite(sys.argv[2],cv2.resize(im,(int(w*k),int(h*k))))" $f "up/txc_${U}_t$e.jpg"; done
+              for e in $(python -c "import json;print(' '.join(str(x['tex']) for x in json.load(open('library/patches/$U.json'))))"); do f=$(ls /tmp/tx_$U/t$e.*); python scripts/library/texprev.py $f "up/txc_${U}_t$e.jpg" nogrid; done
             fi
           done
           gh release view lib >/dev/null 2>&1 || gh release create lib --title "Библиотека моделей" --notes "Модели."
