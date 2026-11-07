@@ -6,6 +6,7 @@ import json, sys, glob
 import cv2, numpy as np
 P, D = sys.argv[1], sys.argv[2]
 for e in json.load(open(P)):
+    if not e.get('rects') and not e.get('polys'): continue
     f = glob.glob(f"{D}/t{e['tex']}.*")[0]
     im = cv2.imread(f, cv2.IMREAD_UNCHANGED)
     h, w = im.shape[:2]
