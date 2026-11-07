@@ -51,7 +51,10 @@ jobs:
           sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL /usr/local/share/boost
           df -h / | tail -1
           npm install --no-audit --no-fund --loglevel=error
-          curl -sSL https://download.blender.org/release/Blender4.2/blender-4.2.3-linux-x64.tar.xz | tar xJ
+          F=blender-4.2.3-linux-x64.tar.xz
+          for u in https://download.blender.org/release/Blender4.2/$F https://mirrors.ocf.berkeley.edu/blender/release/Blender4.2/$F https://ftp.halifax.rwth-aachen.de/blender/release/Blender4.2/$F https://mirror.clarkson.edu/blender/release/Blender4.2/$F; do
+            curl -fsSL --retry 3 -o /tmp/$F "$u" && xz -t /tmp/$F && break; echo "не скачалось: $u"; done
+          tar xJf /tmp/$F && rm /tmp/$F
           mv blender-4.2.3-linux-x64 blender
           sudo apt-get install -y -qq libxi6 libxkbcommon0 libsm6 libgl1 > /dev/null
           bash scripts/library/rocketbox.sh
