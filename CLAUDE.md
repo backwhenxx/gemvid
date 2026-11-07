@@ -104,5 +104,9 @@
   Подкачка при сборке автоматически (`scripts/library/get.mjs`) по id в episode.json.
 - Нет реалистичного бесплатно: животные с анимацией, машины, дома → Sketchfab (CC0/CC-BY, нужен токен Дениса)
   или генерация TRELLIS.2 по картинке. CC-BY — строка в описании, в кадре ничего.
+- Люди со Sketchfab со своим скелетом (Mixamo/UE) играют мокап Rocketbox через ретаргет (`src/lib/retarget.ts`) — просто `"id": "sf:<uid>"` в actors.
+  Солдаты: `sf:f85a4ed8c33a43eca1a7caa45f7acf99_clean` (гимнастёрка, пилотка), `sf:6a104431bcb8400080b79446ec019696_clean` (форма с каской).
+- Знаки государств и армий (звёзды, погоны, петлицы, нашивки) — **убирать** (решение Дениса): `library/patches/<uid>.json`
+  (`rects` — закрасить по соседям, `cut` — срезать выпуклый значок по UV), workflow `tex-extract` → смотреть сетку → `tex-patch` → `sf:<uid>_clean`.
 - Сцена `stage` (`src/scenes/stage/`, `src/lib/lib3d.ts`): HDRI, земля, `items`, `actors` (путь, анимация,
   ноги на полу по костям ступней), `booms` (взрывы спрайтами), `cam`.
