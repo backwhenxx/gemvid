@@ -1,0 +1,4 @@
+{
+ "tex": {"brick": "pht:red_brick_03", "plaster": "pht:white_plaster_02", "concrete": "pht:concrete_floor_02", "cedar": "pht:japanese_cedar_planks", "pave": "pht:concrete_pavement", "roof": "pht:asphalt_02", "metal": "pht:metal_plate"},
+ "city": ["sf:85bb3befb9db491fa2e834534ac093c4", "sf:d0db0e12b3484594a1c9eb35186b7c0f", "sf:2bf2de4e86834d29a47d8c297056b58c", "sf:e7922fe0f7b14ed786f84529f9217dac"]
+}
