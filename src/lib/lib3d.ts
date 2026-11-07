@@ -201,6 +201,26 @@ const smokeTex = (() => {
   };
 })();
 
+const clodGeos = (() => {
+  let g: THREE.BufferGeometry[] | null = null;
+  return () => {
+    if (g) return g;
+    let s = 5;
+    const r = () => ((s = (s * 16807) % 2147483647) / 2147483647);
+    g = [0, 1, 2, 3].map(() => {
+      const q = new THREE.IcosahedronGeometry(1, 1);
+      const p = q.attributes.position;
+      for (let i = 0; i < p.count; i++) {
+        const k = 0.6 + r() * 0.6;
+        p.setXYZ(i, p.getX(i) * k * 1.3, p.getY(i) * k * 0.8, p.getZ(i) * k);
+      }
+      q.computeVertexNormals();
+      return q;
+    });
+    return g;
+  };
+})();
+
 export const explosion = (t: number, opt: {seed?: number; size?: number; dust?: string} = {}) => {
   const grp = new THREE.Group();
   if (t < 0 || t > 6) return grp;
@@ -231,17 +251,17 @@ export const explosion = (t: number, opt: {seed?: number; size?: number; dust?: 
     sp_.scale.setScalar((0.6 + ease * 1.8 + tt * 0.25) * S);
     grp.add(sp_);
   }
-  // комья земли: неровные, падают по баллистике
-  const clod = new THREE.IcosahedronGeometry(0.06 * S, 0);
-  const mud = new THREE.MeshStandardMaterial({color: opt.dust ?? '#4b3b2c', roughness: 1, flatShading: true});
-  for (let i = 0; i < 18; i++) {
-    const a = r() * Math.PI * 2, v = (2 + r() * 3) * S, vy = (3 + r() * 4) * S;
+  // комья земли: неровные (смещённые вершины), тёмные, падают по баллистике
+  const clods = clodGeos();
+  const mud = new THREE.MeshStandardMaterial({color: opt.dust ? new THREE.Color(opt.dust).multiplyScalar(0.55) : '#3a2e24', roughness: 1});
+  for (let i = 0; i < 14; i++) {
+    const a = r() * Math.PI * 2, v = (1.5 + r() * 3) * S, vy = (3 + r() * 4) * S, sz = (0.025 + r() * 0.05) * S;
     const y = vy * t - 4.9 * t * t;
-    if (y < -0.2) continue;
-    const c = new THREE.Mesh(clod, mud);
+    if (y < -0.1) continue;
+    const c = new THREE.Mesh(clods[i % clods.length], mud);
     c.position.set(Math.cos(a) * v * t, y, Math.sin(a) * v * t);
-    c.scale.set(1 + r(), 0.7 + r() * 0.6, 1 + r() * 0.8);
-    c.rotation.set(t * 5 * r(), t * 7 * r(), 0);
+    c.scale.setScalar(sz);
+    c.rotation.set(t * 5 * r(), t * 7 * r(), t * 3);
     grp.add(c);
   }
   return grp;
