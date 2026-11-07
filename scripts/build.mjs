@@ -55,7 +55,7 @@ for (const s of ep.scenes) for (const a of s.props?.actors ?? []) {
   if (!String(a.anim ?? '').startsWith('#')) libIds.push(a.anim ?? 'rba:m_idle_neutral_01');
   if (a.path && !String(a.walk ?? '').startsWith('#')) libIds.push(a.walk ?? 'rba:m_walk_neutral_01');
 }
-if (libIds.length) await fetchLib(libIds, ROOT);
+if (libIds.length) await fetchLib([...new Set(libIds)], ROOT);
 
 // Стоп-кадры всех сцен без озвучки (быстрая проверка картинки): --stills
 if (flag('--stills')) {
