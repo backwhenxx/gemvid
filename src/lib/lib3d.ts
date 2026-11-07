@@ -6,6 +6,7 @@ import {RGBELoader} from 'three/examples/jsm/loaders/RGBELoader.js';
 import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js';
 import {cancelRender, continueRender, delayRender, staticFile} from 'remotion';
 import {useState} from 'react';
+import {Retarget, guessBones, rbBones} from './retarget';
 
 export const libUrl = (id: string) => {
   const [k, n] = id.split(':');
@@ -89,7 +90,9 @@ export class Actor {
   feet: THREE.Object3D[] = [];
   private actions = new Map<string, THREE.AnimationAction>();
   private own: THREE.AnimationClip[];
-  constructor(id: string, opt: {height?: number} = {}) {
+  private driver?: Actor;
+  private rt?: Retarget;
+  constructor(id: string, opt: {height?: number; driver?: string} = {}) {
     this.own = getLib<GLTF>(id).animations;
     this.body = SkeletonUtils.clone(getLib<GLTF>(id).scene);
     this.body.traverse((m: any) => {
@@ -101,6 +104,13 @@ export class Actor {
     const h = new THREE.Box3().setFromObject(this.body, true).getSize(new THREE.Vector3()).y || 1.78;
     this.body.scale.setScalar((opt.height ?? 1.78) / h);
     this.mixer = new THREE.AnimationMixer(this.body);
+    // чужой скелет (не Rocketbox): мокап играет невидимый «водитель» Rocketbox, поза переносится на модель
+    if (opt.driver && !rbBones(this.body).hips) {
+      this.driver = new Actor(opt.driver, {height: opt.height});
+      const tg = guessBones(this.body);
+      this.rt = new Retarget(rbBones(this.driver.body), this.driver.root, tg, this.root);
+      this.feet = [tg.footL, tg.footR, tg.toeL, tg.toeR].filter(Boolean) as THREE.Object3D[];
+    }
   }
   private act(animId: string) {
     let a = this.actions.get(animId);
@@ -115,7 +125,14 @@ export class Actor {
     return a;
   }
   /** Поза: одна анимация или смешивание двух (w — вес второй). t — секунды. */
-  pose(anim: string, t: number, mix?: {anim: string; t: number; w: number}, inPlace = false) {
+  pose(anim: string, t: number, mix?: {anim: string; t: number; w: number}, inPlace = false): this {
+    if (this.driver && !anim.startsWith('#')) {
+      this.driver.root.position.copy(this.root.position);
+      this.driver.root.quaternion.copy(this.root.quaternion);
+      this.driver.pose(anim, t, mix, inPlace);
+      this.rt!.apply();
+      return this;
+    }
     this.actions.forEach((a) => (a.weight = 0));
     const a = this.act(anim);
     a.time = t % a.getClip().duration;
@@ -139,7 +156,8 @@ export class Actor {
   }
   private speeds = new Map<string, number>();
   /** Собственная скорость шага анимации (м/с) — чтобы ноги не скользили. */
-  speed(anim: string) {
+  speed(anim: string): number {
+    if (this.driver) return this.driver.speed(anim);
     if (!this.speeds.has(anim)) {
       const d = this.act(anim).getClip().duration;
       const [x0, z0] = (this.pose(anim, 0), this.hip()).toArray().filter((_, i) => i !== 1);

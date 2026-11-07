@@ -56,7 +56,7 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
     sun.shadow.bias = -0.0004;
     sun.shadow.normalBias = 0.02;
     g.add(sun, sun.target);
-    const actors = (P.actors ?? []).map((a: any) => new Actor(a.id, {height: a.height}));
+    const actors = (P.actors ?? []).map((a: any) => new Actor(a.id, {height: a.height, driver: a.id.startsWith('rb:') ? undefined : a.driver ?? (String(a.anim ?? 'rba:').startsWith('rba:') ? 'rb:Male_Adult_01' : undefined)}));
     actors.forEach((a: Actor) => g.add(a.root));
     return {g, actors};
   }, []);
