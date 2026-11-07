@@ -393,7 +393,7 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
       }
     });
     // колючая проволока на рогатках (модель) вдоль поля со стороны врага
-    for (let z = -6; z > -60; z -= 7) {
+    for (let z = -6; z > -30; z -= 9) {
       const w = libModel(A.wire, {height: 1.15});
       w.position.set(-7.5, 0, z);
       w.rotation.y = Math.PI / 2 + (r() - 0.5) * 0.2;
@@ -430,9 +430,17 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
   useLayoutEffect(() => {
     scene.background = W0.sky;
     scene.fog = new THREE.Fog('#c9cfd6', 60, 260);
-    // отражения и свет неба для реалистичных моделей (металл чайника, кожа, ткань)
-    scene.environment = getLib<THREE.DataTexture>(A.env);
-    scene.environmentIntensity = 0.55;
+    // отражения неба — только на реалистичных моделях (металл чайника, ткань, шерсть); земле и мешкам не нужно —
+    // на всей сцене это втрое замедляло рендер
+    const env = getLib<THREE.DataTexture>(A.env);
+    [W0.hero.root, W0.mate1.root, W0.mate2.root, ...W0.crew.map((c) => c.root), W0.cat, W0.kettle, W0.bucket].forEach((o) =>
+      o.traverse((c: any) => {
+        if (!c.isMesh) return;
+        (Array.isArray(c.material) ? c.material : [c.material]).forEach((mt: any) => {
+          if (mt.isMeshStandardMaterial) { mt.envMap = env; mt.envMapIntensity = 0.55; }
+        });
+      }),
+    );
     scene.add(W0.g);
     scene.add(dyn);
     return () => {
