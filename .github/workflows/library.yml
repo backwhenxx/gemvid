@@ -58,11 +58,11 @@ jobs:
           if [ "${{ inputs.what }}" = "sketchfab-search" ]; then
             IFS=';' read -ra Q <<< "${{ inputs.args }}"; python scripts/library/sketchfab.py search out/library "${Q[@]}"
           else
-            npm install --no-audit --no-fund --loglevel=error @gltf-transform/cli@4 > /dev/null
+            npm install --no-audit --no-fund --loglevel=error @gltf-transform/cli@4 --no-save > /dev/null
             python scripts/library/sketchfab.py get out/library ${{ inputs.args }}
             gh release view lib >/dev/null 2>&1 || gh release create lib --title "Библиотека моделей" --notes "Модели (CC0/MIT/CC-BY)."
             ls out/library/sf_*.glb >/dev/null 2>&1 && gh release upload lib out/library/sf_*.glb --clobber
-            mkdir -p out/library/sft && cp out/library/sf_*.glb out/library/sft/ && npm install --no-audit --no-fund --loglevel=error three puppeteer-core > /dev/null
+            mkdir -p out/library/sft && cp out/library/sf_*.glb out/library/sft/ && npm install --no-audit --no-fund --loglevel=error three puppeteer-core --no-save > /dev/null
             CHROME_PATH=/usr/bin/google-chrome node scripts/library/thumbs.mjs out/library/sft out/library/sf_got 2>&1 | grep -v PropertyBinding || true
           fi
 
@@ -114,4 +114,4 @@ jobs:
           ls out/library/*.jpg >/dev/null 2>&1 && gh release upload lib out/library/*.jpg --clobber
           git config user.name "gemvid-bot"; git config user.email "actions@github.com"
           git add library; git commit -qm "Библиотека: ${{ inputs.what }} [skip ci]" || exit 0
-          for i in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 3; done
+          for i in 1 2 3; do git pull --rebase --autostash -q && git push -q && break; sleep 3; done

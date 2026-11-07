@@ -9,6 +9,7 @@ export const collect = (P: Record<string, any>) => {
   };
   walk(P);
   for (const a of P.actors ?? []) {
+    if (!a.id.startsWith('rb:') && String(a.anim ?? 'rba:').startsWith('rba:')) out.add(a.driver ?? 'rb:Male_Adult_01');
     if (!String(a.anim ?? '').startsWith('#')) out.add(a.anim ?? 'rba:m_idle_neutral_01');
     if (a.path && !String(a.walk ?? '').startsWith('#')) out.add(a.walk ?? 'rba:m_walk_neutral_01');
   }
