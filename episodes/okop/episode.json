@@ -48,7 +48,7 @@
  },
  "ambience": [
   {
-   "q": "rain on mud",
+   "q": "heavy rain falling outdoor",
    "from": 1,
    "to": 6,
    "volume": 0.16
@@ -95,7 +95,8 @@
      {
       "q": "shovel digging dirt",
       "at": 0.1,
-      "volume": 0.35
+      "volume": 0.35,
+      "len": 2
      }
     ]
    }
@@ -158,9 +159,10 @@
     },
     "sounds": [
      {
-      "q": "wooden planks drop",
+      "q": "wooden planks dropped on ground",
       "at": 0.3,
-      "volume": 0.35
+      "volume": 0.35,
+      "len": 1.5
      }
     ]
    }
@@ -216,9 +218,10 @@
     },
     "sounds": [
      {
-      "q": "mud slide",
+      "q": "dirt falling",
       "at": 0.2,
-      "volume": 0.35
+      "volume": 0.35,
+      "len": 1.5
      }
     ]
    }
@@ -388,9 +391,10 @@
     },
     "sounds": [
      {
-      "q": "bullet whizz",
+      "q": "bullet flyby",
       "at": 0.48,
-      "volume": 0.45
+      "volume": 0.45,
+      "len": 1.2
      }
     ]
    }
@@ -454,7 +458,8 @@
      {
       "q": "artillery explosion",
       "at": 0.35,
-      "volume": 0.4
+      "volume": 0.4,
+      "len": 2.5
      }
     ]
    }
@@ -516,7 +521,8 @@
      {
       "q": "artillery explosion",
       "at": 0.6,
-      "volume": 0.35
+      "volume": 0.35,
+      "len": 2.5
      }
     ]
    }
@@ -587,9 +593,10 @@
     "camDur": 0.4,
     "sounds": [
      {
-      "q": "explosion fire whoosh",
+      "q": "artillery explosion",
       "at": 0.15,
-      "volume": 0.45
+      "volume": 0.45,
+      "len": 2.5
      }
     ],
     "aerialNet": true
@@ -708,7 +715,8 @@
      {
       "q": "artillery explosion",
       "at": 0.1,
-      "volume": 0.45
+      "volume": 0.45,
+      "len": 2.5
      }
     ]
    }
@@ -741,7 +749,8 @@
      {
       "q": "cat meow",
       "at": 0.75,
-      "volume": 0.35
+      "volume": 0.35,
+      "len": 1.5
      }
     ]
    }

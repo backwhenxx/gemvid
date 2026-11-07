@@ -117,7 +117,9 @@ export class Actor {
     if (!a) {
       // '#имя' или '#номер' — анимация, встроенная в саму модель (животные со Sketchfab)
       const k = animId.slice(1);
-      const clip = animId.startsWith('#') ? this.own.find((c) => c.name === k) ?? this.own[+k || 0] : getLib<GLTF>(animId).animations[0];
+      const clip = animId.startsWith('#')
+        ? this.own.find((c) => c.name === k) ?? this.own.find((c) => c.name.toLowerCase().includes(k.toLowerCase())) ?? this.own[+k || 0]
+        : getLib<GLTF>(animId).animations[0];
       a = this.mixer.clipAction(clip);
       a.play();
       this.actions.set(animId, a);
@@ -147,6 +149,10 @@ export class Actor {
       this.body.position.z = -p.z;
     }
     return this;
+  }
+  /** Кость части тела (кисть, голова…) — чтобы прикрепить предмет. */
+  bone(p: 'handL' | 'handR' | 'head') {
+    return (this.rt?.tgt[p] ?? rbBones(this.body)[p]) as THREE.Object3D | undefined;
   }
   private bip?: THREE.Object3D;
   private hip() {
@@ -242,7 +248,7 @@ const smokeTex = (() => {
   };
 })();
 
-const clodGeos = (() => {
+export const clodGeos = (() => {
   let g: THREE.BufferGeometry[] | null = null;
   return () => {
     if (g) return g;

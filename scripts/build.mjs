@@ -51,6 +51,8 @@ const log = (...m) => console.log(`[${slug}]`, ...m);
 
 // Модели/анимации/текстуры/небо из библиотеки (rb:, rba:, ph:, pht:, phh:) → public/lib
 const libIds = [...collectIds(ep)];
+// окоп: реалистичные солдаты, кот, предметы — из библиотеки
+if (ep.scenes.some((s) => s.type === 'trench') || ep.cover?.trench) libIds.push(...Object.values(JSON.parse(fs.readFileSync(path.join(ROOT, 'src/scenes/trench/assets.json'), 'utf8'))));
 for (const s of ep.scenes) for (const a of s.props?.actors ?? []) {
   if (!a.id.startsWith('rb:') && String(a.anim ?? 'rba:').startsWith('rba:')) libIds.push(a.driver ?? 'rb:Male_Adult_01');
   if (!String(a.anim ?? '').startsWith('#')) libIds.push(a.anim ?? 'rba:m_idle_neutral_01');

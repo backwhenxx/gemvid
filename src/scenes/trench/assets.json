@@ -1,0 +1,19 @@
+{
+ "soldier": "sf:f85a4ed8c33a43eca1a7caa45f7acf99_clean",
+ "driver": "rb:Male_Adult_01",
+ "stand": "rba:m_idle_neutral_01",
+ "walk": "rba:m_walk_neutral_01",
+ "crouch": "rba:m_crouch_idle",
+ "aim": "rba:m_take_picture",
+ "sit": "rba:m_sit_table_idle_neutral_01",
+ "look": "rba:m_idle_look_around_01",
+ "cat": "sf:6d82596b5db94f7b9093814a4a88caa9",
+ "rat": "sf:3db3acb4140d4de8bd62a171212bad9c",
+ "bucket": "ph:wooden_bucket_01",
+ "lamp": "ph:vintage_oil_lamp",
+ "crate": "ph:wooden_military_crate",
+ "ammo": "ph:ammo_box",
+ "rifle": "ph:bolt_action_rifle_7_62",
+ "wire": "sf:0fc98d8e46434291a2811ee51ad1976b",
+ "kettle": "ph:metal_jug"
+}
