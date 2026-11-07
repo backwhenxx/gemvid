@@ -18,7 +18,7 @@ def search(q, animated):
     if animated: params['animated'] = 'true'
     for lic in ['cc0', 'by']:
         r = S.get(url, params={**params, 'license': lic}, timeout=60).json()
-        res += r.get('results', [])
+        for m in r.get('results', []): m['_lic'] = lic; res.append(m)
     res.sort(key=lambda m: -m.get('likeCount', 0))
     return res[:32]
 
@@ -37,7 +37,7 @@ if mode == 'search':
                 th = Image.open(io.BytesIO(S.get(imgs[0]['url'], timeout=30).content)).convert('RGB')
                 th = th.resize((T, int(T * th.height / th.width))).crop((0, 0, T, T)); im.paste(th, (x, y))
             except Exception as e: print('нет превью', m['uid'], e)
-            lic = m['license']['slug'] if m.get('license') else '?'
+            lic = m['_lic']
             d.text((x + 3, y + T + 1), f"{i+1}. {m['name']}"[:30], fill=(235, 235, 235), font=FONT)
             d.text((x + 3, y + T + 16), f"{lic} a{m.get('animationCount',0)} {m.get('faceCount',0)//1000}k", fill=(170, 200, 160), font=FONT)
             allm[m['uid']] = {'q': q, 'n': i + 1, 'name': m['name'], 'license': lic, 'author': m['user']['username'],
@@ -52,7 +52,9 @@ elif mode == 'get':
     credits = []
     for uid in args:
         info = S.get(f'{API}/models/{uid}', timeout=60).json()
-        lic = (info.get('license') or {}).get('slug')
+        L = info.get('license') or {}
+        lab = (L.get('label') or L.get('slug') or '').lower()
+        lic = 'cc0' if ('cc0' in lab or 'public domain' in lab) else 'by' if lab.strip() in ('cc attribution', 'by', 'cc-by', 'attribution', 'cc by 4.0', 'cc attribution 4.0') or lab.startswith('cc attribution') and not any(w in lab for w in ('noncommercial', 'non-commercial', 'noderiv', 'sharealike', 'share alike')) else lab
         if lic not in OK:
             print('пропуск, лицензия', lic, uid); continue
         dl = S.get(f'{API}/models/{uid}/download', headers=H, timeout=60).json()
@@ -68,7 +70,7 @@ elif mode == 'get':
         r = subprocess.run(['npx', 'gltf-transform', 'resize', f'/tmp/{uid}.glb', dst, '--width', '2048', '--height', '2048'])
         if r.returncode: os.replace(f'/tmp/{uid}.glb', dst)
         print(uid, info['name'], lic, os.path.getsize(dst) // 1024, 'КБ')
-        credits.append({'uid': uid, 'name': info['name'], 'author': info['user']['username'], 'license': info['license']['label'],
+        credits.append({'uid': uid, 'name': info['name'], 'author': info['user']['username'], 'license': L.get('label'),
                         'url': info['viewerUrl']})
     old = json.load(open('library/sketchfab_credits.json')) if os.path.exists('library/sketchfab_credits.json') else []
     keep = {c['uid']: c for c in old + credits}
