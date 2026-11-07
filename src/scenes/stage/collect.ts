@@ -1,4 +1,4 @@
-const RE = /^(rb|rba|ph|pht|phh|sf):[\w.-]+$/;
+const RE = /^(rb|rba|ph|pht|phh|sf|s3):[\w.-]+$/;
 /** Все id библиотеки в props (+ анимации по умолчанию для людей). */
 export const collect = (P: Record<string, any>) => {
   const out = new Set<string>();
