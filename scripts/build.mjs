@@ -14,6 +14,7 @@ import {bundle} from '@remotion/bundler';
 import {renderMedia, renderStill, selectComposition} from '@remotion/renderer';
 import {makeSfx} from './sfx.mjs';
 import {fetchSounds} from './sounds.mjs';
+import {collectIds, fetchLib} from './library/get.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const args = process.argv.slice(2);
@@ -47,6 +48,14 @@ for (const s of ep.scenes) {
 }
 
 const log = (...m) => console.log(`[${slug}]`, ...m);
+
+// Модели/анимации/текстуры/небо из библиотеки (rb:, rba:, ph:, pht:, phh:) → public/lib
+const libIds = [...collectIds(ep)];
+for (const s of ep.scenes) for (const a of s.props?.actors ?? []) {
+  libIds.push(a.anim ?? 'rba:m_idle_neutral_01');
+  if (a.path) libIds.push(a.walk ?? 'rba:m_walk_neutral_01');
+}
+if (libIds.length) await fetchLib(libIds, ROOT);
 
 // Стоп-кадры всех сцен без озвучки (быстрая проверка картинки): --stills
 if (flag('--stills')) {
