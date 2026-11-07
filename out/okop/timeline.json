@@ -1132,7 +1132,8 @@
      {
       "q": "shovel digging dirt",
       "at": 0.1,
-      "volume": 0.35
+      "volume": 0.35,
+      "len": 2
      }
     ]
    }
@@ -1199,9 +1200,10 @@
     },
     "sounds": [
      {
-      "q": "wooden planks drop",
+      "q": "wooden planks dropped on ground",
       "at": 0.3,
-      "volume": 0.35
+      "volume": 0.35,
+      "len": 1.5
      }
     ]
    }
@@ -1261,9 +1263,10 @@
     },
     "sounds": [
      {
-      "q": "mud slide",
+      "q": "dirt falling",
       "at": 0.2,
-      "volume": 0.35
+      "volume": 0.35,
+      "len": 1.5
      }
     ]
    }
@@ -1431,7 +1434,7 @@
     "bullet": true,
     "bulletAt": 0.5,
     "cam": [
-     "enemyView",
+     "stepClose",
      "enemyView"
     ],
     "hero": {
@@ -1445,9 +1448,10 @@
     },
     "sounds": [
      {
-      "q": "bullet whizz",
+      "q": "bullet flyby",
       "at": 0.48,
-      "volume": 0.45
+      "volume": 0.45,
+      "len": 1.2
      }
     ]
    }
@@ -1469,7 +1473,7 @@
      1
     ],
     "cam": [
-     "stepClose",
+     "enemyView",
      "periscope"
     ],
     "hero": {
@@ -1515,7 +1519,8 @@
      {
       "q": "artillery explosion",
       "at": 0.35,
-      "volume": 0.4
+      "volume": 0.4,
+      "len": 2.5
      }
     ]
    }
@@ -1559,7 +1564,7 @@
     "dugout": 1,
     "shells": true,
     "cam": [
-     "dugoutClose",
+     "dugout",
      "bucket"
     ],
     "camDur": 0.55,
@@ -1581,7 +1586,8 @@
      {
       "q": "artillery explosion",
       "at": 0.6,
-      "volume": 0.35
+      "volume": 0.35,
+      "len": 2.5
      }
     ]
    }
@@ -1658,9 +1664,10 @@
     "camDur": 0.4,
     "sounds": [
      {
-      "q": "explosion fire whoosh",
+      "q": "artillery explosion",
       "at": 0.15,
-      "volume": 0.45
+      "volume": 0.45,
+      "len": 2.5
      }
     ],
     "aerialNet": true
@@ -1785,7 +1792,8 @@
      {
       "q": "artillery explosion",
       "at": 0.1,
-      "volume": 0.45
+      "volume": 0.45,
+      "len": 2.5
      }
     ]
    }
@@ -1820,7 +1828,8 @@
      {
       "q": "cat meow",
       "at": 0.75,
-      "volume": 0.35
+      "volume": 0.35,
+      "len": 1.5
      }
     ]
    }
@@ -1835,7 +1844,7 @@
     "zigCut": true,
     "homely": true,
     "cam": [
-     "zigFinal",
+     "cat",
      "zigFinalWide"
     ],
     "banner": "Окоп построен!",
@@ -1895,14 +1904,14 @@
    "volume": 0.35
   },
   {
-   "file": "snd/sfx_6659cb4435.wav",
+   "file": "snd/sfx_1dd647af4d.wav",
    "at": 10.904,
    "volume": 0.35
   },
   {
-   "file": "snd/sfx_a57db07f0b.wav",
-   "at": 37.416000000000004,
-   "volume": 0.45
+   "file": "snd/sfx_f9c0c30a46.wav",
+   "at": 16.36,
+   "volume": 0.35
   },
   {
    "file": "snd/sfx_8c33e49cb5.wav",
@@ -1915,7 +1924,7 @@
    "volume": 0.35
   },
   {
-   "file": "snd/sfx_dad2ae49b2.wav",
+   "file": "snd/sfx_8c33e49cb5.wav",
    "at": 70.685,
    "volume": 0.45
   },
@@ -1934,14 +1943,7 @@
  "accent": "#FF3D8B",
  "keys": [],
  "palette": null,
- "ambience": [
-  {
-   "file": "snd/amb_08536667cb.wav",
-   "from": 4.46,
-   "to": 26.540000000000003,
-   "volume": 0.16
-  }
- ],
+ "ambience": [],
  "captionStyle": "word",
  "brand": true
 }
