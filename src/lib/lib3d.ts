@@ -1,12 +1,11 @@
 // Библиотека реалистичных ассетов в сценах three.js (детерминированно по кадру).
-// id: rb:<человек>, rba:<анимация>, ph:<модель>, pht:<текстура>, phh:<HDRI>  → public/lib (качает build.mjs)
+// id: ph:<модель>, sf:<модель>, s3:<механизм>, pht:<текстура>, phh:<HDRI>  → public/lib (качает build.mjs)
 import * as THREE from 'three';
 import {GLTFLoader, type GLTF} from 'three/examples/jsm/loaders/GLTFLoader.js';
 import {RGBELoader} from 'three/examples/jsm/loaders/RGBELoader.js';
 import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js';
 import {cancelRender, continueRender, delayRender, staticFile} from 'remotion';
 import {useState} from 'react';
-import {Retarget, guessBones, rbBones} from './retarget';
 
 export const libUrl = (id: string) => {
   const [k, n] = id.split(':');
@@ -79,111 +78,6 @@ export const libModel = (id: string, opt: {scale?: number; height?: number; shad
   o.traverse((m: any) => { if (m.isMesh) { m.castShadow = opt.shadow ?? true; m.receiveShadow = true; } });
   return o;
 };
-
-const FOOT = /(L|R) (Toe0|Foot)$/;
-
-/** Человек с анимациями. Время анимации задаётся явно (кадр/fps) — без накопления. */
-export class Actor {
-  root = new THREE.Group();
-  body: THREE.Object3D;
-  mixer: THREE.AnimationMixer;
-  feet: THREE.Object3D[] = [];
-  private actions = new Map<string, THREE.AnimationAction>();
-  private own: THREE.AnimationClip[];
-  private driver?: Actor;
-  private rt?: Retarget;
-  constructor(id: string, opt: {height?: number; driver?: string} = {}) {
-    this.own = getLib<GLTF>(id).animations;
-    this.body = SkeletonUtils.clone(getLib<GLTF>(id).scene);
-    this.body.traverse((m: any) => {
-      if (m.isMesh) { m.castShadow = true; m.receiveShadow = true; m.frustumCulled = false; }
-      if (m.isBone && FOOT.test(m.name.replace(/_/g, ' '))) this.feet.push(m);
-    });
-    this.root.add(this.body);
-    this.body.updateMatrixWorld(true);
-    const h = new THREE.Box3().setFromObject(this.body, true).getSize(new THREE.Vector3()).y || 1.78;
-    this.body.scale.setScalar((opt.height ?? 1.78) / h);
-    this.mixer = new THREE.AnimationMixer(this.body);
-    // чужой скелет (не Rocketbox): мокап играет невидимый «водитель» Rocketbox, поза переносится на модель
-    if (opt.driver && !rbBones(this.body).hips) {
-      this.driver = new Actor(opt.driver, {height: opt.height});
-      const tg = guessBones(this.body);
-      this.rt = new Retarget(rbBones(this.driver.body), this.driver.root, tg, this.root);
-      this.feet = [tg.footL, tg.footR, tg.toeL, tg.toeR].filter(Boolean) as THREE.Object3D[];
-    }
-  }
-  private act(animId: string) {
-    let a = this.actions.get(animId);
-    if (!a) {
-      // '#имя' или '#номер' — анимация, встроенная в саму модель (животные со Sketchfab)
-      const k = animId.slice(1);
-      const clip = animId.startsWith('#')
-        ? this.own.find((c) => c.name === k) ?? this.own.find((c) => c.name.toLowerCase().includes(k.toLowerCase())) ?? this.own[+k || 0]
-        : getLib<GLTF>(animId).animations[0];
-      a = this.mixer.clipAction(clip);
-      a.play();
-      this.actions.set(animId, a);
-    }
-    return a;
-  }
-  /** Поза: одна анимация или смешивание двух (w — вес второй). t — секунды. */
-  pose(anim: string, t: number, mix?: {anim: string; t: number; w: number}, inPlace = false): this {
-    if (this.driver && !anim.startsWith('#')) {
-      this.driver.root.position.copy(this.root.position);
-      this.driver.root.quaternion.copy(this.root.quaternion);
-      this.driver.pose(anim, t, mix, inPlace);
-      this.rt!.apply();
-      return this;
-    }
-    this.actions.forEach((a) => (a.weight = 0));
-    const a = this.act(anim);
-    a.time = t % a.getClip().duration;
-    a.weight = mix ? 1 - mix.w : 1;
-    if (mix) { const b = this.act(mix.anim); b.time = mix.t % b.getClip().duration; b.weight = mix.w; }
-    this.mixer.update(0);
-    this.body.position.set(0, 0, 0);
-    if (inPlace) {
-      // анимации с ходом (xy): таз всегда над точкой персонажа, двигаем мы сами
-      const p = this.hip();
-      this.body.position.x = -p.x;
-      this.body.position.z = -p.z;
-    }
-    return this;
-  }
-  /** Кость части тела (кисть, голова…) — чтобы прикрепить предмет. */
-  bone(p: 'handL' | 'handR' | 'head') {
-    return (this.rt?.tgt[p] ?? rbBones(this.body)[p]) as THREE.Object3D | undefined;
-  }
-  private bip?: THREE.Object3D;
-  private hip() {
-    this.bip ??= this.body.getObjectByName('Bip01') ?? this.body.getObjectByName('Bip01_Pelvis') ?? this.body;
-    this.root.updateMatrixWorld(true);
-    return this.root.worldToLocal(this.bip.getWorldPosition(new THREE.Vector3()));
-  }
-  private speeds = new Map<string, number>();
-  /** Собственная скорость шага анимации (м/с) — чтобы ноги не скользили. */
-  speed(anim: string): number {
-    if (this.driver) return this.driver.speed(anim);
-    if (!this.speeds.has(anim)) {
-      const d = this.act(anim).getClip().duration;
-      const [x0, z0] = (this.pose(anim, 0), this.hip()).toArray().filter((_, i) => i !== 1);
-      const [x1, z1] = (this.pose(anim, d - 1e-3), this.hip()).toArray().filter((_, i) => i !== 1);
-      this.speeds.set(anim, Math.hypot(x1 - x0, z1 - z0) / d || 1.3);
-    }
-    return this.speeds.get(anim)!;
-  }
-  /** Поставить так, чтобы нижняя ступня стояла на полу y (после pose и позиции по x/z). */
-  stand(floorY: number) {
-    this.root.position.y = 0;
-    this.root.updateMatrixWorld(true);
-    let min = Infinity;
-    const v = new THREE.Vector3();
-    for (const f of this.feet) min = Math.min(min, f.getWorldPosition(v).y);
-    if (!isFinite(min)) min = new THREE.Box3().setFromObject(this.body, true).min.y;
-    this.root.position.y = floorY - min + 0.03; // подошва ботинка над костью ступни
-    return this;
-  }
-}
 
 /** Высота пола в точке (луч вниз по объектам с userData.floor). */
 const ray = new THREE.Raycaster();

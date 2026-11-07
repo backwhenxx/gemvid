@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useMemo, useRef} from 'react';
+import React, {useLayoutEffect, useMemo} from 'react';
 import {AbsoluteFill, useCurrentFrame, useVideoConfig} from 'remotion';
 import {ThreeCanvas} from '@remotion/three';
 import {useThree} from '@react-three/fiber';
@@ -7,11 +7,7 @@ import type {SceneProps} from '../../Short';
 import {H as SH, W as SW, clamp01, easeInOut, rng} from '../../lib/util';
 import {loadFont} from '@remotion/google-fonts/Comfortaa';
 import {cloudTexture, waterTexture} from '../dam/textures';
-import {box, burlapTexture, earthCutTexture, mudTexture, overcastSky, smokeTexture, woodTexture} from './parts';
-import {Actor, clodGeos, explosion, getLib, libModel, useLib} from '../../lib/lib3d';
-import A from './assets.json';
-
-const LIB = [...new Set(Object.values(A as Record<string, string>))];
+import {box, burlapTexture, earthCutTexture, makeSoldier, mudTexture, overcastSky, pose, smokeTexture, woodTexture, type Soldier} from './parts';
 
 const {fontFamily: ROUND} = loadFont('normal', {weights: ['700'], subsets: ['cyrillic', 'latin']});
 
@@ -148,9 +144,7 @@ const buildZigCut = (m: Record<string, any>, maxLen = 60, upTo = 9999, withDugou
     const sh = new THREE.Shape(poly.map(([x, z]) => new THREE.Vector2(x, z)));
     const geo = new THREE.ExtrudeGeometry(sh, {depth: DEPTH, bevelEnabled: false});
     geo.rotateX(Math.PI / 2);
-    const sm = new THREE.Mesh(geo, [m.mud, m.earth]);
-    sm.userData.floor = true;
-    return sm;
+    return new THREE.Mesh(geo, [m.mud, m.earth]);
   };
   g.add(slab([[-60, 0], ...L, [-60, zEnd]]));
   g.add(slab([...R, [60, zEnd], [60, 0]]));
@@ -158,7 +152,6 @@ const buildZigCut = (m: Record<string, any>, maxLen = 60, upTo = 9999, withDugou
     const fl = new THREE.Mesh(new THREE.PlaneGeometry(140, 200), m.side);
     fl.rotation.x = -Math.PI / 2;
     fl.position.set(0, -DEPTH, -90);
-    fl.userData.floor = true;
     g.add(fl);
   }
   // нижний слой с лестницей и блиндажом
@@ -176,42 +169,21 @@ const buildZigCut = (m: Record<string, any>, maxLen = 60, upTo = 9999, withDugou
   hole.lineTo(ZC.dug + 2, ZC.floor);
   hole.lineTo(1.6, ZC.floor);
   hole.closePath();
-  // нижний слой тремя кусками, чтобы выемка не тянулась тоннелем на всю длину (иначе сквозь неё видно небо)
-  const lowPart = (holes: THREE.Path[], z0: number, z1: number) => {
-    const sh = new THREE.Shape(low.getPoints());
-    holes.forEach((h) => sh.holes.push(h));
-    const geo = new THREE.ExtrudeGeometry(sh, {depth: z0 - z1, bevelEnabled: false});
-    geo.translate(0, 0, z1);
-    const lm = new THREE.Mesh(geo, [m.earth, m.side]);
-    lm.userData.floor = true;
-    g.add(lm);
-  };
-  if (withDugout) {
-    const room = new THREE.Path();
-    room.moveTo(1.6, ZC.ceil);
-    room.lineTo(ZC.dug + 2, ZC.ceil);
-    room.lineTo(ZC.dug + 2, ZC.floor);
-    room.lineTo(1.6, ZC.floor);
-    room.closePath();
-    lowPart([hole], 0, -1.25);
-    lowPart([room], -1.25, -4.02);
-    lowPart([], -4.02, -LEN);
-  } else lowPart([], 0, -LEN);
+  if (withDugout) low.holes.push(hole);
+  const lowGeo = new THREE.ExtrudeGeometry(low, {depth: LEN, bevelEnabled: false});
+  lowGeo.translate(0, 0, -LEN);
+  g.add(new THREE.Mesh(lowGeo, [m.earth, m.side]));
   if (withDugout) {
   // задние стенки лестницы и блиндажа
-  g.add(new THREE.Mesh(box(0.0, 2.0, ZC.floor, -DEPTH, -1.27, -1.23), m.room));
+  g.add(new THREE.Mesh(box(0.0, 2.0, ZC.floor, -DEPTH, -1.3, -1.25), m.room));
   g.add(new THREE.Mesh(box(1.6, ZC.dug + 2, ZC.floor, ZC.ceil, -4.05, -4.0), m.room));
-  const zf = new THREE.Mesh(box(1.6, ZC.dug + 2, ZC.floor - 0.03, ZC.floor + 0.02, -4.0, 0), m.wood);
-  zf.userData.floor = true;
-  g.add(zf);
+  g.add(new THREE.Mesh(box(1.6, ZC.dug + 2, ZC.floor - 0.05, ZC.floor, -4.0, 0), m.wood));
   // ступени вниз
   for (let i = 0; i < 9; i++) {
     const k = i / 9;
     const x = lerp(0.45, 1.55, k);
     const y = lerp(-DEPTH, ZC.floor + 0.45, k);
-    const stp = new THREE.Mesh(box(x - 0.2, x + 0.25, y - 0.5, y - 0.42, -1.22, 0), m.wood);
-    stp.userData.floor = true;
-    g.add(stp);
+    g.add(new THREE.Mesh(box(x - 0.2, x + 0.25, y - 0.5, y - 0.42, -1.25, 0), m.wood));
   }
   // брёвна потолка, стол, свеча, ящики
   for (let x = 1.75; x <= ZC.dug + 1.9; x += 0.42) {
@@ -239,11 +211,7 @@ const buildZigCut = (m: Record<string, any>, maxLen = 60, upTo = 9999, withDugou
     const za = Math.min(z0, z1);
     const zb = Math.max(z0, z1);
     [-1, 1].forEach((sd) => g.add(new THREE.Mesh(box(x0 + sd * ZC.w - 0.03, x0 + sd * ZC.w + 0.03, -DEPTH, 0, za, zb), m.room)));
-    for (let z = zb - 0.15; z > za; z -= 0.2) {
-      const sl = new THREE.Mesh(box(x0 - 0.45, x0 + 0.45, -DEPTH + 0.08, -DEPTH + 0.12, z - 0.055, z + 0.055), m.wood);
-      sl.userData.floor = true;
-      g.add(sl);
-    }
+    for (let z = zb - 0.15; z > za; z -= 0.2) g.add(new THREE.Mesh(box(x0 - 0.45, x0 + 0.45, -DEPTH + 0.08, -DEPTH + 0.12, z - 0.055, z + 0.055), m.wood));
     [-1, 1].forEach((sd) => {
       for (let z = zb - 0.55; z > za + 0.2; z -= 1.15) g.add(new THREE.Mesh(box(x0 + sd * (ZC.w + 0.42) - 0.38, x0 + sd * (ZC.w + 0.42) + 0.38, 0, 0.24, z - 0.5, z + 0.5), m.bag));
     });
@@ -272,7 +240,6 @@ const buildNetwork = (m: Record<string, any>, cp: number) => {
   const fl = new THREE.Mesh(new THREE.PlaneGeometry(140, 170), m.side);
   fl.rotation.x = -Math.PI / 2;
   fl.position.set(0, -DEPTH, -70);
-  fl.userData.floor = true;
   g.add(fl);
   COMMS.forEach((zc, i) => {
     const len = lens[i];
@@ -286,8 +253,7 @@ const buildNetwork = (m: Record<string, any>, cp: number) => {
 const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
-  const {camera, scene, gl} = useThree();
-  const first = useRef(true);
+  const {camera, scene} = useThree();
   const p = clamp01(frame / life);
   const t = frame / fps;
 
@@ -318,7 +284,7 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
       fire: new THREE.MeshBasicMaterial({color: '#ff8a2a'}),
       flame: new THREE.MeshBasicMaterial({color: '#ffd27a'}),
       smokeBall: new THREE.MeshStandardMaterial({color: '#4a4c52', roughness: 1, transparent: true, opacity: 0.7, depthWrite: false}),
-      room: new THREE.MeshStandardMaterial({map: woodTexture(), color: '#8f7a60', roughness: 1}), // обшивка досками, без светлых «белых» граней
+      room: new THREE.MeshStandardMaterial({color: '#d9c8a6', roughness: 1}),
       channel: new THREE.MeshStandardMaterial({color: '#3d2f25', roughness: 1}),
       grey: new THREE.MeshStandardMaterial({color: '#7b7672', roughness: 0.9}),
     };
@@ -326,7 +292,7 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
     // дальнее поле за окопом
     const far = new THREE.Mesh(new THREE.PlaneGeometry(400, 400), m.mud);
     far.rotation.x = -Math.PI / 2;
-    far.position.set(0, -0.05, -LEN - 200);
+    far.position.set(0, -0.01, -LEN - 190);
     g.add(far);
     const r = rng(41);
     // воронки с водой
@@ -358,15 +324,15 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
       tr.position.set(x, 0, z);
       g.add(tr);
     });
-    // колючая проволока на колышках вдоль поля (со стороны врага), дальше рогаток
+    // колючая проволока на колышках вдоль поля (со стороны врага)
     const wirePts: number[] = [];
-    for (let z = -60; z > -LEN; z -= 2.2) {
+    for (let z = -3; z > -LEN; z -= 2.2) {
       const post = new THREE.Mesh(box(-0.04, 0.04, 0, 1.1, -0.04, 0.04), m.darkWood);
       post.position.set(-7, 0, z);
       g.add(post);
     }
-    for (let k = 0; k < 450; k++) {
-      const z0 = -60 - k * 0.13;
+    for (let k = 0; k < 900; k++) {
+      const z0 = -3 - k * 0.13;
       const a = k * 0.9;
       const a2 = (k + 1) * 0.9;
       wirePts.push(-7 + Math.cos(a) * 0.35, 0.55 + Math.sin(a) * 0.35, z0, -7 + Math.cos(a2) * 0.35, 0.55 + Math.sin(a2) * 0.35, z0 - 0.13);
@@ -392,28 +358,13 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
         smokes.push({sp, x, z, ph: k / 7 + j * 0.13});
       }
     });
-    // колючая проволока на рогатках (модель) вдоль поля со стороны врага
-    for (let z = -6; z > -30; z -= 9) {
-      const w = libModel(A.wire, {height: 1.15});
-      w.position.set(-7.5, 0, z);
-      w.rotation.y = Math.PI / 2 + (r() - 0.5) * 0.2;
-      g.add(w);
-    }
-    // солдаты: реалистичная модель, мокап-анимация Rocketbox
+    // солдаты
     const mk = () => {
-      const a = new Actor(A.soldier, {height: 1.76, driver: A.driver});
-      a.root.traverse((c) => (c.userData.cached = true)); // переиспользуется каждый кадр — не освобождать
-      return a;
+      const s = makeSoldier({cloth: m.cloth, skin: m.skin, helmet: m.helmet, boot: m.boot});
+      s.traverse((c) => (c.userData.cached = true)); // переиспользуется каждый кадр — не освобождать
+      return s;
     };
-    const keep = <T extends THREE.Object3D>(o: T) => (o.traverse((c) => (c.userData.cached = true)), o);
-    const rat = () => {
-      const a = new Actor(A.rat, {height: 0.07});
-      a.root.traverse((c) => (c.userData.cached = true));
-      return a;
-    };
-    return {m, g, sky, smokes, hero: mk(), mate1: mk(), mate2: mk(), crew: [mk(), mk(), mk(), mk()], rats: [rat(), rat()],
-      bucket: keep(libModel(A.bucket, {height: 0.3})), cat: keep(libModel(A.cat, {height: 0.3})), kettle: keep(libModel(A.kettle, {height: 0.2})),
-      cache: new Map<string, THREE.Object3D>()};
+    return {m, g, sky, smokes, hero: mk(), mate1: mk(), mate2: mk(), carrier: mk(), cache: new Map<string, THREE.Object3D>()};
   }, []);
   const {m} = W0;
   const dyn = useMemo(() => new THREE.Group(), []);
@@ -430,17 +381,6 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
   useLayoutEffect(() => {
     scene.background = W0.sky;
     scene.fog = new THREE.Fog('#c9cfd6', 60, 260);
-    // отражения неба — только на реалистичных моделях (металл чайника, ткань, шерсть); земле и мешкам не нужно —
-    // на всей сцене это втрое замедляло рендер
-    const env = getLib<THREE.DataTexture>(A.env);
-    [W0.hero.root, W0.mate1.root, W0.mate2.root, ...W0.crew.map((c) => c.root), W0.cat, W0.kettle, W0.bucket].forEach((o) =>
-      o.traverse((c: any) => {
-        if (!c.isMesh) return;
-        (Array.isArray(c.material) ? c.material : [c.material]).forEach((mt: any) => {
-          if (mt.isMeshStandardMaterial) { mt.envMap = env; mt.envMapIntensity = 0.55; }
-        });
-      }),
-    );
     scene.add(W0.g);
     scene.add(dyn);
     return () => {
@@ -456,25 +396,6 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
     });
     const add = (o: THREE.Object3D) => dyn.add(o);
     const rr = rng(77);
-    // высота пола под точкой: луч вниз по мосткам/ступени/дну/полу блиндажа (userData.floor)
-    const ray = new THREE.Raycaster();
-    const floorY = (x: number, z: number, hint: number) => {
-      const fl: THREE.Object3D[] = [];
-      dyn.traverse((o) => o.userData.floor && fl.push(o));
-      dyn.updateMatrixWorld(true);
-      ray.set(new THREE.Vector3(x, hint + 1.0, z), new THREE.Vector3(0, -1, 0));
-      const h = ray.intersectObjects(fl, false)[0];
-      return h ? h.point.y : hint;
-    };
-    const ANIM: Record<string, string> = {stand: A.stand, walk: A.walk, carry: A.walk, crouch: A.crouch, aim: A.aim, peek: A.aim, sit: A.sit, look: A.look};
-    const place = (a: Actor, ps: string, x: number, yHint: number, z: number, rotY: number, tt: number, dist = 0) => {
-      a.root.position.set(x, 0, z);
-      a.root.rotation.y = rotY;
-      if (ps === 'walk') a.pose(A.walk, dist / a.speed(A.walk), undefined, true);
-      else a.pose(ANIM[ps] ?? A.stand, tt);
-      a.stand(floorY(x, z, yHint));
-      add(a.root);
-    };
 
     const dig = range(P.dig ?? 1, p, P.digDur ?? 0.6, P.digDelay ?? 0);
     const walls = range(P.revet, p, P.revetDur ?? 0.6, P.revetDelay ?? 0);
@@ -484,7 +405,12 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
     // --- финальный вид: зигзагообразный окоп в разрезе с блиндажом
     if (P.zigCut) {
       add(cached('zigCut', () => buildZigCut(m)));
-      [W0.mate1, W0.mate2].forEach((s2, i) => place(s2, 'sit', ZC.dug + (i ? 1.05 : -1.05), ZC.floor + 0.05, -2.5, i ? -Math.PI / 2 : Math.PI / 2, t + i * 1.7));
+      [W0.mate1, W0.mate2].forEach((s2, i) => {
+        pose(s2 as Soldier, 'sit', t + i);
+        s2.position.set(ZC.dug + (i ? 1.05 : -1.05), ZC.floor + 0.03, -2.5);
+        s2.rotation.y = i ? -Math.PI / 2 : Math.PI / 2;
+        add(s2);
+      });
     }
 
     // --- вид сверху: настоящие канавы с глубиной
@@ -504,9 +430,7 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
       cached(gkey, () => {
         const geo = new THREE.ExtrudeGeometry(groundShape(dig, walls > 0 ? 1 : 0, dug > 0), {depth: LEN, bevelEnabled: false});
         geo.translate(0, 0, -LEN);
-        const gm = new THREE.Mesh(geo, [m.earth, m.side]);
-        gm.userData.floor = true;
-        return gm;
+        return new THREE.Mesh(geo, [m.earth, m.side]);
       }),
     );
     }
@@ -534,7 +458,6 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
             o.updateMatrix();
             slats.setMatrixAt(i, o.matrix);
           }
-          slats.userData.floor = true;
           g.add(slats);
           const zEnd = -0.15 - n * 0.2;
           [-0.45, 0.45].forEach((x) => g.add(new THREE.Mesh(box(x - 0.05, x + 0.05, y - 0.13, y - 0.025, zEnd, -0.05), m.darkWood)));
@@ -551,9 +474,7 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
         const k = clamp01((p - 0.1 - i * 0.05) / 0.4);
         if (k <= 0 || k >= 1) continue;
         const side = i % 2 ? 1 : -1;
-        const c = new THREE.Mesh(clodGeos()[i % 4], m.wall); // неровный ком глины, не кубик
-        c.scale.set(0.24, 0.16, 0.3);
-        c.userData.cached = true; // геометрия общая — не освобождать
+        const c = new THREE.Mesh(box(-0.2, 0.2, -0.14, 0.14, -0.3, 0.3), m.wall);
         c.position.set(side * lerp(1.15, 0.35, k), lerp(-0.2, -D + 0.7, k * k), -1.2 - i * 0.9 - rr() * 0.4);
         c.rotation.set(k * 1.5, rr(), k * side * 1.2);
         add(c);
@@ -599,11 +520,7 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
     // --- стрелковая ступень + бруствер с бойницей
     const st = range(P.step, p, 0.4, P.stepDelay ?? 0);
     if (st > 0) {
-      add(cached('step', () => {
-        const sm = new THREE.Mesh(box(-WALL + 0.02, -WALL + 0.52, -DEPTH, -DEPTH + 0.8, -24, -0.03), m.wood);
-        sm.userData.floor = true;
-        return sm;
-      }));
+      add(cached('step', () => new THREE.Mesh(box(-WALL + 0.02, -WALL + 0.52, -DEPTH, -DEPTH + 0.8, -24, -0.03), m.wood)));
     }
     const pr = range(P.parapet, p, 0.5, P.parapetDelay ?? 0);
     if (pr > 0) {
@@ -635,14 +552,6 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
           }
           im.count = k;
           g.add(im);
-          if (rowsP === 3) {
-            // бойница: стальной щит со щелью в верхнем ряду мешков — щель видно явно
-            const yb = 0.08 + 2 * 0.155 - 0.07, yt = yb + 0.2;
-            g.add(new THREE.Mesh(box(-1.16, -1.12, yb, yb + 0.07, -3.55, -2.75), m.black));
-            g.add(new THREE.Mesh(box(-1.16, -1.12, yb + 0.13, yt, -3.55, -2.75), m.black));
-            g.add(new THREE.Mesh(box(-1.16, -1.12, yb + 0.07, yb + 0.13, -3.55, -3.25), m.black));
-            g.add(new THREE.Mesh(box(-1.16, -1.12, yb + 0.07, yb + 0.13, -3.05, -2.75), m.black));
-          }
           return g;
         }),
       );
@@ -658,35 +567,22 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
       }
     }
 
-    // --- перископ: деревянный короб, сверху окно к врагу с зеркалом, снизу окно к солдату с зеркалом
+    // --- перископ
     const pe = range(P.periscope, p, 0.35, P.periscopeDelay ?? 0);
     if (pe > 0) {
-      const g = cached('periscope', () => {
-        const q = new THREE.Group();
-        const H = 2.35; // голова на ~35 см выше мешков бруствера
-        q.add(new THREE.Mesh(box(-0.08, 0.08, 0, H, -0.08, 0.08), m.wood));
-        // верхняя голова: открыта к врагу (-x), внутри зеркало под 45°
-        // голова: открытый верх, зеркало под 45° смотрит на врага и видно сверху
-        q.add(new THREE.Mesh(box(-0.085, 0.085, H - 0.02, H + 0.0, -0.085, 0.085), m.darkWood));
-        q.add(new THREE.Mesh(box(0.06, 0.085, H, H + 0.2, -0.085, 0.085), m.darkWood));
-        [-1, 1].forEach((sd) => q.add(new THREE.Mesh(box(-0.085, 0.085, H, H + 0.2, sd * 0.085 - 0.012, sd * 0.085 + 0.012), m.darkWood)));
-        const mt = new THREE.Mesh(new THREE.PlaneGeometry(0.21, 0.15), m.mirror);
-        mt.position.set(0, H + 0.1, 0);
-        mt.rotation.set(0, Math.PI / 2, 0);
-        mt.rotateX(-Math.PI / 4);
-        q.add(mt);
-        // нижнее окно на уровне глаз солдата (+x), со вторым зеркалом
-        const ey = 1.45;
-        q.add(new THREE.Mesh(box(0.08, 0.1, ey - 0.08, ey - 0.06, -0.08, 0.08), m.darkWood));
-        q.add(new THREE.Mesh(box(0.08, 0.1, ey + 0.06, ey + 0.08, -0.08, 0.08), m.darkWood));
-        const mb = new THREE.Mesh(new THREE.PlaneGeometry(0.13, 0.11), m.mirror);
-        mb.position.set(0.085, ey, 0);
-        mb.rotation.y = Math.PI / 2;
-        q.add(mb);
-        return q;
-      });
-      g.scale.set(1, pe, 1);
-      g.position.set(-0.62, -DEPTH + 0.8, -2.2);
+      const g = new THREE.Group();
+      g.add(new THREE.Mesh(box(-0.08, 0.08, 0, 1.45 * pe, -0.08, 0.08), m.green));
+      if (pe > 0.9) {
+        const top = new THREE.Mesh(new THREE.PlaneGeometry(0.13, 0.13), m.mirror);
+        top.position.set(-0.081, 1.35, 0);
+        top.rotation.y = -Math.PI / 2;
+        g.add(top);
+        const bot = new THREE.Mesh(new THREE.PlaneGeometry(0.13, 0.13), m.mirror);
+        bot.position.set(0.081, 0.18, 0);
+        bot.rotation.y = Math.PI / 2;
+        g.add(bot);
+      }
+      g.position.set(-0.62, -DEPTH + 0.95, -2.2);
       add(g);
     }
 
@@ -696,9 +592,7 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
         cached('dugout', () => {
           const g = new THREE.Group();
           g.add(new THREE.Mesh(box(-2.6, 2.6, -7.3, -4.7, -4.6, -4.4), m.room)); // задняя стена
-          const df = new THREE.Mesh(box(-2.6, 2.6, -7.33, -7.28, -4.6, 0), m.wood); // пол на 2 см выше дна выемки — без мерцания
-          df.userData.floor = true;
-          g.add(df);
+          g.add(new THREE.Mesh(box(-2.6, 2.6, -7.35, -7.3, -4.6, 0), m.wood)); // пол
           for (let x = -2.4; x <= 2.41; x += 0.44) {
             const log = new THREE.Mesh(new THREE.CylinderGeometry(0.21, 0.21, 4.6, 12), m.darkWood);
             log.rotation.x = Math.PI / 2;
@@ -708,16 +602,13 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
           g.add(new THREE.Mesh(box(-0.6, 0.6, -6.6, -6.55, -2.9, -2.1), m.wood)); // столешница
           g.add(new THREE.Mesh(box(-0.08, 0.08, -7.3, -6.6, -2.58, -2.42), m.darkWood));
           [-1.15, 1.15].forEach((x) => g.add(new THREE.Mesh(box(x - 0.3, x + 0.3, -7.3, -6.9, -2.8, -2.2), m.wood))); // ящики-скамьи
-          const lamp = libModel(A.lamp, {height: 0.28});
-          lamp.position.set(0.25, -6.55, -2.55);
-          g.add(lamp);
-          const crate = libModel(A.crate, {height: 0.5});
-          crate.position.set(1.9, -7.28, -3.9);
-          crate.rotation.y = 0.2;
-          g.add(crate);
-          const ammo = libModel(A.ammo, {height: 0.22});
-          ammo.position.set(-2.1, -7.28, -3.7);
-          g.add(ammo);
+          const candle = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.14, 8), m.paper);
+          candle.position.set(0.2, -6.48, -2.5);
+          g.add(candle);
+          const fl = new THREE.Mesh(new THREE.SphereGeometry(0.035, 8, 6), m.flame);
+          fl.position.set(0.2, -6.37, -2.5);
+          fl.scale.set(1, 1.6, 1);
+          g.add(fl);
           const light = new THREE.PointLight('#ffcf8a', 3.5, 7, 1.5);
           light.position.set(0.2, -6.1, -2.3);
           g.add(light);
@@ -730,111 +621,159 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
           return g;
         }),
       );
-      // солдаты за картами (сидят на ящиках)
-      [W0.mate1, W0.mate2].forEach((s, i) => place(s, 'sit', i ? 1.15 : -1.15, -7.3, -2.5, i ? -Math.PI / 2 : Math.PI / 2, t + i * 1.7));
+      // солдаты за картами
+      [W0.mate1, W0.mate2].forEach((s, i) => {
+        pose(s as Soldier, 'sit', t + i);
+        s.position.set(i ? 1.15 : -1.15, -7.33, -2.5);
+        s.rotation.y = i ? -Math.PI / 2 : Math.PI / 2;
+        add(s);
+      });
     }
 
-    // --- взрыв, летящий по прямому окопу: цепочка разрывов по всей линии (без засветки кадра)
-    const fpsT = life / fps; // длительность сцены в секундах
-    if (P.blastLine) {
-      const t0 = (P.blastDelay ?? 0.15) * fpsT;
-      for (let i = 0; i < 14; i++) {
-        const e = explosion(t - t0 - i * 0.09, {seed: 30 + i, size: 1.3, dust: '#6d5c49'});
-        e.position.set(0, -DEPTH + 0.3, -LEN * 0.8 + i * (LEN * 0.8 / 13));
-        add(e);
-      }
+    // --- взрыв, летящий по прямому окопу
+    const bl = range(P.blastLine, p, 0.45, P.blastDelay ?? 0.15);
+    if (bl > 0 && bl < 1.02) {
+      const z1 = -LEN * 0.8;
+      const z0 = lerp(z1, -1, bl);
+      const fire = new THREE.Mesh(box(-0.5, 0.5, -DEPTH, -DEPTH + 1.6, z0, z0 + 22), m.fire);
+      add(fire);
+      const glow = new THREE.PointLight('#ff8a2a', 30, 30, 1.2);
+      glow.position.set(0, 1, z0 + 6);
+      add(glow);
     }
 
-    // взрыв в одном колене зигзага — дальше изгиба не идёт
-    if (P.zigBlast) {
+    // взрыв в одном колене зигзага — не проходит за угол
+    const zb = range(P.zigBlast, p, 0.5, P.zigBlastDelay ?? 0.1);
+    if (zb > 0) {
       const zp = zigPath(110);
       const [x, z] = zp[4];
-      const e = explosion(t - (P.zigBlastDelay ?? 0.1) * fpsT, {seed: 7, size: 1.2, dust: '#6d5c49'});
-      e.position.set(x, -DEPTH + 0.3, z + 2.2);
-      add(e);
+      const flash = new THREE.Mesh(new THREE.SphereGeometry(1, 16, 12), m.fire);
+      const fk = clamp01(zb * 3);
+      flash.scale.setScalar(0.4 + 1.6 * fk);
+      flash.position.set(x, -0.6, z + 2.2);
+      if (zb < 0.45) add(flash);
+      const smoke = new THREE.Mesh(new THREE.SphereGeometry(1, 16, 12), m.smokeBall);
+      smoke.scale.setScalar(0.5 + 2.4 * easeInOut(zb));
+      smoke.position.set(x, 0.2 + 2.6 * zb, z + 2.2);
+      add(smoke);
     }
 
-    // --- снаряды в поле
+    // --- снаряды в поле (ведро) — дым и вспышки
     if (P.shells) {
       [0.2, 0.55, 0.8].forEach((at, i) => {
-        const e = explosion(t - at * fpsT, {seed: 11 + i, size: 1.0, dust: '#6d5c49'});
-        e.position.set(4 + i * 3.5, 0, -9 - i * 4);
-        add(e);
+        const k = clamp01((p - at) / 0.35);
+        if (k <= 0 || k >= 1) return;
+        const x = 4 + i * 3.5;
+        const z = -9 - i * 4;
+        if (k < 0.15) {
+          const f = new THREE.Mesh(new THREE.SphereGeometry(0.6 + k * 6, 12, 10), m.fire);
+          f.position.set(x, 0.4, z);
+          add(f);
+        }
+        const s = new THREE.Mesh(new THREE.SphereGeometry(1, 14, 10), m.smokeBall);
+        s.scale.setScalar(0.4 + 1.5 * k);
+        s.position.set(x, 0.6 + 2.6 * k, z);
+        add(s);
       });
     }
 
     // --- чайник, письма, кот и крысы
     if (P.homely) {
-      const dx = P.zigCut ? 0.42 : 0, dy = P.zigCut ? -0.2 : 0;
       const hg = cached('homely', () => {
-        const g = new THREE.Group();
-        [[-0.72, -1.65], [-0.68, -1.85]].forEach(([x, z], i) => {
-          const l = new THREE.Mesh(new THREE.PlaneGeometry(0.16, 0.11), m.paper);
-          l.rotation.x = -Math.PI / 2;
-          l.rotation.z = 0.3 * (i ? -1 : 1);
-          l.position.set(x, -DEPTH + 0.805, z);
-          g.add(l);
+          const g = new THREE.Group();
+          const pot = new THREE.Mesh(new THREE.SphereGeometry(0.14, 14, 10), m.black);
+          pot.scale.set(1, 0.85, 1);
+          pot.position.set(-0.75, -DEPTH + 0.92, -1.2);
+          g.add(pot);
+          const spout = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.03, 0.16, 8), m.black);
+          spout.position.set(-0.6, -DEPTH + 0.95, -1.2);
+          spout.rotation.z = -0.9;
+          g.add(spout);
+          const handle = new THREE.Mesh(new THREE.TorusGeometry(0.09, 0.015, 6, 14, Math.PI), m.black);
+          handle.position.set(-0.75, -DEPTH + 1.02, -1.2);
+          g.add(handle);
+          [[-0.72, -1.65], [-0.68, -1.85]].forEach(([x, z], i) => {
+            const l = new THREE.Mesh(new THREE.PlaneGeometry(0.16, 0.11), m.paper);
+            l.rotation.x = -Math.PI / 2;
+            l.rotation.z = 0.3 * (i ? -1 : 1);
+            l.position.set(x, -DEPTH + 0.805, z);
+            g.add(l);
+          });
+          // кот на бруствере
+          const cat = new THREE.Group();
+          const bodyC = new THREE.Mesh(new THREE.SphereGeometry(0.16, 14, 10), m.black);
+          bodyC.scale.set(0.9, 0.85, 1.5);
+          bodyC.position.y = 0.16;
+          cat.add(bodyC);
+          const headC = new THREE.Mesh(new THREE.SphereGeometry(0.1, 12, 10), m.black);
+          headC.position.set(0, 0.33, -0.2);
+          cat.add(headC);
+          [-0.05, 0.05].forEach((x) => {
+            const ear = new THREE.Mesh(new THREE.ConeGeometry(0.035, 0.08, 6), m.black);
+            ear.position.set(x, 0.44, -0.2);
+            cat.add(ear);
+            const eye = new THREE.Mesh(new THREE.SphereGeometry(0.015, 6, 6), m.flame);
+            eye.position.set(x * 0.8, 0.35, -0.29);
+            cat.add(eye);
+          });
+          const tail = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.025, 0.4, 6), m.black);
+          tail.position.set(0, 0.3, 0.27);
+          tail.rotation.x = -0.6;
+          cat.add(tail);
+          cat.position.set(-1.25, 0.48, -1.6);
+          cat.rotation.y = -0.6;
+          g.add(cat);
+          return g;
         });
-        return g;
-      });
-      hg.position.set(dx, dy, 0);
+      hg.position.set(P.zigCut ? 0.42 : 0, P.zigCut ? -0.2 : 0, 0);
       add(hg);
-      W0.kettle.position.set(-0.7 + dx, -DEPTH + 0.8 + dy, -2.15);
-      add(W0.kettle);
-      W0.cat.position.set(-1.15 + dx, 0.47 + dy, -0.95);
-      W0.cat.rotation.y = 0.64; // смотрит в камеру
-      add(W0.cat);
-      W0.rats.forEach((rt, i) => {
-        const k = (t * 0.12 + i * 0.5) % 1;
-        const x = 0.25 - i * 0.4 + dx, z = lerp(P.zigCut ? -4.2 : -9, -2.2, k);
-        rt.root.position.set(x, 0, z);
-        rt.root.rotation.y = 0;
-        rt.pose('#walk', t + i);
-        rt.stand(floorY(x, z, P.zigCut ? -DEPTH : -DEPTH + 0.6));
-        add(rt.root);
-      });
+      for (let i = 0; i < 2; i++) {
+        const k = (t * 0.35 + i * 0.5) % 1;
+        const rat = new THREE.Mesh(new THREE.SphereGeometry(0.06, 8, 6), m.grey);
+        rat.scale.set(0.7, 0.6, 1.6);
+        rat.position.set(0.25 - i * 0.4, P.zigCut ? -DEPTH + 0.2 : -DEPTH + 0.66, lerp(P.zigCut ? -4.2 : -9, -2.2, k));
+        add(rat);
+      }
     }
 
     // --- солдаты
     const S = P.hero;
     if (S) {
+      const hs = W0.hero as Soldier;
       const k = easeInOut(clamp01(p / (S.dur ?? 1)));
       const pos = S.from ? S.from.map((v: number, i: number) => lerp(v, S.to[i], k)) : S.at;
-      const moving = S.from && k < 1;
-      const dist = S.from ? Math.hypot(S.to[0] - S.from[0], S.to[2] - S.from[2]) * k : 0;
-      const ps = S.pose === 'walk' || S.pose === 'carry' ? (moving ? 'walk' : 'stand') : S.pose ?? 'stand';
-      // идёт лицом по ходу движения, остановился — как задано в сцене
-      const yaw = moving ? Math.atan2(S.to[0] - S.from[0], S.to[2] - S.from[2]) : S.rotY ?? 0;
-      place(W0.hero, ps, pos[0], pos[1], pos[2], yaw, t, dist);
+      pose(hs, S.pose ?? 'stand', t);
+      hs.position.set(pos[0], pos[1], pos[2]);
+      hs.rotation.y = S.rotY ?? 0;
+      add(hs);
       if (S.pose === 'carry') {
-        // ведро в правой руке, висит под кистью
-        const hand = W0.hero.bone('handR');
-        if (hand) {
-          W0.hero.root.updateMatrixWorld(true);
-          hand.getWorldPosition(W0.bucket.position);
-          W0.bucket.position.y -= 0.3;
-          W0.bucket.rotation.y = S.rotY ?? 0;
-          add(W0.bucket);
-        }
+        const b = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.09, 0.22, 12, 1, true), m.grey);
+        b.position.set(pos[0] + 0.3, pos[1] + 0.68, pos[2]);
+        add(b);
       }
     }
     if (P.crew) {
       (P.crew as any[]).forEach((c, i) => {
-        if (i >= W0.crew.length) return;
-        place(W0.crew[i], c.pose ?? (i % 2 ? 'look' : 'stand'), c.at[0], c.at[1], c.at[2], c.rotY ?? 0, t + i * 2.3);
+        const key = `crew${i}`;
+        const sd = cached(key, () => makeSoldier({cloth: m.cloth, skin: m.skin, helmet: m.helmet, boot: m.boot})) as Soldier;
+        pose(sd, c.pose ?? 'stand', t + i * 0.7);
+        sd.position.set(c.at[0], c.at[1], c.at[2]);
+        sd.rotation.y = c.rotY ?? 0;
+        sd.scale.setScalar(c.scale ?? 1);
+        add(sd);
       });
     }
 
-    // --- комья из-под лопаты: неровные, летят из окопа на бруствер
+    // --- комья, летящие по полю (начало)
     if (P.clods) {
-      for (let i = 0; i < 8; i++) {
-        const k = (t * 0.9 + i * 0.125) % 1;
-        const c = new THREE.Mesh(clodGeos()[i % 4], m.wall);
-        c.scale.setScalar(0.07 + (i % 3) * 0.025);
-        c.userData.cached = true;
-        c.position.set(lerp(0.2, 1.6 + (i % 3) * 0.3, k), -1.2 + Math.sin(k * Math.PI) * 1.4 + k * 1.25, -4 + (i % 4) * 0.25);
+      for (let i = 0; i < 14; i++) {
+        const k = ((t * 0.5 + i * 0.137) % 1);
+        const x0 = -12 + rr() * 24;
+        const z0 = -6 - rr() * 18;
+        const c = new THREE.Mesh(box(-0.12, 0.12, -0.12, 0.12, -0.12, 0.12), m.wall);
+        c.position.set(x0 + k * 2, Math.max(0.12, Math.sin(k * Math.PI) * 3.5), z0);
         c.rotation.set(k * 6, k * 4, 0);
-        if (k < 0.95) add(c);
+        add(c);
       }
     }
 
@@ -870,11 +809,6 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
     const look = c0.look.map((v, i) => lerp(v, c1.look[i], kc));
     camera.position.set(pos[0], pos[1], pos[2]);
     camera.lookAt(look[0], look[1], look[2]);
-    // мир появился после загрузки библиотеки — первый кадр рисуем сами
-    if (first.current) {
-      first.current = false;
-      gl.render(scene, camera);
-    }
   }, [frame]);
 
   return (
@@ -886,11 +820,6 @@ const World: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
   );
 };
 
-const Loader: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
-  const lib = useLib(LIB);
-  return lib ? <World P={P} life={life} /> : null;
-};
-
 export const TrenchScene: React.FC<SceneProps> = ({scene, durationInFrames}) => {
   const P = scene.props;
   const frame = useCurrentFrame();
@@ -898,8 +827,8 @@ export const TrenchScene: React.FC<SceneProps> = ({scene, durationInFrames}) => 
   const bIn = clamp01((frame - (P.bannerAt ?? 0) * life) / 8);
   return (
     <AbsoluteFill>
-      <ThreeCanvas width={SW} height={SH} camera={{fov: 45, position: [0, 2, 8], near: 0.3, far: 700}} gl={{preserveDrawingBuffer: true, antialias: false}}>
-        <Loader P={P} life={life} />
+      <ThreeCanvas width={SW} height={SH} camera={{fov: 45, position: [0, 2, 8], near: 0.1, far: 700}} gl={{preserveDrawingBuffer: true, antialias: false}}>
+        <World P={P} life={life} />
       </ThreeCanvas>
       {P.banner ? (
         <div
