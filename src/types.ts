@@ -18,7 +18,8 @@ export type SceneType =
   | 'trench'
   | 'septic'
   | 'tower'
-  | 'subway';
+  | 'subway'
+  | 'steam';
 
 export type TimedScene = {
   type: SceneType;
