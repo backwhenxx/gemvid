@@ -56,6 +56,10 @@ if (ep.scenes.some((s) => s.type === 'tower') || ep.cover?.tower) {
   const L = JSON.parse(fs.readFileSync(path.join(ROOT, 'src/scenes/tower/lib.json'), 'utf8'));
   libIds.push(...Object.values(L.tex), ...L.city);
 }
+if (ep.scenes.some((s) => s.type === 'steam') || ep.cover?.steam) {
+  const L = JSON.parse(fs.readFileSync(path.join(ROOT, 'src/scenes/steam/lib.json'), 'utf8'));
+  libIds.push(...Object.values(L.tex), ...L.city, ...(L.chrysler ? [L.chrysler] : []));
+}
 if (ep.scenes.some((s) => s.type === 'subway') || ep.cover?.subway) {
   const L = JSON.parse(fs.readFileSync(path.join(ROOT, 'src/scenes/subway/lib.json'), 'utf8'));
   libIds.push(...Object.values(L.tex), ...L.city);
@@ -63,10 +67,21 @@ if (ep.scenes.some((s) => s.type === 'subway') || ep.cover?.subway) {
 if (ep.scenes.some((s) => s.type === 'trench') || ep.cover?.trench) libIds.push(...Object.values(JSON.parse(fs.readFileSync(path.join(ROOT, 'src/scenes/trench/assets.json'), 'utf8'))));
 if (libIds.length) await fetchLib([...new Set(libIds)], ROOT);
 
+// события сцены (props.at: {имя: доля сцены}) → абсолютные секунды props.events, видны этой и всем следующим сценам
+const stampEvents = (scs) => {
+  let ev = {};
+  scs.forEach((s) => {
+    for (const [k, v] of Object.entries(s.props?.at ?? {})) ev = {...ev, [k]: s.start + v * (s.end - s.start)};
+    s.props = {...(s.props ?? {}), events: ev};
+  });
+  return scs;
+};
+
 // Стоп-кадры всех сцен без озвучки (быстрая проверка картинки): --stills
 if (flag('--stills')) {
   const SD = 3;
   const scenesS = ep.scenes.map((s, i) => ({type: s.type, start: i * SD, end: (i + 1) * SD, say: '', props: s.props ?? {}}));
+  stampEvents(scenesS);
   const timeline = {fps: 30, durationInFrames: scenesS.length * SD * 30, base: pubBase, voice: null, words: [], scenes: scenesS, sfx: [], music: null,
     accent: ep.accent ?? '#A9BCCB', palette: ep.palette ?? null, captionStyle: ep.captionStyle ?? 'karaoke'};
   const serveUrl = await bundle({entryPoint: path.join(ROOT, 'src/index.ts'), publicDir: path.join(ROOT, 'public')});
@@ -253,6 +268,7 @@ const ambience = (ep.ambience ?? [])
   .filter(Boolean);
 fs.writeFileSync(path.join(outDir, 'sounds.json'), JSON.stringify(Object.values(snd), null, 1));
 
+stampEvents(scenes);
 const timeline = {
   fps: FPS,
   durationInFrames: Math.ceil(total * FPS),

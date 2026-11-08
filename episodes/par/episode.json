@@ -1,0 +1,43 @@
+{
+  "title": "Почему из люков Нью-Йорка идёт пар",
+  "music": false,
+  "whisper": "medium",
+  "captionStyle": "word",
+  "autoOutro": false,
+  "ambience": [{"q": "city street ambience", "from": 0, "to": 5, "volume": 0.12}],
+  "cover": {
+    "lines": ["Почему из люков", "*идёт пар*"],
+    "sub": "Нью-Йорк",
+    "steam": {"cam": [{"pos": [7, -0.6, 14], "look": [3, 0.4, -4]}, {"pos": [7, -0.6, 14], "look": [3, 0.4, -4]}], "flow": 1, "seep": 1}
+  },
+  "scenes": [
+    {"type": "steam", "say": "[curious] Почему из люков Нью-Йорка всё время валит пар?",
+     "props": {"cam": ["hook", {"pos": [8, 1.2, 8.5], "look": [3, 0.8, -6]}], "banner": "ПАР ИЗ ЛЮКА?",
+               "sounds": [{"q": "steam hiss", "at": 0.05, "len": 2, "volume": 0.3}], "cont": false}},
+    {"type": "steam", "say": "Под асфальтом Манхэттена проложены паровые трубы. Почти сто семьдесят километров.",
+     "props": {"cam": [{"pos": [8, 1.2, 8.5], "look": [3, 0.8, -6]}, "cut"], "flow": [0, 1], "banner": "≈ 170 КМ ПАРОВЫХ ТРУБ", "bannerAt": 0.45, "bannerSize": 58, "cont": true}},
+    {"type": "steam", "say": "По ним идёт пар — сто восемьдесят градусов. Его делают на станциях и гонят в дома.",
+     "props": {"cam": ["cut", "plant"], "flow": 1, "banner": "≈ 180 °C", "bannerSize": 72, "cont": true}},
+    {"type": "steam", "say": "Так греются почти две тысячи зданий.",
+     "props": {"cam": ["plant", "basement"], "flow": 1, "heatUp": [0, 1], "banner": "≈ 2000 ЗДАНИЙ", "bannerAt": 0.4, "cont": true}},
+    {"type": "steam", "say": "А летом... этим же паром их охлаждают.",
+     "props": {"cam": ["basement", "cool"], "flow": 1, "heatUp": 1, "coldUp": [0, 1], "banner": "ЛЕТОМ ПАР ДАЁТ ХОЛОД", "bannerSize": 58, "cont": true}},
+    {"type": "steam", "say": "[amazed] И работает это с тысяча восемьсот восемьдесят второго года.",
+     "props": {"cam": ["cool", "wide"], "flow": 1, "heatUp": 1, "coldUp": 1, "banner": "С 1882 ГОДА", "bannerSize": 72, "cont": true}},
+    {"type": "steam", "say": "А пар из люка — не утечка. Дождь просачивается под асфальт, попадает на горячую трубу и испаряется.",
+     "props": {"cam": ["wide", "rain"], "flow": 1, "rain": [0, 1], "seep": [0, 1], "banner": "ДОЖДЬ + ГОРЯЧАЯ ТРУБА", "bannerAt": 0.35, "bannerSize": 58,
+               "sounds": [{"q": "heavy rain falling outdoor", "at": 0.1, "len": 3, "volume": 0.3}], "cont": true}},
+    {"type": "steam", "say": "Если пара много, ставят оранжевую трубу — чтобы он уходил выше голов.",
+     "props": {"cam": ["rain", "stack"], "flow": 1, "rain": 1, "seep": 1, "stack": [0, 1], "banner": "ПАР — ВЫШЕ ГОЛОВ", "bannerAt": 0.5, "cont": true}},
+    {"type": "steam", "say": "[tense] Но вода опасна и для самой трубы. Холодная вода остужает её снаружи... пар внутри превращается в воду — и бьёт, как молот.",
+     "props": {"cam": ["stack", "hammer"], "flow": 1, "rain": 1, "seep": 1, "stack": 1, "hammer": true, "banner": "ГИДРОУДАР", "bannerAt": 0.62, "bannerSize": 76,
+               "sounds": [{"q": "metal pipe bang", "at": 0.62, "len": 1.5, "volume": 0.5}], "cont": true}},
+    {"type": "steam", "say": "[dramatically] В две тысячи седьмом так рванула труба у Центрального вокзала. Облако пара поднялось выше небоскрёба Крайслер.",
+     "props": {"cam": ["hammer", "blast"], "rain": [1, 0], "stack": 1, "cond": 0.25, "at": {"blast": 0.3}, "banner": "2007: ВЫШЕ КРАЙСЛЕРА", "bannerAt": 0.55, "bannerSize": 58,
+               "sounds": [{"q": "steam explosion", "at": 0.3, "len": 3, "volume": 0.55}], "cont": true}},
+    {"type": "steam", "say": "Ливень, прорыв водопровода или старость — что добьёт эти трубы первым?",
+     "props": {"cam": ["blast", "final"], "stack": 1, "cond": 0.25, "plume": [1, 0.55], "banner": "ЛИВЕНЬ? ВОДОПРОВОД? СТАРОСТЬ?", "bannerSize": 52, "cont": true}},
+    {"type": "steam", "say": "[warmly] Подпишись.",
+     "props": {"cam": ["final", {"pos": [-4, 17, 66], "look": [-12, 15, -30]}], "stack": 1, "cond": 0.25, "plume": [0.55, 0.4], "cont": true}}
+  ]
+}
