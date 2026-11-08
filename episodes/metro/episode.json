@@ -69,7 +69,8 @@
       "volume": 0.35
      }
     ],
-    "cont": false
+    "cont": false,
+    "train": 1
    }
   },
   {
