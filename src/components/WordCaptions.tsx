@@ -6,7 +6,7 @@ import type {Word} from '../types';
 const {fontFamily} = loadFont('normal', {weights: ['700'], subsets: ['cyrillic', 'latin']});
 
 // Субтитры «по одному слову» по центру кадра — как в 3D-роликах канала
-export const WordCaptions: React.FC<{words: Word[]; y?: number}> = ({words, y = 900}) => {
+export const WordCaptions: React.FC<{words: Word[]; y?: number}> = ({words, y = 1120}) => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
   const t = frame / fps;
