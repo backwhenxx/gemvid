@@ -46,7 +46,7 @@ const CAMS: Record<string, Cam> = {
   pit: {pos: [0.5, -11.1, 11], look: [0.5, -11.3, -1]},
   panL: {pos: [-20, -6.5, 30], look: [-20, -7, -2]},
   sewer: {pos: [-6, -3.2, 22], look: [-6, -3, -3]},
-  pools: {pos: [31, 115, -5], look: [31, 0, -48]},
+  pools: {pos: [27, 115, -30], look: [27, 0, -40]},
   rainView: {pos: [0, -2, 36], look: [0, -4, -2]},
   flood1: {pos: [22, -9.5, 30], look: [22, -9.8, -2]},
   flood2: {pos: [18, -8, 44], look: [18, -8.5, -2]},
