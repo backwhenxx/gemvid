@@ -24,8 +24,8 @@ const PIT0 = -13.55; // дно приямка
 const BACK = -9.5; // задняя стена тоннеля
 const PW = 1.4, PD = 1.6; // полуширина приямка по x и глубина по z
 const LO = -13.0, HI = -12.1; // уровни воды: насос выключился / включился
-const SEW0 = -3.1, SEW1 = -1.7; // коллектор
-const SEWW = -2.75; // поверхность воды в коллекторе
+const SEW0 = -3.3, SEW1 = -1.5; // коллектор
+const SEWW = -2.55; // поверхность воды в коллекторе
 const PZ = 0.14; // трубы лежат на плоскости среза
 const PITS = [-42, -35, -28, -21, -14, -7, 0, 7, 14];
 const HERO = 6; // приямок под камерой x = 0
@@ -43,10 +43,10 @@ const CAMS: Record<string, Cam> = {
   street: {pos: [8, 8, 48], look: [0, -1, -8]},
   full: {pos: [0, -6, 27], look: [0, -6.6, -2]},
   seep: {pos: [-6, -8.5, 20], look: [-6, -8, -3]},
-  pit: {pos: [0.5, -12, 11], look: [0.5, -12.2, -1]},
+  pit: {pos: [0.5, -11.1, 11], look: [0.5, -11.3, -1]},
   panL: {pos: [-20, -6.5, 30], look: [-20, -7, -2]},
   sewer: {pos: [-6, -3.2, 22], look: [-6, -3, -3]},
-  pools: {pos: [31, 95, 55], look: [31, 0, -20]},
+  pools: {pos: [31, 120, 30], look: [31, 0, -21]},
   rainView: {pos: [0, -2, 36], look: [0, -4, -2]},
   flood1: {pos: [22, -9.5, 30], look: [22, -9.8, -2]},
   flood2: {pos: [18, -8, 44], look: [18, -8.5, -2]},
@@ -122,23 +122,26 @@ const World: React.FC<{P: Record<string, any>; life: number; t0: number}> = ({P,
   const W0 = useMemo(() => {
     const m: Record<string, any> = {
       brick: libMaterial(TEX.brick, [1, 1], {roughness: 0.95}),
-      concrete: libMaterial(TEX.concrete, [1, 1], {color: '#d0cec8'}),
-      tunnel: libMaterial(TEX.concrete, [1, 1], {color: '#8f9296'}),
-      tile: libMaterial(TEX.concrete, [1, 1], {color: '#ece8dc'}),
+      concrete: libMaterial(TEX.pave, [1, 1], {color: '#e2e2de'}),
+      tunnel: libMaterial(TEX.pave, [1, 1], {color: '#b3bcc4', emissive: '#1d2226'}),
+      tile: libMaterial(TEX.pave, [1, 1], {color: '#f1ede2'}),
+      sewerWall: libMaterial(TEX.brick, [1, 1], {color: '#5d6d70', emissive: '#12181a'}),
+      trainBody: libMaterial(TEX.metal, [1, 1], {color: '#cfd6dc', metalness: 0.15, roughness: 0.5}),
+      glass: new THREE.MeshStandardMaterial({color: '#26323c', emissive: '#8a7a4c', emissiveIntensity: 0.55, roughness: 0.3}),
       pave: libMaterial(TEX.pave, [1, 1]),
       road: libMaterial(TEX.roof, [1, 1], {color: '#6d6a66'}),
       metal: libMaterial(TEX.metal, [1, 1], {color: '#7d8791', metalness: 0.2, roughness: 0.55}),
       sleeper: libMaterial(TEX.cedar, [1, 1], {color: '#4d3a2a'}),
-      topsoil: new THREE.MeshStandardMaterial({map: topsoilTexture(1 / 6, 1 / 3), roughness: 1}),
+      topsoil: new THREE.MeshStandardMaterial({map: topsoilTexture(1 / 6, 1 / 3), roughness: 1, color: '#cdbba8'}),
       clay: new THREE.MeshStandardMaterial({map: clayTexture(1 / 6, 1 / 3), roughness: 1}),
       gravel: new THREE.MeshStandardMaterial({map: gravelTexture(1 / 5, 1 / 5), roughness: 1}),
-      rock: new THREE.MeshStandardMaterial({map: rockTexture(1 / 7, 1 / 7), roughness: 1, color: '#9aa0a6'}),
+      rock: new THREE.MeshStandardMaterial({map: rockTexture(1 / 7, 1 / 7), roughness: 1, color: '#ffffff', emissive: '#34383d'}),
       steel: new THREE.MeshStandardMaterial({color: '#4c5258', roughness: 0.6, metalness: 0.1}),
       rail: new THREE.MeshStandardMaterial({color: '#7a7f84', roughness: 0.4, metalness: 0.4}),
       pipe: new THREE.MeshStandardMaterial({color: '#aeb6bd', roughness: 0.45, metalness: 0.1}),
       pipeOn: new THREE.MeshStandardMaterial({color: '#4a8fd0', roughness: 0.35, metalness: 0.1}),
       stream: new THREE.MeshStandardMaterial({map: waterTexture(), color: '#4f8fc0', roughness: 0.2, transparent: true, opacity: 0.85, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2}),
-      sewerWater: new THREE.MeshStandardMaterial({map: waterTexture(), color: '#6f9a9a', roughness: 0.25, transparent: true, opacity: 0.92}),
+      sewerWater: new THREE.MeshStandardMaterial({map: waterTexture(), color: '#5f9fb0', roughness: 0.25, transparent: true, opacity: 0.95}),
       waterDeep: new THREE.MeshStandardMaterial({color: '#3f86c8', roughness: 0.3, transparent: true, opacity: 0.6}),
       flood: new THREE.MeshStandardMaterial({map: waterTexture(), color: '#4f8fc0', roughness: 0.2, transparent: true, opacity: 0.7}),
       puddle: new THREE.MeshStandardMaterial({color: '#5d86ad', roughness: 0.2, transparent: true, opacity: 0.8, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2}),
@@ -169,11 +172,11 @@ const World: React.FC<{P: Record<string, any>; life: number; t0: number}> = ({P,
     A(mbox(XL, XR, -0.3, 0.15, -14.4, -14, m.pave, 2));
     for (let x = XL; x < XR; x += 6) A(mbox(x, x + 3, 0.01, 0.03, -27.1, -26.9, m.yellow, 1));
     // --- слои грунта в разрезе, коллектор, перекрытие тоннеля
-    A(mbox(XL, XR, -1.2, -0.3, -40, 0, m.topsoil, 3));
-    A(mbox(XL, XR, -1.7, -1.2, -40, 0, m.brick, 2)); // свод коллектора
-    A(mbox(XL, XR, SEW0, SEW1, -40, -6, m.brick, 2)); // задняя стена коллектора
-    A(mbox(XL, XR, -3.4, SEW0, -40, 0, m.brick, 2)); // лоток коллектора
-    A(mbox(XL, XR, -4.9, -3.4, -40, 0, m.clay, 3));
+    A(mbox(XL, XR, -1.0, -0.3, -40, 0, m.topsoil, 3));
+    A(mbox(XL, XR, SEW1, -1.0, -40, 0, m.brick, 2)); // свод коллектора
+    A(mbox(XL, XR, SEW0, SEW1, -40, -6, m.sewerWall, 2)); // задняя стена коллектора (сырая)
+    A(mbox(XL, XR, SEW0 - 0.3, SEW0, -40, 0, m.brick, 2)); // лоток коллектора
+    A(mbox(XL, XR, -4.9, SEW0 - 0.3, -40, 0, m.clay, 3));
     A(mbox(XL, XR, SLAB1, -4.9, -40, 0, m.gravel, 3));
     A(mbox(XL, XR, SLAB0, SLAB1, -10.2, 0, m.concrete, 3));
     // вода в коллекторе
@@ -239,10 +242,10 @@ const World: React.FC<{P: Record<string, any>; life: number; t0: number}> = ({P,
       const seg = (a: V3, b: V3, r = 0.11) => pipes.push(A(setCyl(keepMesh(U_CYL, m.pipe), a, b, r)));
       seg([x + 0.2, -12.6, -0.8], [xr, -12.6, -0.8]);
       seg([xr, -12.6, -0.8], [xr, -12.6, PZ]);
-      seg([xr, -12.6, PZ], [xr, -2.3, PZ]);
-      seg([xr, -2.3, PZ], [xr, -2.3, -0.8]);
-      seg([xr, -2.3, -0.8], [xr, -2.75, -0.8], 0.09);
-      for (const [yy, zz] of [[-12.6, -0.8], [-12.6, PZ], [-2.3, PZ], [-2.3, -0.8]]) {
+      seg([xr, -12.6, PZ], [xr, -2.0, PZ]);
+      seg([xr, -2.0, PZ], [xr, -2.0, -0.8]);
+      seg([xr, -2.0, -0.8], [xr, -2.5, -0.8], 0.09);
+      for (const [yy, zz] of [[-12.6, -0.8], [-12.6, PZ], [-2.0, PZ], [-2.0, -0.8]]) {
         const j = A(keepMesh(U_SPH, m.pipe));
         j.position.set(xr, yy, zz);
         j.scale.setScalar(0.14);
@@ -275,6 +278,19 @@ const World: React.FC<{P: Record<string, any>; life: number; t0: number}> = ({P,
       o.visible = false;
       return {o, x: -22 + i * 3.8 + r() * 2, len: 2 + r() * 3.2};
     });
+    // --- поезд на дальнем пути: три серебристых вагона с окнами едет по абсолютному времени
+    const train = A(new THREE.Group());
+    train.visible = false;
+    for (let c = 0; c < 3; c++) {
+      const x0 = c * 18;
+      const add2 = (mat: THREE.Material, ax0: number, ax1: number, y0: number, y1: number, z0: number, z1: number) =>
+        train.add(setBox(keepMesh(U_BOX, mat), x0 + ax0, x0 + ax1, y0, y1, z0, z1));
+      add2(m.trainBody, 0, 17.4, -11.3, -8.1, -8.9, -6.2);
+      add2(m.steel, 0.6, 16.8, -11.5, -11.3, -8.6, -6.5);
+      add2(m.stripe, 0, 17.4, -10.5, -10.3, -6.21, -6.15);
+      for (let k = 0; k < 6; k++) add2(m.glass, 1.2 + k * 2.55, 3.1 + k * 2.55, -9.9, -8.7, -6.21, -6.13);
+      for (const dx of [0.05, 8.7, 17.3]) add2(m.steel, dx - 0.04, dx + 0.04, -11.2, -8.2, -6.21, -6.14);
+    }
     // --- затопление тоннеля
     const flood = A(keepMesh(U_BOX, m.flood));
     flood.visible = false;
@@ -367,7 +383,7 @@ const World: React.FC<{P: Record<string, any>; life: number; t0: number}> = ({P,
     const NR = 700;
     const rainGeo = new THREE.BufferGeometry();
     rainGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(NR * 6), 3));
-    const rain = new THREE.LineSegments(rainGeo, new THREE.LineBasicMaterial({color: '#b3cde0', transparent: true, opacity: 0.6, fog: false}));
+    const rain = new THREE.LineSegments(rainGeo, new THREE.LineBasicMaterial({color: '#b3cde0', transparent: true, opacity: 0.85, fog: false}));
     rain.frustumCulled = false;
     rain.visible = false;
     g.add(rain);
@@ -377,7 +393,7 @@ const World: React.FC<{P: Record<string, any>; life: number; t0: number}> = ({P,
     g.add(hemi, sun);
     const rnd2 = rng(77);
     const rainSeed = Array.from({length: NR}, () => [rnd2(), rnd2(), rnd2()]);
-    return {m, g, pits, drops, puddles, streaks, flood, stream, pools, steam, rain, rainSeed, hemi, sun};
+    return {m, g, train, pits, drops, puddles, streaks, flood, stream, pools, steam, rain, rainSeed, hemi, sun};
   }, []);
   const {m} = W0;
 
@@ -444,6 +460,11 @@ const World: React.FC<{P: Record<string, any>; life: number; t0: number}> = ({P,
       setBox(s.o, s.x - 0.07, s.x + 0.07, SLAB0 - s.len * seep, SLAB0, BACK + 0.01, BACK + 0.04);
     });
 
+    // --- поезд
+    const tk = range(P.train, p, 0.01);
+    W0.train.visible = tk > 0;
+    W0.train.position.x = -52 + t * 12;
+
     // --- затопление тоннеля: вода поднимается над полом
     W0.flood.visible = floodH > 0.01;
     if (W0.flood.visible) setBox(W0.flood, XL, XR, FLOOR + 0.01, FLOOR + floodH, BACK + 0.05, -0.04);
@@ -502,12 +523,12 @@ const World: React.FC<{P: Record<string, any>; life: number; t0: number}> = ({P,
       m.arrow.opacity = Math.min(1, a);
     };
     arrows([[XL + 40, -5.2, 0], [XR - 40, -5.2, 0]], 14, 3, range(P.arrowsStream, p, 0.2), 0.9); // ручей течёт
-    arrows([[-18, -2.4, -3], [14, -2.4, -3]], 8, 4, range(P.arrowsSewer, p, 0.2), 0.8); // коллектор уносит воду
+    arrows([[-18, -2.0, -3], [14, -2.0, -3]], 8, 4, range(P.arrowsSewer, p, 0.2), 0.8); // коллектор уносит воду
     if (!off) {
       const hs = pitState(HERO, ph);
       if (hs.on) {
         const xr = PITS[HERO] + 0.9;
-        arrows([[xr, -12.4, PZ], [xr, -2.5, PZ]], 8, 7, range(P.arrowsPump, p, 0.2), 0.9);
+        arrows([[xr, -12.4, PZ], [xr, -2.2, PZ]], 8, 7, range(P.arrowsPump, p, 0.2), 0.9);
       }
     }
 
