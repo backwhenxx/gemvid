@@ -46,7 +46,7 @@ const CAMS: Record<string, Cam> = {
   pit: {pos: [0.5, -11.1, 11], look: [0.5, -11.3, -1]},
   panL: {pos: [-20, -6.5, 30], look: [-20, -7, -2]},
   sewer: {pos: [-6, -3.2, 22], look: [-6, -3, -3]},
-  pools: {pos: [31, 120, 30], look: [31, 0, -21]},
+  pools: {pos: [31, 115, -5], look: [31, 0, -48]},
   rainView: {pos: [0, -2, 36], look: [0, -4, -2]},
   flood1: {pos: [22, -9.5, 30], look: [22, -9.8, -2]},
   flood2: {pos: [18, -8, 44], look: [18, -8.5, -2]},
@@ -186,7 +186,7 @@ const World: React.FC<{P: Record<string, any>; life: number; t0: number}> = ({P,
     // --- тоннель: задняя стена, плитка, потолок, плита пола с приямками
     A(mbox(XL, XR, FL0, SLAB0, -10.2, BACK, m.tunnel, 2));
     A(mbox(PLAT_X0, XR, FLOOR, FLOOR + 3.5, BACK, BACK + 0.05, m.tile, 2));
-    A(mbox(PLAT_X0, XR, FLOOR + 3.0, FLOOR + 3.3, BACK + 0.05, BACK + 0.08, m.stripe, 1));
+    A(mbox(XL, XR, FLOOR + 3.0, FLOOR + 3.3, BACK, BACK + 0.03, m.stripe, 1));
     const edges = [XL, ...PITS.flatMap((x) => [x - PW, x + PW]), XR];
     for (let i = 0; i < edges.length; i += 2) A(mbox(edges[i], edges[i + 1], FL0, FLOOR, -10.2, 0, m.concrete, 3));
     for (const x of PITS) {
@@ -355,7 +355,7 @@ const World: React.FC<{P: Record<string, any>; life: number; t0: number}> = ({P,
       g.add(o);
     };
     place(CITY[0], -24, -48, 46, 0.2);
-    place(CITY[1], 26, -52, 60, -0.3);
+    place(CITY[1], 26, -78, 44, -0.3);
     place(CITY[2], -17, -24, 30, 0);
     place(CITY[2], -46, -30, 32, Math.PI / 2);
     place(CITY[3], 0, -125, 90, 0);
