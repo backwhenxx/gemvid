@@ -56,6 +56,10 @@ if (ep.scenes.some((s) => s.type === 'tower') || ep.cover?.tower) {
   const L = JSON.parse(fs.readFileSync(path.join(ROOT, 'src/scenes/tower/lib.json'), 'utf8'));
   libIds.push(...Object.values(L.tex), ...L.city);
 }
+if (ep.scenes.some((s) => s.type === 'subway') || ep.cover?.subway) {
+  const L = JSON.parse(fs.readFileSync(path.join(ROOT, 'src/scenes/subway/lib.json'), 'utf8'));
+  libIds.push(...Object.values(L.tex), ...L.city);
+}
 if (ep.scenes.some((s) => s.type === 'trench') || ep.cover?.trench) libIds.push(...Object.values(JSON.parse(fs.readFileSync(path.join(ROOT, 'src/scenes/trench/assets.json'), 'utf8'))));
 if (libIds.length) await fetchLib([...new Set(libIds)], ROOT);
 

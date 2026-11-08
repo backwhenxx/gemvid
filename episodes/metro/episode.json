@@ -1,0 +1,277 @@
+{
+ "title": "Как метро Нью-Йорка не тонет",
+ "music": false,
+ "whisper": "medium",
+ "captionStyle": "word",
+ "autoOutro": false,
+ "ambience": [
+  {
+   "q": "city street ambience",
+   "from": 0,
+   "to": 6,
+   "volume": 0.12
+  }
+ ],
+ "cover": {
+  "lines": [
+   "Как метро",
+   "*не тонет*"
+  ],
+  "sub": "Нью-Йорка",
+  "subway": {
+   "cam": [
+    {
+     "pos": [
+      0,
+      -7,
+      30
+     ],
+     "look": [
+      0,
+      -5.5,
+      -2
+     ]
+    },
+    {
+     "pos": [
+      0,
+      -7,
+      30
+     ],
+     "look": [
+      0,
+      -5.5,
+      -2
+     ]
+    }
+   ],
+   "stream": 1,
+   "seep": 1
+  }
+ },
+ "scenes": [
+  {
+   "type": "subway",
+   "say": "[confidently] Каждую секунду из метро Нью-Йорка выкачивают больше пятисот литров воды.",
+   "props": {
+    "cam": [
+     "street",
+     "full"
+    ],
+    "arrowsSewer": 1,
+    "banner": "≈ 570 ЛИТРОВ В СЕКУНДУ",
+    "bannerSize": 58,
+    "sounds": [
+     {
+      "q": "subway train passing",
+      "at": 0.1,
+      "len": 2.5,
+      "volume": 0.35
+     }
+    ],
+    "cont": false
+   }
+  },
+  {
+   "type": "subway",
+   "say": "[curious] Откуда она там? Манхэттен стоит на бывших ручьях и речках. Земля под ним пропитана водой... и она сочится в тоннели сквозь стены.",
+   "props": {
+    "cam": [
+     "full",
+     "seep"
+    ],
+    "stream": [
+     0,
+     1
+    ],
+    "arrowsStream": 1,
+    "seep": [
+     0,
+     1
+    ],
+    "arrowsSewer": 1,
+    "banner": "НА БЫВШИХ РУЧЬЯХ",
+    "sounds": [
+     {
+      "q": "water dripping",
+      "at": 0.5,
+      "len": 2,
+      "volume": 0.35
+     }
+    ],
+    "cont": true
+   }
+  },
+  {
+   "type": "subway",
+   "say": "Вода стекает под рельсы — в приямок. Это колодец с насосом. Поднялась до отметки — насос включился сам.",
+   "props": {
+    "cam": [
+     "seep",
+     "pit"
+    ],
+    "stream": 1,
+    "seep": 1,
+    "marks": 1,
+    "arrowsPump": 1,
+    "banner": "ПРИЯМОК + НАСОС",
+    "sounds": [
+     {
+      "q": "water pump motor",
+      "at": 0.55,
+      "len": 2,
+      "volume": 0.45
+     }
+    ],
+    "cont": true
+   }
+  },
+  {
+   "type": "subway",
+   "say": "Таких насосных — почти три сотни. Они гонят воду наверх, в городскую канализацию.",
+   "props": {
+    "cam": [
+     "pit",
+     "panL"
+    ],
+    "stream": 1,
+    "seep": 1,
+    "arrowsPump": 1,
+    "arrowsSewer": 1,
+    "banner": "≈ 300 НАСОСНЫХ",
+    "cont": true
+   }
+  },
+  {
+   "type": "subway",
+   "say": "[curious] За сутки — тринадцать миллионов галлонов. Почти пятьдесят миллионов литров.",
+   "props": {
+    "cam": [
+     "panL",
+     "sewer"
+    ],
+    "stream": 1,
+    "seep": 1,
+    "arrowsSewer": 1,
+    "banner": "13 МЛН ГАЛЛОНОВ ≈ 49 МЛН ЛИТРОВ",
+    "bannerSize": 52,
+    "cont": true
+   }
+  },
+  {
+   "type": "subway",
+   "say": "Это двадцать олимпийских бассейнов... каждый день.",
+   "props": {
+    "cam": [
+     "sewer",
+     "pools"
+    ],
+    "stream": 1,
+    "seep": 1,
+    "arrowsSewer": 1,
+    "pools": [
+     0,
+     1
+    ],
+    "banner": "≈ 20 ОЛИМПИЙСКИХ БАССЕЙНОВ",
+    "bannerSize": 54,
+    "cont": true
+   }
+  },
+  {
+   "type": "subway",
+   "say": "[dramatically] А в сильный ливень — вдвое больше.",
+   "props": {
+    "cam": [
+     "pools",
+     "rainView"
+    ],
+    "stream": 1,
+    "seep": 1,
+    "pools": 1,
+    "rain": [
+     0,
+     1
+    ],
+    "rate2": true,
+    "arrowsSewer": 1,
+    "banner": "В ЛИВЕНЬ — ВДВОЕ БОЛЬШЕ",
+    "sounds": [
+     {
+      "q": "heavy rain falling outdoor",
+      "at": 0,
+      "len": 3,
+      "volume": 0.35
+     }
+    ],
+    "cont": true
+   }
+  },
+  {
+   "type": "subway",
+   "say": "Теперь представьте: насосы встали. Через сколько затопит первую станцию?",
+   "props": {
+    "cam": [
+     "rainView",
+     "flood1"
+    ],
+    "stream": 1,
+    "seep": 1,
+    "pools": 1,
+    "rain": 1,
+    "pumps": 0,
+    "flood": [
+     0,
+     0.3
+    ],
+    "floodDelay": 0.4,
+    "banner": "НАСОСЫ ВСТАЛИ",
+    "cont": true
+   }
+  },
+  {
+   "type": "subway",
+   "say": "Час? Сутки? Неделю? Точно не скажет никто... всё зависит от дождя.",
+   "props": {
+    "cam": [
+     "flood1",
+     "flood2"
+    ],
+    "stream": 1,
+    "seep": 1,
+    "pools": 1,
+    "rain": 1,
+    "pumps": 0,
+    "pitsFull": true,
+    "flood": [
+     0.3,
+     0.85
+    ],
+    "banner": "ЧАС? СУТКИ? НЕДЕЛЯ?",
+    "bannerSize": 58,
+    "cont": true
+   }
+  },
+  {
+   "type": "subway",
+   "say": "[warmly] Подпишись.",
+   "props": {
+    "cam": [
+     "flood2",
+     "final"
+    ],
+    "stream": 1,
+    "seep": 1,
+    "pools": 1,
+    "rain": 1,
+    "pumps": 0,
+    "pitsFull": true,
+    "flood": [
+     0.85,
+     0.9
+    ],
+    "cont": true
+   }
+  }
+ ]
+}
