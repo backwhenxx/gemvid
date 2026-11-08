@@ -19,7 +19,7 @@ const {fontFamily: ROUND} = loadFont('normal', {weights: ['700'], subsets: ['cyr
 // ---- размеры (метры) ----
 const XL = -90, XR = 90;
 const PY = -2.4; // ось паровой магистрали (лежит на плоскости среза)
-const R1 = 0.42, R2 = 0.62; // внутренний радиус стали и наружный — по кожуху изоляции
+const R1 = 0.58, R2 = 0.82; // внутренний радиус стали и наружный — по кожуху изоляции
 const PB0 = -60, PB1 = -47; // подвал станции
 const BR0 = 20, BR1 = 34; // подвал дома
 const RY0 = -4.4, RY1 = -0.3; // пол и потолок подвалов
@@ -39,16 +39,16 @@ type Cam = {pos: V3; look: V3; fov?: number};
 const CAMS: Record<string, Cam> = {
   hook: {pos: [MX + 6, 1.7, 10], look: [MX - 1, 0.6, -6]},
   cut: {pos: [MX - 3, -1.4, 13], look: [MX - 3, -2.0, -2]},
-  pipeIn: {pos: [-6, -2.3, 5.2], look: [-6, -2.4, -1]},
-  plant: {pos: [-50, 5, 40], look: [-50, 3, -4]},
+  pipeIn: {pos: [-6, -2.3, 4.6], look: [-6, -2.4, -1]},
+  plant: {pos: [-50, 6, 56], look: [-50, 9, -4]},
   basement: {pos: [27, -1.8, 14], look: [27, -2.2, -3]},
   cool: {pos: [30, -1.6, 11], look: [30, -2.4, -3]},
   wide: {pos: [-8, 22, 75], look: [-8, 10, -20]},
   rain: {pos: [MX, -0.8, 14], look: [MX, -1.0, -2]},
   stack: {pos: [MX + 4, 2.5, 15], look: [MX, 1.8, -2]},
-  hammer: {pos: [-5, -2.35, 6.5], look: [-5, -2.4, -1]},
-  blast: {pos: [-12, 12, 46], look: [-22, 22, -30]},
-  final: {pos: [-4, 16, 70], look: [-12, 14, -30]},
+  hammer: {pos: [-4, -2.35, 4.4], look: [-4, -2.4, -1]},
+  blast: {pos: [-24, 9, 52], look: [-26, 30, -20]},
+  final: {pos: [-16, 14, 72], look: [-22, 22, -30]},
 };
 const cam = (c: string | Cam) => (typeof c === 'string' ? CAMS[c] ?? CAMS.cut : c);
 const lerp = (a: number, b: number, k: number) => a + (b - a) * k;
@@ -125,6 +125,16 @@ const halfPipeX = (r: number, x0: number, x1: number, y: number) => {
   return g;
 };
 // половина цилиндра вдоль оси y — колодец
+const shadeY = (g: THREE.BufferGeometry, y: number, r: number) => {
+  const pos = g.attributes.position;
+  const c = new Float32Array(pos.count * 3);
+  for (let i = 0; i < pos.count; i++) {
+    const k = 1 - 0.62 * Math.pow(Math.abs(pos.getY(i) - y) / r, 1.6);
+    c.set([k, k, k], i * 3);
+  }
+  g.setAttribute('color', new THREE.BufferAttribute(c, 3));
+  return g;
+};
 const halfPipeY = (r: number, y0: number, y1: number, x: number) => {
   const g = new THREE.CylinderGeometry(r, r, y1 - y0, 20, 1, true, Math.PI / 2, Math.PI);
   g.translate(x, (y0 + y1) / 2, 0);
@@ -184,10 +194,10 @@ const World: React.FC<{P: Record<string, any>; life: number; t0: number}> = ({P,
       pave: libMaterial(TEX.pave, [1, 1]),
       road: libMaterial(TEX.roof, [1, 1], {color: '#6d6a66'}),
       jacket: libMaterial(TEX.metal, [1, 1], {color: '#c9ced2', metalness: 0.25, roughness: 0.45, side: THREE.DoubleSide}),
-      inner: new THREE.MeshStandardMaterial({color: '#6b625a', roughness: 0.7, side: THREE.DoubleSide, emissive: '#1c1916'}),
+      inner: new THREE.MeshStandardMaterial({color: '#cfc6ba', roughness: 0.55, metalness: 0.1, side: THREE.DoubleSide, vertexColors: true}),
       steelCut: new THREE.MeshStandardMaterial({color: '#4a4c4f', roughness: 0.5}),
       wool: new THREE.MeshStandardMaterial({color: '#d9c38a', roughness: 1}),
-      tank: libMaterial(TEX.metal, [1, 1], {color: '#9aa3aa', metalness: 0.2, roughness: 0.5}),
+      tank: libMaterial(TEX.metal, [1, 1], {color: '#c3cad0', metalness: 0.05, roughness: 0.5, emissive: '#2a2e31'}),
       boiler: libMaterial(TEX.metal, [1, 1], {color: '#7b6f66', metalness: 0.15, roughness: 0.6}),
       chiller: new THREE.MeshStandardMaterial({color: '#7e8f87', roughness: 0.6}),
       coolant: new THREE.MeshStandardMaterial({color: '#6aa2c8', roughness: 0.45}),
@@ -206,7 +216,7 @@ const World: React.FC<{P: Record<string, any>; life: number; t0: number}> = ({P,
       lid: new THREE.MeshStandardMaterial({map: lidTexture(), roughness: 0.7, metalness: 0.2, side: THREE.DoubleSide}),
       yellow: new THREE.MeshStandardMaterial({color: '#e0b92f', roughness: 0.7}),
       lamp: new THREE.MeshStandardMaterial({color: '#fff0c8', emissive: '#ffe7a8', emissiveIntensity: 0.7}),
-      glass: new THREE.MeshStandardMaterial({color: '#3a4650', emissive: '#6a5d40', emissiveIntensity: 0.4, roughness: 0.3}),
+      glass: new THREE.MeshStandardMaterial({color: '#7f95a6', emissive: '#4d5a64', emissiveIntensity: 0.4, roughness: 0.25}),
       hydrant: new THREE.MeshStandardMaterial({color: '#b8372f', roughness: 0.5}),
       stackO: new THREE.MeshStandardMaterial({color: '#e0732a', roughness: 0.6}),
       stackW: new THREE.MeshStandardMaterial({color: '#f1ede4', roughness: 0.6}),
@@ -246,7 +256,7 @@ const World: React.FC<{P: Record<string, any>; life: number; t0: number}> = ({P,
     // --- паровая магистраль: разрезана вдоль, видно нутро; срез стенки — сталь, изоляция, кожух
     const PX0 = -55, PX1 = 23;
     A(new THREE.Mesh(halfPipeX(R2, PX0, PX1, PY), m.jacket));
-    A(new THREE.Mesh(halfPipeX(R1, PX0, PX1, PY), m.inner));
+    A(new THREE.Mesh(shadeY(halfPipeX(R1, PX0, PX1, PY), PY, R1), m.inner));
     for (const sgn of [1, -1]) {
       const yy = (a: number, b: number) => (sgn > 0 ? [PY + a, PY + b] : [PY - b, PY - a]) as [number, number];
       A(mbox(PX0, PX1, ...yy(R1, R1 + 0.05), 0, 0.012, m.steelCut, 1));
@@ -264,7 +274,7 @@ const World: React.FC<{P: Record<string, any>; life: number; t0: number}> = ({P,
     A(setCyl(keepMesh(U_CYL, m.steel), [-54, PY - 1.3, -2.6], [-54, RY0 + 0.2, -2.6], 0.25));
     A(mbox(-58, -57.2, PY - 0.5, PY + 0.5, -1.27, -1.2, m.wheel, 1)); // топочная дверца
     A(mbox(-62, -45, 0, 15, -13, -2, m.brickDark, 3));
-    for (let fl = 0; fl < 3; fl++) for (let k = 0; k < 5; k++) A(mbox(-60.5 + k * 3.2, -58.7 + k * 3.2, 3 + fl * 4, 5.6 + fl * 4, -2.02, -1.95, m.glass, 1));
+    for (let fl = 0; fl < 3; fl++) for (let k = 0; k < 7; k++) A(mbox(-60.6 + k * 2.3, -59.4 + k * 2.3, 3 + fl * 4, 5.4 + fl * 4, -2.02, -1.95, m.glass, 1));
     A(setCyl(keepMesh(U_CYL, m.brickDark), [-49, 15, -8], [-49, 40, -8], 1.5));
     A(setCyl(keepMesh(U_CYL, m.stackW), [-49, 37, -8], [-49, 38.6, -8], 1.52));
     // --- подвал дома: задвижка, теплообменник, стояк в дом, чиллер с трубами холода
@@ -314,7 +324,7 @@ const World: React.FC<{P: Record<string, any>; life: number; t0: number}> = ({P,
       const o = A(new THREE.Mesh(lumpGeo(100 + i), i % 3 ? m.lumpRoad : m.lumpSoil));
       const ang = rl() * Math.PI * 2, sp = 6 + rl() * 10;
       o.visible = false;
-      return {o, s: 0.35 + rl() * 0.5, vx: Math.cos(ang) * sp * 0.35, vz: Math.sin(ang) * sp * 0.35, vy: 14 + rl() * 18, spin: rl() * 6, r0: 2 + rl() * 2, ang};
+      return {o, s: 0.35 + rl() * 0.5, vx: Math.cos(ang) * sp * 0.35, vz: Math.sin(ang) * sp * 0.35, vy: 9 + rl() * 10, spin: rl() * 6, r0: 2 + rl() * 2, ang};
     });
     // --- город: модели Нью-Йорка, Крайслер, дальние дома, облака
     const place = (id: string, x: number, z: number, h: number, ry = 0) => {
@@ -367,6 +377,12 @@ const World: React.FC<{P: Record<string, any>; life: number; t0: number}> = ({P,
     const cond = A(keepMesh(U_BOX, m.water));
     const slug = A(keepMesh(U_BOX, m.water));
     cond.visible = slug.visible = false;
+    const steamIn = Array.from({length: 18}, (_, k) => {
+      const sp = new THREE.Sprite(new THREE.SpriteMaterial({map: cloudTexture(500 + k), transparent: true, depthWrite: false, fog: false, opacity: 0}));
+      sp.visible = false;
+      g.add(sp);
+      return sp;
+    });
     // дождь: пул штрихов
     const NR = 700;
     const rainGeo = new THREE.BufferGeometry();
@@ -381,7 +397,7 @@ const World: React.FC<{P: Record<string, any>; life: number; t0: number}> = ({P,
     g.add(hemi, sun);
     const rnd2 = rng(77);
     const rainSeed = Array.from({length: NR}, () => [rnd2(), rnd2(), rnd2()]);
-    return {m, g, stack, patch, bowl, lumps, puffs, seeps, cond, slug, rain, rainSeed, hemi, sun};
+    return {m, g, steamIn, stack, patch, bowl, lumps, puffs, seeps, cond, slug, rain, rainSeed, hemi, sun};
   }, []);
   const {m} = W0;
 
@@ -453,7 +469,7 @@ const World: React.FC<{P: Record<string, any>; life: number; t0: number}> = ({P,
       const d = W0.seeps[(k * 3 + 1) % W0.seeps.length];
       const u = ((t / 1.5 + d.ph + 0.0) % 1 + 1) % 1;
       const v = ((t * 0.6 + k / 10) % 1 + 1) % 1;
-      puff(sp, d.x + Math.sin(k + v * 3) * 0.2, PY + R2 + v * 1.0, 0.1, 0.35 + v * 0.6, seepK * 0.7 * Math.sin(Math.PI * v) * (u > 0 ? 1 : 1));
+      puff(sp, d.x + Math.sin(k + v * 3) * 0.15, PY + R2 + 0.05 + v * 0.3, 0.1, 0.2 + v * 0.3, seepK * 0.45 * Math.sin(Math.PI * v) * (u > 0 ? 1 : 1));
     });
     // --- дым/пар станции
     W0.puffs.plant.forEach((sp, k) => {
@@ -473,7 +489,7 @@ const World: React.FC<{P: Record<string, any>; life: number; t0: number}> = ({P,
       setBox(W0.cond, -16, HX - 0.15, PY - R1 + 0.01, PY - R1 + condH, -w, -0.01);
     }
     const IMP = 0.62;
-    W0.slug.visible = P.hammer && hk > 0.45 && hk < IMP;
+    W0.slug.visible = !!P.hammer && hk > 0.45 && hk < IMP;
     if (W0.slug.visible) {
       const k = (hk - 0.45) / (IMP - 0.45);
       const x1 = lerp(-12, HX - 0.15, k * k);
@@ -487,6 +503,13 @@ const World: React.FC<{P: Record<string, any>; life: number; t0: number}> = ({P,
       puff(sp, HX + Math.cos(a) * (0.3 + v * 1.4), PY + Math.sin(a) * (0.6 + v * 1.0), 0.3, 0.4 + v * 1.4, v > 0 ? 0.7 * (1 - v) : 0);
     });
     const flowOn = P.hammer ? (hk < IMP ? 1 : 0) : 1;
+    W0.steamIn.forEach((sp, k) => {
+      const span = 24;
+      const x = pos[0] - span / 2 + ((((t * 2.2 + (k / 18) * span) % span) + span) % span);
+      const yy = PY + Math.sin(k * 2.7) * R1 * 0.45;
+      const inX = x > PB1 && x < BR0;
+      puff(sp, x, yy, -R1 * 0.5, 0.7 + (k % 3) * 0.2, inX ? flowA * flowOn * 0.4 : 0);
+    });
     // --- взрыв 2007 года: заплатка исчезает, комья летят, столб пара выше Крайслера
     const tb = ev.blast !== undefined ? t - ev.blast : -1;
     const blown = tb >= 0;
