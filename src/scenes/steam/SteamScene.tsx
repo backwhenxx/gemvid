@@ -343,6 +343,21 @@ const World: React.FC<{P: Record<string, any>; life: number; t0: number}> = ({P,
     place(CITY[2], -46, -48, 32, Math.PI / 2);
     place(CITY[1], 48, -82, 44, -0.3);
     if (LIBJ.chrysler) place(LIBJ.chrysler, -14, -150, 105, 0.3);
+    else {
+      // силуэт в духе Крайслера: уступы, ступенчатая корона из блестящих колец, шпиль
+      const cx = -14, cz = -150;
+      const facade = libMaterial(TEX.pave, [1, 1], {color: '#d9d4c8'});
+      const crown = new THREE.MeshStandardMaterial({color: '#e4e8ec', metalness: 0.35, roughness: 0.3, emissive: '#3a3f44'});
+      for (const [w, y0, y1] of [[22, 0, 50], [17, 50, 70], [12, 70, 82]] as const) g.add(mbox(cx - w / 2, cx + w / 2, y0, y1, cz - w / 2, cz + w / 2, facade, 4));
+      for (let k = 0; k < 6; k++) {
+        const o = keepMesh(new THREE.CylinderGeometry(5.2 - k * 0.75, 5.6 - k * 0.75, 2.7, 16, 1, false, 0, Math.PI * 2), crown);
+        o.position.set(cx, 83.4 + k * 2.7, cz);
+        g.add(o);
+      }
+      const sp = keepMesh(new THREE.ConeGeometry(0.9, 14, 12), crown);
+      sp.position.set(cx, 106, cz);
+      g.add(sp);
+    }
     place(CITY[3], 40, -150, 80, 0);
     const r = rng(5);
     for (let i = 0; i < 28; i++) {
