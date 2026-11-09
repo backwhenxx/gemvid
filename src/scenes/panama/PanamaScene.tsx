@@ -96,9 +96,9 @@ const CAMS: Record<string, Cam> = {
   culvert: {pos: [250, 14, 125], look: [285, 6, -6], fov: 45},
   rise: {pos: [-60, 25, 175], look: [25, 0, -20], fov: 45, rel: true},
   chase: {pos: [-380, 125, 110], look: [40, 12, -30], fov: 45, rel: true},
-  tow: {pos: [-190, 92, 58], look: [30, 16, -34], fov: 45, rel: true},
+  tow: {pos: [-10, 85, 75], look: [112, 12, -34], fov: 34, rel: true},
   drain: {pos: [-330, 140, 380], look: [460, -2, -30], fov: 45},
-  storm: {pos: [-250, 150, 400], look: [1500, 200, -900], fov: 45},
+  storm: {pos: [-250, 150, 400], look: [1700, 250, -1400], fov: 45},
   queue: {pos: [-300, 80, 250], look: [-760, 5, -400], fov: 45},
   final: {pos: [-330, 92, 285], look: [-790, 8, -420], fov: 45},
   final2: {pos: [-370, 108, 310], look: [-820, 12, -440], fov: 45},
@@ -345,11 +345,10 @@ const corrTex = () => {
   const [c, g] = cv(256, 64);
   g.fillStyle = '#ffffff';
   g.fillRect(0, 0, 256, 64);
-  for (let x = 0; x < 256; x += 8) {
-    g.fillStyle = 'rgba(0,0,0,0.16)';
-    g.fillRect(x, 0, 3, 64);
-    g.fillStyle = 'rgba(255,255,255,0.4)';
-    g.fillRect(x + 4, 0, 1, 64);
+  // редкие мягкие рёбра: частая контрастная полоска на средних планах рябит (муар)
+  for (let x = 0; x < 256; x += 32) {
+    g.fillStyle = 'rgba(0,0,0,0.09)';
+    g.fillRect(x, 0, 12, 64);
   }
   g.fillStyle = 'rgba(0,0,0,0.25)';
   g.fillRect(0, 0, 256, 3);
@@ -625,7 +624,7 @@ const useWorld = () =>
       drop: new THREE.MeshBasicMaterial({color: '#d6f3f6', fog: false, transparent: true}),
       jet: new THREE.MeshBasicMaterial({color: '#e4f6f4', transparent: true, opacity: 0.7, fog: false, depthWrite: false}),
       arrow: new THREE.MeshBasicMaterial({color: '#e9fbff', transparent: true, opacity: 0.9, fog: false, depthWrite: false}),
-      rain: new THREE.MeshBasicMaterial({map: rainTex(), transparent: true, opacity: 0, depthWrite: false, side: THREE.DoubleSide}),
+      rain: new THREE.MeshBasicMaterial({map: rainTex(), transparent: true, opacity: 0, depthWrite: false, side: THREE.DoubleSide, fog: false}),
       mudBand: new THREE.MeshStandardMaterial({color: '#7d6f4f', roughness: 1}),
     };
     const world = new THREE.Group();

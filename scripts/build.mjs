@@ -103,6 +103,16 @@ if (flag('--stills')) {
   // крупнее — чтобы рассмотреть детали (людей, животных, предметы)
   const rows = Math.ceil(scenesS.length / 4);
   execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-pattern_type', 'glob', '-i', path.join(dir, '*.jpg'), '-vf', `scale=540:-1,tile=4x${rows}`, '-frames:v', '1', '-q:v', '4', path.join(outDir, 'stills_big.jpg')], {stdio: 'inherit'});
+  // разница соседних кадров (усиленная) — вместо мелкого листа: пятна и полосы = мерцание
+  if (ep.stillPairs) {
+    const dd = path.join(outDir, 'stills_d');
+    fs.mkdirSync(dd, {recursive: true});
+    for (let i = 0; i < scenesS.length; i++) {
+      const n = `${String(i + 1).padStart(2, '0')}.jpg`;
+      execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', path.join(dir, n), '-i', path.join(outDir, 'stills_b', n), '-filter_complex', '[0][1]blend=all_mode=difference,format=gray,eq=contrast=5:brightness=0.35', '-q:v', '3', path.join(dd, n)], {stdio: 'inherit'});
+    }
+    execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-pattern_type', 'glob', '-i', path.join(dd, '*.jpg'), '-vf', `scale=540:-1,tile=4x${rows}`, '-frames:v', '1', '-q:v', '4', path.join(outDir, 'stills.jpg')], {stdio: 'inherit'});
+  }
   process.exit(0);
 }
 
