@@ -86,12 +86,12 @@ if (flag('--stills')) {
     accent: ep.accent ?? '#A9BCCB', palette: ep.palette ?? null, captionStyle: ep.captionStyle ?? 'karaoke'};
   const serveUrl = await bundle({entryPoint: path.join(ROOT, 'src/index.ts'), publicDir: path.join(ROOT, 'public')});
   const inputProps = {timeline};
-  const comp = await selectComposition({serveUrl, id: 'Short', inputProps, chromiumOptions: {gl: 'swangle'}});
+  const comp = await selectComposition({serveUrl, id: 'Short', inputProps, chromiumOptions: {gl: 'swangle'}, timeoutInMilliseconds: 180000});
   const dir = path.join(outDir, 'stills');
   fs.mkdirSync(dir, {recursive: true});
   for (let i = 0; i < scenesS.length; i++) {
     const f = Math.round((i * SD + SD * 0.7) * 30);
-    await renderStill({composition: comp, serveUrl, inputProps, frame: f, output: path.join(dir, `${String(i + 1).padStart(2, '0')}.jpg`), imageFormat: 'jpeg', jpegQuality: 80, chromiumOptions: {gl: 'swangle'}});
+    await renderStill({composition: comp, serveUrl, inputProps, frame: f, output: path.join(dir, `${String(i + 1).padStart(2, '0')}.jpg`), imageFormat: 'jpeg', jpegQuality: 80, chromiumOptions: {gl: 'swangle'}, timeoutInMilliseconds: 180000});
     log(`кадр сцены ${i + 1}`);
   }
   execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-pattern_type', 'glob', '-i', path.join(dir, '*.jpg'), '-vf', 'scale=270:-1,tile=8x3', '-frames:v', '1', '-q:v', '4', path.join(outDir, 'stills.jpg')], {stdio: 'inherit'});
@@ -107,8 +107,8 @@ if (flag('--cover-only')) {
   const timeline = {fps: 30, durationInFrames: 30, base: pubBase, voice: null, words: [], scenes: [], sfx: [], music: null, accent: ep.accent ?? '#A9BCCB', palette: ep.palette ?? null};
   const serveUrl = await bundle({entryPoint: path.join(ROOT, 'src/index.ts'), publicDir: path.join(ROOT, 'public')});
   const props = {timeline, cover: ep.cover};
-  const comp = await selectComposition({serveUrl, id: 'Cover', inputProps: props, chromiumOptions: {gl: 'swangle'}});
-  await renderStill({composition: comp, serveUrl, inputProps: props, output: path.join(outDir, 'cover.png'), chromiumOptions: {gl: 'swangle'}});
+  const comp = await selectComposition({serveUrl, id: 'Cover', inputProps: props, chromiumOptions: {gl: 'swangle'}, timeoutInMilliseconds: 180000});
+  await renderStill({composition: comp, serveUrl, inputProps: props, output: path.join(outDir, 'cover.png'), chromiumOptions: {gl: 'swangle'}, timeoutInMilliseconds: 180000});
   log('обложка → out/' + slug + '/cover.png');
   process.exit(0);
 }
@@ -293,7 +293,7 @@ if (total < 45) log(`⚠ ролик короче 45 с (${total.toFixed(1)} с)`
 log('сборка Remotion…');
 const serveUrl = await bundle({entryPoint: path.join(ROOT, 'src/index.ts'), publicDir: path.join(ROOT, 'public')});
 const inputProps = {timeline};
-const composition = await selectComposition({serveUrl, id: 'Short', inputProps, chromiumOptions: {gl: 'swangle'}});
+const composition = await selectComposition({serveUrl, id: 'Short', inputProps, chromiumOptions: {gl: 'swangle'}, timeoutInMilliseconds: 180000});
 const raw = path.join(ROOT, '.render', `${slug}.mp4`);
 fs.mkdirSync(path.dirname(raw), {recursive: true});
 let lastPct = -10;
@@ -320,8 +320,8 @@ await renderMedia({
 // ---------- обложка ----------
 if (ep.cover) {
   const coverProps = {timeline, cover: ep.cover};
-  const coverComp = await selectComposition({serveUrl, id: 'Cover', inputProps: coverProps, chromiumOptions: {gl: 'swangle'}});
-  await renderStill({composition: coverComp, serveUrl, inputProps: coverProps, output: path.join(outDir, 'cover.png'), chromiumOptions: {gl: 'swangle'}});
+  const coverComp = await selectComposition({serveUrl, id: 'Cover', inputProps: coverProps, chromiumOptions: {gl: 'swangle'}, timeoutInMilliseconds: 180000});
+  await renderStill({composition: coverComp, serveUrl, inputProps: coverProps, output: path.join(outDir, 'cover.png'), chromiumOptions: {gl: 'swangle'}, timeoutInMilliseconds: 180000});
   log('обложка → out/' + slug + '/cover.png');
 }
 
