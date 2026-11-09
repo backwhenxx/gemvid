@@ -26,7 +26,7 @@ export const LOOKS: Record<string, Look> = {
     bounce: {dir: [0.2, 0.15, 1], color: '#ffb98a', intensity: 0.55},
     sky: {top: '#3f5584', mid: '#d6a171', horizon: '#f6d29a', glow: '#ffe2a8', glowSize: 10},
     fog: {color: '#e8b98f', near: 180, far: 1500},
-    grade: {shadow: '#2a2a48', shadowAmt: 0.09, high: '#ffe6c4', highAmt: 0.28, vignette: 0.38, grain: 0.05},
+    grade: {shadow: '#2a2a48', shadowAmt: 0.09, high: '#ffe6c4', highAmt: 0.18, vignette: 0.38, grain: 0.05},
     exposure: 1.0,
     shadows: true,
   },
