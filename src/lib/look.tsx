@@ -30,6 +30,17 @@ export const LOOKS: Record<string, Look> = {
     exposure: 1.0,
     shadows: true,
   },
+  // Влажный тропический день: тёплое высокое солнце, тени и вода — бирюзово-холодные, зелень, дымка у горизонта
+  tropic: {
+    sun: {dir: [-0.55, 0.85, 0.6], color: '#fff0d2', intensity: 2.9},
+    fill: {sky: '#9cc4dc', ground: '#55613a', intensity: 1.0},
+    bounce: {dir: [0.3, 0.2, 1], color: '#d6ece6', intensity: 0.35},
+    sky: {top: '#2f6aa6', mid: '#86b8d8', horizon: '#dbe8e4', glow: '#fff6df', glowSize: 9},
+    fog: {color: '#cddfdc', near: 350, far: 3200},
+    grade: {shadow: '#0f3640', shadowAmt: 0.08, high: '#fff1d6', highAmt: 0.1, vignette: 0.3, grain: 0.04},
+    exposure: 1.0,
+    shadows: true,
+  },
   // Пасмурно-свинцовый: мягкий рассеянный свет, оливково-серые тона
   overcast: {
     sun: {dir: [-0.4, 1, 0.5], color: '#e8ecef', intensity: 1.2},
@@ -87,24 +98,25 @@ const makeSky = (L: Look) => {
 };
 
 // Свет, небо, туман и отражения окружения. center — куда смотрит тень (центр интересной области).
-export const LookLights: React.FC<{look: Look; center?: [number, number, number]; shadowSize?: number}> = ({look: L, center = [0, 0, 0], shadowSize = 260}) => {
+export const LookLights: React.FC<{look: Look; center?: [number, number, number]; shadowSize?: number; shadowMap?: number; far?: number}> = ({look: L, center = [0, 0, 0], shadowSize = 260, shadowMap = 2048, far = 1400}) => {
   const {scene, gl, camera} = useThree();
   const W = useMemo(() => {
     const sky = makeSky(L);
     const sun = new THREE.DirectionalLight(L.sun.color, L.sun.intensity);
     const d = new THREE.Vector3(...L.sun.dir).normalize();
-    sun.position.set(center[0] + d.x * 600, center[1] + d.y * 600, center[2] + d.z * 600);
+    const sd = far / 2.3;
+    sun.position.set(center[0] + d.x * sd, center[1] + d.y * sd, center[2] + d.z * sd);
     sun.target.position.set(...center);
     if (L.shadows) {
       sun.castShadow = true;
-      sun.shadow.mapSize.set(2048, 2048);
+      sun.shadow.mapSize.set(shadowMap, shadowMap);
       const cam = sun.shadow.camera as THREE.OrthographicCamera;
       cam.left = -shadowSize;
       cam.right = shadowSize;
       cam.top = shadowSize;
       cam.bottom = -shadowSize;
       cam.near = 10;
-      cam.far = 1400;
+      cam.far = far;
       sun.shadow.bias = -0.0006;
       sun.shadow.normalBias = 0.4;
     }
@@ -164,6 +176,26 @@ export const shadowAll = (o: THREE.Object3D, cast = true, receive = true) =>
     }
   });
 
+// Зерно: одна плитка шума на весь ролик, каждый кадр сдвигается (дёшево, без SVG-фильтра)
+let grainUrl = '';
+const grainTile = () => {
+  if (grainUrl) return grainUrl;
+  const c = document.createElement('canvas');
+  c.width = c.height = 256;
+  const g = c.getContext('2d')!;
+  const im = g.createImageData(256, 256);
+  let s = 12345;
+  for (let i = 0; i < im.data.length; i += 4) {
+    s = (s * 1103515245 + 12345) & 0x7fffffff;
+    const v = (s >> 8) & 255;
+    im.data[i] = im.data[i + 1] = im.data[i + 2] = v;
+    im.data[i + 3] = 255;
+  }
+  g.putImageData(im, 0, 0);
+  grainUrl = c.toDataURL('image/png');
+  return grainUrl;
+};
+
 // Цветокор поверх 3D: кладётся в сцену ПЕРЕД плашками и субтитрами
 export const LookGrade: React.FC<{look: Look}> = ({look: L}) => {
   const frame = useCurrentFrame();
@@ -174,15 +206,15 @@ export const LookGrade: React.FC<{look: Look}> = ({look: L}) => {
       <AbsoluteFill style={{background: G.high, mixBlendMode: 'multiply', opacity: G.highAmt}} />
       <AbsoluteFill style={{background: `radial-gradient(ellipse 75% 60% at 50% 48%, rgba(0,0,0,0) 55%, rgba(10,6,20,${G.vignette}) 100%)`}} />
       {G.grain > 0 ? (
-        <AbsoluteFill style={{mixBlendMode: 'overlay', opacity: G.grain}}>
-          <svg width="100%" height="100%">
-            <filter id={`grain${frame}`}>
-              <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves={2} seed={frame % 97} stitchTiles="stitch" />
-              <feColorMatrix type="saturate" values="0" />
-            </filter>
-            <rect width="100%" height="100%" filter={`url(#grain${frame})`} />
-          </svg>
-        </AbsoluteFill>
+        <AbsoluteFill
+          style={{
+            mixBlendMode: 'overlay',
+            opacity: G.grain,
+            backgroundImage: `url(${grainTile()})`,
+            backgroundSize: '256px 256px',
+            backgroundPosition: `${(frame * 97) % 256}px ${(frame * 61) % 256}px`,
+          }}
+        />
       ) : null}
     </AbsoluteFill>
   );
