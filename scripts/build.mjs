@@ -92,6 +92,11 @@ if (flag('--stills')) {
   for (let i = 0; i < scenesS.length; i++) {
     const f = Math.round((i * SD + SD * 0.7) * 30);
     await renderStill({composition: comp, serveUrl, inputProps, frame: f, output: path.join(dir, `${String(i + 1).padStart(2, '0')}.jpg`), imageFormat: 'jpeg', jpegQuality: 80, chromiumOptions: {gl: 'swangle'}, timeoutInMilliseconds: 180000});
+    // пара соседних кадров — для поиска мерцания (episode.json: "stillPairs": true)
+    if (ep.stillPairs) {
+      fs.mkdirSync(path.join(outDir, 'stills_b'), {recursive: true});
+      await renderStill({composition: comp, serveUrl, inputProps, frame: f + 1, output: path.join(outDir, 'stills_b', `${String(i + 1).padStart(2, '0')}.jpg`), imageFormat: 'jpeg', jpegQuality: 80, chromiumOptions: {gl: 'swangle'}, timeoutInMilliseconds: 180000});
+    }
     log(`кадр сцены ${i + 1}`);
   }
   execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-pattern_type', 'glob', '-i', path.join(dir, '*.jpg'), '-vf', 'scale=270:-1,tile=8x3', '-frames:v', '1', '-q:v', '4', path.join(outDir, 'stills.jpg')], {stdio: 'inherit'});

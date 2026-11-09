@@ -8,7 +8,7 @@
   "cover": {
     "lines": ["Лифт для", "*корабля*"],
     "sub": "Панамский канал",
-    "panama": {"cam": ["cover", "cover"], "st": 3.6}
+    "panama": {"cam": ["cover", "cover"], "st": 3.8}
   },
   "scenes": [
     {"type": "panama", "say": "[curious] Этот корабль сейчас поднимется на высоту девятиэтажного дома. Без единого насоса.",
@@ -25,14 +25,16 @@
      "props": {"cam": ["gate", "culvert"], "camDur": 0.7, "st": [1.15, 1.45], "banner": "ВОДА ТЕЧЁТ САМА", "bannerAt": 0.4, "bannerSize": 70,
                "sounds": [{"q": "water gushing", "at": 0.35, "len": 3, "volume": 0.3}], "cont": true}},
     {"type": "panama", "say": "Камера наполняется минут за десять. Корабль всплывает на ступень выше.",
-     "props": {"cam": ["culvert", "rise"], "camDur": 0.6, "st": [1.45, 2.15], "banner": "≈ 10 МИНУТ", "bannerAt": 0.15, "bannerSize": 90, "cont": true}},
-    {"type": "panama", "say": "Три такие ступени — и он в озере. А тянут его электровозы на рельсах. Их зовут «мулы».",
-     "props": {"cam": ["rise", "mules"], "st": [2.15, 6.5], "banner": "«МУЛЫ»", "bannerAt": 0.68, "bannerSize": 90, "cont": true}},
+     "props": {"cam": ["culvert", "rise"], "camDur": 0.6, "st": [[0, 1.45], [0.56, 2], [0.72, 2.15], [1, 2.76]], "banner": "≈ 10 МИНУТ", "bannerAt": 0.15, "bannerSize": 90, "cont": true}},
+    {"type": "panama", "say": "Три такие ступени — и он в озере.",
+     "props": {"cam": ["rise", "chase"], "st": [2.76, 3.91], "cont": true}},
+    {"type": "panama", "say": "А тянут его электровозы на рельсах. Их зовут «мулы».",
+     "props": {"cam": ["chase", "tow"], "camDur": 0.55, "st": [3.91, 5.84], "banner": "«МУЛЫ»", "bannerAt": 0.5, "bannerSize": 90, "cont": true}},
     {"type": "panama", "say": "Но у этого есть цена. Каждый проход сливает в океан около двухсот миллионов литров пресной воды.",
-     "props": {"cam": ["mules", "drain"], "camDur": 0.6, "st": [6.5, 8], "banner": "≈ 200 000 000 ЛИТРОВ\nВ ОКЕАН", "bannerAt": 0.45, "bannerSize": 58,
+     "props": {"cam": ["tow", "drain"], "camDur": 0.6, "st": [[0, 5.84], [0.36, 7], [1, 8]], "banner": "≈ 200 000 000 ЛИТРОВ\nВ ОКЕАН", "bannerAt": 0.45, "bannerSize": 58,
                "sounds": [{"q": "water draining rushing", "at": 0.5, "len": 3, "volume": 0.25}], "cont": true}},
     {"type": "panama", "say": "А воду даёт только дождь. В засуху двадцать третьего года корабли неделями стояли в очереди.",
-     "props": {"cam": ["drain", "queue"], "via": "lake", "viaAt": 0.45, "st": 8, "rain": "pulse", "rainIn": 0.08, "rainOut": 0.42,
+     "props": {"cam": ["drain", "queue"], "via": "storm", "viaAt": 0.45, "st": 8, "rain": "pulse", "rainIn": 0.08, "rainOut": 0.42,
                "lakeDrop": [0, 1], "lakeDelay": 0.38, "lakeDur": 0.3, "banner": "ЗАСУХА 2023", "bannerAt": 0.45, "bannerSize": 80,
                "sounds": [{"q": "heavy rain", "at": 0.08, "len": 3, "volume": 0.25}], "cont": true}},
     {"type": "panama", "say": "[thoughtful] Так что для канала дороже: вода, время или корабли покрупнее?",
