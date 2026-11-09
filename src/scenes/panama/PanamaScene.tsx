@@ -27,7 +27,7 @@ const YC = FL.map((f) => f - 5.5); // ось водовода под камер�
 const CR = 2.8; // полувысота водовода
 const SEA_BED = -14;
 const LAKE_BED = 2;
-const BOTTOM = -170;
+const BOTTOM = -2500;
 const SHIP_Z = -16.75;
 const DRAFT = 11;
 const CENTERS = [160, 480, 800];
@@ -90,9 +90,9 @@ const CAMS: Record<string, Cam> = {
   mules: {pos: [1005, 44, 30], look: [1070, 29, -40], fov: 45},
   drain: {pos: [-330, 140, 380], look: [460, -2, -30], fov: 45},
   lake: {pos: [980, 90, 220], look: [1500, 40, -600], fov: 45},
-  queue: {pos: [300, 150, 360], look: [-520, 0, -320], fov: 45},
-  final: {pos: [-260, 110, 420], look: [430, 22, -160], fov: 45},
-  final2: {pos: [-220, 125, 400], look: [450, 26, -170], fov: 45},
+  queue: {pos: [-180, 95, 300], look: [-640, 4, -300], fov: 45},
+  final: {pos: [-760, 95, 330], look: [80, 12, -140], fov: 45},
+  final2: {pos: [-720, 110, 300], look: [120, 16, -150], fov: 45},
   cover: {pos: [300, 38, 150], look: [520, 14, -30], fov: 45},
 };
 const cam = (c: string | Cam) => (typeof c === 'string' ? CAMS[c] ?? CAMS.overview : c);
@@ -285,6 +285,37 @@ const hullTex = (base: string, seed: number) => {
     g.fillRect(x, y, 2 + r() * 3, 50);
   }
   return tex(c, 1 / 40, 1 / 20);
+};
+// обшивка ворот: панели, пояса, заклёпки
+const gateTex = () => {
+  const [c, g] = cv(256, 256);
+  g.fillStyle = '#434b4f';
+  g.fillRect(0, 0, 256, 256);
+  for (let y = 0; y < 256; y += 32) {
+    g.fillStyle = 'rgba(0,0,0,0.3)';
+    g.fillRect(0, y, 256, 4);
+    g.fillStyle = 'rgba(255,255,255,0.08)';
+    g.fillRect(0, y + 4, 256, 2);
+    for (let x = 4; x < 256; x += 10) {
+      g.fillStyle = 'rgba(255,255,255,0.18)';
+      g.fillRect(x, y + 8, 2, 2);
+    }
+  }
+  for (let x = 0; x < 256; x += 64) {
+    g.fillStyle = 'rgba(0,0,0,0.22)';
+    g.fillRect(x, 0, 3, 256);
+  }
+  const r = rng(33);
+  for (let i = 0; i < 30; i++) {
+    const x = r() * 256;
+    const y = r() * 256;
+    const gr = g.createLinearGradient(x, y, x, y + 40);
+    gr.addColorStop(0, 'rgba(140,80,45,0.3)');
+    gr.addColorStop(1, 'rgba(140,80,45,0)');
+    g.fillStyle = gr;
+    g.fillRect(x, y, 2, 40);
+  }
+  return tex(c, 1 / 8, 1 / 8);
 };
 // гофра контейнеров
 const corrTex = () => {
@@ -487,12 +518,22 @@ const makeShip = (m: Record<string, any>, seed: number) => {
 // створка ворот: полая стальная коробка (обшивка + горизонтальные ригели), шарнир у дальней стенки
 const LEAF_T = 2.2;
 const LEAF_L = -CZ - 0.07; // от шарнира (у дальней стенки) до плоскости разреза
+const leafUV = (g: THREE.BufferGeometry) => {
+  const pos = g.attributes.position;
+  const uv = new Float32Array(pos.count * 2);
+  for (let i = 0; i < pos.count; i++) {
+    uv[i * 2] = pos.getZ(i);
+    uv[i * 2 + 1] = pos.getY(i);
+  }
+  g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+  return g;
+};
 const makeLeaf = (m: Record<string, any>, h: number) => {
   const g = new THREE.Group();
   const th = 0.28;
   // обшивка с двух сторон (по x), вдоль z от шарнира (z=0) до разреза
-  g.add(new THREE.Mesh(box(-LEAF_T / 2, -LEAF_T / 2 + th, 0, h, 0, LEAF_L), m.gate));
-  g.add(new THREE.Mesh(box(LEAF_T / 2 - th, LEAF_T / 2, 0, h, 0, LEAF_L), m.gate));
+  g.add(new THREE.Mesh(leafUV(box(-LEAF_T / 2, -LEAF_T / 2 + th, 0, h, 0, LEAF_L)), m.gate));
+  g.add(new THREE.Mesh(leafUV(box(LEAF_T / 2 - th, LEAF_T / 2, 0, h, 0, LEAF_L)), m.gate));
   // ригели: горизонтальные перегородки — на срезе видны ячейки
   for (let y = 0; y <= h - 0.2; y += 2.4) g.add(new THREE.Mesh(box(-LEAF_T / 2 + th, LEAF_T / 2 - th, y, y + 0.3, 0, LEAF_L), m.girder));
   g.add(new THREE.Mesh(box(-LEAF_T / 2 + th, LEAF_T / 2 - th, h - 0.3, h, 0, LEAF_L), m.girder));
@@ -525,18 +566,18 @@ const useWorld = () =>
   useMemo(() => {
     const wtop = waterTexture();
     const m: Record<string, any> = {
-      conc: new THREE.MeshStandardMaterial({map: concreteTex(), roughness: 0.92}),
+      conc: new THREE.MeshStandardMaterial({map: concreteTex(), roughness: 0.92, fog: false}),
       concDark: new THREE.MeshStandardMaterial({map: concreteTex('#9a9487', 1 / 10), roughness: 0.95}),
-      rock: new THREE.MeshStandardMaterial({map: rockTex(), roughness: 1}),
-      later: new THREE.MeshStandardMaterial({map: lateriteTex(), roughness: 1}),
-      silt: new THREE.MeshStandardMaterial({map: siltTex(), roughness: 1}),
+      rock: new THREE.MeshStandardMaterial({map: rockTex(), roughness: 1, fog: false}),
+      later: new THREE.MeshStandardMaterial({map: lateriteTex(), roughness: 1, fog: false}),
+      silt: new THREE.MeshStandardMaterial({map: siltTex(), roughness: 1, fog: false}),
       land: new THREE.MeshStandardMaterial({vertexColors: true, roughness: 1}),
       waterTop: new THREE.MeshStandardMaterial({map: wtop, color: '#4c8a86', transparent: true, opacity: 0.9, roughness: 0.08, metalness: 0.2}),
-      waterCut: new THREE.MeshStandardMaterial({map: waterCutTex('#5f9e98', '#1d4f57'), transparent: true, opacity: 0.66, roughness: 0.2, depthWrite: false}),
-      lakeCut: new THREE.MeshStandardMaterial({map: waterCutTex('#5f9a86', '#1f4a45'), transparent: true, opacity: 0.72, roughness: 0.2, depthWrite: false}),
+      waterCut: new THREE.MeshStandardMaterial({map: waterCutTex('#3f8c88', '#123f48'), transparent: true, opacity: 0.58, fog: false, roughness: 0.2, depthWrite: false}),
+      lakeCut: new THREE.MeshStandardMaterial({map: waterCutTex('#3f8a78', '#123c38'), transparent: true, opacity: 0.66, fog: false, roughness: 0.2, depthWrite: false}),
       culvert: new THREE.MeshStandardMaterial({map: waterCutTex('#2d6670', '#163a44'), roughness: 0.5}),
       culvertRim: new THREE.MeshStandardMaterial({color: '#cfc8b8', roughness: 0.9}),
-      gate: new THREE.MeshStandardMaterial({color: '#3c4347', metalness: 0.55, roughness: 0.5}),
+      gate: new THREE.MeshStandardMaterial({map: gateTex(), metalness: 0.5, roughness: 0.55}),
       girder: new THREE.MeshStandardMaterial({color: '#8a9089', metalness: 0.45, roughness: 0.55}),
       cavity: new THREE.MeshStandardMaterial({color: '#1b1f22', roughness: 1}),
       steel: new THREE.MeshStandardMaterial({color: '#7f878b', metalness: 0.75, roughness: 0.35}),
@@ -574,8 +615,8 @@ const useWorld = () =>
     };
     L(layer(cutTop, concBot, 2000, -24.01, 1000.01), m.conc);
     L(layer((x) => (x > -24 && x < 1000 ? -1e4 : cutTop(x)), sedBot, 2000), m.silt);
-    L(layer((x) => Math.min(concBot(x), sedBot(x)), rock1Bot, 300), m.later);
-    L(layer(rock1Bot, () => BOTTOM, 300), m.rock);
+    L(layer((x) => Math.min(concBot(x), sedBot(x)), rock1Bot, 2000), m.later);
+    L(layer(rock1Bot, () => BOTTOM, 2000), m.rock);
 
     // --- дальняя стенка шлюзов (ступенями) и рельсы мулов
     const wall = new THREE.Mesh(planarUV(layer(wallTop, () => -30, WZ * -1 + CZ, -200, 1100)), m.concDark);
@@ -595,7 +636,7 @@ const useWorld = () =>
     tg.translate(500, 0, -2100 + WZ - 0.6);
     const tp = tg.attributes.position;
     const colors = new Float32Array(tp.count * 3);
-    const cJ = [new THREE.Color('#2c4a26'), new THREE.Color('#3f6330'), new THREE.Color('#567a38')];
+    const cJ = [new THREE.Color('#223d1f'), new THREE.Color('#33552a'), new THREE.Color('#4a6a33')];
     const cSand = new THREE.Color('#b9a77c');
     const cMud = new THREE.Color('#5f5a40');
     const cc = new THREE.Color();
@@ -623,16 +664,16 @@ const useWorld = () =>
     const crowns = new THREE.InstancedMesh(new THREE.SphereGeometry(1, 8, 6), m.canopy, 1500);
     const dm = new THREE.Object3D();
     let ci = 0;
-    const cA = new THREE.Color('#2f5228');
-    const cB = new THREE.Color('#4d7434');
-    const cC = new THREE.Color('#6b8a3e');
+    const cA = new THREE.Color('#1f3a1c');
+    const cB = new THREE.Color('#2f5226');
+    const cC = new THREE.Color('#47672e');
     for (let k = 0; k < 6000 && ci < 1500; k++) {
       const x = -260 + r() * 1700;
       const z = WZ - 40 - Math.pow(r(), 1.6) * 900;
       const h = landH(x, z);
       const water = x > 1000 ? LV[3] : 0;
       if (h < water + 3) continue;
-      const s = 6 + r() * 7;
+      const s = 7 + r() * 9;
       dm.position.set(x, h + s * 0.5, z);
       dm.scale.set(s, s * (0.75 + r() * 0.3), s);
       dm.updateMatrix();
@@ -683,13 +724,13 @@ const useWorld = () =>
     // --- очередь кораблей на рейде (стоят всегда)
     const queue = new THREE.Group();
     [
-      [-700, -260, 0.4],
-      [-980, -420, -0.3],
-      [-620, -620, 0.9],
-      [-1250, -300, 0.2],
-      [-1100, -760, -0.6],
-      [-1500, -560, 0.5],
-      [-860, -980, 1.2],
+      [-520, -170, 0.35],
+      [-760, -330, -0.25],
+      [-560, -520, 0.8],
+      [-980, -200, 0.15],
+      [-900, -620, -0.5],
+      [-1250, -420, 0.45],
+      [-700, -860, 1.1],
     ].forEach(([x, z, a], i) => {
       const s = makeShip(m, 100 + i);
       s.position.set(x, -DRAFT, z);
