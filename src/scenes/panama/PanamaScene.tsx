@@ -29,6 +29,11 @@ const SEA_BED = -14;
 const LAKE_BED = 2;
 const BOTTOM = -2500;
 const SHIP_Z = -16.75;
+// слои на плоскости разреза (z=0): зазоры ≥ 0.3 м, иначе на дальних планах буфер глубины их путает (мерцание)
+const ZW = 0.3; // срез воды
+const ZRIM = 0.4; // обводка водовода
+const ZCUL = 0.8; // сам водовод
+const NEAR = 3;
 const DRAFT = 11;
 const CENTERS = [160, 480, 800];
 const RISERS = (i: number) => Array.from({length: 11}, (_, k) => GX[i] + 30 + k * 26);
@@ -65,89 +70,93 @@ const landH = (x: number, z: number) => {
   const near = wallTop(Math.max(-200, Math.min(1100, x))) - 0.5;
   // суша вдоль канала: x∈[-250,1060]
   const shoreL = smooth(-320, -230, x);
-  const shoreR = 1 - smooth(1040, 1110, x);
+  const shoreR = 1 - smooth(1110, 1190, x);
   let h = lerp(SEA_BED - 1, near, shoreL * shoreR);
   // холмы джунглей растут с удалением
   const amp = smooth(70, 420, d);
   h += hn(x, z) * 40 * amp * shoreL * shoreR;
   // острова на озере
   const isl = (cx: number, cz: number, r: number, hh: number) => hh * smooth(r, r * 0.35, Math.hypot(x - cx, z - cz));
-  h = Math.max(h, isl(1500, -700, 160, 62), isl(1950, -420, 110, 44), isl(2400, -1100, 230, 80), isl(1250, -1300, 180, 58));
+  const is = Math.max(isl(1500, -700, 160, 62), isl(1950, -420, 110, 44), isl(2400, -1100, 230, 80), isl(1250, -1300, 180, 58));
+  if (is > 0.01) h = Math.max(h, SEA_BED - 1 + is * 1.25);
   // дальний берег: гряда холмов к горизонту
   const ridge = smooth(1300, 2300, d) * (70 + hn(x * 0.6, z * 0.6) * 60);
   h = Math.max(h, SEA_BED - 1 + ridge);
   return h;
 };
 
-type Cam = {pos: [number, number, number]; look: [number, number, number]; fov?: number};
+// rel: координаты x — относительно корабля, y — относительно плавной «опорной высоты» пути (камера едет вместе с кораблём)
+type Cam = {pos: [number, number, number]; look: [number, number, number]; fov?: number; rel?: boolean};
 const CAMS: Record<string, Cam> = {
   hook: {pos: [-470, 16, 120], look: [-270, 16, -30], fov: 45},
   hook2: {pos: [-430, 26, 170], look: [-180, 20, -40], fov: 45},
   overview: {pos: [-420, 95, 230], look: [480, 18, -60], fov: 45},
   enter: {pos: [-40, 34, 105], look: [150, 4, -20], fov: 45},
   gate: {pos: [-26, -1, 46], look: [4, -2, -14], fov: 45},
-  culvert: {pos: [262, -6, 62], look: [290, -11, -6], fov: 45},
-  rise: {pos: [40, 24, 115], look: [190, 6, -20], fov: 45},
-  mules: {pos: [1005, 44, 30], look: [1070, 29, -40], fov: 45},
+  culvert: {pos: [250, 14, 125], look: [285, 6, -6], fov: 45},
+  rise: {pos: [-60, 25, 175], look: [25, 0, -20], fov: 45, rel: true},
+  chase: {pos: [-380, 125, 110], look: [40, 12, -30], fov: 45, rel: true},
+  tow: {pos: [-190, 92, 58], look: [30, 16, -34], fov: 45, rel: true},
   drain: {pos: [-330, 140, 380], look: [460, -2, -30], fov: 45},
-  lake: {pos: [980, 90, 220], look: [1500, 40, -600], fov: 45},
+  storm: {pos: [-250, 150, 400], look: [1500, 200, -900], fov: 45},
   queue: {pos: [-300, 80, 250], look: [-760, 5, -400], fov: 45},
   final: {pos: [-330, 92, 285], look: [-790, 8, -420], fov: 45},
   final2: {pos: [-370, 108, 310], look: [-820, 12, -440], fov: 45},
   cover: {pos: [300, 38, 150], look: [520, 14, -30], fov: 45},
 };
+const yRef = (x: number) => LV[1] + (LV[3] - LV[1]) * smooth(380, 890, x);
 const cam = (c: string | Cam) => (typeof c === 'string' ? CAMS[c] ?? CAMS.overview : c);
 const range = (v: any, p: number, dur = 1, delay = 0, ease = false): number => {
   if (v === undefined || v === null || v === false) return 0;
   if (v === true) return 1;
   if (typeof v === 'number') return v;
+  if (Array.isArray(v[0])) {
+    const ks = v as [number, number][];
+    if (p <= ks[0][0]) return ks[0][1];
+    for (let i = 1; i < ks.length; i++) if (p <= ks[i][0]) return lerp(ks[i - 1][1], ks[i][1], (p - ks[i - 1][0]) / Math.max(1e-6, ks[i][0] - ks[i - 1][0]));
+    return ks[ks.length - 1][1];
+  }
   const k = clamp01((p - delay) / dur);
   return lerp(v[0], v[1], ease ? easeInOut(k) : k);
 };
 
 // ---------- состояние шлюзования по «стадии» st ----------
-// 0→1 корабль входит в 1-ю камеру; 1→1.15 ворота 0 закрываются; 1.15→2 камера 1 наполняется;
-// 2→2.15 ворота 1 открываются; 2.15→3 переход во 2-ю; ... 6.15→7 выход в озеро; 7→7.15 ворота 3 закрываются;
-// 7.15→8 все камеры сливают воду в океан.
+// 0→1 корабль входит в 1-ю камеру; 1→1.15 ворота 0 закрываются; 1.15→2 камера 1 наполняется; 2→2.15 ворота 1 открываются.
+// 2.15→7 — «ускоренный проход»: корабль идёт без остановок с постоянной скоростью, а ворота и вода
+// срабатывают по его положению (закрылись за кормой → камера наполнилась → открылись перед носом).
+// 7→7.15 ворота 3 закрываются; 7.15→8 все камеры сливают воду в океан.
+const XL = 1120; // где корабль останавливается в озере
 const seg = (st: number, a: number, b: number) => clamp01((st - a) / (b - a));
+// трапеция скорости: плавный разгон и торможение, между ними ровный ход
+const trap = (u0: number, a = 0.1) => {
+  const u = clamp01(u0);
+  const v = 1 / (1 - a);
+  return u < a ? (0.5 * v * u * u) / a : u < 1 - a ? v * (u - a / 2) : 1 - (0.5 * v * (1 - u) * (1 - u)) / a;
+};
 const lockState = (st: number) => {
-  const lv = [0, 1, 2].map((i) => {
-    const fill = seg(st, 2 * i + 1.15, 2 * i + 2);
-    const drain = seg(st, 7.15, 8);
-    return lerp(lerp(LV[i], LV[i + 1], fill), LV[i], drain);
-  });
-  const gate = [0, 1, 2, 3].map((g) => {
-    if (g === 0) return 1 - seg(st, 1, 1.15); // 1 = открыты
-    const op = seg(st, 2 * g, 2 * g + 0.15);
-    const cl = seg(st, 2 * g + 1, 2 * g + 1.15);
-    return op * (1 - cl);
-  });
-  // корабль
+  const fk = [0, 0, 0];
+  const gate = [0, 0, 0, 0]; // 1 = открыты
   let x: number;
-  let y: number;
-  if (st < 1) {
-    x = lerp(-300, CENTERS[0], easeInOut(st));
-    y = 0;
+  if (st < 2.15) {
+    x = st < 1 ? lerp(-300, CENTERS[0], easeInOut(st)) : CENTERS[0];
+    gate[0] = 1 - seg(st, 1, 1.15);
+    fk[0] = seg(st, 1.15, 2);
+    gate[1] = seg(st, 2, 2.15);
   } else {
-    let i = 0;
-    for (let k = 1; k < 3; k++) if (st >= 2 * k + 0.15) i = k;
-    x = CENTERS[i];
-    y = lv[i];
-    for (let k = 1; k <= 3; k++) {
-      const u = seg(st, 2 * k + 0.15, 2 * k + 1);
-      if (st >= 2 * k + 0.15 && st < 2 * k + 1) {
-        x = lerp(CENTERS[k - 1], k < 3 ? CENTERS[k] : 1320, easeInOut(u));
-        y = k < 3 ? lv[k] : LV[3];
-      }
-    }
-    if (st >= 7) {
-      x = 1320;
-      y = LV[3];
-    }
+    x = lerp(CENTERS[0], XL, trap((st - 2.15) / 4.85));
+    fk[0] = 1;
+    gate[1] = 1 - smooth(GX[1] + 103, GX[1] + 128, x);
+    fk[1] = smooth(GX[1] + 128, GX[1] + 190, x);
+    gate[2] = smooth(GX[1] + 190, GX[1] + 214, x) * (1 - smooth(GX[2] + 103, GX[2] + 128, x));
+    fk[2] = smooth(GX[2] + 128, GX[2] + 190, x);
+    gate[3] = smooth(GX[2] + 190, GX[2] + 214, x) * (1 - seg(st, 7, 7.15));
   }
+  const dk = seg(st, 7.15, 8);
+  const lv = [0, 1, 2].map((i) => lerp(lerp(LV[i], LV[i + 1], fk[i]), LV[i], dk));
+  const y = st < 1 ? 0 : LV[0] + fk.reduce((a, f, i) => a + f * (LV[i + 1] - LV[i]), 0);
   // поток в водоводах: какая камера наполняется (0..2), сила 0..1; слив — drain
   const env = (a: number, b: number) => smooth(a, a + 0.08, st) * (1 - smooth(b - 0.08, b, st));
-  const fill = [0, 1, 2].map((i) => env(2 * i + 1.15, 2 * i + 2));
+  const fill = fk.map((f, i) => (i === 0 && st < 2.15 ? env(1.15, 2) : clamp01(6 * f * (1 - f))));
   const drain = env(7.15, 8);
   return {lv, gate, x, y, fill, drain};
 };
@@ -489,13 +498,13 @@ const makeShip = (m: Record<string, any>, seed: number) => {
   for (let i = xs.length - 1; i >= 0; i--) ds.lineTo(xs[i], halfW(xs[i]) - 0.05);
   const dg = new THREE.ShapeGeometry(ds);
   dg.rotateX(Math.PI / 2);
-  dg.translate(0, 22.04, 0);
+  dg.translate(0, 22.35, 0);
   sh.add(new THREE.Mesh(dg, m.deck));
   // фальшборт на баке
   sh.add(new THREE.Mesh(box(84, 103, 22, 24.2, -0.4, 0.4), m.hullBlue));
   // надстройка, крылья мостика, труба
   sh.add(new THREE.Mesh(box(-96, -80, 22, 40, -11, 11), m.bridge));
-  sh.add(new THREE.Mesh(box(-84, -80, 38, 40.2, -14.6, 14.6), m.bridge));
+  sh.add(new THREE.Mesh(box(-84.3, -79.7, 38, 40.2, -14.6, 14.6), m.bridge));
   sh.add(new THREE.Mesh(box(-96.3, -79.7, 40.2, 41, -11.3, 11.3), m.dark));
   sh.add(new THREE.Mesh(box(-100, -94, 22, 44, -3.2, 3.2), m.funnel));
   sh.add(new THREE.Mesh(box(-100.2, -93.8, 39, 41.5, -3.4, 3.4), m.funnelBand));
@@ -552,7 +561,7 @@ const makeLeaf = (m: Record<string, any>, h: number) => {
   for (let y = 0; y <= h - 0.2; y += 2.4) g.add(new THREE.Mesh(box(-LEAF_T / 2 + th, LEAF_T / 2 - th, y, y + 0.3, 0, LEAF_L), m.girder));
   g.add(new THREE.Mesh(box(-LEAF_T / 2 + th, LEAF_T / 2 - th, h - 0.3, h, 0, LEAF_L), m.girder));
   // торец у шарнира и тёмная полость внутри
-  g.add(new THREE.Mesh(box(-LEAF_T / 2, LEAF_T / 2, 0, h, 0, 0.4), m.gate));
+  g.add(new THREE.Mesh(box(-LEAF_T / 2 + th, LEAF_T / 2 - th, 0, h, -0.3, 0.4), m.gate));
   g.add(new THREE.Mesh(box(-LEAF_T / 2 + th, LEAF_T / 2 - th, 0, h, 0.4, LEAF_L - 0.6), m.cavity));
   // мостик по верху створки
   g.add(new THREE.Mesh(box(-1.3, 1.3, h, h + 0.15, 0, LEAF_L), m.girder));
@@ -564,12 +573,12 @@ const makeMule = (m: Record<string, any>) => {
   const g = new THREE.Group();
   g.add(new THREE.Mesh(box(-5.5, 5.5, 0.6, 3.4, -1.6, 1.6), m.mule));
   g.add(new THREE.Mesh(box(-2.2, 2.2, 3.4, 5.6, -1.5, 1.5), m.mule));
-  g.add(new THREE.Mesh(box(-2.25, 2.25, 4.2, 5.2, -1.55, 1.55), m.dark)); // окна кабины
-  g.add(new THREE.Mesh(box(-5.6, 5.6, 1.6, 2.0, -1.65, 1.65), m.muleStripe));
-  g.add(new THREE.Mesh(box(-5, 5, 0, 0.7, -1.3, 1.3), m.dark)); // тележки
+  g.add(new THREE.Mesh(box(-2.4, 2.4, 4.2, 5.2, -1.7, 1.7), m.dark)); // окна кабины
+  g.add(new THREE.Mesh(box(-5.75, 5.75, 1.5, 2.1, -1.8, 1.8), m.muleStripe));
+  g.add(new THREE.Mesh(box(-5, 5, 0, 0.6, -1.3, 1.3), m.dark)); // тележки
   const winch = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.7, 2.4, 12), m.steel);
   winch.rotation.x = Math.PI / 2;
-  winch.position.set(3.8, 4.0, 0);
+  winch.position.set(0, 6.0, 0);
   g.add(winch);
   shadowAll(g);
   return g;
@@ -591,13 +600,14 @@ const useWorld = () =>
       waterCut: new THREE.MeshStandardMaterial({map: waterCutTex('#3f8c88', '#123f48'), transparent: true, opacity: 0.58, fog: false, roughness: 0.2, depthWrite: false}),
       lakeCut: new THREE.MeshStandardMaterial({map: waterCutTex('#3f8a78', '#123c38'), transparent: true, opacity: 0.66, fog: false, roughness: 0.2, depthWrite: false}),
       culvert: new THREE.MeshStandardMaterial({map: waterCutTex('#2d6670', '#163a44'), roughness: 0.5}),
-      culvertRim: new THREE.MeshStandardMaterial({color: '#cfc8b8', roughness: 0.9}),
+      culvertRim: new THREE.MeshStandardMaterial({color: '#cfc8b8', roughness: 0.9, transparent: true}),
       gate: new THREE.MeshStandardMaterial({map: gateTex(), metalness: 0.5, roughness: 0.55}),
       girder: new THREE.MeshStandardMaterial({color: '#8a9089', metalness: 0.45, roughness: 0.55}),
       cavity: new THREE.MeshStandardMaterial({color: '#1b1f22', roughness: 1}),
       steel: new THREE.MeshStandardMaterial({color: '#7f878b', metalness: 0.75, roughness: 0.35}),
       valve: new THREE.MeshStandardMaterial({color: '#a8562f', metalness: 0.4, roughness: 0.5}),
-      rail: new THREE.MeshStandardMaterial({color: '#3a3936', metalness: 0.6, roughness: 0.5}),
+      rail: new THREE.MeshStandardMaterial({color: '#3a3936', metalness: 0.6, roughness: 0.5, transparent: true}),
+      bumper: new THREE.MeshStandardMaterial({color: '#a8562f', metalness: 0.3, roughness: 0.6}),
       hullRed: new THREE.MeshStandardMaterial({map: hullTex('#8b3b2b', 1), roughness: 0.7}),
       hullBlue: new THREE.MeshStandardMaterial({map: hullTex('#24394c', 2), roughness: 0.55, metalness: 0.15}),
       hullStripe: new THREE.MeshStandardMaterial({color: '#e8e4da', roughness: 0.6}),
@@ -612,7 +622,7 @@ const useWorld = () =>
       rope: new THREE.MeshBasicMaterial({color: '#2c2a26'}),
       canopy: new THREE.MeshStandardMaterial({color: '#ffffff', vertexColors: false, roughness: 0.95}),
       trunk: new THREE.MeshStandardMaterial({color: '#5a4636', roughness: 1}),
-      drop: new THREE.MeshBasicMaterial({color: '#d6f3f6', fog: false}),
+      drop: new THREE.MeshBasicMaterial({color: '#d6f3f6', fog: false, transparent: true}),
       jet: new THREE.MeshBasicMaterial({color: '#e4f6f4', transparent: true, opacity: 0.7, fog: false, depthWrite: false}),
       arrow: new THREE.MeshBasicMaterial({color: '#e9fbff', transparent: true, opacity: 0.9, fog: false, depthWrite: false}),
       rain: new THREE.MeshBasicMaterial({map: rainTex(), transparent: true, opacity: 0, depthWrite: false, side: THREE.DoubleSide}),
@@ -639,9 +649,16 @@ const useWorld = () =>
     wall.position.z = CZ;
     world.add(wall);
     [-38.2, -41.8].forEach((z) => {
-      const rl = new THREE.Mesh(layer((x) => wallTop(x) + 0.22, (x) => wallTop(x), 0.25, -200, 1100), m.rail);
-      rl.position.z = z + 0.125;
+      const rl = new THREE.Mesh(layer((x) => wallTop(x) + 0.3, (x) => wallTop(x) + 0.05, 0.5, -196, 1096), m.rail);
+      rl.position.z = z + 0.25;
+      rl.renderOrder = 1;
       world.add(rl);
+    });
+    // тупиковые упоры на концах пути — рельсы не обрываются в пустоту
+    [-198, 1098].forEach((x) => {
+      const y = wallTop(x);
+      world.add(new THREE.Mesh(box(x - 1.5, x + 1.5, y, y + 2.2, -43.2, -36.8), m.bumper));
+      world.add(new THREE.Mesh(box(x - 2.2, x + 2.2, y, y + 0.6, -44, -36), m.conc));
     });
     
     // --- земля за стенкой, холмы, острова, дальний берег
@@ -705,10 +722,12 @@ const useWorld = () =>
     // --- вода: море и озеро (верх + срез), уровень озера меняется в засуху — поэтому озеро в dyn
     const seaTop = new THREE.Mesh(new THREE.PlaneGeometry(6000, 6000), m.waterTop);
     seaTop.rotation.x = -Math.PI / 2;
-    seaTop.position.set(-3000 - 1.15, 0, -3000);
+    seaTop.position.set(-3000 - 1.15, 0, -3000 + ZW);
+    seaTop.renderOrder = 2;
     world.add(seaTop);
     const seaCut = new THREE.Mesh(new THREE.PlaneGeometry(4000 - 1.15, -SEA_BED + 1), m.waterCut);
-    seaCut.position.set(-2000 - 0.58, (SEA_BED - 1) / 2, 0.02);
+    seaCut.position.set(-2000 - 0.58, (SEA_BED - 1) / 2, ZW);
+    seaCut.renderOrder = 3;
     world.add(seaCut);
 
     // --- облака: кучевые, плотные, у горизонта
@@ -778,7 +797,7 @@ const useWorld = () =>
   }, []);
 
 // ---------- сцена ----------
-const PanamaWorld: React.FC<{P: Record<string, any>; life: number}> = ({P, life}) => {
+const PanamaWorld: React.FC<{P: Record<string, any>; life: number; dur: number}> = ({P, life, dur}) => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
   const {camera, scene} = useThree();
@@ -810,20 +829,23 @@ const PanamaWorld: React.FC<{P: Record<string, any>; life: number}> = ({P, life}
       if (!c.userData.cached) c.geometry?.dispose?.();
     });
     const add = (o: THREE.Object3D) => dyn.add(o);
-    const st = range(P.st, p, P.stDur ?? 1, P.stDelay ?? 0);
+    // стадия идёт по полной длине сцены (без «досрочного финиша»), иначе корабль замирает на стыках сцен
+    const st = range(P.st, clamp01(frame / Math.max(1, dur)), P.stDur ?? 1, P.stDelay ?? 0);
     const S = lockState(st);
 
     // --- вода в камерах (верх отдельно от среза, чтобы срез был полупрозрачным «аквариумом»)
     const waterBox = (key: string, x0: number, x1: number, y0: number, y1: number, cut = m.waterCut) =>
       cached(key, () => {
         const g = new THREE.Group();
-        const top = new THREE.Mesh(new THREE.PlaneGeometry(x1 - x0, CZ * -1 - 0.1), m.waterTop);
+        const top = new THREE.Mesh(new THREE.PlaneGeometry(x1 - x0, -CZ - 0.03 + ZW), m.waterTop);
         top.rotation.x = -Math.PI / 2;
-        top.position.set((x0 + x1) / 2, y1, CZ / 2 - 0.02);
+        top.position.set((x0 + x1) / 2, y1, (CZ + 0.03 + ZW) / 2);
         top.receiveShadow = true;
+        top.renderOrder = 2;
         g.add(top);
         const front = new THREE.Mesh(new THREE.PlaneGeometry(x1 - x0, y1 - y0), cut);
-        front.position.set((x0 + x1) / 2, (y0 + y1) / 2, 0.02);
+        front.position.set((x0 + x1) / 2, (y0 + y1) / 2, ZW);
+        front.renderOrder = 3;
         g.add(front);
         return g;
       });
@@ -848,11 +870,13 @@ const PanamaWorld: React.FC<{P: Record<string, any>; life: number}> = ({P, life}
         const g = new THREE.Group();
         const top = new THREE.Mesh(new THREE.PlaneGeometry(6000, 6000), m.waterTop);
         top.rotation.x = -Math.PI / 2;
-        top.position.set(GX[3] + LEAF_T / 2 + 3000 + 0.02, lakeY, -3000);
+        top.position.set(GX[3] + LEAF_T / 2 + 3000 + 0.02, lakeY, -3000 + ZW);
         top.receiveShadow = true;
+        top.renderOrder = 2;
         g.add(top);
         const front = new THREE.Mesh(new THREE.PlaneGeometry(4000, lakeY - LAKE_BED + 1), m.lakeCut);
-        front.position.set(GX[3] + LEAF_T / 2 + 2000 + 0.02, (lakeY + LAKE_BED - 1) / 2, 0.02);
+        front.position.set(GX[3] + LEAF_T / 2 + 2000 + 0.02, (lakeY + LAKE_BED - 1) / 2, ZW);
+        front.renderOrder = 3;
         g.add(front);
         return g;
       }),
@@ -862,25 +886,24 @@ const PanamaWorld: React.FC<{P: Record<string, any>; life: number}> = ({P, life}
       cached('culverts', () => {
         const g = new THREE.Group();
         const Z0 = -0.5;
-        const Z1 = 0.05;
         const seg2 = (x0: number, x1: number, y0: number, y1: number) => {
-          g.add(new THREE.Mesh(box(x0 - 0.5, x1 + 0.5, y0 - 0.5, y1 + 0.5, Z0 - 0.1, Z1 - 0.02), m.culvertRim));
-          g.add(new THREE.Mesh(box(x0, x1, y0, y1, Z0, Z1), m.culvert));
+          g.add(new THREE.Mesh(box(x0 - 0.6, x1 + 0.6, y0 - 0.6, y1 + 0.6, Z0 - 0.1, ZRIM), m.culvertRim));
+          g.add(new THREE.Mesh(box(x0, x1, y0, y1, Z0, ZCUL), m.culvert));
         };
         // горизонтальные участки под камерами
         seg2(-30, GX[1] - 1.2 + CR, YC[0] - CR, YC[0] + CR);
         seg2(GX[1] - 1.2 - CR, GX[2] - 1.2 + CR, YC[1] - CR, YC[1] + CR);
         seg2(GX[2] - 1.2 - CR, 1012, YC[2] - CR, YC[2] + CR);
         // ступени между камерами
-        seg2(GX[1] - 1.2 - CR, GX[1] - 1.2 + CR, YC[0] + CR, YC[1] + CR);
-        seg2(GX[2] - 1.2 - CR, GX[2] - 1.2 + CR, YC[1] + CR, YC[2] + CR);
+        seg2(GX[1] - 1.2 - CR, GX[1] - 1.2 + CR, YC[0] + CR, YC[1] - CR);
+        seg2(GX[2] - 1.2 - CR, GX[2] - 1.2 + CR, YC[1] + CR, YC[2] - CR);
         // выход в море и забор из озера
-        seg2(-36, -30 + 0.01, YC[0] - CR, cutTop(-36) - 0.1);
-        seg2(1006, 1012, YC[2] - CR, cutTop(1012) - 0.1);
+        seg2(-36, -30, YC[0] - CR, cutTop(-36) - 0.3);
+        seg2(1012, 1018, YC[2] - CR, cutTop(1018) - 0.3);
         // стояки к отверстиям в дне
         [0, 1, 2].forEach((i) =>
           RISERS(i).forEach((x) => {
-            g.add(new THREE.Mesh(box(x - 0.8, x + 0.8, YC[i] + CR - 0.1, FL[i] - 0.06, Z0, Z1), m.culvert));
+            g.add(new THREE.Mesh(box(x - 0.8, x + 0.8, YC[i] + CR, FL[i] - 0.3, Z0, ZCUL), m.culvert));
           }),
         );
         return g;
@@ -901,8 +924,8 @@ const PanamaWorld: React.FC<{P: Record<string, any>; life: number}> = ({P, life}
       add(
         cached(`valve${g}_${lift}`, () => {
           const v = new THREE.Group();
-          v.add(new THREE.Mesh(box(x - 1.1, x + 1.1, yc - 3 * CR - 0.4, yc - CR - 0.2, -0.6, 0.06), m.cavity)); // шахта под водоводом
-          v.add(new THREE.Mesh(box(x - 0.7, x + 0.7, yc - CR - lift, yc + CR - lift, -0.45, 0.16), m.valve));
+          v.add(new THREE.Mesh(box(x - 1.1, x + 1.1, yc - 3 * CR - 0.4, yc - CR - 0.2, -0.6, ZCUL + 0.3), m.cavity)); // шахта под водоводом
+          v.add(new THREE.Mesh(box(x - 0.7, x + 0.7, yc - CR - lift, yc + CR - lift, -0.45, ZCUL + 0.6), m.valve));
           return v;
         }),
       );
@@ -931,7 +954,7 @@ const PanamaWorld: React.FC<{P: Record<string, any>; life: number}> = ({P, life}
     const pushDrop = (x: number, y: number, s = 1) => {
       const d = new THREE.Mesh(dropGeo, m.drop);
       d.userData.cached = true;
-      d.position.set(x, y, 0.35);
+      d.position.set(x, y, ZCUL + 0.9);
       d.scale.setScalar(s);
       add(d);
     };
@@ -945,7 +968,7 @@ const PanamaWorld: React.FC<{P: Record<string, any>; life: number}> = ({P, life}
         const pts: [number, number][] =
           i < 2
             ? [[xi, FL[i + 1] + 1], [xi, YC[i + 1]], [xg, YC[i + 1]], [xg, YC[i]], [xr, YC[i]], [xr, FL[i]], [xr, FL[i] + 3.5]]
-            : [[1009, cutTop(1009) + 1.5], [1009, YC[2]], [xr, YC[2]], [xr, FL[2]], [xr, FL[2] + 3.5]];
+            : [[1015, cutTop(1015) + 1.5], [1015, YC[2]], [xr, YC[2]], [xr, FL[2]], [xr, FL[2] + 3.5]];
         const u = (k / 90 + t * 0.16 + rr() * 0.01) % 1;
         if (rr() > a) continue;
         const [x, y] = path(pts, u);
@@ -958,6 +981,7 @@ const PanamaWorld: React.FC<{P: Record<string, any>; life: number}> = ({P, life}
         j.userData.cached = true;
         add(j);
         j.position.set(x, FL[i] + hgt / 2, 0.4);
+        j.renderOrder = 4;
         j.scale.set(1, hgt, 1);
         j.rotation.z = Math.PI;
       });
@@ -990,7 +1014,8 @@ const PanamaWorld: React.FC<{P: Record<string, any>; life: number}> = ({P, life}
     const chev = (x: number, y: number, dir: number, sc: number) => {
       const c = new THREE.Mesh(chevron, m.arrow);
       c.userData.cached = true;
-      c.position.set(x, y, 0.5);
+      c.position.set(x, y, ZCUL + 1.5);
+      c.renderOrder = 5;
       c.scale.setScalar(sc);
       c.rotation.z = dir;
       add(c);
@@ -1019,20 +1044,23 @@ const PanamaWorld: React.FC<{P: Record<string, any>; life: number}> = ({P, life}
     // --- корабль и мулы
     W0.ship.position.set(S.x, S.y - DRAFT, SHIP_Z);
     W0.ship.rotation.set(0, 0, 0);
-    const inLock = S.x > -120 && S.x < 1040;
-    const muleX = [S.x + 82, S.x - 82];
+    const inLock = S.x > -120 && S.x < 1000;
+    const deckY = S.y - DRAFT + 22.9;
+    // передний мул идёт впереди носа и тянет, задний — за кормой, держит корабль по центру
+    const muleX = [S.x + 125, S.x - 118];
+    const tie = [new THREE.Vector3(S.x + 100, deckY + 1.6, SHIP_Z - 0.6), new THREE.Vector3(S.x - 99, deckY, SHIP_Z - 11)];
     W0.mules.forEach((u, k) => {
-      const x = Math.max(-195, Math.min(1095, muleX[k]));
+      const x = Math.max(-190, Math.min(1088, muleX[k]));
       const y = wallTop(x);
       const sl = Math.atan2(wallTop(x + 2) - wallTop(x - 2), 4);
-      u.position.set(x, y + 0.22, -40);
+      u.position.set(x, y + 0.3, -40);
       u.rotation.set(0, 0, sl);
       if (inLock) {
-        // трос к борту
-        const a = new THREE.Vector3(x + (k ? 3.8 : 3.8), y + 4, -40 + 1.2);
-        const b = new THREE.Vector3(S.x + (k ? -70 : 78), S.y - DRAFT + 22.4, SHIP_Z - halfW(k ? -70 : 78) + 0.2);
+        // буксирный трос от лебёдки мула к кораблю
+        const a = new THREE.Vector3(x, y + 6.3, -40 + 1.3);
+        const b = tie[k];
         const len = a.distanceTo(b);
-        const rp = new THREE.Mesh(cached('ropeGeo', () => new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 1, 5), m.rope)).geometry, m.rope);
+        const rp = new THREE.Mesh(cached('ropeGeo', () => new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.28, 1, 6), m.rope)).geometry, m.rope);
         rp.userData.cached = true;
         rp.position.copy(a).add(b).multiplyScalar(0.5);
         rp.scale.set(1, len, 1);
@@ -1050,36 +1078,47 @@ const PanamaWorld: React.FC<{P: Record<string, any>; life: number}> = ({P, life}
     (m.rain.map as THREE.Texture).offset.set(0, t * 1.4);
     W0.rain.forEach((pl) => (pl.visible = rain > 0.01));
 
-    // --- камера (с промежуточной точкой via)
-    const cs = (P.cam ?? ['overview', 'overview']).map(cam);
+    // --- камера (с промежуточной точкой via). Камеры rel едут вместе с кораблём.
+    const res = (c: Cam): Cam => (c.rel ? {pos: [c.pos[0] + S.x, c.pos[1] + yRef(S.x), c.pos[2]], look: [c.look[0] + S.x, c.look[1] + yRef(S.x), c.look[2]], fov: c.fov} : c);
+    const cs = (P.cam ?? ['overview', 'overview']).map((c: string | Cam) => res(cam(c)));
     const c0 = cs[0];
     const c1 = cs[cs.length - 1];
-    const kc = easeInOut(clamp01((p - (P.camDelay ?? 0)) / (P.camDur ?? 1)));
-    let pos: number[];
-    let look: number[];
-    let fov: number;
+    const q0 = clamp01((p - (P.camDelay ?? 0)) / (P.camDur ?? 1));
+    let ca = c0;
+    let cb = c1;
+    let kc = easeInOut(q0);
     if (P.via) {
-      const v = cam(P.via);
+      // через промежуточную точку: плавно пришли, на миг задержались, плавно ушли
+      const v = res(cam(P.via));
       const va = P.viaAt ?? 0.5;
-      const q0 = clamp01((p - (P.camDelay ?? 0)) / (P.camDur ?? 1));
-      const [a, b, k] = q0 < va ? [c0, v, easeInOut(q0 / va)] : [v, c1, easeInOut((q0 - va) / (1 - va))];
-      pos = a.pos.map((x, i) => lerp(x, b.pos[i], k));
-      look = a.look.map((x, i) => lerp(x, b.look[i], k));
-      fov = lerp(a.fov ?? 45, b.fov ?? 45, k);
-    } else {
-      pos = c0.pos.map((v, i) => lerp(v, c1.pos[i], kc));
-      look = c0.look.map((v, i) => lerp(v, c1.look[i], kc));
-      fov = lerp(c0.fov ?? 45, c1.fov ?? 45, kc);
+      if (q0 < va) {
+        cb = v;
+        kc = easeInOut(q0 / va);
+      } else {
+        ca = v;
+        kc = easeInOut((q0 - va) / (1 - va));
+      }
     }
+    const pos = ca.pos.map((v, i) => lerp(v, cb.pos[i], kc));
+    const look = ca.look.map((v, i) => lerp(v, cb.look[i], kc));
+    const fov = lerp(ca.fov ?? 45, cb.fov ?? 45, kc);
     camera.position.set(pos[0], pos[1], pos[2]);
     camera.lookAt(look[0], look[1], look[2]);
     const pc = camera as THREE.PerspectiveCamera;
-    if (pc.fov !== fov || pc.far !== 7000) {
+    if (pc.fov !== fov || pc.far !== 7000 || pc.near !== NEAR) {
       pc.fov = fov;
-      pc.near = 0.5;
+      pc.near = NEAR;
       pc.far = 7000;
       pc.updateProjectionMatrix();
     }
+    // мелкие детали (обводка водоводов, капли, рельсы) вдали тоньше пикселя и рябят — плавно гасим их с расстоянием
+    const dCut = Math.hypot(pos[1], pos[2]) + Math.max(0, -30 - pos[0], pos[0] - 1010);
+    m.culvertRim.opacity = 1 - smooth(260, 420, dCut);
+    m.culvertRim.visible = m.culvertRim.opacity > 0.01;
+    m.drop.opacity = 1 - smooth(300, 480, dCut);
+    m.drop.visible = m.drop.opacity > 0.01;
+    m.rail.opacity = 1 - smooth(420, 700, dCut);
+    m.rail.visible = m.rail.opacity > 0.01;
     followSky(scene, camera);
   }, [frame]);
 
@@ -1094,8 +1133,8 @@ export const PanamaScene: React.FC<SceneProps> = ({scene, durationInFrames}) => 
   const look = LOOKS[P.look ?? 'tropic'];
   return (
     <AbsoluteFill>
-      <ThreeCanvas width={SW} height={SH} shadows camera={{fov: 45, position: [0, 30, 150], near: 0.5, far: 7000}} gl={{preserveDrawingBuffer: true, antialias: false}}>
-        <PanamaWorld P={P} life={life} />
+      <ThreeCanvas width={SW} height={SH} shadows camera={{fov: 45, position: [0, 30, 150], near: NEAR, far: 7000}} gl={{preserveDrawingBuffer: true, antialias: false}}>
+        <PanamaWorld P={P} life={life} dur={durationInFrames} />
       </ThreeCanvas>
       <LookGrade look={look} />
       {P.banner ? (

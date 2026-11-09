@@ -1,0 +1,205 @@
+{
+ "title": "тест",
+ "music": false,
+ "captionStyle": "word",
+ "autoOutro": false,
+ "stillPairs": true,
+ "scenes": [
+  {
+   "type": "panama",
+   "say": "",
+   "props": {
+    "cam": [
+     "hook2",
+     "overview"
+    ],
+    "st": 0.3,
+    "cont": false
+   }
+  },
+  {
+   "type": "panama",
+   "say": "",
+   "props": {
+    "cam": [
+     "overview",
+     "enter"
+    ],
+    "st": 1.0,
+    "cont": false
+   }
+  },
+  {
+   "type": "panama",
+   "say": "",
+   "props": {
+    "cam": [
+     "gate",
+     "culvert"
+    ],
+    "st": 1.3,
+    "cont": false
+   }
+  },
+  {
+   "type": "panama",
+   "say": "",
+   "props": {
+    "cam": [
+     "culvert",
+     "culvert"
+    ],
+    "st": 1.4,
+    "cont": false
+   }
+  },
+  {
+   "type": "panama",
+   "say": "",
+   "props": {
+    "cam": [
+     "rise",
+     "rise"
+    ],
+    "st": 1.8,
+    "cont": false
+   }
+  },
+  {
+   "type": "panama",
+   "say": "",
+   "props": {
+    "cam": [
+     "rise",
+     "chase"
+    ],
+    "st": 3.3,
+    "cont": false
+   }
+  },
+  {
+   "type": "panama",
+   "say": "",
+   "props": {
+    "cam": [
+     "chase",
+     "chase"
+    ],
+    "st": 3.6,
+    "cont": false
+   }
+  },
+  {
+   "type": "panama",
+   "say": "",
+   "props": {
+    "cam": [
+     "tow",
+     "tow"
+    ],
+    "st": 4.3,
+    "cont": false
+   }
+  },
+  {
+   "type": "panama",
+   "say": "",
+   "props": {
+    "cam": [
+     "tow",
+     "tow"
+    ],
+    "st": 5.2,
+    "cont": false
+   }
+  },
+  {
+   "type": "panama",
+   "say": "",
+   "props": {
+    "cam": [
+     "chase",
+     "tow"
+    ],
+    "st": 4.8,
+    "cont": false
+   }
+  },
+  {
+   "type": "panama",
+   "say": "",
+   "props": {
+    "cam": [
+     "tow",
+     "drain"
+    ],
+    "st": 6.6,
+    "cont": false
+   }
+  },
+  {
+   "type": "panama",
+   "say": "",
+   "props": {
+    "cam": [
+     "drain",
+     "drain"
+    ],
+    "st": 7.6,
+    "cont": false
+   }
+  },
+  {
+   "type": "panama",
+   "say": "",
+   "props": {
+    "cam": [
+     "drain",
+     "storm"
+    ],
+    "st": 8,
+    "cont": false,
+    "rain": 1
+   }
+  },
+  {
+   "type": "panama",
+   "say": "",
+   "props": {
+    "cam": [
+     "storm",
+     "queue"
+    ],
+    "st": 8,
+    "cont": false,
+    "lakeDrop": 1
+   }
+  },
+  {
+   "type": "panama",
+   "say": "",
+   "props": {
+    "cam": [
+     "queue",
+     "final"
+    ],
+    "st": 8,
+    "cont": false,
+    "lakeDrop": 1
+   }
+  },
+  {
+   "type": "panama",
+   "say": "",
+   "props": {
+    "cam": [
+     "final2",
+     "final2"
+    ],
+    "st": 8,
+    "cont": false,
+    "lakeDrop": 1
+   }
+  }
+ ]
+}
