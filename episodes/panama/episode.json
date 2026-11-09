@@ -1,0 +1,43 @@
+{
+  "title": "Как корабль поднимается на 26 метров без насосов",
+  "music": false,
+  "whisper": "medium",
+  "captionStyle": "word",
+  "autoOutro": false,
+  "ambience": [{"q": "tropical rainforest ambience birds", "from": 0, "to": 11, "volume": 0.09}],
+  "cover": {
+    "lines": ["Лифт для", "*корабля*"],
+    "sub": "Панамский канал",
+    "panama": {"cam": ["cover", "cover"], "st": 3.6}
+  },
+  "scenes": [
+    {"type": "panama", "say": "[curious] Этот корабль сейчас поднимется на высоту девятиэтажного дома. Без единого насоса.",
+     "props": {"cam": ["hook", "hook2"], "st": [0, 0.2], "banner": "+26 М БЕЗ НАСОСОВ", "bannerAt": 0.5, "bannerSize": 66,
+               "sounds": [{"q": "ship horn", "at": 0.05, "len": 2.5, "volume": 0.3}], "cont": false}},
+    {"type": "panama", "say": "Это Панамский канал. Посередине пути — озеро. Оно выше моря на двадцать шесть метров.",
+     "props": {"cam": ["hook2", "overview"], "st": [0.2, 0.45], "banner": "ПАНАМСКИЙ КАНАЛ\nОЗЕРО ВЫШЕ МОРЯ НА 26 М", "bannerAt": 0.05, "bannerSize": 54, "cont": true}},
+    {"type": "panama", "say": "Корабль заходит в шлюз — бетонную камеру длиной в три футбольных поля. Ворота за ним закрываются.",
+     "props": {"cam": ["overview", "enter"], "st": [0.45, 1.15], "banner": "КАМЕРА 305 М", "bannerAt": 0.35, "bannerSize": 76,
+               "sounds": [{"q": "heavy metal gate closing", "at": 0.8, "len": 2, "volume": 0.3}], "cont": true}},
+    {"type": "panama", "say": "Каждая створка весит до шестисот шестидесяти тонн. Но внутри она полая и почти плавает.",
+     "props": {"cam": ["enter", "gate"], "camDur": 0.6, "st": 1.15, "banner": "СТВОРКА — 660 ТОНН", "bannerAt": 0.3, "bannerSize": 66, "cont": true}},
+    {"type": "panama", "say": "[amazed] А дальше просто открывают затвор. Вода сверху сама течёт по тоннелям в стенах — и бьёт из дна.",
+     "props": {"cam": ["gate", "culvert"], "camDur": 0.7, "st": [1.15, 1.45], "banner": "ВОДА ТЕЧЁТ САМА", "bannerAt": 0.4, "bannerSize": 70,
+               "sounds": [{"q": "water gushing", "at": 0.35, "len": 3, "volume": 0.3}], "cont": true}},
+    {"type": "panama", "say": "Камера наполняется минут за десять. Корабль всплывает на ступень выше.",
+     "props": {"cam": ["culvert", "rise"], "camDur": 0.6, "st": [1.45, 2.15], "banner": "≈ 10 МИНУТ", "bannerAt": 0.15, "bannerSize": 90, "cont": true}},
+    {"type": "panama", "say": "Три такие ступени — и он в озере. А тянут его электровозы на рельсах. Их зовут «мулы».",
+     "props": {"cam": ["rise", "mules"], "st": [2.15, 6.5], "banner": "«МУЛЫ»", "bannerAt": 0.68, "bannerSize": 90, "cont": true}},
+    {"type": "panama", "say": "Но у этого есть цена. Каждый проход сливает в океан около двухсот миллионов литров пресной воды.",
+     "props": {"cam": ["mules", "drain"], "camDur": 0.6, "st": [6.5, 8], "banner": "≈ 200 000 000 ЛИТРОВ\nВ ОКЕАН", "bannerAt": 0.45, "bannerSize": 58,
+               "sounds": [{"q": "water draining rushing", "at": 0.5, "len": 3, "volume": 0.25}], "cont": true}},
+    {"type": "panama", "say": "А воду даёт только дождь. В засуху двадцать третьего года корабли неделями стояли в очереди.",
+     "props": {"cam": ["drain", "queue"], "via": "lake", "viaAt": 0.45, "st": 8, "rain": "pulse", "rainIn": 0.08, "rainOut": 0.42,
+               "lakeDrop": [0, 1], "lakeDelay": 0.38, "lakeDur": 0.3, "banner": "ЗАСУХА 2023", "bannerAt": 0.45, "bannerSize": 80,
+               "sounds": [{"q": "heavy rain", "at": 0.08, "len": 3, "volume": 0.25}], "cont": true}},
+    {"type": "panama", "say": "[thoughtful] Так что для канала дороже: вода, время или корабли покрупнее?",
+     "props": {"cam": ["queue", "final"], "st": 8, "lakeDrop": 1, "banner": "ВОДА? ВРЕМЯ?\nКОРАБЛИ?", "bannerAt": 0.45, "bannerSize": 70, "cont": true}},
+    {"type": "panama", "say": "[warmly] Подпишись.",
+     "props": {"cam": ["final", "final2"], "st": 8, "lakeDrop": 1, "cont": true}}
+  ]
+}
