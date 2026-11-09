@@ -1073,7 +1073,7 @@ const PanamaWorld: React.FC<{P: Record<string, any>; life: number; dur: number}>
     W0.clouds.forEach((c, i) => (c.position.x = -2600 + i * 420 + t * 2));
     const rain = P.rain === 'pulse' ? smooth(P.rainIn ?? 0.05, (P.rainIn ?? 0.05) + 0.12, p) * (1 - smooth(P.rainOut ?? 0.5, (P.rainOut ?? 0.5) + 0.12, p)) : range(P.rain, p, P.rainDur ?? 0.4, P.rainDelay ?? 0);
     W0.storm.forEach((s) => ((s.material as THREE.SpriteMaterial).opacity = 0.9 * rain));
-    m.rain.opacity = 0.55 * rain;
+    m.rain.opacity = 0.8 * rain;
     (m.rain.map as THREE.Texture).offset.set(0, t * 1.4);
     W0.rain.forEach((pl) => (pl.visible = rain > 0.01));
 
