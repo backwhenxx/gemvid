@@ -55,6 +55,7 @@ const cutTop = (x: number) => {
 const concBot = (x: number) => (x > -24 && x < 1000 ? cutTop(x) - 12 : cutTop(x) - 0.01);
 const sedBot = (x: number) => (x > -24 && x < 1000 ? concBot(x) : cutTop(x) - 7 + wv(x, 0.8, 3));
 const rock1Bot = (x: number) => -48 + wv(x, 2.5, 4);
+const sandBot = (x: number) => -82 + wv(x, 3, 5);
 
 // высота земли за стенкой и вдаль
 const hn = (x: number, z: number) =>
@@ -90,9 +91,9 @@ const CAMS: Record<string, Cam> = {
   mules: {pos: [1005, 44, 30], look: [1070, 29, -40], fov: 45},
   drain: {pos: [-330, 140, 380], look: [460, -2, -30], fov: 45},
   lake: {pos: [980, 90, 220], look: [1500, 40, -600], fov: 45},
-  queue: {pos: [-180, 95, 300], look: [-640, 4, -300], fov: 45},
-  final: {pos: [-760, 95, 330], look: [80, 12, -140], fov: 45},
-  final2: {pos: [-720, 110, 300], look: [120, 16, -150], fov: 45},
+  queue: {pos: [-300, 80, 250], look: [-760, 5, -400], fov: 45},
+  final: {pos: [-330, 92, 285], look: [-790, 8, -420], fov: 45},
+  final2: {pos: [-370, 108, 310], look: [-820, 12, -440], fov: 45},
   cover: {pos: [300, 38, 150], look: [520, 14, -30], fov: 45},
 };
 const cam = (c: string | Cam) => (typeof c === 'string' ? CAMS[c] ?? CAMS.overview : c);
@@ -233,6 +234,19 @@ const lateriteTex = () => {
   speckle(g, 512, 512, 6000, ['rgba(190,110,70,0.35)', 'rgba(60,28,16,0.3)', 'rgba(210,160,90,0.25)'], 13, [1, 2.5]);
   speckle(g, 512, 512, 120, ['#6e6a62', '#9a8f80', '#5b3a28'], 14, [3, 8]);
   return tex(c, 1 / 24, 1 / 24);
+};
+// песчаник: охристые слои
+const sandstTex = () => {
+  const [c, g] = cv(512, 512);
+  g.fillStyle = '#b08a55';
+  g.fillRect(0, 0, 512, 512);
+  const r = rng(17);
+  for (let i = 0; i < 18; i++) {
+    g.fillStyle = r() > 0.5 ? 'rgba(120,80,45,0.25)' : 'rgba(225,195,140,0.22)';
+    g.fillRect(0, r() * 512, 512, 4 + r() * 18);
+  }
+  speckle(g, 512, 512, 5000, ['rgba(250,225,170,0.3)', 'rgba(90,60,30,0.25)'], 18, [0.8, 2]);
+  return tex(c, 1 / 30, 1 / 30);
 };
 // ил и песок дна
 const siltTex = () => {
@@ -571,6 +585,7 @@ const useWorld = () =>
       rock: new THREE.MeshStandardMaterial({map: rockTex(), roughness: 1, fog: false}),
       later: new THREE.MeshStandardMaterial({map: lateriteTex(), roughness: 1, fog: false}),
       silt: new THREE.MeshStandardMaterial({map: siltTex(), roughness: 1, fog: false}),
+      sandst: new THREE.MeshStandardMaterial({map: sandstTex(), roughness: 1, fog: false}),
       land: new THREE.MeshStandardMaterial({vertexColors: true, roughness: 1}),
       waterTop: new THREE.MeshStandardMaterial({map: wtop, color: '#4c8a86', transparent: true, opacity: 0.9, roughness: 0.08, metalness: 0.2}),
       waterCut: new THREE.MeshStandardMaterial({map: waterCutTex('#3f8c88', '#123f48'), transparent: true, opacity: 0.58, fog: false, roughness: 0.2, depthWrite: false}),
@@ -616,7 +631,8 @@ const useWorld = () =>
     L(layer(cutTop, concBot, 2000, -24.01, 1000.01), m.conc);
     L(layer((x) => (x > -24 && x < 1000 ? -1e4 : cutTop(x)), sedBot, 2000), m.silt);
     L(layer((x) => Math.min(concBot(x), sedBot(x)), rock1Bot, 2000), m.later);
-    L(layer(rock1Bot, () => BOTTOM, 2000), m.rock);
+    L(layer(rock1Bot, sandBot, 2000), m.sandst);
+    L(layer(sandBot, () => BOTTOM, 2000), m.rock);
 
     // --- дальняя стенка шлюзов (ступенями) и рельсы мулов
     const wall = new THREE.Mesh(planarUV(layer(wallTop, () => -30, WZ * -1 + CZ, -200, 1100)), m.concDark);
@@ -724,13 +740,13 @@ const useWorld = () =>
     // --- очередь кораблей на рейде (стоят всегда)
     const queue = new THREE.Group();
     [
-      [-520, -170, 0.35],
-      [-760, -330, -0.25],
-      [-560, -520, 0.8],
-      [-980, -200, 0.15],
-      [-900, -620, -0.5],
-      [-1250, -420, 0.45],
-      [-700, -860, 1.1],
+      [-560, -230, 0.35],
+      [-740, -420, -0.25],
+      [-620, -600, 0.8],
+      [-930, -330, 0.15],
+      [-900, -700, -0.5],
+      [-1150, -520, 0.45],
+      [-760, -900, 1.1],
     ].forEach(([x, z, a], i) => {
       const s = makeShip(m, 100 + i);
       s.position.set(x, -DRAFT, z);
