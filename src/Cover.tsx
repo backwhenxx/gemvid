@@ -8,12 +8,13 @@ import {SepticScene} from './scenes/septic/SepticScene';
 import {TowerScene} from './scenes/tower/TowerScene';
 import {SubwayScene} from './scenes/subway/SubwayScene';
 import {SteamScene} from './scenes/steam/SteamScene';
+import {ShanghaiScene} from './scenes/shanghai/ShanghaiScene';
 import {BrandMark, Grain, Vignette} from './components/Brand';
 import {Accented} from './components/Accented';
 import {BODY, C, SLAM, applyPalette} from './lib/theme';
 
 // Обложка (= первый кадр в ленте): заголовок в верхней трети, под ним мир ролика, низ пустой
-export type CoverSpec = {lines: string[]; sub?: string; bg?: Record<string, any> | null; dam?: Record<string, any>; trench?: Record<string, any>; septic?: Record<string, any>; tower?: Record<string, any>; subway?: Record<string, any>; steam?: Record<string, any>};
+export type CoverSpec = {lines: string[]; sub?: string; bg?: Record<string, any> | null; dam?: Record<string, any>; trench?: Record<string, any>; septic?: Record<string, any>; tower?: Record<string, any>; subway?: Record<string, any>; steam?: Record<string, any>; shanghai?: Record<string, any>};
 
 export const Cover: React.FC<{timeline: Timeline; cover: CoverSpec}> = ({timeline, cover}) => {
   applyPalette(timeline.palette);
@@ -29,7 +30,9 @@ export const Cover: React.FC<{timeline: Timeline; cover: CoverSpec}> = ({timelin
   const fs = Math.min(118, Math.floor(940 / (longest * 1.0)));
   return (
     <AbsoluteFill style={{backgroundColor: C.bg}}>
-      {cover.steam ? (
+      {cover.shanghai ? (
+        <ShanghaiScene scene={{type: 'shanghai', start: 0, end: 10, say: '', props: cover.shanghai}} prev={null} base={timeline.base} accent={C.accent} durationInFrames={300} />
+      ) : cover.steam ? (
         <SteamScene scene={{type: 'steam', start: 0, end: 10, say: '', props: cover.steam}} prev={null} base={timeline.base} accent={C.accent} durationInFrames={300} />
       ) : cover.subway ? (
         <SubwayScene scene={{type: 'subway', start: 0, end: 10, say: '', props: cover.subway}} prev={null} base={timeline.base} accent={C.accent} durationInFrames={300} />
@@ -47,7 +50,7 @@ export const Cover: React.FC<{timeline: Timeline; cover: CoverSpec}> = ({timelin
       <AbsoluteFill
         style={{
           background:
-            cover.dam || cover.trench || cover.septic || cover.tower || cover.subway || cover.steam
+            cover.dam || cover.trench || cover.septic || cover.tower || cover.subway || cover.steam || cover.shanghai
               ? `linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.25) 26%, rgba(0,0,0,0) 40%, rgba(0,0,0,0) 74%, rgba(0,0,0,0.55) 100%)`
               : `linear-gradient(180deg, ${C.bg} 0%, ${C.bg}F0 30%, ${C.bg}00 46%, ${C.bg}00 72%, ${C.bg} 86%)`,
         }}

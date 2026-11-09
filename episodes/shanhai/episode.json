@@ -1,0 +1,40 @@
+{
+  "title": "Как небоскрёб стоит на каше",
+  "music": false,
+  "whisper": "medium",
+  "captionStyle": "word",
+  "autoOutro": false,
+  "ambience": [{"q": "city ambience distant traffic evening", "from": 0, "to": 11, "volume": 0.1}],
+  "cover": {
+    "lines": ["Небоскрёб", "*на каше*"],
+    "sub": "Шанхай",
+    "shanghai": {"cam": [{"pos": [62, 14, 120], "look": [18, 38, -18], "fov": 50}, {"pos": [62, 14, 120], "look": [18, 38, -18], "fov": 50}], "sink": 1, "piles": 1, "mat": 1}
+  },
+  "scenes": [
+    {"type": "shanghai", "say": "[curious] Шанхай стоит на мягкой глине. Почти как на каше.",
+     "props": {"cam": ["skyline", "clay"], "banner": "ПОД ШАНХАЕМ — ГЛИНА", "bannerAt": 0.55, "bannerSize": 58,
+               "sounds": [{"q": "ship horn distant harbor", "at": 0.05, "len": 2.5, "volume": 0.25}], "cont": false}},
+    {"type": "shanghai", "say": "Как на ней держится небоскрёб высотой шестьсот тридцать два метра?",
+     "props": {"cam": ["clay", "tower"], "banner": "632 М", "bannerAt": 0.6, "bannerSize": 96, "cont": true}},
+    {"type": "shanghai", "say": "Сначала город чуть себя не утопил. Из-под земли качали воду для заводов.",
+     "props": {"cam": ["tower", "district"], "pump": "out", "banner": "ВОДУ КАЧАЛИ ИЗ-ПОД ЗЕМЛИ", "bannerAt": 0.6, "bannerSize": 52,
+               "sounds": [{"q": "water pump motor running", "at": 0.6, "len": 2.5, "volume": 0.25}], "cont": true}},
+    {"type": "shanghai", "say": "Глина отдавала воду и сжималась. Центр Шанхая просел больше чем на два с половиной метра.",
+     "props": {"cam": ["district", "sinkB"], "pump": "out", "sink": [0, 1], "sinkDur": 0.85, "banner": "−2,6 М", "bannerAt": 0.62, "bannerSize": 96, "cont": true}},
+    {"type": "shanghai", "say": "[amazed] Тогда воду начали закачивать обратно. Зимой — в землю, летом — из земли.",
+     "props": {"cam": ["sinkB", "recharge"], "pump": "in", "sink": 1, "banner": "С 1966: ВОДУ — ОБРАТНО", "bannerAt": 0.2, "bannerSize": 56, "cont": true}},
+    {"type": "shanghai", "say": "Теперь город проседает всего на несколько миллиметров в год.",
+     "props": {"cam": ["recharge", "cityMid"], "pump": "in", "sink": 1, "banner": "≈ 5 ММ В ГОД", "bannerAt": 0.3, "bannerSize": 76, "cont": true}},
+    {"type": "shanghai", "say": "А башню поставили на сваи. Девятьсот сорок семь штук, каждая — длиннее пятидесяти метров.",
+     "props": {"cam": ["cityMid", "piles"], "sink": 1, "piles": [0, 1], "pilesDelay": 0.3, "pilesDur": 0.6, "banner": "947 СВАЙ ПО 55 М", "bannerAt": 0.5, "bannerSize": 62, "cont": true}},
+    {"type": "shanghai", "say": "Они проходят сквозь глину до плотного песка.",
+     "props": {"cam": ["piles", "tips"], "sink": 1, "piles": 1, "banner": "ДО ПЛОТНОГО ПЕСКА", "bannerAt": 0.4, "bannerSize": 60, "cont": true}},
+    {"type": "shanghai", "say": "Сверху — бетонная плита толщиной шесть метров. Её залили без остановки за шестьдесят три часа.",
+     "props": {"cam": ["tips", "mat"], "sink": 1, "piles": 1, "mat": [0, 1], "matDelay": 0.25, "matDur": 0.65, "banner": "6 М БЕТОНА ЗА 63 ЧАСА", "bannerAt": 0.55, "bannerSize": 54,
+               "sounds": [{"q": "concrete mixer truck", "at": 0.3, "len": 2.5, "volume": 0.25}], "cont": true}},
+    {"type": "shanghai", "say": "[thoughtful] Но глина всё равно понемногу сжимается. Что Шанхаю опаснее: море, глина или новые небоскрёбы?",
+     "props": {"cam": ["mat", "final"], "sink": 1, "piles": 1, "mat": 1, "banner": "МОРЕ? ГЛИНА? НЕБОСКРЁБЫ?", "bannerAt": 0.5, "bannerSize": 52, "cont": true}},
+    {"type": "shanghai", "say": "[warmly] Подпишись.",
+     "props": {"cam": ["final", "final2"], "sink": 1, "piles": 1, "mat": 1, "cont": true}}
+  ]
+}
