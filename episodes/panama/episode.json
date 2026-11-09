@@ -29,7 +29,7 @@
     {"type": "panama", "say": "Три такие ступени — и он в озере.",
      "props": {"cam": ["rise", "chase"], "st": [2.76, 3.91], "cont": true}},
     {"type": "panama", "say": "А тянут его электровозы на рельсах. Их зовут «мулы».",
-     "props": {"cam": ["chase", "tow"], "camDur": 0.55, "st": [3.91, 5.84], "banner": "«МУЛЫ»", "bannerAt": 0.5, "bannerSize": 90, "cont": true}},
+     "props": {"cam": ["chase", "tow"], "camDur": 0.8, "st": [3.91, 5.84], "banner": "«МУЛЫ»", "bannerAt": 0.5, "bannerSize": 90, "cont": true}},
     {"type": "panama", "say": "Но у этого есть цена. Каждый проход сливает в океан около двухсот миллионов литров пресной воды.",
      "props": {"cam": ["tow", "drain"], "camDur": 0.6, "st": [[0, 5.84], [0.36, 7], [1, 8]], "banner": "≈ 200 000 000 ЛИТРОВ\nВ ОКЕАН", "bannerAt": 0.45, "bannerSize": 58,
                "sounds": [{"q": "water draining rushing", "at": 0.5, "len": 3, "volume": 0.25}], "cont": true}},
