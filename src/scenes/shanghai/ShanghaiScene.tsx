@@ -106,15 +106,15 @@ const fillTex = () => {
 const clayTex = () => {
   const [c, g] = cv(512, 512);
   const gr = g.createLinearGradient(0, 0, 0, 512);
-  gr.addColorStop(0, '#7c735f');
-  gr.addColorStop(1, '#6c6554');
+  gr.addColorStop(0, '#6f7068');
+  gr.addColorStop(1, '#5f625b');
   g.fillStyle = gr;
   g.fillRect(0, 0, 512, 512);
   const r = rng(7);
   // слоистость
-  for (let i = 0; i < 46; i++) {
+  for (let i = 0; i < 14; i++) {
     let y = r() * 512;
-    g.strokeStyle = r() > 0.5 ? 'rgba(50,46,36,0.28)' : 'rgba(160,150,125,0.22)';
+    g.strokeStyle = r() > 0.5 ? 'rgba(40,42,38,0.18)' : 'rgba(150,152,140,0.14)';
     g.lineWidth = 1 + r() * 2.5;
     g.beginPath();
     g.moveTo(-5, y);
@@ -125,8 +125,8 @@ const clayTex = () => {
     g.stroke();
   }
   // мокрые блики — «каша»
-  for (let i = 0; i < 160; i++) {
-    g.strokeStyle = `rgba(235,225,200,${0.12 + r() * 0.25})`;
+  for (let i = 0; i < 220; i++) {
+    g.strokeStyle = `rgba(225,228,215,${0.15 + r() * 0.3})`;
     g.lineWidth = 1 + r() * 1.5;
     const x = r() * 512;
     const y = r() * 512;
@@ -356,12 +356,12 @@ const useWorld = () =>
     const m: Record<string, any> = {
       fill: new THREE.MeshStandardMaterial({map: fillTex(), roughness: 1}),
       ground: new THREE.MeshStandardMaterial({map: groundTex(), roughness: 0.95}),
-      clay: new THREE.MeshStandardMaterial({map: clayTex(), roughness: 0.55}),
+      clay: new THREE.MeshStandardMaterial({map: clayTex(), roughness: 0.38, metalness: 0.05}),
       mud: new THREE.MeshStandardMaterial({map: mudTex(), roughness: 0.9}),
       sand: new THREE.MeshStandardMaterial({map: sandTex('#c39a5f', 21, 0, 900), roughness: 0.95}),
       stiff: new THREE.MeshStandardMaterial({map: sandTex('#8b6748', 31, 60), roughness: 1}),
       dense: new THREE.MeshStandardMaterial({map: sandTex('#b08f5e', 41, 700), roughness: 1}),
-      water: new THREE.MeshStandardMaterial({map: waterTexture(), color: '#6f9aa6', transparent: true, opacity: 0.82, roughness: 0.08, metalness: 0.1}),
+      water: new THREE.MeshStandardMaterial({map: waterTexture(), color: '#4f7a80', transparent: true, opacity: 0.93, roughness: 0.06, metalness: 0.25}),
       tower: new THREE.MeshStandardMaterial({map: T.map, emissiveMap: T.lit, emissive: '#ffffff', emissiveIntensity: 0.6, color: '#d9e4ea', metalness: 0.55, roughness: 0.16}),
       crown: new THREE.MeshStandardMaterial({color: '#8d9aa3', metalness: 0.7, roughness: 0.3}),
       glassB: facMat('glass', 1 / 16, 1 / 32, {metalness: 0.45, roughness: 0.2}),
@@ -370,16 +370,16 @@ const useWorld = () =>
       brickH: facMat('brick', 1 / 16, 1 / 32),
       roofTile: new THREE.MeshStandardMaterial({color: '#3d3b3a', roughness: 0.8}),
       roofFlat: new THREE.MeshStandardMaterial({color: '#5d5a56', roughness: 0.9}),
-      jinmao: new THREE.MeshStandardMaterial({color: '#8f9396', metalness: 0.6, roughness: 0.28}),
+      jinmao: new THREE.MeshStandardMaterial({color: '#5e6266', metalness: 0.7, roughness: 0.35}),
       swfc: new THREE.MeshStandardMaterial({color: '#9fb2bd', metalness: 0.6, roughness: 0.15}),
-      pearl: new THREE.MeshStandardMaterial({color: '#9a4b46', metalness: 0.45, roughness: 0.3}),
+      pearl: new THREE.MeshStandardMaterial({color: '#6e3a3a', metalness: 0.6, roughness: 0.28}),
       pearlLeg: new THREE.MeshStandardMaterial({color: '#cfc8bd', roughness: 0.6}),
-      concrete: new THREE.MeshStandardMaterial({color: '#a7a198', roughness: 0.9}),
+      concrete: new THREE.MeshStandardMaterial({map: sandTex('#9c968c', 51, 400), color: '#d8d4cc', roughness: 0.9}),
       wet: new THREE.MeshStandardMaterial({color: '#6e6a63', roughness: 0.3}),
       steel: new THREE.MeshStandardMaterial({color: '#8c949a', metalness: 0.8, roughness: 0.35}),
       rust: new THREE.MeshStandardMaterial({color: '#7a5a44', metalness: 0.4, roughness: 0.6}),
       pump: new THREE.MeshStandardMaterial({color: '#4f6b5a', metalness: 0.3, roughness: 0.5}),
-      pile: new THREE.MeshStandardMaterial({color: '#b9b2a6', roughness: 0.85}),
+      pile: new THREE.MeshStandardMaterial({color: '#9d9890', roughness: 0.85}),
       drop: new THREE.MeshBasicMaterial({color: '#8fd0f2', fog: false}),
       arrow: new THREE.MeshBasicMaterial({color: '#fff3dc', transparent: true, fog: false}),
       leaf: new THREE.MeshStandardMaterial({color: '#4e6e34', roughness: 0.9}),
@@ -555,7 +555,7 @@ const useWorld = () =>
       tree(world, -3 + (r() - 0.5), z - 3, 1.1 + r() * 0.3);
     }
     // вода реки до горизонта
-    const water = new THREE.Mesh(box(RX0 + 0.6, RX1 - 0.6, -5, -0.7, -2000, 0.04), m.water);
+    const water = new THREE.Mesh(box(RX0 + 0.3, RX1 - 0.3, -5, -0.35, -2000, 0.04), m.water);
     world.add(water);
     // облака у горизонта, подсвеченные закатом
     const clouds: THREE.Sprite[] = [];
