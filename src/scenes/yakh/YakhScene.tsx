@@ -95,12 +95,12 @@ const CAMS: Record<string, Cam> = {
   pool: {pos: [104, 26, 54], look: [46, 2, -42]},
   qanat: {pos: [124, 11, 74], look: [94, -3, -10]},
   sky: {pos: [124, 14, 80], look: [62, 12, -36]},
-  poolCut: {pos: [53.6, 1.35, 4.8], look: [48, 0.55, -1]},
+  poolCut: {pos: [44.6, 1.45, 5.0], look: [51, 0.45, -1.6]},
   pit: {pos: [22, 2.5, 41], look: [0, -4, -2]},
   air: {pos: [0, 8, 51], look: [0, 6.8, -3]},
   pit2: {pos: [7, 0.5, 28], look: [0, -4.2, -1]},
-  wide: {pos: [42, 68, 176], look: [24, 2, -26]},
-  final: {pos: [46, 92, 228], look: [24, 4, -40]},
+  wide: {pos: [30, 30, 152], look: [24, 4, -30]},
+  final: {pos: [34, 42, 192], look: [24, 6, -40]},
   cover: {pos: [27, 7, 47], look: [4, 4.5, -4]},
   hookA2: {pos: [-30, 4.5, 54], look: [0, 7.5, -4]},
   wallC2: {pos: [-16, 2.2, 9.8], look: [-10.2, 1.6, -1]},
@@ -108,7 +108,7 @@ const CAMS: Record<string, Cam> = {
   pit3: {pos: [17, 0.5, 33], look: [0, -4.5, -2]},
   air2: {pos: [0, 7, 46], look: [0, 6.2, -3]},
   yakh2: {pos: [34, 13, 62], look: [4, 7, -6]},
-  final2: {pos: [48, 100, 246], look: [24, 4, -42]},
+  final2: {pos: [36, 46, 204], look: [24, 6, -42]},
 };
 const cam = (c: string | Cam) => (typeof c === 'string' ? CAMS[c] ?? CAMS.yakh : c);
 const range = (v: any, p: number, dur = 1, delay = 0, ease = false): number => {
