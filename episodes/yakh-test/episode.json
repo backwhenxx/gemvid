@@ -1,0 +1,269 @@
+{
+ "title": "тест",
+ "music": false,
+ "captionStyle": "word",
+ "autoOutro": false,
+ "stillPairs": true,
+ "scenes": [
+  {
+   "type": "yakh",
+   "say": "",
+   "props": {
+    "cam": [
+     "hookA",
+     "hookA"
+    ],
+    "cont": false,
+    "ice": 7
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "",
+   "props": {
+    "cam": [
+     "hookB",
+     "hookB"
+    ],
+    "cont": false,
+    "ice": 7
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "",
+   "props": {
+    "cam": [
+     "yakh",
+     "yakh"
+    ],
+    "cont": false,
+    "ice": 7
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "",
+   "props": {
+    "cam": [
+     "wallC",
+     "wallC"
+    ],
+    "cont": false,
+    "ice": 7
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "",
+   "props": {
+    "cam": [
+     "pool",
+     "pool"
+    ],
+    "cont": false,
+    "ice": 0
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "",
+   "props": {
+    "cam": [
+     "pool2",
+     "pool2"
+    ],
+    "cont": false,
+    "ice": 0,
+    "banner": "СТЕНА 10 М"
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "",
+   "props": {
+    "cam": [
+     "qanat",
+     "qanat"
+    ],
+    "cont": false,
+    "night": 0.6,
+    "flow": 1,
+    "pool": 0.3
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "",
+   "props": {
+    "cam": [
+     "sky",
+     "sky"
+    ],
+    "cont": false,
+    "night": 1,
+    "heat": 1,
+    "pool": 0.8,
+    "flow": 1
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "",
+   "props": {
+    "cam": [
+     "poolCut",
+     "poolCut"
+    ],
+    "cont": false,
+    "night": 1,
+    "pool": 3.4
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "",
+   "props": {
+    "cam": [
+     "poolCut",
+     "poolCut"
+    ],
+    "cont": false,
+    "night": 0,
+    "pool": 6,
+    "grid": 1
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "",
+   "props": {
+    "cam": [
+     "pit",
+     "pit"
+    ],
+    "cont": false,
+    "ice": 2.5,
+    "pool": 6,
+    "grid": 1,
+    "night": 0.3
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "",
+   "props": {
+    "cam": [
+     "pit3",
+     "pit3"
+    ],
+    "cont": false,
+    "ice": 7
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "",
+   "props": {
+    "cam": [
+     "air",
+     "air"
+    ],
+    "cont": false,
+    "ice": 7,
+    "air": 1
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "",
+   "props": {
+    "cam": [
+     "pit2",
+     "pit2"
+    ],
+    "cont": false,
+    "ice": 7
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "",
+   "props": {
+    "cam": [
+     "wide",
+     "wide"
+    ],
+    "cont": false,
+    "ice": 7,
+    "hl": {
+     "wall": [
+      0,
+      1
+     ]
+    }
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "",
+   "props": {
+    "cam": [
+     "final",
+     "final"
+    ],
+    "cont": false,
+    "ice": 7,
+    "flow": 0.4
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "",
+   "props": {
+    "cam": [
+     "cover",
+     "cover"
+    ],
+    "cont": false,
+    "ice": 7
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "",
+   "props": {
+    "cam": [
+     "yakh2",
+     "yakh2"
+    ],
+    "cont": false,
+    "ice": 7
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "",
+   "props": {
+    "cam": [
+     "wallC2",
+     "wallC2"
+    ],
+    "cont": false,
+    "ice": 7
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "",
+   "props": {
+    "cam": [
+     "hookA2",
+     "hookA2"
+    ],
+    "cont": false,
+    "ice": 7
+   }
+  }
+ ]
+}
