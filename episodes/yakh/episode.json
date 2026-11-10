@@ -1,0 +1,589 @@
+{
+ "title": "Как в пустыне всё лето хранили лёд без электричества",
+ "music": false,
+ "whisper": "medium",
+ "captionStyle": "word",
+ "autoOutro": false,
+ "ambience": [
+  {
+   "q": "desert wind ambience",
+   "from": 0,
+   "to": 6,
+   "volume": 0.1
+  },
+  {
+   "q": "night crickets ambience",
+   "from": 7,
+   "to": 10,
+   "volume": 0.08
+  },
+  {
+   "q": "desert wind ambience",
+   "from": 11,
+   "to": 18,
+   "volume": 0.1
+  }
+ ],
+ "cover": {
+  "lines": [
+   "Лёд",
+   "в *пустыне*"
+  ],
+  "sub": "Персидский яхчал",
+  "yakh": {
+   "cam": [
+    "cover",
+    "cover"
+   ],
+   "ice": 7
+  }
+ },
+ "scenes": [
+  {
+   "type": "yakh",
+   "say": "[confidently] Плюс сорок в тени.",
+   "props": {
+    "cam": [
+     "hookA",
+     "hookA2"
+    ],
+    "ice": 7,
+    "banner": "+40° В ТЕНИ",
+    "bannerAt": 0.05,
+    "sounds": [
+     {
+      "q": "desert wind gust",
+      "at": 0.0,
+      "len": 2.5,
+      "volume": 0.25
+     }
+    ],
+    "cont": false
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "А в этом глиняном куполе всё лето лежал лёд. Без единого провода.",
+   "props": {
+    "cam": [
+     "hookA2",
+     "hookB"
+    ],
+    "ice": 7,
+    "camDur": 0.8,
+    "cont": true
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "Это яхчал — персидский холодильник. Высотой с шестиэтажный дом.",
+   "props": {
+    "cam": [
+     "hookB",
+     "yakh"
+    ],
+    "ice": 7,
+    "camDur": 0.7,
+    "banner": "ЯХЧАЛ\nВЫСОТА 18 М",
+    "bannerAt": 0.15,
+    "bannerSize": 58,
+    "cont": true
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "Стены внизу — два метра толщиной.",
+   "props": {
+    "cam": [
+     "yakh",
+     "wallC"
+    ],
+    "ice": 7,
+    "camDur": 0.8,
+    "banner": "СТЕНА 2 М",
+    "bannerAt": 0.45,
+    "cont": true
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "Раствор из глины, извести, золы, козьей шерсти... и яичного белка.",
+   "props": {
+    "cam": [
+     "wallC",
+     "wallC2"
+    ],
+    "ice": 7,
+    "banner": "САРУДЖ: ГЛИНА, ИЗВЕСТЬ,\nЗОЛА, ШЕРСТЬ, БЕЛОК",
+    "bannerAt": 0.1,
+    "bannerSize": 50,
+    "cont": true
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "[curious] Но откуда лёд в пустыне? Его делали зимой.",
+   "props": {
+    "cam": [
+     "wallC2",
+     "pool"
+    ],
+    "via": "yakh",
+    "viaAt": 0.35,
+    "camDur": 0.85,
+    "ice": [
+     [
+      0,
+      7
+     ],
+     [
+      0.94,
+      7
+     ],
+     [
+      0.96,
+      0
+     ]
+    ],
+    "banner": "ЗИМОЙ",
+    "bannerAt": 0.6,
+    "cont": true
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "Рядом с куполом — длинный мелкий бассейн. А вдоль него — стена высотой с трёхэтажный дом. Она прячет воду от солнца.",
+   "props": {
+    "cam": [
+     "pool",
+     "pool2"
+    ],
+    "ice": 0,
+    "banner": "СТЕНА 10 М",
+    "bannerAt": 0.42,
+    "cont": true
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "Ночью из подземного канала пускали тонкий слой воды.",
+   "props": {
+    "cam": [
+     "pool2",
+     "qanat"
+    ],
+    "ice": 0,
+    "night": [
+     [
+      0,
+      0
+     ],
+     [
+      0.55,
+      1
+     ]
+    ],
+    "flow": [
+     [
+      0,
+      0
+     ],
+     [
+      0.3,
+      1
+     ]
+    ],
+    "pool": [
+     [
+      0,
+      0
+     ],
+     [
+      0.4,
+      0
+     ],
+     [
+      1,
+      0.35
+     ]
+    ],
+    "banner": "КАНАТ —\nПОДЗЕМНЫЙ КАНАЛ",
+    "bannerAt": 0.35,
+    "bannerSize": 56,
+    "sounds": [
+     {
+      "q": "water stream trickle",
+      "at": 0.4,
+      "len": 3,
+      "volume": 0.25
+     }
+    ],
+    "cont": true
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "Небо над пустыней сухое и ясное — вода отдаёт тепло прямо в него. К утру — корка льда.",
+   "props": {
+    "cam": [
+     "qanat",
+     "sky"
+    ],
+    "camDur": 0.6,
+    "ice": 0,
+    "night": [
+     [
+      0,
+      1
+     ],
+     [
+      0.8,
+      1
+     ],
+     [
+      1,
+      0.75
+     ]
+    ],
+    "flow": 1,
+    "heat": [
+     [
+      0,
+      0
+     ],
+     [
+      0.25,
+      1
+     ],
+     [
+      0.75,
+      1
+     ],
+     [
+      0.9,
+      0
+     ]
+    ],
+    "pool": [
+     [
+      0,
+      0.35
+     ],
+     [
+      0.55,
+      0.5
+     ],
+     [
+      1,
+      1
+     ]
+    ],
+    "banner": "ТЕПЛО УХОДИТ В НЕБО",
+    "bannerAt": 0.3,
+    "bannerSize": 54,
+    "sounds": [
+     {
+      "q": "ice cracking",
+      "at": 0.85,
+      "len": 2,
+      "volume": 0.3
+     }
+    ],
+    "cont": true
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "Следующей ночью — ещё слой. И так, пока лёд не станет толщиной в полметра.",
+   "props": {
+    "cam": [
+     "sky",
+     "poolCut"
+    ],
+    "camDur": 0.6,
+    "ice": 0,
+    "night": [
+     [
+      0,
+      0.75
+     ],
+     [
+      0.15,
+      1
+     ]
+    ],
+    "flow": [
+     [
+      0,
+      1
+     ],
+     [
+      0.9,
+      1
+     ],
+     [
+      1,
+      0.3
+     ]
+    ],
+    "pool": [
+     [
+      0,
+      1
+     ],
+     [
+      0.25,
+      1
+     ],
+     [
+      0.95,
+      6
+     ]
+    ],
+    "banner": "50 СМ",
+    "bannerAt": 0.75,
+    "cont": true
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "Лёд рубили на блоки и спускали в яму под куполом.",
+   "props": {
+    "cam": [
+     "poolCut",
+     "pit"
+    ],
+    "camDur": 0.8,
+    "pool": 6,
+    "grid": [
+     [
+      0,
+      0
+     ],
+     [
+      0.2,
+      1
+     ]
+    ],
+    "flow": [
+     [
+      0,
+      0.3
+     ],
+     [
+      0.3,
+      0
+     ]
+    ],
+    "night": [
+     [
+      0,
+      1
+     ],
+     [
+      0.55,
+      0
+     ]
+    ],
+    "ice": [
+     [
+      0,
+      0
+     ],
+     [
+      0.35,
+      0
+     ],
+     [
+      1,
+      3.5
+     ]
+    ],
+    "sounds": [
+     {
+      "q": "ice chopping",
+      "at": 0.1,
+      "len": 2,
+      "volume": 0.3
+     }
+    ],
+    "cont": true
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "Слои перекладывали соломой.",
+   "props": {
+    "cam": [
+     "pit",
+     "pit3"
+    ],
+    "pool": 6,
+    "grid": 1,
+    "ice": [
+     [
+      0,
+      3.5
+     ],
+     [
+      1,
+      7
+     ]
+    ],
+    "banner": "СОЛОМА",
+    "bannerAt": 0.25,
+    "cont": true
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "[amazed] А купол работает как труба.",
+   "props": {
+    "cam": [
+     "pit3",
+     "air"
+    ],
+    "pool": 0,
+    "ice": 7,
+    "air": [
+     [
+      0,
+      0
+     ],
+     [
+      0.45,
+      0
+     ],
+     [
+      0.8,
+      1
+     ]
+    ],
+    "sounds": [
+     {
+      "q": "wind howling chimney",
+      "at": 0.4,
+      "len": 3,
+      "volume": 0.2
+     }
+    ],
+    "cont": true
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "Горячий воздух поднимается наверх и уходит. Холод остаётся внизу — у льда.",
+   "props": {
+    "cam": [
+     "air",
+     "air2"
+    ],
+    "pool": 0,
+    "ice": 7,
+    "air": 1,
+    "banner": "ТЕПЛО ↑   ХОЛОД ↓",
+    "bannerAt": 0.1,
+    "cont": true
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "И лёд доживал до лета.",
+   "props": {
+    "cam": [
+     "air2",
+     "pit2"
+    ],
+    "pool": 0,
+    "ice": 7,
+    "air": [
+     [
+      0,
+      1
+     ],
+     [
+      0.4,
+      0
+     ]
+    ],
+    "banner": "ДО ЛЕТА",
+    "bannerAt": 0.35,
+    "cont": true
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "Из него делали фалуде — тонкую лапшу в ледяном сиропе.",
+   "props": {
+    "cam": [
+     "pit2",
+     "yakh2"
+    ],
+    "pool": 0,
+    "ice": 7,
+    "banner": "ФАЛУДЕ",
+    "bannerAt": 0.2,
+    "cont": true
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "[thoughtful] А теперь убери одну деталь: стену, купол или подземный канал.",
+   "props": {
+    "cam": [
+     "yakh2",
+     "wide"
+    ],
+    "camDur": 0.55,
+    "pool": 0,
+    "ice": 7,
+    "hl": {
+     "wall": [
+      0.5,
+      0.7
+     ],
+     "dome": [
+      0.66,
+      0.84
+     ],
+     "qanat": [
+      0.8,
+      1.0
+     ]
+    },
+    "cont": true
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "Без чего яхчал растает первым?",
+   "props": {
+    "cam": [
+     "wide",
+     "final"
+    ],
+    "pool": 0,
+    "ice": 7,
+    "flow": 0.4,
+    "banner": "СТЕНА? КУПОЛ? КАНАТ?",
+    "bannerAt": 0.1,
+    "bannerSize": 54,
+    "cont": true
+   }
+  },
+  {
+   "type": "yakh",
+   "say": "[warmly] Подпишись.",
+   "props": {
+    "cam": [
+     "final",
+     "final2"
+    ],
+    "pool": 0,
+    "ice": 7,
+    "flow": 0.4,
+    "cont": true
+   }
+  }
+ ]
+}
