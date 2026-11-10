@@ -57,8 +57,9 @@ const ZQ = 0.7;
 const ZQW = 1.0;
 const ZARR = 1.4;
 
-const ri = (y: number) => 0.55 + (R0 - 0.55) * Math.pow(clamp01(1 - y / (DH - 0.6)), 0.82);
-const ro = (y: number) => 0.85 + (RO - 0.85) * Math.pow(clamp01(1 - y / DH), 0.78);
+// выпуклый «улей», а не пирамида
+const ri = (y: number) => 0.55 + (R0 - 0.55) * Math.pow(clamp01(1 - Math.pow(y / (DH - 0.6), 1.35)), 0.68);
+const ro = (y: number) => 0.85 + (RO - 0.85) * Math.pow(clamp01(1 - Math.pow(y / DH, 1.35)), 0.68);
 
 // ---------- рельеф ----------
 const n2 = (x: number, z: number) => Math.sin(x * 0.013 + 1.3) * Math.cos(z * 0.011 - 0.4) + 0.5 * Math.sin(x * 0.031 + z * 0.023) + 0.25 * Math.sin(x * 0.071 - z * 0.057 + 2);
@@ -92,14 +93,14 @@ const CAMS: Record<string, Cam> = {
   yakh: {pos: [30, 11, 58], look: [2, 7.5, -4]},
   wallC: {pos: [-17.5, 3.2, 11.5], look: [-10.4, 2.4, -1]},
   pool: {pos: [104, 26, 54], look: [46, 2, -42]},
-  qanat: {pos: [152, 22, 128], look: [102, -5, -18]},
-  sky: {pos: [150, 26, 132], look: [72, 13, -38]},
-  poolCut: {pos: [57.5, 2.5, 9.6], look: [48, 0.4, -1.6]},
+  qanat: {pos: [124, 11, 74], look: [94, -3, -10]},
+  sky: {pos: [124, 14, 80], look: [62, 12, -36]},
+  poolCut: {pos: [53.6, 1.35, 4.8], look: [48, 0.55, -1]},
   pit: {pos: [22, 2.5, 41], look: [0, -4, -2]},
   air: {pos: [0, 8, 51], look: [0, 6.8, -3]},
   pit2: {pos: [7, 0.5, 28], look: [0, -4.2, -1]},
-  wide: {pos: [128, 60, 168], look: [40, 0, -48]},
-  final: {pos: [168, 86, 220], look: [44, 4, -72]},
+  wide: {pos: [42, 68, 176], look: [24, 2, -26]},
+  final: {pos: [46, 92, 228], look: [24, 4, -40]},
   cover: {pos: [27, 7, 47], look: [4, 4.5, -4]},
   hookA2: {pos: [-30, 4.5, 54], look: [0, 7.5, -4]},
   wallC2: {pos: [-16, 2.2, 9.8], look: [-10.2, 1.6, -1]},
@@ -107,7 +108,7 @@ const CAMS: Record<string, Cam> = {
   pit3: {pos: [17, 0.5, 33], look: [0, -4.5, -2]},
   air2: {pos: [0, 7, 46], look: [0, 6.2, -3]},
   yakh2: {pos: [34, 13, 62], look: [4, 7, -6]},
-  final2: {pos: [176, 92, 232], look: [44, 4, -74]},
+  final2: {pos: [48, 100, 246], look: [24, 4, -42]},
 };
 const cam = (c: string | Cam) => (typeof c === 'string' ? CAMS[c] ?? CAMS.yakh : c);
 const range = (v: any, p: number, dur = 1, delay = 0, ease = false): number => {
@@ -129,25 +130,25 @@ const DAY = {
   sun: new THREE.Vector3(-1, 0.42, 0.55).normalize(),
   sunCol: '#ffc58a',
   sunI: 3.0,
-  hemiSky: '#8f9cc8',
-  hemiGround: '#8a6040',
+  hemiSky: '#9fb3d6',
+  hemiGround: '#8a6a4a',
   hemiI: 0.95,
   bounceI: 0.6,
-  sky: {top: '#3f5584', mid: '#d6a171', horizon: '#f6d29a', glow: '#ffe2a8', glowSize: 10},
-  fog: '#e8b98f',
-  fogNear: 260,
-  fogFar: 2900,
-  grade: {shadow: '#2a2a48', shadowAmt: 0.09, high: '#ffe6c4', highAmt: 0.16, vignette: 0.36, grain: 0.05},
+  sky: {top: '#3e6aa8', mid: '#9fb9d2', horizon: '#f3dcb4', glow: '#ffe2a8', glowSize: 10},
+  fog: '#e9d3b4',
+  fogNear: 420,
+  fogFar: 3600,
+  grade: {shadow: '#26304e', shadowAmt: 0.08, high: '#fff0dc', highAmt: 0.08, vignette: 0.34, grain: 0.05},
 };
 const NIGHT = {
   moon: new THREE.Vector3(0.55, 0.75, 0.6).normalize(),
-  moonCol: '#aec2ee',
-  moonI: 1.0,
-  hemiSky: '#3a4d84',
-  hemiGround: '#2a2219',
+  moonCol: '#c8d3ec',
+  moonI: 1.1,
+  hemiSky: '#4b5a7e',
+  hemiGround: '#3a3127',
   hemiI: 0.75,
   sky: {top: '#050919', mid: '#141f44', horizon: '#39406a', glow: '#7584b0', glowSize: 8},
-  fog: '#272d4c',
+  fog: '#2c3149',
   fogNear: 220,
   fogFar: 2500,
   grade: {shadow: '#0e1430', shadowAmt: 0.14, high: '#d6e2ff', highAmt: 0.14, vignette: 0.46, grain: 0.06},
@@ -500,20 +501,26 @@ const halfLathe = (pts: [number, number][], seg = 48) => {
   return g;
 };
 // профиль стены купола (r, y): ступенчатый снаружи, гладкий изнутри, отверстие наверху
-const domeProfile = (): [number, number][] => {
+const outerProfile = (): [number, number][] => {
   const out: [number, number][] = [[R0, 0], [RO, 0]];
-  const STEP = 1.5;
+  const STEP = 1.0;
   for (let y = 0; y < DH - 0.01; y += STEP) {
     const y1 = Math.min(DH, y + STEP);
-    out.push([ro(y) , y1 - 0.25]);
-    out.push([ro(y1) + 0.12, y1]);
+    out.push([ro(y), y1 - 0.18]);
+    out.push([ro(y1) + 0.07, y1]);
   }
   out.push([0.85, DH]);
   out.push([0.6, DH]);
-  for (let y = DH - 0.6; y >= 0; y -= 0.5) out.push([ri(y), y]);
+  return out;
+};
+const innerProfile = (): [number, number][] => {
+  const out: [number, number][] = [[0.6, DH]];
+  for (let y = DH - 0.6; y >= 0; y -= 0.4) out.push([ri(y), y]);
+  out.push([ri(0), 0]);
   out.push([R0, 0]);
   return out;
 };
+const domeProfile = (): [number, number][] => [...outerProfile(), ...innerProfile().slice(1)];
 
 // дерево сада: шар кроны (инстансы)
 // дом городка: кубик с текстурой, купол-крыша, иногда ветряная башня
@@ -539,18 +546,20 @@ const useWorld = () =>
   useMemo(() => {
     const m: Record<string, any> = {
       adobe: new THREE.MeshStandardMaterial({map: adobeTex(), roughness: 0.95}),
-      domeMat: new THREE.MeshStandardMaterial({map: adobeTex('#c38a55', 4), roughness: 0.95, flatShading: true, side: THREE.DoubleSide}),
+      domeMat: new THREE.MeshStandardMaterial({map: adobeTex('#b4744a', 4), roughness: 0.95, flatShading: true, side: THREE.DoubleSide}),
+      domeIn: new THREE.MeshStandardMaterial({map: adobeTex('#7c5034', 5), roughness: 1, side: THREE.DoubleSide}),
       adobeDark: new THREE.MeshStandardMaterial({map: adobeTex('#b07c4c', 9), roughness: 0.95}),
       brick: new THREE.MeshStandardMaterial({map: brickCutTex(), roughness: 0.95}),
       lining: new THREE.MeshStandardMaterial({map: brickCutTex(), roughness: 0.95, color: '#d9cfc2'}),
       sand: new THREE.MeshStandardMaterial({map: sandTopTex(), vertexColors: true, roughness: 1}),
       cSand: new THREE.MeshStandardMaterial({map: soilTex('#d2ab73', ['rgba(255,235,195,0.3)', 'rgba(120,85,50,0.25)'], [], 11), roughness: 1, fog: false}),
-      cAll: new THREE.MeshStandardMaterial({map: soilTex('#a07c56', ['rgba(220,190,150,0.3)', 'rgba(70,50,30,0.3)'], ['#6d6258', '#c9b9a0', '#86684c', '#5b5048'], 13), roughness: 1, fog: false}),
-      cAq: new THREE.MeshStandardMaterial({map: soilTex('#6c7476', ['rgba(150,175,185,0.35)', 'rgba(30,40,45,0.3)'], ['#4f5b60', '#9aa6aa', '#3c4448'], 15), roughness: 0.7, fog: false}),
-      cRock: new THREE.MeshStandardMaterial({map: soilTex('#86563c', ['rgba(190,130,90,0.3)', 'rgba(60,30,18,0.3)'], ['#5e3a28', '#a8775a'], 17, 1 / 30), roughness: 1, fog: false}),
-      ice: new THREE.MeshStandardMaterial({map: iceTex(), roughness: 0.3, metalness: 0}),
+      cAll: new THREE.MeshStandardMaterial({map: soilTex('#98724f', ['rgba(220,190,150,0.3)', 'rgba(70,50,30,0.3)'], ['#6d6258', '#c9b9a0', '#86684c', '#5b5048'], 13), roughness: 1, fog: false}),
+      cAq: new THREE.MeshStandardMaterial({map: soilTex('#5d7180', ['rgba(150,175,185,0.35)', 'rgba(30,40,45,0.3)'], ['#4f5b60', '#9aa6aa', '#3c4448'], 15), roughness: 0.7, fog: false}),
+      cRock: new THREE.MeshStandardMaterial({map: soilTex('#7a4630', ['rgba(190,130,90,0.3)', 'rgba(60,30,18,0.3)'], ['#5e3a28', '#a8775a'], 17, 1 / 30), roughness: 1, fog: false}),
+      ice: new THREE.MeshStandardMaterial({map: iceTex(), color: '#dbeef7', roughness: 0.3, metalness: 0}),
       iceTop: new THREE.MeshStandardMaterial({map: frostTex(), color: '#dff0f6', roughness: 0.35}),
-      poolIce: new THREE.MeshStandardMaterial({color: '#cfe6ee', roughness: 0.25, transparent: true, opacity: 0.92}),
+      poolIce: new THREE.MeshStandardMaterial({color: '#d3eaf2', roughness: 0.25}),
+      poolIce2: new THREE.MeshStandardMaterial({color: '#b3d4e2', roughness: 0.25}),
       straw: new THREE.MeshStandardMaterial({map: strawTex(), roughness: 1}),
       film: new THREE.MeshStandardMaterial({map: waterTexture(), color: '#5f9fb0', roughness: 0.08, metalness: 0.15, transparent: true, opacity: 0.85, depthWrite: false}),
       grid: new THREE.MeshBasicMaterial({map: gridTex(), transparent: true, opacity: 0, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -4}),
@@ -562,8 +571,8 @@ const useWorld = () =>
       slot: new THREE.MeshStandardMaterial({color: '#2e2219', roughness: 1}),
       canopy: new THREE.MeshStandardMaterial({color: '#ffffff', roughness: 0.95}),
       trunk: new THREE.MeshStandardMaterial({color: '#5c4532', roughness: 1}),
-      warm: new THREE.MeshBasicMaterial({color: '#ffa260', transparent: true, opacity: 0.95, fog: false, depthWrite: false}),
-      cold: new THREE.MeshBasicMaterial({color: '#bfe8f7', transparent: true, opacity: 0.95, fog: false, depthWrite: false}),
+      warm: new THREE.MeshBasicMaterial({color: '#ff8a3d', transparent: true, opacity: 0.95, fog: false, depthWrite: false}),
+      cold: new THREE.MeshBasicMaterial({color: '#8fd6f2', transparent: true, opacity: 0.95, fog: false, depthWrite: false}),
       heat: new THREE.MeshBasicMaterial({color: '#cfe0ff', transparent: true, opacity: 0.8, fog: false, depthWrite: false}),
       flow: new THREE.MeshBasicMaterial({color: '#e6fbff', transparent: true, opacity: 0.9, fog: false, depthWrite: false}),
       flume: new THREE.MeshStandardMaterial({map: waterTexture(), color: '#5f9fb0', roughness: 0.08, metalness: 0.15, transparent: true, opacity: 0.85, depthWrite: false}),
@@ -595,8 +604,8 @@ const useWorld = () =>
     const pos: number[] = [];
     const colors: number[] = [];
     const uv: number[] = [];
-    const cSandA = new THREE.Color('#e2b981');
-    const cSandB = new THREE.Color('#cf9f68');
+    const cSandA = new THREE.Color('#ead0a0');
+    const cSandB = new THREE.Color('#dcb582');
     const cGravel = new THREE.Color('#a98a68');
     const cMount = new THREE.Color('#8f6b52');
     const cSnow = new THREE.Color('#efe6dc');
@@ -636,8 +645,10 @@ const useWorld = () =>
 
     // --- купол: стены (половина) и срез стены в z=0
     const prof = domeProfile();
-    const dome = new THREE.Mesh(halfLathe(prof, 56), m.domeMat);
+    const dome = new THREE.Mesh(halfLathe(outerProfile(), 64), m.domeMat);
     world.add(dome);
+    // изнанка купола темнее: внутри тень и прохлада
+    world.add(new THREE.Mesh(halfLathe(innerProfile(), 64), m.domeIn));
     const capPts = prof.slice(0, -1);
     const capR = polyFace(capPts.map(([x, y]) => [x, y]), 0);
     const capL = polyFace(capPts.map(([x, y]) => [-x, y]), 0);
@@ -991,7 +1002,7 @@ const YakhWorld: React.FC<{P: Record<string, any>; dur: number}> = ({P, dur}) =>
     for (let k = 0; k < nl; k++) {
       add(
         cached(`pl${k}`, () => {
-          const g = new THREE.Mesh(box(PX0, PX1, PFLOOR + k * PLAYER, PFLOOR + (k + 1) * PLAYER - 0.004, PZ, 0), m.poolIce);
+          const g = new THREE.Mesh(box(PX0, PX1, PFLOOR + k * PLAYER, PFLOOR + (k + 1) * PLAYER, PZ, 0), k % 2 ? m.poolIce2 : m.poolIce);
           g.receiveShadow = true;
           g.renderOrder = 1;
           return g;
@@ -1110,13 +1121,13 @@ const YakhWorld: React.FC<{P: Record<string, any>; dur: number}> = ({P, dur}) =>
         for (let k = 0; k < 7; k++) {
           const u = (k / 7 + t * 0.12) % 1;
           const [x, y, a] = pathPt(warmP, u);
-          chev(m.warm, x, y, -1.6, a, 0.9 * air * (1 - smooth(0.88, 1, u)) * smooth(0, 0.06, u));
+          chev(m.warm, x, y, -1.6, a, 1.4 * air * (1 - smooth(0.88, 1, u)) * smooth(0, 0.06, u));
         }
         const coldP: [number, number][] = [[s * 6.4, 8], [s * 6.2, 3], [s * 4.5, iceTopY + 0.6]];
         for (let k = 0; k < 4; k++) {
           const u = (k / 4 + t * 0.08) % 1;
           const [x, y, a] = pathPt(coldP, u);
-          chev(m.cold, x, y, -1.6, a, 0.85 * air * (1 - smooth(0.85, 1, u)) * smooth(0, 0.1, u));
+          chev(m.cold, x, y, -1.6, a, 1.3 * air * (1 - smooth(0.85, 1, u)) * smooth(0, 0.1, u));
         }
       });
     }
