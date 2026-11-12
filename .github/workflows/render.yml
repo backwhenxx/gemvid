@@ -29,6 +29,7 @@ on:
       - "episodes/**/voice.mp3"
       - "episodes/**/episode.json"
 
+
 permissions:
   contents: write
 
@@ -36,10 +37,17 @@ concurrency:
   group: render-${{ github.ref }}
   cancel-in-progress: false
 
+env:
+  PARTS: 6
+
 jobs:
-  render:
+  # 1) подготовка: озвучка → тайминги, звуки, модели → timeline.json (или режимы проверки целиком)
+  prep:
     runs-on: ubuntu-latest
-    timeout-minutes: 330
+    timeout-minutes: 90
+    outputs:
+      ep: ${{ steps.eps.outputs.ep }}
+      full: ${{ steps.eps.outputs.full }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -49,12 +57,17 @@ jobs:
         id: eps
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "list=${{ inputs.episode }}" >> "$GITHUB_OUTPUT"
+            L="${{ inputs.episode }}"
           else
             L=$(git diff --name-only HEAD^ HEAD -- episodes/ | cut -d/ -f2 | sort -u | while read e; do [ -f "episodes/$e/voice.mp3" ] && echo "$e"; done | tr '\n' ' ')
-            echo "list=$L" >> "$GITHUB_OUTPUT"
           fi
-          echo "Эпизоды: $(grep list "$GITHUB_OUTPUT")"
+          echo "list=$L" >> "$GITHUB_OUTPUT"
+          EP=$(echo $L | awk '{print $1}')
+          echo "ep=$EP" >> "$GITHUB_OUTPUT"
+          FULL=false
+          if [ -n "$EP" ] && [ "${{ inputs.cover_only }}" != "true" ] && [ "${{ inputs.stills }}" != "true" ] && [ "${{ inputs.sounds_only }}" != "true" ]; then FULL=true; fi
+          echo "full=$FULL" >> "$GITHUB_OUTPUT"
+          echo "Эпизоды: $L; полный рендер кусками: $FULL ($EP)"
 
       - uses: actions/setup-node@v4
         if: steps.eps.outputs.list != ''
@@ -67,7 +80,7 @@ jobs:
           python-version: "3.11"
           cache: pip
 
-      - name: Кэш npm и модели Whisper
+      - name: Кэш npm, звуков, моделей и Whisper
         if: steps.eps.outputs.list != ''
         uses: actions/cache@v4
         with:
@@ -78,7 +91,7 @@ jobs:
             public/lib
           key: deps-${{ hashFiles('package.json', 'package-lock.json', 'requirements.txt') }}
 
-      - name: Системные пакеты (FFmpeg, эмодзи, espeak)
+      - name: Системные пакеты
         if: steps.eps.outputs.list != ''
         run: |
           sudo apt-get update -qq
@@ -88,47 +101,130 @@ jobs:
         if: steps.eps.outputs.list != ''
         run: |
           [ "${{ inputs.cover_only }}" = "true" ] || [ "${{ inputs.stills }}" = "true" ] || pip install -q -r requirements.txt
-          # версии библиотек закреплены в package-lock.json; первый запуск без него создаёт файл и кладёт в репо
+          # версии библиотек закреплены в package-lock.json; первый запуск без него создаёт файл
           if [ -f package-lock.json ]; then npm ci --no-audit --no-fund --loglevel=error; else npm install --no-audit --no-fund --loglevel=error; fi
 
-      - name: Сборка
+      - name: Подготовка или проверка
         if: steps.eps.outputs.list != ''
         env:
           CHROME_PATH: /usr/bin/google-chrome
           GH_TOKEN: ${{ github.token }}
         run: |
+          if [ "${{ steps.eps.outputs.full }}" = "true" ]; then
+            node scripts/build.mjs "episodes/${{ steps.eps.outputs.ep }}" ${{ inputs.demo_voice && '--demo-voice' || '' }} --prep
+            exit 0
+          fi
           for EP in ${{ steps.eps.outputs.list }}; do
             if [ "${{ inputs.sounds_only }}" = "true" ]; then node scripts/sounds.mjs "episodes/$EP"; continue; fi
-            node scripts/build.mjs "episodes/$EP" ${{ inputs.demo_voice && '--demo-voice' || '' }} ${{ inputs.cover_only && '--cover-only' || '' }} ${{ inputs.stills && '--stills' || '' }}
+            node scripts/build.mjs "episodes/$EP" ${{ inputs.cover_only && '--cover-only' || '' }} ${{ inputs.stills && '--stills' || '' }}
           done
 
-      - name: Видео в Releases (скачать можно с телефона)
-        if: steps.eps.outputs.list != ''
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          for EP in ${{ steps.eps.outputs.list }}; do
-            [ "${{ inputs.sounds_only }}" = "true" ] && exit 0
-            [ "${{ inputs.stills }}" = "true" ] && exit 0
-            FILES=""; for f in "out/$EP/$EP.mp4" "out/$EP/preview.jpg" "out/$EP/cover.png"; do [ -f "$f" ] && FILES="$FILES $f"; done
-            gh release create "$EP-${{ github.run_number }}" $FILES \
-              --title "$EP · сборка ${{ github.run_number }}" \
-              --notes "Готовый шортс 1080×1920. Сценарий: episodes/$EP/episode.json"
-          done
-
-      - uses: actions/upload-artifact@v4
-        if: steps.eps.outputs.list != ''
+      - name: Данные для кусков
+        if: steps.eps.outputs.full == 'true'
+        uses: actions/upload-artifact@v4
         with:
-          name: shorts-${{ github.run_number }}
-          path: out/
-          retention-days: 14
+          name: prep
+          path: |
+            public/
+            out/${{ steps.eps.outputs.ep }}/
+            package-lock.json
+          retention-days: 2
 
-      - name: Превью и тайминги обратно в репо
-        if: steps.eps.outputs.list != ''
+      - name: Результаты проверки обратно в репо
+        if: steps.eps.outputs.list != '' && steps.eps.outputs.full != 'true'
         run: |
           git config user.name "gemvid-bot"
           git config user.email "actions@github.com"
-          for EP in ${{ steps.eps.outputs.list }}; do for f in preview.jpg timeline.json words.json cover.png sounds.json stills.jpg stills_big.jpg; do [ -f "out/$EP/$f" ] && git add -f "out/$EP/$f"; done; done
+          for EP in ${{ steps.eps.outputs.list }}; do for f in cover.png sounds.json stills.jpg stills_big.jpg; do [ -f "out/$EP/$f" ] && git add -f "out/$EP/$f"; done; done
           [ -f package-lock.json ] && git add package-lock.json
-          git commit -m "Рендер: ${{ steps.eps.outputs.list }} [skip ci]" || exit 0
+          git commit -m "Проверка: ${{ steps.eps.outputs.list }} [skip ci]" || exit 0
+          for i in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 3; done
+
+  # 2) куски кадров параллельно
+  part:
+    needs: prep
+    if: needs.prep.outputs.full == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: true
+      matrix:
+        i: [0, 1, 2, 3, 4, 5]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: prep
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Кэш npm
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('package.json', 'package-lock.json') }}
+      - name: Зависимости
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-color-emoji > /dev/null
+          if [ -f package-lock.json ]; then npm ci --no-audit --no-fund --loglevel=error; else npm install --no-audit --no-fund --loglevel=error; fi
+      - name: Кусок ${{ matrix.i }}
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+        run: node scripts/build.mjs "episodes/${{ needs.prep.outputs.ep }}" --part ${{ matrix.i }}/${{ env.PARTS }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: part-${{ matrix.i }}
+          path: out/${{ needs.prep.outputs.ep }}/parts/*.mp4
+          retention-days: 2
+
+  # 3) склейка, звук, обложка, релиз
+  merge:
+    needs: [prep, part]
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: prep
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: part-*
+          path: out/${{ needs.prep.outputs.ep }}/parts
+          merge-multiple: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Кэш npm
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('package.json', 'package-lock.json') }}
+      - name: Зависимости
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg fonts-noto-color-emoji > /dev/null
+          if [ -f package-lock.json ]; then npm ci --no-audit --no-fund --loglevel=error; else npm install --no-audit --no-fund --loglevel=error; fi
+      - name: Склейка и звук
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+        run: node scripts/build.mjs "episodes/${{ needs.prep.outputs.ep }}" --merge
+
+      - name: Видео в Releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          EP=${{ needs.prep.outputs.ep }}
+          FILES=""; for f in "out/$EP/$EP.mp4" "out/$EP/preview.jpg" "out/$EP/cover.png"; do [ -f "$f" ] && FILES="$FILES $f"; done
+          gh release create "$EP-${{ github.run_number }}" $FILES \
+            --title "$EP · сборка ${{ github.run_number }}" \
+            --notes "Готовый шортс 1080×1920. Сценарий: episodes/$EP/episode.json"
+
+      - name: Превью и тайминги обратно в репо
+        run: |
+          EP=${{ needs.prep.outputs.ep }}
+          git config user.name "gemvid-bot"
+          git config user.email "actions@github.com"
+          for f in preview.jpg timeline.json words.json cover.png sounds.json; do [ -f "out/$EP/$f" ] && git add -f "out/$EP/$f"; done
+          [ -f package-lock.json ] && git add -f package-lock.json
+          git commit -m "Рендер: $EP [skip ci]" || exit 0
           for i in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 3; done

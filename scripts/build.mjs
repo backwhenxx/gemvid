@@ -34,6 +34,63 @@ const pubBase = `ep/${slug}`;
 const pubDir = path.join(ROOT, 'public', pubBase);
 const outDir = path.join(ROOT, 'out', slug);
 fs.mkdirSync(outDir, {recursive: true});
+// Параллельный рендер: --prep (всё до timeline.json), --part i/N (кусок кадров без звука), --merge (склейка + звук)
+const PART = opt('--part', null);
+const MERGE = flag('--merge');
+if (PART || MERGE) {
+  const timeline = JSON.parse(fs.readFileSync(path.join(outDir, 'timeline.json'), 'utf8'));
+  const sh2 = (cmd, a) => execFileSync(cmd, a, {stdio: ['ignore', 'inherit', 'inherit']});
+  const serveUrl = await bundle({entryPoint: path.join(ROOT, 'src/index.ts'), publicDir: path.join(ROOT, 'public')});
+  const inputProps = {timeline};
+  const composition = await selectComposition({serveUrl, id: 'Short', inputProps, chromiumOptions: {gl: 'swangle'}, timeoutInMilliseconds: 180000});
+  const N = timeline.durationInFrames;
+  const partsDir = path.join(outDir, 'parts');
+  fs.mkdirSync(partsDir, {recursive: true});
+  if (PART) {
+    const [i, n] = PART.split('/').map(Number);
+    const a = Math.floor((N * i) / n);
+    const b = Math.floor((N * (i + 1)) / n) - 1;
+    console.log(`[${slug}] часть ${i + 1}/${n}: кадры ${a}–${b}`);
+    let lastPct = -10;
+    await renderMedia({
+      composition, serveUrl, codec: 'h264', crf: 18, x264Preset: 'veryfast', muted: true, frameRange: [a, b],
+      outputLocation: path.join(partsDir, `part_${String(i).padStart(2, '0')}.mp4`), inputProps,
+      chromiumOptions: {gl: 'swangle'}, concurrency: Math.max(1, os.cpus().length), timeoutInMilliseconds: 180000,
+      onProgress: ({progress}) => {
+        const p = Math.floor(progress * 100);
+        if (p >= lastPct + 10) {
+          lastPct = p;
+          console.log(`[${slug}] часть ${i + 1}: ${p}%`);
+        }
+      },
+    });
+    process.exit(0);
+  }
+  // --merge: видео-куски встык, звук отдельным проходом (без отрисовки кадров), громкость, обложка, превью
+  const parts = fs.readdirSync(partsDir).filter((f) => f.endsWith('.mp4')).sort();
+  if (!parts.length) throw new Error('Нет кусков в ' + partsDir);
+  const list = path.join(partsDir, 'list.txt');
+  fs.writeFileSync(list, parts.map((f) => `file '${path.join(partsDir, f)}'`).join('\n'));
+  const vid = path.join(ROOT, '.render', `${slug}_v.mp4`);
+  const aud = path.join(ROOT, '.render', `${slug}_a.aac`);
+  fs.mkdirSync(path.dirname(vid), {recursive: true});
+  sh2('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', list, '-c', 'copy', vid]);
+  const nf = parseInt(execFileSync('ffprobe', ['-v', 'error', '-count_packets', '-select_streams', 'v:0', '-show_entries', 'stream=nb_read_packets', '-of', 'csv=p=0', vid]).toString().trim(), 10);
+  console.log(`[${slug}] склеено кадров: ${nf} из ${N}`);
+  if (nf !== N) throw new Error(`Склейка: ${nf} кадров вместо ${N}`);
+  await renderMedia({composition, serveUrl, codec: 'aac', outputLocation: aud, inputProps, chromiumOptions: {gl: 'swangle'}, timeoutInMilliseconds: 180000});
+  const total = N / timeline.fps;
+  const final = path.join(outDir, `${slug}.mp4`);
+  sh2('ffmpeg', ['-y', '-loglevel', 'error', '-i', vid, '-i', aud, '-map', '0:v', '-map', '1:a', '-c:v', 'copy', '-af', 'loudnorm=I=-14:TP=-1.5:LRA=11', '-c:a', 'aac', '-b:a', '192k', '-ar', '48000', '-shortest', '-movflags', '+faststart', final]);
+  if (ep.cover) {
+    const coverProps = {timeline, cover: ep.cover};
+    const coverComp = await selectComposition({serveUrl, id: 'Cover', inputProps: coverProps, chromiumOptions: {gl: 'swangle'}, timeoutInMilliseconds: 180000});
+    await renderStill({composition: coverComp, serveUrl, inputProps: coverProps, output: path.join(outDir, 'cover.png'), chromiumOptions: {gl: 'swangle'}, timeoutInMilliseconds: 180000});
+  }
+  sh2('ffmpeg', ['-y', '-loglevel', 'error', '-i', final, '-vf', `fps=${(12 / total).toFixed(4)},scale=270:-1,tile=6x2`, '-frames:v', '1', '-q:v', '4', path.join(outDir, 'preview.jpg')]);
+  console.log(`[${slug}] готово → out/${slug}/${slug}.mp4`);
+  process.exit(0);
+}
 fs.rmSync(pubDir, {recursive: true, force: true});
 fs.mkdirSync(pubDir, {recursive: true});
 fs.cpSync(epDir, pubDir, {recursive: true});
@@ -303,6 +360,10 @@ const timeline = {
 fs.writeFileSync(path.join(outDir, 'timeline.json'), JSON.stringify(timeline, null, 1));
 log(`сцен: ${scenes.length}, длительность ${total.toFixed(1)} с`);
 if (total < 45) log(`⚠ ролик короче 45 с (${total.toFixed(1)} с)`);
+if (flag('--prep')) {
+  log('подготовка готова (timeline.json) — рендер кусками');
+  process.exit(0);
+}
 
 // ---------- рендер ----------
 log('сборка Remotion…');
