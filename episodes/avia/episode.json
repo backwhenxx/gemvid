@@ -30,7 +30,7 @@
    "slug": 0.75
   }
  },
- "stillPairs": true,
+ "stillPairs": false,
  "scenes": [
   {
    "type": "avia",

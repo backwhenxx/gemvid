@@ -185,9 +185,9 @@ const CAMS: Record<string, Cam> = {
   bowl2: {pos: [-8.75, -0.05, 1.9], look: [-9.4, -0.38, 0]},
   lav: {pos: [-8.2, 0.1, 4.6], look: [-10.0, -0.6, 0]},
   lavB: {pos: [-7.7, 0.5, 6.6], look: [-10.1, -0.5, 0]},
-  diag: {pos: [8, 13, 23], look: [-4, -0.3, 0]},
-  diag2: {pos: [5, 10.5, 19], look: [-4.5, -0.3, 0]},
-  mid: {pos: [-3, 3, 13], look: [-6.5, -0.2, 0]},
+  diag: {pos: [-23, 9, 23], look: [-5, -0.3, 0]},
+  diag2: {pos: [-20, 7.5, 19], look: [-5.5, -0.3, 0]},
+  mid: {pos: [-15, 2.6, 12], look: [-7.5, -0.2, 0]},
   under: {pos: [-9.95, -0.75, 3.0], look: [-10.5, -1.0, 0]},
   tank: {pos: [-10.95, -0.8, 2.7], look: [-11.5, -1.05, 0]},
   hatch: {pos: [-9.8, -2.4, 4.2], look: [-11.2, -1.4, 0]},
@@ -259,7 +259,7 @@ const deckTex = () => {
     });
     return v / tot;
   };
-  const sh = new THREE.Color('#8687b4');
+  const sh = new THREE.Color('#a7a4c9');
   const mid = new THREE.Color('#e6c9b0');
   const li = new THREE.Color('#fff4e0');
   const cc = new THREE.Color();
@@ -410,7 +410,7 @@ const useWorld = () =>
       hold: new THREE.MeshStandardMaterial({color: '#59616f', roughness: 0.9, side: THREE.DoubleSide}),
       ribs: new THREE.MeshStandardMaterial({map: ribTex(), roughness: 0.85, side: THREE.DoubleSide}),
       body: new THREE.MeshStandardMaterial({color: '#eef0f2', roughness: 0.35}),
-      bowlIn: new THREE.MeshStandardMaterial({map: steelTex('#8d98a4', 21), roughness: 0.3, metalness: 0.7}),
+      bowlIn: new THREE.MeshStandardMaterial({color: '#aeb8c2', roughness: 0.45, metalness: 0.3}),
       lavWall: new THREE.MeshStandardMaterial({color: '#c9d3da', roughness: 0.8, side: THREE.DoubleSide}),
       carpet: new THREE.MeshStandardMaterial({map: carpetTex(), roughness: 1}),
       wall: new THREE.MeshStandardMaterial({color: '#ded7c9', roughness: 0.85, side: THREE.DoubleSide}),
@@ -418,15 +418,15 @@ const useWorld = () =>
       head: new THREE.MeshStandardMaterial({color: '#d9d2c2', roughness: 0.9}),
       bin: new THREE.MeshStandardMaterial({color: '#e7e2d8', roughness: 0.6}),
       strip: new THREE.MeshBasicMaterial({color: '#ffe2b0'}),
-      winIn: new THREE.MeshBasicMaterial({color: '#ffd5a0'}),
+      winIn: new THREE.MeshBasicMaterial({color: '#ffc27a'}),
       winOut: new THREE.MeshStandardMaterial({color: '#1c2632', roughness: 0.15, metalness: 0.3, emissive: '#ffc98a', emissiveIntensity: 0.3}),
       glass: new THREE.MeshStandardMaterial({color: '#141c26', roughness: 0.1, metalness: 0.4}),
-      steel: new THREE.MeshStandardMaterial({map: steelTex('#b9c0c8', 9), roughness: 0.35, metalness: 0.75, side: THREE.DoubleSide}),
+      steel: new THREE.MeshStandardMaterial({color: '#aeb8c2', roughness: 0.45, metalness: 0.3, side: THREE.DoubleSide}),
       steelCut: new THREE.MeshStandardMaterial({color: '#7f8891', roughness: 0.6, metalness: 0.4}),
       white: new THREE.MeshStandardMaterial({color: '#f4f2ec', roughness: 0.5}),
-      pipe: new THREE.MeshStandardMaterial({map: steelTex('#aab3bd', 11), roughness: 0.4, metalness: 0.7, side: THREE.DoubleSide, clippingPlanes: [clipZ], emissive: '#ffcf7a', emissiveIntensity: 0}),
+      pipe: new THREE.MeshStandardMaterial({color: '#aeb8c2', roughness: 0.45, metalness: 0.3, side: THREE.DoubleSide, clippingPlanes: [clipZ], emissive: '#ffcf7a', emissiveIntensity: 0}),
       vent: new THREE.MeshStandardMaterial({color: '#9aa4af', roughness: 0.4, metalness: 0.7, side: THREE.DoubleSide, clippingPlanes: [clipZ], emissive: '#ffcf7a', emissiveIntensity: 0}),
-      tank: new THREE.MeshStandardMaterial({map: steelTex('#a8b0b8', 13), roughness: 0.45, metalness: 0.65, side: THREE.DoubleSide, clippingPlanes: [clipZ], emissive: '#ffcf7a', emissiveIntensity: 0}),
+      tank: new THREE.MeshStandardMaterial({color: '#aeb8c2', roughness: 0.45, metalness: 0.3, side: THREE.DoubleSide, clippingPlanes: [clipZ], emissive: '#ffcf7a', emissiveIntensity: 0}),
       tankCut: new THREE.MeshStandardMaterial({color: '#6f7780', roughness: 0.6, metalness: 0.4}),
       liquid: new THREE.MeshStandardMaterial({color: '#2b86b8', roughness: 0.25, metalness: 0.1, emissive: '#1a5f8a', emissiveIntensity: 0.35, side: THREE.DoubleSide, clippingPlanes: [clipZ, clipY]}),
       liquidCut: new THREE.MeshStandardMaterial({color: '#3a9bd0', roughness: 0.3, emissive: '#1f6f9e', emissiveIntensity: 0.4, clippingPlanes: [clipY]}),
@@ -716,9 +716,9 @@ const useWorld = () =>
     deck.rotation.x = -Math.PI / 2;
     deck.position.y = -1500;
     const puffs: {s: THREE.Sprite; x0: number; span: number}[] = [];
-    for (let i = 0; i < 80; i++) {
+    for (let i = 0; i < 34; i++) {
       const s = new THREE.Sprite(new THREE.SpriteMaterial({map: cloudTexture(300 + (i % 14)), color: '#fff3e2', transparent: true, opacity: 0.7, depthWrite: false}));
-      const near = i < 50;
+      const near = false;
       const sc = near ? 700 + r() * 1300 : 1500 + r() * 2500;
       s.scale.set(sc, sc * (0.32 + r() * 0.12), 1);
       const x0 = -9000 + r() * 18000;
