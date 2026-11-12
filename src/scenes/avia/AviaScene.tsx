@@ -190,8 +190,8 @@ const CAMS: Record<string, Cam> = {
   mid: {pos: [-15, 2.6, 12], look: [-7.5, -0.2, 0]},
   under: {pos: [-9.95, -0.75, 3.0], look: [-10.5, -1.0, 0]},
   tank: {pos: [-10.95, -0.8, 2.7], look: [-11.5, -1.05, 0]},
-  hatch: {pos: [-9.8, -2.4, 4.2], look: [-11.2, -1.4, 0]},
-  tail: {pos: [-26, 5, 9], look: [-12, 0, 0]},
+  hatch: {pos: [-10.1, -1.75, 3.3], look: [-11.15, -1.5, 0]},
+  tail: {pos: [-25, 10, 15], look: [-10, 0, 0]},
   ext: {pos: [-36, 7, -27], look: [-2, 0.3, 0]},
   cover: {pos: [-7.4, 0.5, 5.6], look: [-10.0, -0.6, 0]},
 };
@@ -259,8 +259,8 @@ const deckTex = () => {
     });
     return v / tot;
   };
-  const sh = new THREE.Color('#a7a4c9');
-  const mid = new THREE.Color('#e6c9b0');
+  const sh = new THREE.Color('#c2bbd8');
+  const mid = new THREE.Color('#f0d3b6');
   const li = new THREE.Color('#fff4e0');
   const cc = new THREE.Color();
   for (let y = 0; y < S; y++)
@@ -927,6 +927,7 @@ const AviaWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> = (
     SL.btnGlow.scale.setScalar(0.5);
     (SL.btnGlow.material as THREE.SpriteMaterial).opacity = 0.75 * btn;
 
+    // шаг шеврона за кадр ≤ 1/4 расстояния между шевронами, иначе поток «стробит» (кажется мерцанием)
     const stream = (key: string, P0: Path, n: number, speed: number, size: number, mat: THREE.Material, amt: number, z = 0.02) => {
       if (amt < 0.01) return;
       for (let k = 0; k < n; k++) {
@@ -941,9 +942,9 @@ const AviaWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> = (
         add(c);
       }
     };
-    P_FEED.forEach((F, i) => stream(`feed${i}`, F, 5, 2.6, 0.2, m.flowWarm, flush));
-    stream('main', P_MAIN, 13, 3.4, 0.15, m.flow, flush);
-    stream('vent', P_VENT, 16, 3.4, 0.14, m.flow, range(P.ventFlow ?? P.flush ?? 0, p));
+    P_FEED.forEach((F, i) => stream(`feed${i}`, F, 5, 1.3, 0.2, m.flowWarm, flush));
+    stream('main', P_MAIN, 11, 1.25, 0.15, m.flow, flush);
+    stream('vent', P_VENT, 16, 2.0, 0.14, m.flow, range(P.ventFlow ?? P.flush ?? 0, p));
 
     // синяя жидкость уходит по трубе в бак
     const slug = range(P.slug ?? -1, p);
