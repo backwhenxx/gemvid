@@ -966,8 +966,10 @@ const YakhWorld: React.FC<{P: Record<string, any>; dur: number}> = ({P, dur}) =>
       const y0 = -PD + k * (ICE_L + STRAW);
       const hgt = q(ICE_L * f, 10);
       if (hgt < 0.05) continue;
+      const withStraw = f >= 0.999 && k < ICE_MAX - 1;
+      // ключ кэша = ВСЕ входы геометрии; иначе вкладки рендера держат разные версии → мерцание через кадр
       add(
-        cached(`ice${k}_${hgt}`, () => {
+        cached(`ice${k}_${hgt}_${withStraw ? 's' : 'n'}`, () => {
           const g = new THREE.Group();
           const cyl = new THREE.Mesh(new THREE.CylinderGeometry(iceR, iceR, hgt, 40, 1, false, Math.PI / 2, Math.PI), [m.iceTop, m.iceTop, m.iceTop]);
           cyl.position.y = y0 + hgt / 2;
@@ -978,7 +980,7 @@ const YakhWorld: React.FC<{P: Record<string, any>; dur: number}> = ({P, dur}) =>
           const fr = new THREE.Mesh(fg, m.ice);
           fr.position.set(0, y0 + hgt / 2, 0);
           g.add(fr);
-          if (f >= 0.999 && k < ICE_MAX - 1) {
+          if (withStraw) {
             // солома поверх готового слоя
             const st = new THREE.Mesh(new THREE.CylinderGeometry(iceR, iceR, STRAW, 40, 1, false, Math.PI / 2, Math.PI), m.straw);
             st.position.y = y0 + ICE_L + STRAW / 2;
