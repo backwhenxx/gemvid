@@ -89,7 +89,7 @@ const CAMS: Record<string, Cam> = {
   rays: {pos: [0.9, 44.3, 3.6], look: [1.0, 44.3, 0]},
   far: {pos: [-30, 60, 22], look: [260, 22, -140]},
   sweep: {pos: [-70, 120, 110], look: [70, 10, -70]},
-  seaLow: {pos: [150, 12, 40], look: [0, 33, -6]},
+  seaLow: {pos: [170, 42, 70], look: [0, 29, -6]},
   shipView: {pos: [-8, 48.5, 14], look: [165, 4, -265]},
   shipView2: {pos: [-6, 48, 10], look: [165, 6, -272]},
   lensBack: {pos: [2.6, 44.9, 3.3], look: [0, 44.0, 0]},
@@ -265,10 +265,12 @@ const discsTex = () => {
   g.fillStyle = '#7a7d83';
   g.fillRect(0, 0, 64, 256);
   for (let k = 0; k < 6; k++) {
-    g.fillStyle = 'rgba(0,0,0,0.55)';
-    g.fillRect(0, k * 42 + 38, 64, 4);
-    g.fillStyle = 'rgba(255,255,255,0.12)';
-    g.fillRect(0, k * 42 + 2, 64, 3);
+    const gr = g.createLinearGradient(0, k * 42 + 30, 0, k * 42 + 48);
+    gr.addColorStop(0, 'rgba(0,0,0,0)');
+    gr.addColorStop(0.5, 'rgba(0,0,0,0.35)');
+    gr.addColorStop(1, 'rgba(0,0,0,0)');
+    g.fillStyle = gr;
+    g.fillRect(0, k * 42 + 30, 64, 18);
   }
   speckle(g, 64, 256, 200, ['rgba(0,0,0,0.2)', 'rgba(140,100,70,0.2)'], 3, [0.5, 1.4]);
   return tex(c);
@@ -610,7 +612,7 @@ const useWorld = () =>
       step: new THREE.MeshStandardMaterial({map: stoneTex('#a59f95', 11), roughness: 0.9}),
       land: new THREE.MeshStandardMaterial({map: grassTex(), vertexColors: true, roughness: 1}),
       rock: new THREE.MeshStandardMaterial({map: stoneTex('#76726d', 15), roughness: 1, flatShading: true}),
-      sea: new THREE.MeshStandardMaterial({map: waterTexture(), color: '#1f4a66', roughness: 0.35, metalness: 0, envMapIntensity: 0.25}),
+      sea: new THREE.MeshPhysicalMaterial({map: waterTexture(), color: '#22506e', roughness: 0.28, metalness: 0, specularIntensity: 0.18, envMapIntensity: 0.3}),
       iron: new THREE.MeshStandardMaterial({map: ironTex(), roughness: 0.6, metalness: 0.55, side: THREE.DoubleSide}),
       ironDark: new THREE.MeshStandardMaterial({color: '#4a4c50', roughness: 0.8, side: THREE.DoubleSide}),
       lanternIron: new THREE.MeshStandardMaterial({color: '#2b2f2c', roughness: 0.5, metalness: 0.5, side: THREE.DoubleSide}),
@@ -618,7 +620,7 @@ const useWorld = () =>
       brass: new THREE.MeshStandardMaterial({color: '#c39340', roughness: 0.32, metalness: 0.9}),
       bronze: new THREE.MeshStandardMaterial({color: '#7a5a34', roughness: 0.4, metalness: 0.8}),
       mercury: new THREE.MeshStandardMaterial({color: '#cdd3dc', roughness: 0.12, metalness: 0.9, envMapIntensity: 1.6, emissive: '#7d8796', emissiveIntensity: 0.15}),
-      weight: new THREE.MeshStandardMaterial({map: discsTex(), color: '#c9ccd2', roughness: 0.5, metalness: 0.3, emissive: '#ffb050', emissiveIntensity: 0}),
+      weight: new THREE.MeshStandardMaterial({map: discsTex(), color: '#a7adb5', roughness: 0.55, metalness: 0.25, emissive: '#ffb050', emissiveIntensity: 0}),
       drum: new THREE.MeshStandardMaterial({map: drumTex(), roughness: 0.6, metalness: 0.4}),
       shaft: new THREE.MeshStandardMaterial({map: shaftTex(), roughness: 0.35, metalness: 0.8}),
       cable: new THREE.MeshStandardMaterial({color: '#6d655a', roughness: 0.6, metalness: 0.4, transparent: true}),
@@ -1259,11 +1261,10 @@ const MayakWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> = 
     // трос: от гири до барабана (длина квантуется → ключ кэша = длина)
     const cTop = 39.0;
     const cBot = wy + W_H / 2 + 0.12;
-    const cl = q(cTop - cBot, 50);
-    const cable = cached(`cable_${cl}`, () => {
-      const c = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, cl, 6), m.cable);
-      return c;
-    });
+    // трос — один цилиндр высотой 1, растягивается по длине (без шагов квантования: конец не дёргается у крюка)
+    const cl = Math.max(0.01, cTop - cBot);
+    const cable = cached('cable', () => new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 1, 8), m.cable));
+    cable.scale.set(1, cl, 1);
     cable.position.set(0, cTop - cl / 2, -0.15);
     add(cable);
     m.cable.opacity = 1 - smooth(40, 70, camV.distanceTo(new THREE.Vector3(0, 30, 0)));

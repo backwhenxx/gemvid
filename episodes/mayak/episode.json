@@ -160,7 +160,7 @@
       1
      ]
     ],
-    "camDur": 0.3,
+    "camDur": 1,
     "cont": true,
     "phase": 0.854
    }
@@ -275,7 +275,8 @@
     ],
     "w": 0.15,
     "cont": true,
-    "phase": 0.854
+    "phase": 0.854,
+    "camDur": 1
    }
   },
   {
@@ -303,15 +304,13 @@
    "props": {
     "cam": [
      "bath",
-     "lensSide"
+     "bath2"
     ],
     "night": [
      0.78,
      0.8
     ],
     "w": 0.15,
-    "via": "bath2",
-    "viaAt": 0.45,
     "banner": "Ртуть тяжелее железа",
     "bannerAt": 0.05,
     "bannerSize": 56,
@@ -324,7 +323,7 @@
    "say": "А крутит её... гиря.",
    "props": {
     "cam": [
-     "lensSide",
+     "bath2",
      "wTop"
     ],
     "night": [
@@ -578,5 +577,11 @@
     "phase": 0.854
    }
   }
- ]
+ ],
+ "lensPhase": {
+  "word": "вспышка",
+  "camX": 170,
+  "camZ": 70,
+  "period": 20
+ }
 }

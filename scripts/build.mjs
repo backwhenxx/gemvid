@@ -340,6 +340,19 @@ const ambience = (ep.ambience ?? [])
   .filter(Boolean);
 fs.writeFileSync(path.join(outDir, 'sounds.json'), JSON.stringify(Object.values(snd), null, 1));
 
+// фаза вращения (маяк): луч смотрит на камеру ровно на нужном слове → props.phase всем сценам одинаково
+if (ep.lensPhase && words.length) {
+  const L = ep.lensPhase;
+  const w = words.find((x) => norm(x.text) === norm(L.word));
+  if (w) {
+    const tf = w.start + 0.15;
+    const want = -Math.atan2(L.camZ, L.camX);
+    let ph = want - (2 * Math.PI * tf) / (L.period ?? 20);
+    ph = ((ph % Math.PI) + Math.PI) % Math.PI;
+    scenes.forEach((s) => (s.props = {...s.props, phase: ph}));
+    log(`фаза линзы ${ph.toFixed(3)} (вспышка на «${L.word}» в ${tf.toFixed(2)} с)`);
+  } else log(`⚠ слово для вспышки «${L.word}» не найдено`);
+}
 stampEvents(scenes);
 const timeline = {
   fps: FPS,
