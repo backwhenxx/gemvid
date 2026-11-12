@@ -83,8 +83,8 @@ const CAMS: Record<string, Cam> = {
   top: {pos: [10, 47, 16], look: [0, 41.5, -1]},
   wide: {pos: [80, 36, 125], look: [8, 30, -20]},
   wide2: {pos: [70, 40, 110], look: [5, 31, -18]},
-  bath: {pos: [1.35, 43.33, 1.95], look: [0, 43.2, -0.25]},
-  bath2: {pos: [0.95, 43.3, 1.3], look: [0, 43.22, -0.25]},
+  bath: {pos: [0.95, 43.34, 1.65], look: [0.55, 43.2, -0.1]},
+  bath2: {pos: [0.72, 43.3, 1.05], look: [0.56, 43.22, -0.1]},
   lensSide: {pos: [2.0, 44.6, 2.5], look: [0, 44.3, 0]},
   rays: {pos: [0.9, 44.3, 3.6], look: [1.0, 44.3, 0]},
   far: {pos: [-30, 60, 22], look: [260, 22, -140]},
@@ -127,13 +127,13 @@ const MOON_SKY = new THREE.Vector3(-0.38, 0.36, -0.85).normalize();
 const MOON_L = new THREE.Vector3(-0.35, 0.65, 0.68).normalize();
 const DUSK = {
   sky: {top: '#1c2a58', mid: '#56699a', horizon: '#eea46e', glow: '#ffcf8c', glowSize: 5},
-  fog: '#5f6788',
+  fog: '#55618a',
   fogNear: 320,
   fogFar: 4200,
   hemiSky: '#8494c4',
   hemiGround: '#433a30',
   hemiI: 0.95,
-  rimI: 1.6,
+  rimI: 0.95,
   grade: {shadow: '#1c2448', shadowAmt: 0.1, high: '#ffe2c4', highAmt: 0.07, vignette: 0.38, grain: 0.05},
 };
 const NIGHT = {
@@ -610,7 +610,7 @@ const useWorld = () =>
       step: new THREE.MeshStandardMaterial({map: stoneTex('#a59f95', 11), roughness: 0.9}),
       land: new THREE.MeshStandardMaterial({map: grassTex(), vertexColors: true, roughness: 1}),
       rock: new THREE.MeshStandardMaterial({map: stoneTex('#76726d', 15), roughness: 1, flatShading: true}),
-      sea: new THREE.MeshStandardMaterial({map: waterTexture(), color: '#1d3d57', roughness: 0.55, metalness: 0.05, envMapIntensity: 0.45}),
+      sea: new THREE.MeshStandardMaterial({map: waterTexture(), color: '#163650', roughness: 0.2, metalness: 0, envMapIntensity: 0.8}),
       iron: new THREE.MeshStandardMaterial({map: ironTex(), roughness: 0.6, metalness: 0.55, side: THREE.DoubleSide}),
       ironDark: new THREE.MeshStandardMaterial({color: '#4a4c50', roughness: 0.8, side: THREE.DoubleSide}),
       lanternIron: new THREE.MeshStandardMaterial({color: '#2b2f2c', roughness: 0.5, metalness: 0.5, side: THREE.DoubleSide}),
