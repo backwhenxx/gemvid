@@ -71,7 +71,12 @@ const landH = (x: number, z: number) => {
 };
 const ground = (x: number, z: number) => {
   const d = coastX(z) - x;
-  if (d >= 0) return lerp(-3, landH(x, z), smooth(0, 11, d)) + 1.1 * Math.sin(z * 0.37 + x * 0.21) * smooth(0, 4, d) * (1 - smooth(6, 11, d));
+  if (d >= 0) {
+    // крутой скалистый обрыв: рёбра и выступы породы
+    const cz = smooth(0, 1.2, d) * (1 - smooth(4.5, 6.5, d));
+    const rib = 1.4 * Math.sin(z * 0.31 + x * 0.2) + 0.8 * Math.sin(z * 1.27 + 1.3) + 0.45 * Math.sin(z * 2.9 + x * 0.7);
+    return lerp(-3, landH(x, z), smooth(0, 5.5, d)) + cz * rib;
+  }
   return -3 - 22 * smooth(0, 260, -d) + 0.8 * n2(x * 2, z * 2);
 };
 
@@ -81,7 +86,7 @@ const CAMS: Record<string, Cam> = {
   lensHook: {pos: [2.3, 44.5, 2.9], look: [0, 44.25, 0]},
   lensHook2: {pos: [3.1, 45.0, 4.1], look: [0, 44.1, 0]},
   top: {pos: [10, 47, 16], look: [0, 41.5, -1]},
-  wide: {pos: [80, 36, 125], look: [8, 30, -20]},
+  wide: {pos: [58, 50, 112], look: [4, 28, -20]},
   wide2: {pos: [70, 40, 110], look: [5, 31, -18]},
   bath: {pos: [0.95, 43.34, 1.65], look: [0.55, 43.2, -0.1]},
   bath2: {pos: [0.72, 43.3, 1.05], look: [0.56, 43.22, -0.1]},
@@ -658,7 +663,10 @@ const useWorld = () =>
     const cGrassA = new THREE.Color('#4d7a3c');
     const cGrassB = new THREE.Color('#6c9146');
     const cHeath = new THREE.Color('#6a5358');
-    const cRock = new THREE.Color('#77716b');
+    const cRock = new THREE.Color('#8a8784');
+    const cRockD = new THREE.Color('#5c5a5a');
+    const cRockL = new THREE.Color('#a9a49c');
+    const cRockV = new THREE.Color();
     const cSand = new THREE.Color('#6d6650');
     const cFar = new THREE.Color('#4f5a46');
     const cc = new THREE.Color();
@@ -675,7 +683,10 @@ const useWorld = () =>
         cc.copy(cGrassA).lerp(cGrassB, nn);
         cc.lerp(cHeath, smooth(0.6, 0.95, nn) * 0.3);
         cc.lerp(cFar, smooth(400, 2500, rad) * 0.6);
-        cc.lerp(cRock, smooth(0.25, 0.8, slope));
+        // скала: серый камень со слоями (полосы по высоте), без рыжины
+        const band = 0.5 + 0.5 * Math.sin(h * 1.9 + Math.sin(z * 0.05) * 2);
+        cRockV.copy(cRock).lerp(cRockD, smooth(0.55, 0.9, band) * 0.7).lerp(cRockL, smooth(0.0, 0.25, band) * 0.5);
+        cc.lerp(cRockV, smooth(0.25, 0.8, slope));
         if (h < 1) cc.copy(cSand);
         colors.push(cc.r, cc.g, cc.b);
       }
