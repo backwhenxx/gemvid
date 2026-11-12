@@ -89,9 +89,9 @@ const CAMS: Record<string, Cam> = {
   rays: {pos: [0.9, 44.3, 3.6], look: [1.0, 44.3, 0]},
   far: {pos: [-30, 60, 22], look: [260, 22, -140]},
   sweep: {pos: [-70, 120, 110], look: [70, 10, -70]},
-  seaLow: {pos: [120, 26, 70], look: [0, 35, -6]},
-  shipView: {pos: [-14, 53, 16], look: [165, 4, -265]},
-  shipView2: {pos: [-10, 51, 12], look: [165, 6, -272]},
+  seaLow: {pos: [150, 12, 40], look: [0, 33, -6]},
+  shipView: {pos: [-8, 48.5, 14], look: [165, 4, -265]},
+  shipView2: {pos: [-6, 48, 10], look: [165, 6, -272]},
   lensBack: {pos: [2.6, 44.9, 3.3], look: [0, 44.0, 0]},
   wTop: {pos: [2.6, 37.4, 6.5], look: [0, 36.6, -0.4]},
   wMid: {pos: [2.9, 29.5, 8.0], look: [0, 28.8, -0.4]},
@@ -610,14 +610,14 @@ const useWorld = () =>
       step: new THREE.MeshStandardMaterial({map: stoneTex('#a59f95', 11), roughness: 0.9}),
       land: new THREE.MeshStandardMaterial({map: grassTex(), vertexColors: true, roughness: 1}),
       rock: new THREE.MeshStandardMaterial({map: stoneTex('#76726d', 15), roughness: 1, flatShading: true}),
-      sea: new THREE.MeshStandardMaterial({map: waterTexture(), color: '#1d3d57', roughness: 0.3, metalness: 0.05, envMapIntensity: 0.45}),
+      sea: new THREE.MeshStandardMaterial({map: waterTexture(), color: '#1d3d57', roughness: 0.55, metalness: 0.05, envMapIntensity: 0.45}),
       iron: new THREE.MeshStandardMaterial({map: ironTex(), roughness: 0.6, metalness: 0.55, side: THREE.DoubleSide}),
       ironDark: new THREE.MeshStandardMaterial({color: '#4a4c50', roughness: 0.8, side: THREE.DoubleSide}),
       lanternIron: new THREE.MeshStandardMaterial({color: '#2b2f2c', roughness: 0.5, metalness: 0.5, side: THREE.DoubleSide}),
       roof: new THREE.MeshStandardMaterial({color: '#2f4a40', roughness: 0.45, metalness: 0.6, side: THREE.DoubleSide}),
       brass: new THREE.MeshStandardMaterial({color: '#c39340', roughness: 0.32, metalness: 0.9}),
       bronze: new THREE.MeshStandardMaterial({color: '#7a5a34', roughness: 0.4, metalness: 0.8}),
-      mercury: new THREE.MeshStandardMaterial({color: '#dfe3ea', roughness: 0.06, metalness: 1, envMapIntensity: 1.6}),
+      mercury: new THREE.MeshStandardMaterial({color: '#e8ecf2', roughness: 0.15, metalness: 0.85, envMapIntensity: 1.8, emissive: '#8f99a8', emissiveIntensity: 0.25}),
       weight: new THREE.MeshStandardMaterial({map: discsTex(), color: '#c9ccd2', roughness: 0.5, metalness: 0.3, emissive: '#ffb050', emissiveIntensity: 0}),
       drum: new THREE.MeshStandardMaterial({map: drumTex(), roughness: 0.6, metalness: 0.4}),
       shaft: new THREE.MeshStandardMaterial({map: shaftTex(), roughness: 0.35, metalness: 0.8}),
@@ -653,8 +653,8 @@ const useWorld = () =>
     const pos: number[] = [];
     const colors: number[] = [];
     const uv: number[] = [];
-    const cGrassA = new THREE.Color('#5a7240');
-    const cGrassB = new THREE.Color('#7a8448');
+    const cGrassA = new THREE.Color('#4d7a3c');
+    const cGrassB = new THREE.Color('#6c9146');
     const cHeath = new THREE.Color('#6a5358');
     const cRock = new THREE.Color('#77716b');
     const cSand = new THREE.Color('#6d6650');
@@ -671,7 +671,7 @@ const useWorld = () =>
         const nn = 0.5 + 0.5 * Math.sin(x * 0.05 + z * 0.03) * Math.cos(x * 0.021 - z * 0.04);
         const slope = Math.abs(ground(x + 0.7, z) - h) + Math.abs(ground(x, z + 0.7) - h);
         cc.copy(cGrassA).lerp(cGrassB, nn);
-        cc.lerp(cHeath, smooth(0.55, 0.9, nn) * 0.6);
+        cc.lerp(cHeath, smooth(0.6, 0.95, nn) * 0.3);
         cc.lerp(cFar, smooth(400, 2500, rad) * 0.6);
         cc.lerp(cRock, smooth(0.25, 0.8, slope));
         if (h < 1) cc.copy(cSand);
@@ -1011,6 +1011,8 @@ const useSkyLights = () =>
     const stairL2 = new THREE.PointLight('#ffc98e', 6, 10, 1.4);
     stairL2.position.set(-0.4, 23, -1.6);
     const keeperL = new THREE.PointLight('#ffb866', 0, 4, 1.5);
+    const bathL = new THREE.PointLight('#ffd9a0', 1.6, 2.5, 1.5);
+    bathL.position.set(0.55, 43.28, 0.9);
     const beams = [0, 1].map(() => {
       const g = new THREE.ConeGeometry(BEAM_L * 0.065, BEAM_L, 32, 1, true);
       g.translate(0, -BEAM_L / 2, 0);
@@ -1036,7 +1038,7 @@ const useSkyLights = () =>
       s.renderOrder = 21;
       return s;
     });
-    return {skyG, skyNight, starMat, moon, rim, moonL, hemi, lampL, roomL, stairL, stairL2, keeperL, beams, flash, flame, far2Flash, keeperGlow, shipLights};
+    return {skyG, skyNight, starMat, moon, rim, moonL, hemi, lampL, roomL, stairL, stairL2, keeperL, bathL, beams, flash, flame, far2Flash, keeperGlow, shipLights};
   }, []);
 
 // ---------- сцена ----------
@@ -1062,7 +1064,7 @@ const MayakWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> = 
 
   useLayoutEffect(() => {
     const L = SL;
-    scene.add(W0.world, dyn, L.skyG, L.rim, L.rim.target, L.moonL, L.moonL.target, L.hemi, L.lampL, L.roomL, L.stairL, L.stairL2, L.keeperL, ...L.beams, L.flash, L.flame, L.far2Flash, L.keeperGlow, ...L.shipLights, W0.lens.g, W0.ship);
+    scene.add(W0.world, dyn, L.skyG, L.rim, L.rim.target, L.moonL, L.moonL.target, L.hemi, L.lampL, L.roomL, L.stairL, L.stairL2, L.keeperL, L.bathL, ...L.beams, L.flash, L.flame, L.far2Flash, L.keeperGlow, ...L.shipLights, W0.lens.g, W0.ship);
     scene.fog = new THREE.Fog(DUSK.fog, DUSK.fogNear, DUSK.fogFar);
     gl.toneMapping = THREE.ACESFilmicToneMapping;
     gl.toneMappingExposure = 1.05;
@@ -1075,7 +1077,7 @@ const MayakWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> = 
     scene.environment = pm.fromScene(envScene, 0.02).texture;
     pm.dispose();
     return () => {
-      scene.remove(W0.world, dyn, L.skyG, L.rim, L.rim.target, L.moonL, L.moonL.target, L.hemi, L.lampL, L.roomL, L.stairL, L.stairL2, L.keeperL, ...L.beams, L.flash, L.flame, L.far2Flash, L.keeperGlow, ...L.shipLights, W0.lens.g, W0.ship);
+      scene.remove(W0.world, dyn, L.skyG, L.rim, L.rim.target, L.moonL, L.moonL.target, L.hemi, L.lampL, L.roomL, L.stairL, L.stairL2, L.keeperL, L.bathL, ...L.beams, L.flash, L.flame, L.far2Flash, L.keeperGlow, ...L.shipLights, W0.lens.g, W0.ship);
       scene.environment = null;
     };
   }, []);
