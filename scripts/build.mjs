@@ -371,6 +371,25 @@ const timeline = {
   brand: ep.brand !== false,
 };
 fs.writeFileSync(path.join(outDir, 'timeline.json'), JSON.stringify(timeline, null, 1));
+// проверка перелётов камеры по настоящим длительностям сцен (урок «Маяка»: рывок у предмета в конце наезда)
+try {
+  const types = [...new Set(scenes.map((s) => s.type))];
+  for (const t of types) {
+    const dir = path.join(ROOT, 'src/scenes', t);
+    if (!fs.existsSync(dir)) continue;
+    const tsx = fs.readdirSync(dir).find((f) => /Scene\.tsx$/.test(f));
+    if (!tsx) continue;
+    let out = '';
+    try {
+      out = execFileSync('python3', ['-I', path.join(ROOT, 'scripts/camcheck.py'), path.join(dir, tsx), epDir], {cwd: ROOT}).toString();
+    } catch (e) {
+      out = (e.stdout || '').toString();
+    }
+    out.split('\n').filter((l) => l.startsWith('⚠') || l.startsWith('итого')).forEach((l) => log('камера: ' + l));
+  }
+} catch (e) {
+  log('камера: проверка не запустилась — ' + e.message);
+}
 log(`сцен: ${scenes.length}, длительность ${total.toFixed(1)} с`);
 if (total < 45) log(`⚠ ролик короче 45 с (${total.toFixed(1)} с)`);
 if (flag('--prep')) {

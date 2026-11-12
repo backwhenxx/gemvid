@@ -9,6 +9,7 @@ import {H as SH, W as SW, clamp01, easeInOut, rng} from '../../lib/util';
 import {loadFont} from '@remotion/google-fonts/Comfortaa';
 import {box} from '../trench/parts';
 import {cloudTexture, waterTexture} from '../dam/textures';
+import {camBetween} from '../../lib/camPath';
 
 const {fontFamily: ROUND} = loadFont('normal', {weights: ['700'], subsets: ['cyrillic', 'latin']});
 
@@ -1163,12 +1164,13 @@ const MayakWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> = 
         kc = easeInOut((q0 - va) / (1 - va));
       }
     }
-    const pos = ca.pos.map((v, i) => lerp(v, cb.pos[i], kc));
-    const look = ca.look.map((v, i) => lerp(v, cb.look[i], kc));
-    const fov = lerp(ca.fov ?? 45, cb.fov ?? 45, kc);
-    camera.position.set(pos[0], pos[1], pos[2]);
-    camera.lookAt(look[0], look[1], look[2]);
-    const dLook = Math.hypot(pos[0] - look[0], pos[1] - look[1], pos[2] - look[2]);
+    // перелёт без рывка у предмета: поворот — slerp, наезд — в логарифме расстояния (src/lib/camPath.ts)
+    const cp = camBetween(ca, cb, kc);
+    const pos = [cp.pos.x, cp.pos.y, cp.pos.z];
+    const fov = cp.fov;
+    camera.position.copy(cp.pos);
+    camera.quaternion.copy(cp.q);
+    const dLook = cp.dist;
     const near = Math.min(3, Math.max(0.15, dLook * 0.08));
     const pc = camera as THREE.PerspectiveCamera;
     if (pc.fov !== fov || pc.far !== FAR || Math.abs(pc.near - near) > 1e-4) {
