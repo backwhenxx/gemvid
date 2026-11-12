@@ -1,0 +1,35 @@
+name: Скачать озвучку
+
+on:
+  workflow_dispatch:
+    inputs:
+      episode:
+        description: "Папка эпизода"
+        required: true
+      url:
+        description: "Ссылка на MP3 (ElevenLabs)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Скачать и закоммитить
+        env:
+          EP: ${{ inputs.episode }}
+          URL: ${{ inputs.url }}
+        run: |
+          case "$EP" in *[!a-z0-9_-]*|"") echo "плохое имя эпизода"; exit 1;; esac
+          case "$URL" in https://elevenlabsusercontent.com/*|https://storage.googleapis.com/eleven-*) ;; *) echo "чужой адрес"; exit 1;; esac
+          mkdir -p "episodes/$EP"
+          curl -sSfL -o "episodes/$EP/voice.mp3" "$URL"
+          ls -la "episodes/$EP/voice.mp3"
+          git config user.name "gemvid-bot"; git config user.email "actions@github.com"
+          git add "episodes/$EP/voice.mp3"
+          git commit -qm "Озвучка: $EP [skip ci]"
+          for i in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 3; done
