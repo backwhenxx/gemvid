@@ -1,0 +1,47 @@
+[
+ {
+  "file": "snd/amb_9b000b4b4e.wav",
+  "q": "ocean waves rocks",
+  "title": "Waves crashing on the rocks in Veracruz",
+  "creator": "felix.blume",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/felix.blume/sounds/411509"
+ },
+ {
+  "file": "snd/amb_eee1249c06.wav",
+  "q": "seagulls",
+  "title": "Seagulls / gaviotas clean wildtrack.WAV",
+  "creator": "Soojay",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/Soojay/sounds/462462"
+ },
+ {
+  "file": "snd/sfx_5c6418eb7f.wav",
+  "q": "ship horn distant",
+  "title": "Long Distant Foghorn.aiff",
+  "creator": "Danjocross",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/Danjocross/sounds/507471"
+ },
+ {
+  "file": "snd/sfx_443a639e3e.wav",
+  "q": "clock ticking",
+  "title": "Clock ticking",
+  "creator": "olver",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/olver/sounds/130388"
+ },
+ {
+  "file": "snd/sfx_38b22cc7f3.wav",
+  "q": "ratchet winding",
+  "title": "Ratchet Wind Down",
+  "creator": "adh.dreaming",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/adh.dreaming/sounds/614622"
+ }
+]
