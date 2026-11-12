@@ -11,10 +11,6 @@ on:
         description: "Для sketchfab: запросы через ; (запрос|animated) или uid через пробел"
         required: false
         default: ""
-      sf_token:
-        description: "Токен Sketchfab (если нет секрета SKETCHFAB_TOKEN)"
-        required: false
-        default: ""
 
 permissions:
   contents: write
@@ -40,7 +36,7 @@ jobs:
           SECRET_TOK: ${{ secrets.SKETCHFAB_TOKEN }}
           GH_TOKEN: ${{ github.token }}
         run: |
-          T="$SECRET_TOK"; [ -z "$T" ] && T=$(jq -r '.inputs.sf_token // ""' "$GITHUB_EVENT_PATH"); echo "::add-mask::$T"
+          T="$SECRET_TOK"; [ -z "$T" ] && { echo "Нет секрета SKETCHFAB_TOKEN"; exit 1; }; echo "::add-mask::$T"
           export SKETCHFAB_TOKEN="$T"
           if [ "${{ inputs.what }}" = "sketchfab-search" ]; then
             IFS=';' read -ra Q <<< "${{ inputs.args }}"; python scripts/library/sketchfab.py search out/library "${Q[@]}"
