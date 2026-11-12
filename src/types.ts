@@ -23,7 +23,8 @@ export type SceneType =
   | 'shanghai'
   | 'panama'
   | 'yakh'
-  | 'mayak';
+  | 'mayak'
+  | 'avia';
 
 export type TimedScene = {
   type: SceneType;
