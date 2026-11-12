@@ -22,7 +22,8 @@ export type SceneType =
   | 'steam'
   | 'shanghai'
   | 'panama'
-  | 'yakh';
+  | 'yakh'
+  | 'mayak';
 
 export type TimedScene = {
   type: SceneType;

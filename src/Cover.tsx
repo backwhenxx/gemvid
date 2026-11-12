@@ -11,12 +11,13 @@ import {SteamScene} from './scenes/steam/SteamScene';
 import {ShanghaiScene} from './scenes/shanghai/ShanghaiScene';
 import {PanamaScene} from './scenes/panama/PanamaScene';
 import {YakhScene} from './scenes/yakh/YakhScene';
+import {MayakScene} from './scenes/mayak/MayakScene';
 import {BrandMark, Grain, Vignette} from './components/Brand';
 import {Accented} from './components/Accented';
 import {BODY, C, SLAM, applyPalette} from './lib/theme';
 
 // Обложка (= первый кадр в ленте): заголовок в верхней трети, под ним мир ролика, низ пустой
-export type CoverSpec = {lines: string[]; sub?: string; bg?: Record<string, any> | null; dam?: Record<string, any>; trench?: Record<string, any>; septic?: Record<string, any>; tower?: Record<string, any>; subway?: Record<string, any>; steam?: Record<string, any>; shanghai?: Record<string, any>; panama?: Record<string, any>; yakh?: Record<string, any>};
+export type CoverSpec = {lines: string[]; sub?: string; bg?: Record<string, any> | null; dam?: Record<string, any>; trench?: Record<string, any>; septic?: Record<string, any>; tower?: Record<string, any>; subway?: Record<string, any>; steam?: Record<string, any>; shanghai?: Record<string, any>; panama?: Record<string, any>; yakh?: Record<string, any>; mayak?: Record<string, any>};
 
 export const Cover: React.FC<{timeline: Timeline; cover: CoverSpec}> = ({timeline, cover}) => {
   applyPalette(timeline.palette);
@@ -32,7 +33,9 @@ export const Cover: React.FC<{timeline: Timeline; cover: CoverSpec}> = ({timelin
   const fs = Math.min(118, Math.floor(940 / (longest * 1.0)));
   return (
     <AbsoluteFill style={{backgroundColor: C.bg}}>
-      {cover.yakh ? (
+      {cover.mayak ? (
+        <MayakScene scene={{type: 'mayak', start: 0, end: 10, say: '', props: cover.mayak}} prev={null} base={timeline.base} accent={C.accent} durationInFrames={300} />
+      ) : cover.yakh ? (
         <YakhScene scene={{type: 'yakh', start: 0, end: 10, say: '', props: cover.yakh}} prev={null} base={timeline.base} accent={C.accent} durationInFrames={300} />
       ) : cover.panama ? (
         <PanamaScene scene={{type: 'panama', start: 0, end: 10, say: '', props: cover.panama}} prev={null} base={timeline.base} accent={C.accent} durationInFrames={300} />
@@ -56,7 +59,7 @@ export const Cover: React.FC<{timeline: Timeline; cover: CoverSpec}> = ({timelin
       <AbsoluteFill
         style={{
           background:
-            cover.dam || cover.trench || cover.septic || cover.tower || cover.subway || cover.steam || cover.shanghai || cover.panama || cover.yakh
+            cover.dam || cover.trench || cover.septic || cover.tower || cover.subway || cover.steam || cover.shanghai || cover.panama || cover.yakh || cover.mayak
               ? `linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.25) 26%, rgba(0,0,0,0) 40%, rgba(0,0,0,0) 74%, rgba(0,0,0,0.55) 100%)`
               : `linear-gradient(180deg, ${C.bg} 0%, ${C.bg}F0 30%, ${C.bg}00 46%, ${C.bg}00 72%, ${C.bg} 86%)`,
         }}

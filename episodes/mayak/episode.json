@@ -1,0 +1,554 @@
+{
+ "title": "Как полтонны стекла крутятся в ртути",
+ "music": false,
+ "whisper": "medium",
+ "captionStyle": "word",
+ "autoOutro": false,
+ "ambience": [
+  {
+   "q": "ocean waves rocks",
+   "from": 0,
+   "to": 20,
+   "volume": 0.16
+  },
+  {
+   "q": "seagulls",
+   "from": 0,
+   "to": 3,
+   "volume": 0.06
+  }
+ ],
+ "cover": {
+  "lines": [
+   "Полтонны стекла",
+   "в *ртути*"
+  ],
+  "sub": "Как крутится маяк",
+  "mayak": {
+   "cam": [
+    "cover",
+    "cover"
+   ],
+   "night": 0.72,
+   "w": 0.3
+  }
+ },
+ "stillPairs": true,
+ "scenes": [
+  {
+   "type": "mayak",
+   "say": "[confidently] Полтонны стекла крутятся на вершине башни.",
+   "props": {
+    "cam": [
+     "lensHook",
+     "lensHook2"
+    ],
+    "night": [
+     0.5,
+     0.52
+    ],
+    "w": 0.15,
+    "banner": "500 кг стекла",
+    "bannerAt": 0.15,
+    "cont": false,
+    "phase": 0.6
+   }
+  },
+  {
+   "type": "mayak",
+   "say": "Без мотора. Без электричества.",
+   "props": {
+    "cam": [
+     "lensHook2",
+     "top"
+    ],
+    "night": [
+     0.52,
+     0.54
+    ],
+    "w": 0.15,
+    "cont": true,
+    "phase": 0.6
+   }
+  },
+  {
+   "type": "mayak",
+   "say": "Это маяк.",
+   "props": {
+    "cam": [
+     "top",
+     "wide"
+    ],
+    "night": [
+     0.54,
+     0.56
+    ],
+    "w": 0.15,
+    "camDur": 0.9,
+    "cont": true,
+    "phase": 0.6
+   }
+  },
+  {
+   "type": "mayak",
+   "say": "И его сердце... плавает в ртути.",
+   "props": {
+    "cam": [
+     "wide",
+     "bath"
+    ],
+    "night": [
+     0.56,
+     0.58
+    ],
+    "w": 0.15,
+    "via": "top",
+    "viaAt": 0.55,
+    "banner": "Ртуть",
+    "bannerAt": 0.7,
+    "cont": true,
+    "phase": 0.6
+   }
+  },
+  {
+   "type": "mayak",
+   "say": "[curious] Наверху — линза Френеля.",
+   "props": {
+    "cam": [
+     "bath",
+     "lensSide"
+    ],
+    "night": [
+     0.58,
+     0.6
+    ],
+    "w": 0.15,
+    "banner": "Линза Френеля",
+    "bannerAt": 0.3,
+    "cont": true,
+    "phase": 0.6
+   }
+  },
+  {
+   "type": "mayak",
+   "say": "Десятки стеклянных призм собирают свет керосиновой лампы в узкий луч.",
+   "props": {
+    "cam": [
+     "lensSide",
+     "rays"
+    ],
+    "night": [
+     0.6,
+     0.62
+    ],
+    "w": 0.15,
+    "rays": [
+     [
+      0,
+      0
+     ],
+     [
+      0.25,
+      0
+     ],
+     [
+      0.85,
+      1
+     ],
+     [
+      1,
+      1
+     ]
+    ],
+    "camDur": 0.3,
+    "cont": true,
+    "phase": 0.6
+   }
+  },
+  {
+   "type": "mayak",
+   "say": "Его видно за тридцать пять километров.",
+   "props": {
+    "cam": [
+     "rays",
+     "far"
+    ],
+    "night": [
+     0.62,
+     0.66
+    ],
+    "w": 0.15,
+    "rays": [
+     [
+      0,
+      1
+     ],
+     [
+      0.25,
+      0
+     ],
+     [
+      1,
+      0
+     ]
+    ],
+    "banner": "35 км",
+    "bannerAt": 0.45,
+    "cont": true,
+    "phase": 0.6
+   }
+  },
+  {
+   "type": "mayak",
+   "say": "Но луч мало зажечь. Его надо крутить.",
+   "props": {
+    "cam": [
+     "far",
+     "sweep"
+    ],
+    "night": [
+     0.66,
+     0.7
+    ],
+    "w": 0.15,
+    "cont": true,
+    "phase": 0.6
+   }
+  },
+  {
+   "type": "mayak",
+   "say": "Каждый маяк мигает по-своему: например, вспышка раз в десять секунд.",
+   "props": {
+    "cam": [
+     "sweep",
+     "seaLow"
+    ],
+    "night": [
+     0.7,
+     0.74
+    ],
+    "w": 0.15,
+    "camDur": 0.55,
+    "banner": "Вспышка раз в 10 с",
+    "bannerAt": 0.6,
+    "bannerSize": 58,
+    "cont": true,
+    "phase": 0.6
+   }
+  },
+  {
+   "type": "mayak",
+   "say": "По этому ритму капитан узнаёт, какой берег перед ним.",
+   "props": {
+    "cam": [
+     "seaLow",
+     "shipView"
+    ],
+    "night": [
+     0.74,
+     0.76
+    ],
+    "w": 0.15,
+    "sounds": [
+     {
+      "q": "ship horn distant",
+      "at": 0.35,
+      "len": 3,
+      "volume": 0.3
+     }
+    ],
+    "cont": true,
+    "phase": 0.6
+   }
+  },
+  {
+   "type": "mayak",
+   "say": "[dramatically] Как сдвинуть полтонны стекла?",
+   "props": {
+    "cam": [
+     "shipView",
+     "lensBack"
+    ],
+    "night": [
+     0.76,
+     0.77
+    ],
+    "w": 0.15,
+    "cont": true,
+    "phase": 0.6
+   }
+  },
+  {
+   "type": "mayak",
+   "say": "Линзу ставят на поплавок в чаше с ртутью.",
+   "props": {
+    "cam": [
+     "lensBack",
+     "bath"
+    ],
+    "night": [
+     0.77,
+     0.78
+    ],
+    "w": 0.15,
+    "banner": "Поплавок в ртути",
+    "bannerAt": 0.45,
+    "cont": true,
+    "phase": 0.6
+   }
+  },
+  {
+   "type": "mayak",
+   "say": "Ртуть тяжелее железа. Она держит всю махину почти без трения — линзу можно сдвинуть рукой.",
+   "props": {
+    "cam": [
+     "bath",
+     "lensSide"
+    ],
+    "night": [
+     0.78,
+     0.8
+    ],
+    "w": 0.15,
+    "via": "bath2",
+    "viaAt": 0.45,
+    "banner": "Ртуть тяжелее железа",
+    "bannerAt": 0.05,
+    "bannerSize": 56,
+    "cont": true,
+    "phase": 0.6
+   }
+  },
+  {
+   "type": "mayak",
+   "say": "А крутит её... гиря.",
+   "props": {
+    "cam": [
+     "lensSide",
+     "wTop"
+    ],
+    "night": [
+     0.8,
+     0.81
+    ],
+    "w": 0.15,
+    "cont": true,
+    "phase": 0.6
+   }
+  },
+  {
+   "type": "mayak",
+   "say": "Сто двадцать пять килограммов на тросе опускаются по шахте внутри башни.",
+   "props": {
+    "cam": [
+     "wTop",
+     "wMid"
+    ],
+    "night": [
+     0.81,
+     0.83
+    ],
+    "w": [
+     0.15,
+     0.45
+    ],
+    "banner": "Гиря 125 кг",
+    "bannerAt": 0.15,
+    "sounds": [
+     {
+      "q": "clock ticking",
+      "at": 0.1,
+      "len": 3,
+      "volume": 0.3
+     }
+    ],
+    "cont": true,
+    "phase": 0.6
+   }
+  },
+  {
+   "type": "mayak",
+   "say": "Через часовой механизм они вращают линзу.",
+   "props": {
+    "cam": [
+     "wMid",
+     "clock"
+    ],
+    "night": [
+     0.83,
+     0.84
+    ],
+    "w": [
+     0.45,
+     0.5
+    ],
+    "cont": true,
+    "phase": 0.6
+   }
+  },
+  {
+   "type": "mayak",
+   "say": "Ровно, секунда в секунду.",
+   "props": {
+    "cam": [
+     "clock",
+     "clock2"
+    ],
+    "night": [
+     0.84,
+     0.85
+    ],
+    "w": [
+     0.5,
+     0.55
+    ],
+    "sounds": [
+     {
+      "q": "clock ticking",
+      "at": 0.0,
+      "len": 2.5,
+      "volume": 0.35
+     }
+    ],
+    "cont": true,
+    "phase": 0.6
+   }
+  },
+  {
+   "type": "mayak",
+   "say": "Через два с половиной часа гиря на дне.",
+   "props": {
+    "cam": [
+     "clock2",
+     "cut"
+    ],
+    "night": [
+     0.85,
+     0.88
+    ],
+    "w": [
+     [
+      0,
+      0.55
+     ],
+     [
+      0.85,
+      1
+     ],
+     [
+      1,
+      1
+     ]
+    ],
+    "banner": "2,5 часа",
+    "bannerAt": 0.35,
+    "cont": true,
+    "phase": 0.6
+   }
+  },
+  {
+   "type": "mayak",
+   "say": "И смотритель поднимается наверх и заводит её снова.",
+   "props": {
+    "cam": [
+     "cut",
+     "hatch"
+    ],
+    "night": [
+     0.88,
+     0.9
+    ],
+    "w": 1,
+    "keeper": [
+     [
+      0,
+      0
+     ],
+     [
+      0.3,
+      0
+     ],
+     [
+      1,
+      1
+     ]
+    ],
+    "cont": true,
+    "phase": 0.6
+   }
+  },
+  {
+   "type": "mayak",
+   "say": "Всю ночь. Каждую ночь.",
+   "props": {
+    "cam": [
+     "hatch",
+     "cut"
+    ],
+    "night": [
+     0.9,
+     0.92
+    ],
+    "w": [
+     [
+      0,
+      1
+     ],
+     [
+      0.15,
+      1
+     ],
+     [
+      1,
+      0.1
+     ]
+    ],
+    "keeper": 1,
+    "wind": [
+     [
+      0,
+      0
+     ],
+     [
+      0.15,
+      0
+     ],
+     [
+      1,
+      1
+     ]
+    ],
+    "sounds": [
+     {
+      "q": "ratchet winding",
+      "at": 0.15,
+      "len": 2.5,
+      "volume": 0.3
+     }
+    ],
+    "cont": true,
+    "phase": 0.6
+   }
+  },
+  {
+   "type": "mayak",
+   "say": "[warmly] Остался бы ты один на скале ради этого света? Подпишись.",
+   "props": {
+    "cam": [
+     "cut",
+     "final"
+    ],
+    "night": [
+     0.92,
+     0.96
+    ],
+    "w": 0.1,
+    "keeper": 1,
+    "wind": 1,
+    "camDur": 0.85,
+    "cont": true,
+    "phase": 0.6
+   }
+  }
+ ]
+}
