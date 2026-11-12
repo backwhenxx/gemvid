@@ -181,31 +181,29 @@ const V_CLOUD = 140;
 
 type Cam = {pos: [number, number, number]; look: [number, number, number]; fov?: number};
 const CAMS: Record<string, Cam> = {
-  bowl: {pos: [-8.75, 0.35, 2.5], look: [-9.3, -0.28, 0]},
-  bowl2: {pos: [-8.9, 0.25, 2.1], look: [-9.32, -0.3, 0]},
-  lav: {pos: [-8.6, 0.5, 5.2], look: [-9.9, -0.55, 0]},
-  lavB: {pos: [-8.2, 0.8, 7.2], look: [-10.1, -0.55, 0]},
-  rear: {pos: [-6.5, 1.6, 11.5], look: [-10.6, -0.5, 0]},
-  diag: {pos: [17, 5.5, 31], look: [-5, -0.2, 0]},
-  diag2: {pos: [14, 4.5, 27], look: [-5, -0.2, 0]},
-  mid: {pos: [-2, 1.2, 15], look: [-5.5, 0, 0]},
-  under: {pos: [-10.1, -0.55, 3.6], look: [-10.5, -1.0, 0]},
-  tank: {pos: [-11.2, -0.6, 3.1], look: [-11.45, -1.05, 0]},
-  hatch: {pos: [-9.6, -2.6, 4.6], look: [-11.2, -1.45, 0]},
+  bowl: {pos: [-8.55, 0.05, 2.3], look: [-9.35, -0.32, 0]},
+  bowl2: {pos: [-8.75, -0.05, 1.9], look: [-9.4, -0.38, 0]},
+  lav: {pos: [-8.2, 0.1, 4.6], look: [-10.0, -0.6, 0]},
+  lavB: {pos: [-7.7, 0.5, 6.6], look: [-10.1, -0.5, 0]},
+  diag: {pos: [8, 13, 23], look: [-4, -0.3, 0]},
+  diag2: {pos: [5, 10.5, 19], look: [-4.5, -0.3, 0]},
+  mid: {pos: [-3, 3, 13], look: [-6.5, -0.2, 0]},
+  under: {pos: [-9.95, -0.75, 3.0], look: [-10.5, -1.0, 0]},
+  tank: {pos: [-10.95, -0.8, 2.7], look: [-11.5, -1.05, 0]},
+  hatch: {pos: [-9.8, -2.4, 4.2], look: [-11.2, -1.4, 0]},
   tail: {pos: [-26, 5, 9], look: [-12, 0, 0]},
   ext: {pos: [-36, 7, -27], look: [-2, 0.3, 0]},
-  ext2: {pos: [-44, 9, -36], look: [0, 0.3, 0]},
-  cover: {pos: [-7.1, 1.0, 6.3], look: [-9.9, -0.55, 0]},
+  cover: {pos: [-7.4, 0.5, 5.6], look: [-10.0, -0.6, 0]},
 };
 const cam = (c: string | Cam) => (typeof c === 'string' ? CAMS[c] ?? CAMS.diag : c);
 
 const SUN = new THREE.Vector3(-0.3, 0.085, -0.95).normalize();
-const SKY = {top: '#22407e', mid: '#7c9bc8', horizon: '#f7c890', glow: '#fff1cf', glowSize: 6};
+const SKY = {top: '#17408f', mid: '#5f97de', horizon: '#ffc079', glow: '#fff2d2', glowSize: 6};
 const LOOK = {
-  fog: '#e6c6a4',
-  fogNear: 1800,
-  fogFar: 15000,
-  grade: {shadow: '#22305e', shadowAmt: 0.08, high: '#ffe3bd', highAmt: 0.1, vignette: 0.36, grain: 0.045},
+  fog: '#f0cfa6',
+  fogNear: 2600,
+  fogFar: 17000,
+  grade: {shadow: '#22305e', shadowAmt: 0.03, high: '#ffe3bd', highAmt: 0.06, vignette: 0.36, grain: 0.045},
 };
 
 // ---------- текстуры ----------
@@ -229,25 +227,69 @@ const carpetTex = () => {
 };
 // облачное поле сверху: мягкие белые клубы на тёплой основе, бесшовно
 const deckTex = () => {
-  const S = 1024;
+  const S = 512;
   const [c, g] = cv(S, S);
-  g.fillStyle = '#e9d9cb';
-  g.fillRect(0, 0, S, S);
+  const im = g.createImageData(S, S);
   const r = rng(77);
-  const blob = (x: number, y: number, s: number, col: string) => {
-    for (const dx of [-S, 0, S])
-      for (const dy of [-S, 0, S]) {
-        const gr = g.createRadialGradient(x + dx, y + dy, 0, x + dx, y + dy, s);
-        gr.addColorStop(0, col);
-        gr.addColorStop(1, 'rgba(255,255,255,0)');
-        g.fillStyle = gr;
-        g.fillRect(x + dx - s, y + dy - s, s * 2, s * 2);
-      }
+  const octs = [4, 8, 16, 32, 64].map((n) => {
+    const a = new Float32Array(n * n);
+    for (let i = 0; i < a.length; i++) a[i] = r();
+    return {n, a};
+  });
+  const sample = (o: {n: number; a: Float32Array}, x: number, y: number) => {
+    const fx = (x * o.n) / S;
+    const fy = (y * o.n) / S;
+    const x0 = Math.floor(fx);
+    const y0 = Math.floor(fy);
+    const tx = fx - x0;
+    const ty = fy - y0;
+    const sx = tx * tx * (3 - 2 * tx);
+    const sy = ty * ty * (3 - 2 * ty);
+    const A = (i: number, j: number) => o.a[(((j % o.n) + o.n) % o.n) * o.n + (((i % o.n) + o.n) % o.n)];
+    return lerp(lerp(A(x0, y0), A(x0 + 1, y0), sx), lerp(A(x0, y0 + 1), A(x0 + 1, y0 + 1), sx), sy);
   };
-  for (let i = 0; i < 90; i++) blob(r() * S, r() * S, 50 + r() * 110, 'rgba(150,150,185,0.22)');
-  for (let i = 0; i < 260; i++) blob(r() * S, r() * S, 22 + r() * 70, 'rgba(255,250,242,0.55)');
-  const t = tex(c, 14, 14);
+  const Hn = (x: number, y: number) => {
+    let v = 0;
+    let w = 1;
+    let tot = 0;
+    octs.forEach((o) => {
+      v += sample(o, x, y) * w;
+      tot += w;
+      w *= 0.55;
+    });
+    return v / tot;
+  };
+  const sh = new THREE.Color('#8687b4');
+  const mid = new THREE.Color('#e6c9b0');
+  const li = new THREE.Color('#fff4e0');
+  const cc = new THREE.Color();
+  for (let y = 0; y < S; y++)
+    for (let x = 0; x < S; x++) {
+      const h = Hn(x, y);
+      const d = smooth(0.38, 0.62, h);
+      const lit = clamp01(0.5 + (h - Hn(x, y + 4)) * 16);
+      cc.copy(sh).lerp(mid, d).lerp(li, d * lit);
+      const i = (y * S + x) * 4;
+      im.data[i] = cc.r * 255;
+      im.data[i + 1] = cc.g * 255;
+      im.data[i + 2] = cc.b * 255;
+      im.data[i + 3] = 255;
+    }
+  g.putImageData(im, 0, 0);
+  const t = tex(c, 9, 9);
+  t.colorSpace = THREE.NoColorSpace;
   return t;
+};
+// шпангоуты под полом
+const ribTex = () => {
+  const [c, g] = cv(16, 64);
+  g.fillStyle = '#3a4252';
+  g.fillRect(0, 0, 16, 64);
+  g.fillStyle = '#566074';
+  g.fillRect(0, 0, 16, 7);
+  g.fillStyle = '#2a303c';
+  g.fillRect(0, 7, 16, 3);
+  return tex(c, 1, 54);
 };
 const fanTex = () => {
   const [c, g] = cv(128, 128);
@@ -365,7 +407,11 @@ const useWorld = () =>
       skin: new THREE.MeshStandardMaterial({map: plasterTex('#f3f2ee', 2), roughness: 0.38, metalness: 0.15, side: THREE.DoubleSide}),
       skinCut: new THREE.MeshStandardMaterial({color: '#c9c3b6', roughness: 0.9}),
       cabin: new THREE.MeshStandardMaterial({map: plasterTex('#ebe4d6', 3), roughness: 0.9, side: THREE.DoubleSide}),
-      hold: new THREE.MeshStandardMaterial({color: '#8f949c', roughness: 0.9, side: THREE.DoubleSide}),
+      hold: new THREE.MeshStandardMaterial({color: '#59616f', roughness: 0.9, side: THREE.DoubleSide}),
+      ribs: new THREE.MeshStandardMaterial({map: ribTex(), roughness: 0.85, side: THREE.DoubleSide}),
+      body: new THREE.MeshStandardMaterial({color: '#eef0f2', roughness: 0.35}),
+      bowlIn: new THREE.MeshStandardMaterial({map: steelTex('#8d98a4', 21), roughness: 0.3, metalness: 0.7}),
+      lavWall: new THREE.MeshStandardMaterial({color: '#c9d3da', roughness: 0.8, side: THREE.DoubleSide}),
       carpet: new THREE.MeshStandardMaterial({map: carpetTex(), roughness: 1}),
       wall: new THREE.MeshStandardMaterial({color: '#ded7c9', roughness: 0.85, side: THREE.DoubleSide}),
       seat: new THREE.MeshStandardMaterial({color: '#31476b', roughness: 0.9}),
@@ -459,8 +505,14 @@ const useWorld = () =>
     };
     plate(13.1, 0.08, true, m.wall); // кабина пилотов
     plate(-13.5, 0.1, true, m.hold); // гермошпангоут
-    plate(-8.45, 0.05, false, m.wall); // стенки туалета
-    plate(-10.15, 0.05, false, m.wall);
+    plate(-8.45, 0.05, false, m.lavWall); // стенки туалета
+    plate(-10.15, 0.05, false, m.lavWall);
+    // обшивка трюма под полом со шпангоутами
+    {
+      const q = xs.filter((x) => x >= -13.4 && x <= 13);
+      const hg = new THREE.LatheGeometry(q.map((x) => new THREE.Vector2(Math.max(0.02, R(x) - WALL - 0.03), x)), 24, Math.PI / 2, Math.PI / 2 - 0.29);
+      world.add(new THREE.Mesh(toX(hg), m.ribs));
+    }
 
     // --- кресла: три в ряд на дальней стороне, проход по линии разреза
     {
@@ -519,22 +571,32 @@ const useWorld = () =>
     }
     // --- туалет: чаша в разрезе, кнопка, раковина, зеркало
     {
-      const outer: [number, number][] = [[0.22, FLOOR], [0.22, FLOOR + 0.28], [0.28, FLOOR + 0.42], [0.28, FLOOR + 0.47]];
-      const inner: [number, number][] = [[0.245, FLOOR + 0.47], [0.21, FLOOR + 0.37], [0.13, FLOOR + 0.18], [0.075, FLOOR + 0.07], [0.075, FLOOR - 0.13]];
-      const go = halfLathe(outer, 32);
-      go.translate(TX, 0, 0);
-      world.add(new THREE.Mesh(go, m.steel));
-      const gi = halfLathe(inner, 32);
-      gi.translate(TX, 0, 0);
-      world.add(new THREE.Mesh(gi, m.steel));
-      [1, -1].forEach((s) => {
-        const pts: [number, number][] = outer.map(([rr, y]) => [TX + s * rr, y] as [number, number]).concat(inner.slice(0, 4).map(([rr, y]) => [TX + s * rr, y] as [number, number]), [[TX + s * 0.075, FLOOR]]);
-        world.add(new THREE.Mesh(polyFace(pts, 0), m.steelCut));
-      });
-      const ring = new THREE.TorusGeometry(0.262, 0.03, 8, 28, Math.PI);
-      ring.rotateX(-Math.PI / 2);
-      ring.translate(TX, FLOOR + 0.49, 0);
-      world.add(new THREE.Mesh(ring, m.white));
+      // силуэт сбоку (перёд смотрит в нос): тумба, чаша с выступом вперёд, кожух сзади
+      const F = FLOOR;
+      const sil: [number, number][] = [[-0.3, 0], [0.17, 0], [0.2, 0.14], [0.34, 0.3], [0.37, 0.43], [-0.3, 0.43]];
+      const bsh = new THREE.Shape(sil.map(([x, y]) => new THREE.Vector2(TX + x, F + y)));
+      const bg = new THREE.ExtrudeGeometry(bsh, {depth: 0.23, bevelEnabled: false});
+      bg.translate(0, 0, -0.23);
+      world.add(new THREE.Mesh(bg, m.body));
+      const cav: [number, number][] = [[-0.2, 0.43], [0.31, 0.43], [0.25, 0.31], [0.1, 0.11], [0.075, 0.0], [-0.075, 0.0], [-0.1, 0.11], [-0.18, 0.31]];
+      world.add(new THREE.Mesh(polyFace(cav.map(([x, y]) => [TX + x, F + y] as [number, number]), 0.004), m.bowlIn));
+      const seat = new THREE.Mesh(new RoundedBoxGeometry(0.64, 0.04, 0.25, 2, 0.015), m.wall);
+      seat.position.set(TX + 0.04, F + 0.452, -0.125);
+      world.add(seat);
+      const lid = new THREE.Mesh(new RoundedBoxGeometry(0.045, 0.52, 0.25, 2, 0.02), m.body);
+      lid.position.set(TX - 0.27, F + 0.72, -0.125);
+      lid.rotation.z = 0.1;
+      world.add(lid);
+      const shr = new THREE.Mesh(new RoundedBoxGeometry(0.2, 1.0, 0.5, 2, 0.03), m.lavWall);
+      shr.position.set(TX - 0.42, F + 0.5, -0.25);
+      world.add(shr);
+      const zb0 = -(Math.sqrt(Math.pow(R(TX) - WALL, 2) - 0.16) - 0.06);
+      const disp = new THREE.Mesh(new RoundedBoxGeometry(0.3, 0.22, 0.1, 2, 0.02), m.steel);
+      disp.position.set(TX + 0.0, 1.0, zb0 + 0.02);
+      world.add(disp);
+      const lamp = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.05, 0.1), m.strip);
+      lamp.position.set(TX, 1.42, zb0 + 0.45);
+      world.add(lamp);
       const zb = -(Math.sqrt(Math.pow(R(TX) - WALL, 2) - 0.16) - 0.06);
       const pan = new THREE.Mesh(new RoundedBoxGeometry(0.34, 0.24, 0.05, 2, 0.02), m.panel);
       pan.position.set(TX - 0.45, 0.4, zb);
@@ -545,9 +607,6 @@ const useWorld = () =>
       const mir = new THREE.Mesh(rrect(0.5, 0.62, 0.04), m.mirror);
       mir.position.set(TX + 0.48, 0.78, zb + 0.02);
       world.add(mir);
-      const gal = new THREE.Mesh(new RoundedBoxGeometry(1.5, 1.55, 0.55, 3, 0.05), m.panel);
-      gal.position.set(-11.25, 0.3, -1.05);
-      world.add(gal);
     }
     // --- труба от чаши к баку, бак, вентиляция за борт, насос, слив
     world.add(new THREE.Mesh(new THREE.TubeGeometry(curveOf([[TX, -0.6], [TX, -0.8], [TX - 0.07, -0.89], [TX - 0.24, -0.93], [-9.9, -0.93], [-10.5, -0.93]]), 60, 0.078, 14), m.pipe));
@@ -657,9 +716,9 @@ const useWorld = () =>
     deck.rotation.x = -Math.PI / 2;
     deck.position.y = -1500;
     const puffs: {s: THREE.Sprite; x0: number; span: number}[] = [];
-    for (let i = 0; i < 150; i++) {
-      const s = new THREE.Sprite(new THREE.SpriteMaterial({map: cloudTexture(300 + (i % 14)), color: '#fff3e2', transparent: true, opacity: 0.85, depthWrite: false}));
-      const near = i < 110;
+    for (let i = 0; i < 80; i++) {
+      const s = new THREE.Sprite(new THREE.SpriteMaterial({map: cloudTexture(300 + (i % 14)), color: '#fff3e2', transparent: true, opacity: 0.7, depthWrite: false}));
+      const near = i < 50;
       const sc = near ? 700 + r() * 1300 : 1500 + r() * 2500;
       s.scale.set(sc, sc * (0.32 + r() * 0.12), 1);
       const x0 = -9000 + r() * 18000;
@@ -702,11 +761,11 @@ const useSkyLights = () =>
     const sunS = new THREE.Sprite(new THREE.SpriteMaterial({map: glowTex('rgba(255,250,235,1)', 'rgba(255,214,150,0.5)'), transparent: true, depthWrite: false, fog: false, blending: THREE.AdditiveBlending, toneMapped: false}));
     sunS.scale.set(420, 420, 1);
     sunS.renderOrder = -9;
-    const sun = new THREE.DirectionalLight('#ffd6a6', 3.0);
+    const sun = new THREE.DirectionalLight('#ffd6a6', 3.3);
     sun.position.copy(SUN).multiplyScalar(300);
-    const fill = new THREE.DirectionalLight('#bcd0ff', 0.55);
+    const fill = new THREE.DirectionalLight('#bcd0ff', 0.3);
     fill.position.set(0.3, 0.5, 1).multiplyScalar(300);
-    const hemi = new THREE.HemisphereLight('#a9bfe8', '#d9bb98', 0.95);
+    const hemi = new THREE.HemisphereLight('#a9bfe8', '#d9bb98', 0.6);
     const cabL = [-6, 2, 9].map((x) => {
       const l = new THREE.PointLight('#ffd9a8', 9, 10, 1.6);
       l.position.set(x, 1.1, -0.5);
@@ -758,7 +817,7 @@ const AviaWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> = (
     scene.add(...all);
     scene.fog = new THREE.Fog(LOOK.fog, LOOK.fogNear, LOOK.fogFar);
     gl.toneMapping = THREE.ACESFilmicToneMapping;
-    gl.toneMappingExposure = 1.0;
+    gl.toneMappingExposure = 0.95;
     gl.shadowMap.enabled = false;
     gl.localClippingEnabled = true;
     const pm = new THREE.PMREMGenerator(gl);
@@ -767,7 +826,7 @@ const AviaWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> = (
     sk.scale.setScalar(0.05);
     envScene.add(sk);
     scene.environment = pm.fromScene(envScene, 0.02).texture;
-    (scene as any).environmentIntensity = 0.8;
+    (scene as any).environmentIntensity = 0.55;
     pm.dispose();
     return () => {
       scene.remove(...all);
@@ -812,7 +871,7 @@ const AviaWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> = (
     const camV = cp.pos;
 
     // --- облака текут назад (мир движется, самолёт стоит)
-    (m.deck.map as THREE.Texture).offset.set((t * V_CLOUD) / (60000 / 14), 0);
+    (m.deck.map as THREE.Texture).offset.set((t * V_CLOUD) / (60000 / 9), 0);
     W0.puffs.forEach((q) => {
       q.s.position.x = ((((q.x0 - t * V_CLOUD + 9000) % q.span) + q.span) % q.span) - 9000;
     });
@@ -852,7 +911,7 @@ const AviaWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> = (
     const valve = range(P.valve ?? 0, p);
     const btn = range(P.btn ?? 0, p);
     const vp = cached('valve', () => new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.022, 0.15), m.valve));
-    vp.position.set(TX, FLOOR + 0.03, -0.075);
+    vp.position.set(TX, FLOOR + 0.03, -0.06);
     vp.rotation.set(0, 0, (valve * Math.PI) / 2);
     add(vp);
     const zb = -(Math.sqrt(Math.pow(R(TX) - WALL, 2) - 0.16) - 0.06);
@@ -907,7 +966,7 @@ const AviaWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> = (
         g.rotateX(-Math.PI / 2);
         return new THREE.Mesh(g, m.water);
       });
-      wr.position.set(TX, FLOOR + 0.36 - 0.12 * ((t * 0.9) % 1), 0);
+      wr.position.set(TX + 0.04, FLOOR + 0.36 - 0.12 * ((t * 0.9) % 1), 0);
       wr.rotation.set(0, t * 7, 0);
       const sc = 1 - 0.45 * ((t * 0.9) % 1);
       wr.scale.set(sc, 1, sc);
