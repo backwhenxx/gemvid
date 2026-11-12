@@ -1,0 +1,29 @@
+[
+ {
+  "file": "snd/amb_fe6e80dba7.wav",
+  "q": "airplane cabin interior",
+  "title": "Plane Interior",
+  "creator": "Vurca",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/Vurca/sounds/341591"
+ },
+ {
+  "file": "snd/sfx_81c89fab5b.wav",
+  "q": "airplane toilet flush",
+  "title": "Airplane Toilet Flush 1.WAV",
+  "creator": "tedmasterweb",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/tedmasterweb/sounds/185061"
+ },
+ {
+  "file": "snd/sfx_84473a0b46.wav",
+  "q": "button click",
+  "title": "Mid-High Tone Button Click",
+  "creator": "wubitog",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/wubitog/sounds/188388"
+ }
+]
