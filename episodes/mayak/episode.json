@@ -33,7 +33,7 @@
    "w": 0.3
   }
  },
- "stillPairs": true,
+ "stillPairs": false,
  "scenes": [
   {
    "type": "mayak",
@@ -51,7 +51,7 @@
     "banner": "500 кг стекла",
     "bannerAt": 0.15,
     "cont": false,
-    "phase": 0.6
+    "phase": 0.854
    }
   },
   {
@@ -68,7 +68,7 @@
     ],
     "w": 0.15,
     "cont": true,
-    "phase": 0.6
+    "phase": 0.854
    }
   },
   {
@@ -86,7 +86,7 @@
     "w": 0.15,
     "camDur": 0.9,
     "cont": true,
-    "phase": 0.6
+    "phase": 0.854
    }
   },
   {
@@ -107,7 +107,7 @@
     "banner": "Ртуть",
     "bannerAt": 0.7,
     "cont": true,
-    "phase": 0.6
+    "phase": 0.854
    }
   },
   {
@@ -126,7 +126,7 @@
     "banner": "Линза Френеля",
     "bannerAt": 0.3,
     "cont": true,
-    "phase": 0.6
+    "phase": 0.854
    }
   },
   {
@@ -162,7 +162,7 @@
     ],
     "camDur": 0.3,
     "cont": true,
-    "phase": 0.6
+    "phase": 0.854
    }
   },
   {
@@ -195,7 +195,7 @@
     "banner": "35 км",
     "bannerAt": 0.45,
     "cont": true,
-    "phase": 0.6
+    "phase": 0.854
    }
   },
   {
@@ -212,7 +212,7 @@
     ],
     "w": 0.15,
     "cont": true,
-    "phase": 0.6
+    "phase": 0.854
    }
   },
   {
@@ -233,7 +233,7 @@
     "bannerAt": 0.6,
     "bannerSize": 58,
     "cont": true,
-    "phase": 0.6
+    "phase": 0.854
    }
   },
   {
@@ -258,7 +258,7 @@
      }
     ],
     "cont": true,
-    "phase": 0.6
+    "phase": 0.854
    }
   },
   {
@@ -275,7 +275,7 @@
     ],
     "w": 0.15,
     "cont": true,
-    "phase": 0.6
+    "phase": 0.854
    }
   },
   {
@@ -294,7 +294,7 @@
     "banner": "Поплавок в ртути",
     "bannerAt": 0.45,
     "cont": true,
-    "phase": 0.6
+    "phase": 0.854
    }
   },
   {
@@ -316,7 +316,7 @@
     "bannerAt": 0.05,
     "bannerSize": 56,
     "cont": true,
-    "phase": 0.6
+    "phase": 0.854
    }
   },
   {
@@ -333,7 +333,21 @@
     ],
     "w": 0.15,
     "cont": true,
-    "phase": 0.6
+    "phase": 0.854,
+    "hlWeight": [
+     [
+      0,
+      0
+     ],
+     [
+      0.6,
+      1
+     ],
+     [
+      1,
+      1
+     ]
+    ]
    }
   },
   {
@@ -363,7 +377,21 @@
      }
     ],
     "cont": true,
-    "phase": 0.6
+    "phase": 0.854,
+    "hlWeight": [
+     [
+      0,
+      1
+     ],
+     [
+      0.6,
+      1
+     ],
+     [
+      1,
+      0
+     ]
+    ]
    }
   },
   {
@@ -383,7 +411,7 @@
      0.5
     ],
     "cont": true,
-    "phase": 0.6
+    "phase": 0.854
    }
   },
   {
@@ -411,7 +439,7 @@
      }
     ],
     "cont": true,
-    "phase": 0.6
+    "phase": 0.854
    }
   },
   {
@@ -443,7 +471,7 @@
     "banner": "2,5 часа",
     "bannerAt": 0.35,
     "cont": true,
-    "phase": 0.6
+    "phase": 0.854
    }
   },
   {
@@ -474,7 +502,7 @@
      ]
     ],
     "cont": true,
-    "phase": 0.6
+    "phase": 0.854
    }
   },
   {
@@ -527,7 +555,7 @@
      }
     ],
     "cont": true,
-    "phase": 0.6
+    "phase": 0.854
    }
   },
   {
@@ -547,7 +575,7 @@
     "wind": 1,
     "camDur": 0.85,
     "cont": true,
-    "phase": 0.6
+    "phase": 0.854
    }
   }
  ]

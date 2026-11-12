@@ -53,7 +53,7 @@ const HZ0 = -19;
 const HZ1 = -13;
 const HWALL = 3.4;
 // корабль
-const shipPos = (t: number): [number, number] => [260, -150 - 3 * t];
+const shipPos = (t: number): [number, number] => [165, -150 - 3 * t];
 
 // ---------- рельеф: мыс, обрыв, море ----------
 const n2 = (x: number, z: number) => Math.sin(x * 0.013 + 1.3) * Math.cos(z * 0.011 - 0.4) + 0.5 * Math.sin(x * 0.031 + z * 0.023) + 0.25 * Math.sin(x * 0.071 - z * 0.057 + 2);
@@ -83,15 +83,15 @@ const CAMS: Record<string, Cam> = {
   top: {pos: [10, 47, 16], look: [0, 41.5, -1]},
   wide: {pos: [80, 36, 125], look: [8, 30, -20]},
   wide2: {pos: [70, 40, 110], look: [5, 31, -18]},
-  bath: {pos: [1.25, 44.0, 1.7], look: [0, 43.2, -0.2]},
-  bath2: {pos: [0.95, 43.75, 1.25], look: [0, 43.22, -0.2]},
+  bath: {pos: [1.35, 43.33, 1.95], look: [0, 43.2, -0.25]},
+  bath2: {pos: [0.95, 43.3, 1.3], look: [0, 43.22, -0.25]},
   lensSide: {pos: [2.0, 44.6, 2.5], look: [0, 44.3, 0]},
   rays: {pos: [0.9, 44.3, 3.6], look: [1.0, 44.3, 0]},
   far: {pos: [-30, 60, 22], look: [260, 22, -140]},
-  sweep: {pos: [40, 115, 70], look: [60, 15, -60]},
-  seaLow: {pos: [95, 7, 38], look: [0, 38, -6]},
-  shipView: {pos: [-14, 53, 16], look: [260, 4, -265]},
-  shipView2: {pos: [-10, 51, 12], look: [262, 6, -272]},
+  sweep: {pos: [-70, 120, 110], look: [70, 10, -70]},
+  seaLow: {pos: [120, 26, 70], look: [0, 35, -6]},
+  shipView: {pos: [-14, 53, 16], look: [165, 4, -265]},
+  shipView2: {pos: [-10, 51, 12], look: [165, 6, -272]},
   lensBack: {pos: [2.6, 44.9, 3.3], look: [0, 44.0, 0]},
   wTop: {pos: [2.6, 37.4, 6.5], look: [0, 36.6, -0.4]},
   wMid: {pos: [2.9, 29.5, 8.0], look: [0, 28.8, -0.4]},
@@ -262,7 +262,7 @@ const ironTex = () => {
 // гиря: чугунные диски с бороздками
 const discsTex = () => {
   const [c, g] = cv(64, 256);
-  g.fillStyle = '#45474b';
+  g.fillStyle = '#7a7d83';
   g.fillRect(0, 0, 64, 256);
   for (let k = 0; k < 6; k++) {
     g.fillStyle = 'rgba(0,0,0,0.55)';
@@ -610,15 +610,15 @@ const useWorld = () =>
       step: new THREE.MeshStandardMaterial({map: stoneTex('#a59f95', 11), roughness: 0.9}),
       land: new THREE.MeshStandardMaterial({map: grassTex(), vertexColors: true, roughness: 1}),
       rock: new THREE.MeshStandardMaterial({map: stoneTex('#76726d', 15), roughness: 1, flatShading: true}),
-      sea: new THREE.MeshStandardMaterial({map: waterTexture(), color: '#24425a', roughness: 0.14, metalness: 0.35}),
+      sea: new THREE.MeshStandardMaterial({map: waterTexture(), color: '#1d3d57', roughness: 0.3, metalness: 0.05, envMapIntensity: 0.45}),
       iron: new THREE.MeshStandardMaterial({map: ironTex(), roughness: 0.6, metalness: 0.55, side: THREE.DoubleSide}),
-      ironDark: new THREE.MeshStandardMaterial({color: '#1a1b1e', roughness: 0.8, side: THREE.DoubleSide}),
+      ironDark: new THREE.MeshStandardMaterial({color: '#4a4c50', roughness: 0.8, side: THREE.DoubleSide}),
       lanternIron: new THREE.MeshStandardMaterial({color: '#2b2f2c', roughness: 0.5, metalness: 0.5, side: THREE.DoubleSide}),
       roof: new THREE.MeshStandardMaterial({color: '#2f4a40', roughness: 0.45, metalness: 0.6, side: THREE.DoubleSide}),
       brass: new THREE.MeshStandardMaterial({color: '#c39340', roughness: 0.32, metalness: 0.9}),
       bronze: new THREE.MeshStandardMaterial({color: '#7a5a34', roughness: 0.4, metalness: 0.8}),
       mercury: new THREE.MeshStandardMaterial({color: '#dfe3ea', roughness: 0.06, metalness: 1, envMapIntensity: 1.6}),
-      weight: new THREE.MeshStandardMaterial({map: discsTex(), roughness: 0.55, metalness: 0.6}),
+      weight: new THREE.MeshStandardMaterial({map: discsTex(), color: '#c9ccd2', roughness: 0.5, metalness: 0.3, emissive: '#ffb050', emissiveIntensity: 0}),
       drum: new THREE.MeshStandardMaterial({map: drumTex(), roughness: 0.6, metalness: 0.4}),
       shaft: new THREE.MeshStandardMaterial({map: shaftTex(), roughness: 0.35, metalness: 0.8}),
       cable: new THREE.MeshStandardMaterial({color: '#6d655a', roughness: 0.6, metalness: 0.4, transparent: true}),
@@ -1118,7 +1118,7 @@ const MayakWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> = 
     const ang = (t / PERIOD) * Math.PI * 2 + (P.phase ?? 0.6);
     W0.lens.g.position.set(0, LC, 0);
     W0.lens.g.rotation.y = ang;
-    const beamI = range(P.beam ?? 1, p) * lerp(0.12, 0.55, smooth(0.3, 0.9, n));
+    const beamI = range(P.beam ?? 1, p) * lerp(0.35, 1.25, smooth(0.3, 0.9, n));
     SL.beams.forEach((b, k) => {
       b.position.set(0, LC, 0);
       b.rotation.set(0, ang + k * Math.PI, 0);
@@ -1171,7 +1171,7 @@ const MayakWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> = 
     [0, 1].forEach((k) => {
       const a = ang + k * Math.PI;
       const d = Math.cos(a) * toCam.x - Math.sin(a) * toCam.z;
-      fl = Math.max(fl, Math.pow(Math.max(0, d), 60));
+      fl = Math.max(fl, Math.pow(Math.max(0, d), 30));
     });
     const dLens = camV.distanceTo(new THREE.Vector3(0, LC, 0));
     SL.flash.position.set(0, LC, 0);
@@ -1265,6 +1265,7 @@ const MayakWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> = 
     cable.position.set(0, cTop - cl / 2, -0.15);
     add(cable);
     m.cable.opacity = 1 - smooth(40, 70, camV.distanceTo(new THREE.Vector3(0, 30, 0)));
+    m.weight.emissiveIntensity = 0.35 * range(P.hlWeight ?? 0, p);
 
     // --- часовой механизм: шестерни крутятся (ведущий барабан медленно, регулятор быстро)
     const wind = range(P.wind ?? 0, p); // 0..1 — смотритель заводит: барабан крутится назад быстро
