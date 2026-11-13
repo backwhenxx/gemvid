@@ -1232,16 +1232,16 @@ const Grade: React.FC<{n: number}> = ({n}) => {
   );
 };
 
-export const YakhScene: React.FC<SceneProps> = ({scene, durationInFrames}) => {
+export const YakhScene: React.FC<SceneProps> = ({scene, durationInFrames, life: lifeIn}) => {
   const P = scene.props;
   const frame = useCurrentFrame();
-  const life = Math.max(1, durationInFrames - 10);
+  const life = lifeIn ?? Math.max(1, durationInFrames - 10);
   const bIn = clamp01((frame - (P.bannerAt ?? 0) * life) / 8);
-  const n = clamp01(range(P.night, clamp01(frame / Math.max(1, durationInFrames))));
+  const n = clamp01(range(P.night, clamp01(frame / life)));
   return (
     <AbsoluteFill>
       <ThreeCanvas width={SW} height={SH} shadows camera={{fov: 45, position: [0, 30, 150], near: NEAR, far: FAR}} gl={{preserveDrawingBuffer: true, antialias: false}}>
-        <YakhWorld P={P} dur={durationInFrames} />
+        <YakhWorld P={P} dur={life} />
       </ThreeCanvas>
       <Grade n={n} />
       {P.banner ? (

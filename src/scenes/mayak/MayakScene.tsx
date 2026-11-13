@@ -1502,16 +1502,16 @@ const Grade: React.FC<{n: number}> = ({n}) => {
   );
 };
 
-export const MayakScene: React.FC<SceneProps> = ({scene, durationInFrames}) => {
+export const MayakScene: React.FC<SceneProps> = ({scene, durationInFrames, life: lifeIn}) => {
   const P = scene.props;
   const frame = useCurrentFrame();
-  const life = Math.max(1, durationInFrames - 10);
+  const life = lifeIn ?? Math.max(1, durationInFrames - 10);
   const bIn = clamp01((frame - (P.bannerAt ?? 0) * life) / 8);
-  const n = clamp01(range(P.night ?? 0.5, clamp01(frame / Math.max(1, durationInFrames))));
+  const n = clamp01(range(P.night ?? 0.5, clamp01(frame / life)));
   return (
     <AbsoluteFill>
       <ThreeCanvas width={SW} height={SH} camera={{fov: 45, position: [0, 30, 150], near: 1, far: FAR}} gl={{preserveDrawingBuffer: true, antialias: false}}>
-        <MayakWorld P={P} dur={durationInFrames} t0={scene.start ?? 0} />
+        <MayakWorld P={P} dur={life} t0={scene.start ?? 0} />
       </ThreeCanvas>
       <Grade n={n} />
       {P.banner ? (

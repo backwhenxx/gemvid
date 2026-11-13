@@ -36,6 +36,8 @@ export type SceneProps = {
   base: string;
   accent: string;
   durationInFrames: number;
+  // Видимая длина сцены (без 10 кадров нахлёста под следующую). Все движения считать по ней: p = frame / life.
+  life?: number;
 };
 
 const REGISTRY: Record<string, React.FC<SceneProps>> = {
@@ -94,13 +96,14 @@ export const Short: React.FC<{timeline: Timeline}> = ({timeline}) => {
       {scenes.map((s, i) => {
         const from = Math.round(s.start * fps);
         const isLast = i === scenes.length - 1;
-        const dur = Math.max(1, Math.round(s.end * fps) - from + (isLast ? 0 : TR));
+        const life = Math.max(1, Math.round(s.end * fps) - from);
+        const dur = life + (isLast ? 0 : TR);
         const C2 = REGISTRY[s.type] ?? SlamScene;
         const grow = i > 0 && !s.props.cont;
         return (
           <Sequence key={i} from={from} durationInFrames={dur} name={`${i + 1}. ${s.type}`}>
             <Grow on={grow} at={s.props.growAt ?? [540, 860]}>
-              <C2 scene={s} prev={scenes[i - 1] ?? null} base={base} accent={accent} durationInFrames={dur} />
+              <C2 scene={s} prev={scenes[i - 1] ?? null} base={base} accent={accent} durationInFrames={dur} life={life} />
             </Grow>
           </Sequence>
         );

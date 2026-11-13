@@ -1041,16 +1041,16 @@ const Grade: React.FC = () => {
   );
 };
 
-export const AviaScene: React.FC<SceneProps> = ({scene, durationInFrames}) => {
+export const AviaScene: React.FC<SceneProps> = ({scene, durationInFrames, life: lifeIn}) => {
   const P = scene.props;
   const frame = useCurrentFrame();
-  const life = Math.max(1, durationInFrames - 10);
+  const life = lifeIn ?? Math.max(1, durationInFrames - 10);
   const bIn = clamp01((frame - (P.bannerAt ?? 0) * life) / 8);
   const bOut = P.bannerEnd ? 1 - clamp01((frame - P.bannerEnd * life) / 8) : 1;
   return (
     <AbsoluteFill>
       <ThreeCanvas width={SW} height={SH} camera={{fov: 45, position: [17, 5.5, 31], near: 1, far: FAR}} gl={{preserveDrawingBuffer: true, antialias: false}}>
-        <AviaWorld P={P} dur={durationInFrames} t0={scene.start ?? 0} />
+        <AviaWorld P={P} dur={life} t0={scene.start ?? 0} />
       </ThreeCanvas>
       <Grade />
       {P.banner ? (
