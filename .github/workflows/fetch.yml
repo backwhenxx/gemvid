@@ -4,11 +4,17 @@ on:
   workflow_dispatch:
     inputs:
       episode:
-        description: "Папка эпизода"
-        required: true
+        description: "Папка эпизода (voice.mp3 кладётся в неё)"
+        required: false
+        default: ""
       url:
         description: "Ссылка на MP3 (ElevenLabs)"
-        required: true
+        required: false
+        default: ""
+      items:
+        description: "Пробы голоса: пары имя=ссылка через пробел → research/voice/<имя>.mp3"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -23,13 +29,24 @@ jobs:
         env:
           EP: ${{ inputs.episode }}
           URL: ${{ inputs.url }}
+          ITEMS: ${{ inputs.items }}
         run: |
-          case "$EP" in *[!a-z0-9_-]*|"") echo "плохое имя эпизода"; exit 1;; esac
-          case "$URL" in https://elevenlabsusercontent.com/*|https://storage.googleapis.com/eleven-*) ;; *) echo "чужой адрес"; exit 1;; esac
-          mkdir -p "episodes/$EP"
-          curl -sSfL -o "episodes/$EP/voice.mp3" "$URL"
-          ls -la "episodes/$EP/voice.mp3"
+          ok_url() { case "$1" in https://elevenlabsusercontent.com/*|https://storage.googleapis.com/eleven-*) return 0;; *) echo "чужой адрес"; return 1;; esac; }
+          if [ -n "$EP" ]; then
+            case "$EP" in *[!a-z0-9_-]*) echo "плохое имя эпизода"; exit 1;; esac
+            ok_url "$URL"
+            mkdir -p "episodes/$EP"
+            curl -sSfL -o "episodes/$EP/voice.mp3" "$URL"
+            git add "episodes/$EP/voice.mp3"
+          fi
+          for it in $ITEMS; do
+            name="${it%%=*}"; u="${it#*=}"
+            case "$name" in *[!a-z0-9_-]*|"") echo "плохое имя пробы"; exit 1;; esac
+            ok_url "$u"
+            mkdir -p research/voice
+            curl -sSfL -o "research/voice/$name.mp3" "$u"
+            git add -f "research/voice/$name.mp3"
+          done
           git config user.name "gemvid-bot"; git config user.email "actions@github.com"
-          git add "episodes/$EP/voice.mp3"
-          git commit -qm "Озвучка: $EP [skip ci]"
+          git commit -qm "Озвучка: ${EP:-пробы голоса} [skip ci]"
           for i in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 3; done
