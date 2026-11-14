@@ -602,9 +602,11 @@ const waterFace = (ex: number, yb: number, joined: boolean) => {
     h.closePath();
     s.holes.push(h);
   };
-  if (joined) hole(XL, ex + L - 1, REST_YB + 0.05, REST_YB + H);
+  // вырез не должен выходить за контур (у берега дно выше секций) — иначе триангуляция ломается
+  const HX = -2000;
+  if (joined) hole(HX, ex + L - 1, REST_YB + 0.05, REST_YB + H);
   else {
-    hole(XL, -1, REST_YB + 0.05, REST_YB + H);
+    hole(HX, -1, REST_YB + 0.05, REST_YB + H);
     if (!floating) hole(ex + 1, ex + L - 1, Math.max(yb, REST_YB + 0.05), Math.min(top, -0.05));
   }
   const g = new THREE.ShapeGeometry(s);
