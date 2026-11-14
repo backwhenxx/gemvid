@@ -42,7 +42,7 @@
    }
   }
  },
- "stillPairs": true,
+ "stillPairs": false,
  "scenes": [
   {
    "type": "tonnel",
