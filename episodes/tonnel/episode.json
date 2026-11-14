@@ -1,0 +1,672 @@
+{
+ "title": "Как тоннель тонет и становится дорогой",
+ "music": false,
+ "whisper": "medium",
+ "captionStyle": "word",
+ "autoOutro": false,
+ "ambience": [
+  {
+   "q": "ocean waves",
+   "from": 0,
+   "to": 12,
+   "volume": 0.16
+  },
+  {
+   "q": "underwater ambience",
+   "from": 12,
+   "to": 53,
+   "volume": 0.12
+  },
+  {
+   "q": "highway tunnel traffic",
+   "from": 53,
+   "to": 70,
+   "volume": 0.12
+  }
+ ],
+ "cover": {
+  "lines": [
+   "Тоннель",
+   "*утопили*"
+  ],
+  "sub": "Дорога по дну моря",
+  "tonnel": {
+   "cam": [
+    "cover",
+    "cover"
+   ],
+   "towLines": 1
+  }
+ },
+ "stillPairs": true,
+ "scenes": [
+  {
+   "type": "tonnel",
+   "say": "[confidently] Этот кусок бетона весит как семь Эйфелевых башен.",
+   "props": {
+    "cam": [
+     "hero0",
+     "hero1"
+    ],
+    "cont": false,
+    "towLines": 1,
+    "banner": "73 500 тонн\n= 7 Эйфелевых башен",
+    "bannerAt": 0.3,
+    "bannerSize": 56,
+    "sounds": [
+     {
+      "q": "ship horn",
+      "at": 0.1,
+      "len": 2.5,
+      "volume": 0.35
+     }
+    ]
+   }
+  },
+  {
+   "type": "tonnel",
+   "say": "И он плывёт.",
+   "props": {
+    "cam": [
+     "hero1",
+     "waterline"
+    ],
+    "cont": true,
+    "towLines": 1
+   }
+  },
+  {
+   "type": "tonnel",
+   "say": "Это секция подводного тоннеля.",
+   "props": {
+    "cam": [
+     "waterline",
+     "top"
+    ],
+    "cont": true,
+    "towLines": 1,
+    "banner": "Секция тоннеля",
+    "bannerAt": 0.35
+   }
+  },
+  {
+   "type": "tonnel",
+   "say": "Такие тоннели не копают. Их топят.",
+   "props": {
+    "cam": [
+     "top",
+     "front"
+    ],
+    "cont": true,
+    "towLines": 1,
+    "front": [
+     [
+      0,
+      1
+     ],
+     [
+      0.35,
+      1
+     ],
+     [
+      0.8,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "type": "tonnel",
+   "say": "[curious] На дне роют траншею — на глубине до сорока метров.",
+   "props": {
+    "cam": [
+     "front",
+     "trench"
+    ],
+    "cont": true,
+    "towLines": 1,
+    "front": 0,
+    "banner": "Траншея до 40 м",
+    "bannerAt": 0.45
+   }
+  },
+  {
+   "type": "tonnel",
+   "say": "Секция — двести семнадцать метров бетона.",
+   "props": {
+    "cam": [
+     "trench",
+     "secWide"
+    ],
+    "cont": true,
+    "towLines": 1,
+    "front": 0,
+    "banner": "217 метров",
+    "bannerAt": 0.3
+   }
+  },
+  {
+   "type": "tonnel",
+   "say": "Концы закрыты стальными заглушками.",
+   "props": {
+    "cam": [
+     "secWide",
+     "bulk"
+    ],
+    "cont": true,
+    "towLines": 1,
+    "front": 0,
+    "hl": {
+     "bulk": [
+      [
+       0,
+       0
+      ],
+      [
+       0.4,
+       1
+      ],
+      [
+       1,
+       1
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "type": "tonnel",
+   "say": "Внутри воздух — и махина держится на воде, как корабль.",
+   "props": {
+    "cam": [
+     "bulk",
+     "secMid"
+    ],
+    "cont": true,
+    "towLines": 1,
+    "front": 0,
+    "hl": {
+     "bulk": [
+      [
+       0,
+       1
+      ],
+      [
+       0.4,
+       0
+      ]
+     ]
+    },
+    "banner": "Внутри — воздух",
+    "bannerAt": 0.15,
+    "bannerEnd": 0.8
+   }
+  },
+  {
+   "type": "tonnel",
+   "say": "Буксиры ведут её на место.",
+   "props": {
+    "cam": [
+     "secMid",
+     "tow"
+    ],
+    "cont": true,
+    "towLines": 1,
+    "flow": [
+     [
+      0,
+      0
+     ],
+     [
+      0.35,
+      1
+     ],
+     [
+      1,
+      1
+     ]
+    ],
+    "front": 0,
+    "sounds": [
+     {
+      "q": "tugboat engine",
+      "at": 0.3,
+      "len": 3,
+      "volume": 0.3
+     }
+    ]
+   }
+  },
+  {
+   "type": "tonnel",
+   "say": "В баки внутри пускают воду.",
+   "props": {
+    "cam": [
+     "tow",
+     "tank"
+    ],
+    "cont": true,
+    "towLines": [
+     [
+      0,
+      1
+     ],
+     [
+      0.5,
+      0
+     ]
+    ],
+    "flow": [
+     [
+      0,
+      1
+     ],
+     [
+      0.5,
+      0
+     ]
+    ],
+    "fill": [
+     [
+      0,
+      0
+     ],
+     [
+      0.35,
+      0
+     ],
+     [
+      1,
+      0.7
+     ]
+    ],
+    "front": 0,
+    "hl": {
+     "tanks": [
+      [
+       0,
+       0
+      ],
+      [
+       0.5,
+       1
+      ],
+      [
+       1,
+       1
+      ]
+     ]
+    },
+    "sounds": [
+     {
+      "q": "water filling tank",
+      "at": 0.4,
+      "len": 3,
+      "volume": 0.35
+     }
+    ]
+   }
+  },
+  {
+   "type": "tonnel",
+   "say": "Секция тяжелеет и уходит на дно.",
+   "props": {
+    "cam": [
+     "tank",
+     "sink"
+    ],
+    "cont": true,
+    "fill": [
+     [
+      0,
+      0.7
+     ],
+     [
+      0.5,
+      1
+     ]
+    ],
+    "sink": [
+     [
+      0,
+      0
+     ],
+     [
+      0.3,
+      0
+     ],
+     [
+      1,
+      0.45
+     ]
+    ],
+    "front": 0,
+    "hl": {
+     "tanks": [
+      [
+       0,
+       1
+      ],
+      [
+       0.5,
+       0
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "type": "tonnel",
+   "say": "Спуск занимает четырнадцать часов.",
+   "props": {
+    "cam": [
+     "sink",
+     "sink2"
+    ],
+    "cont": true,
+    "fill": 1,
+    "sink": [
+     [
+      0,
+      0.45
+     ],
+     [
+      1,
+      1
+     ]
+    ],
+    "front": 0,
+    "banner": "14 часов",
+    "bannerAt": 0.35
+   }
+  },
+  {
+   "type": "tonnel",
+   "say": "[dramatically] А теперь главное. На торце — толстое резиновое кольцо.",
+   "props": {
+    "cam": [
+     "sink2",
+     "gina"
+    ],
+    "cont": true,
+    "fill": 1,
+    "sink": 1,
+    "front": 0,
+    "hl": {
+     "gina": [
+      [
+       0,
+       0
+      ],
+      [
+       0.5,
+       0
+      ],
+      [
+       0.8,
+       1
+      ],
+      [
+       1,
+       1
+      ]
+     ]
+    },
+    "banner": "Резиновое кольцо",
+    "bannerAt": 0.7
+   }
+  },
+  {
+   "type": "tonnel",
+   "say": "Секцию прижимают к соседней, а воду между заглушками откачивают.",
+   "props": {
+    "cam": [
+     "gina",
+     "joint"
+    ],
+    "cont": true,
+    "fill": 1,
+    "sink": 1,
+    "pull": [
+     [
+      0,
+      0
+     ],
+     [
+      0.45,
+      1
+     ]
+    ],
+    "comp": [
+     [
+      0,
+      0
+     ],
+     [
+      0.35,
+      0
+     ],
+     [
+      0.45,
+      0.3
+     ]
+    ],
+    "drain": [
+     [
+      0,
+      0
+     ],
+     [
+      0.55,
+      0
+     ],
+     [
+      1,
+      1
+     ]
+    ],
+    "front": 0,
+    "hl": {
+     "gina": [
+      [
+       0,
+       1
+      ],
+      [
+       0.4,
+       0
+      ]
+     ]
+    },
+    "sounds": [
+     {
+      "q": "water pump",
+      "at": 0.55,
+      "len": 2.5,
+      "volume": 0.3
+     }
+    ]
+   }
+  },
+  {
+   "type": "tonnel",
+   "say": "Резина сжимается — стык закрыт.",
+   "props": {
+    "cam": [
+     "joint",
+     "gina2"
+    ],
+    "cont": true,
+    "fill": 1,
+    "sink": 1,
+    "pull": 1,
+    "drain": 1,
+    "comp": [
+     [
+      0,
+      0.3
+     ],
+     [
+      0.7,
+      1
+     ]
+    ],
+    "front": 0,
+    "hl": {
+     "gina": [
+      [
+       0,
+       0
+      ],
+      [
+       0.3,
+       1
+      ],
+      [
+       1,
+       1
+      ]
+     ]
+    },
+    "banner": "Стык закрыт",
+    "bannerAt": 0.7
+   }
+  },
+  {
+   "type": "tonnel",
+   "say": "Его держит само море: давит на свободный конец с силой в тысячи тонн.",
+   "props": {
+    "cam": [
+     "gina2",
+     "press"
+    ],
+    "cont": true,
+    "fill": 1,
+    "sink": 1,
+    "pull": 1,
+    "drain": 1,
+    "comp": 1,
+    "press": [
+     [
+      0,
+      0
+     ],
+     [
+      0.45,
+      0
+     ],
+     [
+      0.6,
+      1
+     ],
+     [
+      1,
+      1
+     ]
+    ],
+    "front": 0,
+    "hl": {
+     "gina": [
+      [
+       0,
+       1
+      ],
+      [
+       0.3,
+       0
+      ]
+     ]
+    },
+    "banner": "≈ 13 000 тонн",
+    "bannerAt": 0.7
+   }
+  },
+  {
+   "type": "tonnel",
+   "say": "[warmly] Так, секция за секцией, прямо сейчас строят самый длинный такой тоннель: восемнадцать километров, из Дании в Германию.",
+   "props": {
+    "cam": [
+     "press",
+     "chain"
+    ],
+    "cont": true,
+    "fill": 1,
+    "sink": 1,
+    "pull": 1,
+    "drain": 1,
+    "comp": 1,
+    "press": [
+     [
+      0,
+      1
+     ],
+     [
+      0.3,
+      0
+     ]
+    ],
+    "front": 0,
+    "traffic": 1,
+    "banner": "18 км\nДания → Германия",
+    "bannerAt": 0.6
+   }
+  },
+  {
+   "type": "tonnel",
+   "say": "Вместо сорока пяти минут на пароме — десять на машине.",
+   "props": {
+    "cam": [
+     "chain",
+     "ferry"
+    ],
+    "cont": true,
+    "fill": 1,
+    "sink": 1,
+    "pull": 1,
+    "drain": 1,
+    "comp": 1,
+    "front": 0,
+    "traffic": 1,
+    "banner": "Паром — 45 мин\nМашина — 10 мин",
+    "bannerAt": 0.4,
+    "bannerSize": 56
+   }
+  },
+  {
+   "type": "tonnel",
+   "say": "[curious] Над головой море, а стык держит резина.",
+   "props": {
+    "cam": [
+     "ferry",
+     "inside0"
+    ],
+    "cont": true,
+    "fill": 1,
+    "sink": 1,
+    "pull": 1,
+    "drain": 1,
+    "comp": 1,
+    "front": 0,
+    "traffic": 1
+   }
+  },
+  {
+   "type": "tonnel",
+   "say": "Поехал бы? [excited] Подпишись!",
+   "props": {
+    "cam": [
+     "inside0",
+     "final"
+    ],
+    "cont": true,
+    "fill": 1,
+    "sink": 1,
+    "pull": 1,
+    "drain": 1,
+    "comp": 1,
+    "front": 0,
+    "traffic": 1
+   }
+  }
+ ]
+}
