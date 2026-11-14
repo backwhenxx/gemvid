@@ -185,28 +185,28 @@ const LOOK = {fog: '#e6d2b8', fogNear: 1400, fogFar: 11000, grade: {shadow: '#1d
 
 type Cam = {pos: [number, number, number]; look: [number, number, number]; fov?: number};
 const CAMS: Record<string, Cam> = {
-  hero0: {pos: [-80, 6, 92], look: [95, -4, -12]},
-  hero1: {pos: [-46, 2.6, 62], look: [92, -3.5, -12]},
-  waterline: {pos: [-14, 1.2, 24], look: [8, -2, -8]},
-  top: {pos: [40, 92, 150], look: [112, -5, -12]},
-  front: {pos: [150, 22, 128], look: [110, -22, -12]},
-  trench: {pos: [70, -12, 105], look: [45, -32, -16]},
-  secWide: {pos: [-48, -4, 62], look: [100, -12, -12]},
+  hero0: {pos: [-40, 3.8, 44], look: [60, -4, -12]},
+  hero1: {pos: [-28, 2.2, 32], look: [60, -3.5, -12]},
+  waterline: {pos: [-12, 1.2, 22], look: [8, -2, -8]},
+  top: {pos: [30, 55, 95], look: [110, -4, -12]},
+  front: {pos: [120, 14, 80], look: [100, -20, -12]},
+  trench: {pos: [40, -20, 70], look: [30, -36, -14]},
+  secWide: {pos: [-30, -2, 40], look: [80, -6, -12]},
   bulk: {pos: [-8, -3.5, 20], look: [6.6, -4.6, -6]},
-  secMid: {pos: [-34, -1, 66], look: [70, -7, -12]},
-  tow: {pos: [-70, 48, 160], look: [150, -1, -22]},
+  secMid: {pos: [-26, -1, 45], look: [70, -7, -12]},
+  tow: {pos: [-50, 30, 100], look: [150, -1, -22]},
   tank: {pos: [36, -1.5, 44], look: [56, -6, -6]},
-  sink: {pos: [-70, -12, 118], look: [80, -24, -12]},
-  sink2: {pos: [-82, -16, 128], look: [80, -28, -12]},
-  gina: {pos: [2.8, -29.6, 6.2], look: [5.4, -31.0, -1.5]},
-  joint: {pos: [-2.6, -30.6, 14.5], look: [2.0, -34.2, -5]},
-  gina2: {pos: [-0.9, -30.0, 4.8], look: [0.4, -31.0, -1.2]},
-  press: {pos: [305, -22, 96], look: [165, -34, -12]},
-  chain: {pos: [110, -22, 62], look: [-320, -35, -22]},
-  ferry: {pos: [-190, 9, 125], look: [-420, -6, -470]},
+  sink: {pos: [-45, -16, 80], look: [80, -24, -12]},
+  sink2: {pos: [-55, -20, 88], look: [80, -30, -12]},
+  gina: {pos: [3.0, -31.5, 13], look: [3.0, -31.5, 0]},
+  joint: {pos: [1.5, -32.5, 15], look: [1.5, -33.2, 0]},
+  gina2: {pos: [0.6, -31.0, 6], look: [0.6, -31.0, 0]},
+  press: {pos: [280, -24, 70], look: [170, -34, -12]},
+  chain: {pos: [-40, -24, 70], look: [-420, -35, -25]},
+  ferry: {pos: [-200, 12, 120], look: [-195, -4, -520]},
   inside0: {pos: [-150, -36.2, 3.4], look: [-260, -36.4, -42], fov: 55},
   inside1: {pos: [-205, -36.0, 3.2], look: [-320, -35.4, -44], fov: 55},
-  final: {pos: [-150, 16, 175], look: [-300, -14, -220]},
+  final: {pos: [-120, 10, 120], look: [-260, -14, -200]},
   cover: {pos: [-52, 3.2, 70], look: [92, -4, -12]},
 };
 const cam = (c: string | Cam) => (typeof c === 'string' ? CAMS[c] ?? CAMS.hero0 : c);
@@ -339,6 +339,33 @@ const waterGrad = () => {
   g.fillRect(0, 0, 8, 512);
   const t = new THREE.CanvasTexture(c);
   t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+};
+const raysTex = () => {
+  const [c, g] = cv(512, 256);
+  const r = rng(13);
+  for (let i = 0; i < 26; i++) {
+    const x = r() * 512;
+    const w = 6 + r() * 26;
+    const gr = g.createLinearGradient(0, 0, 0, 256);
+    const a = 0.25 + r() * 0.35;
+    gr.addColorStop(0, `rgba(210,240,230,${a})`);
+    gr.addColorStop(0.5, `rgba(180,225,215,${a * 0.25})`);
+    gr.addColorStop(1, 'rgba(180,225,215,0)');
+    g.fillStyle = gr;
+    g.beginPath();
+    g.moveTo(x, 0);
+    g.lineTo(x + w, 0);
+    g.lineTo(x + w + 60, 256);
+    g.lineTo(x + 60, 256);
+    g.fill();
+  }
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = THREE.RepeatWrapping;
+  t.colorSpace = THREE.SRGBColorSpace;
+  // v: 0,97 (поверхность) → 0,55 (глубже лучей нет)
+  t.repeat.set(1, 1 / 0.45);
+  t.offset.set(0, -0.52 / 0.45);
   return t;
 };
 const seaNormal = () => {
@@ -583,7 +610,7 @@ const waterFace = (ex: number, yb: number, joined: boolean) => {
   const g = new THREE.ShapeGeometry(s);
   const p = g.attributes.position;
   const uv = new Float32Array(p.count * 2);
-  for (let i = 0; i < p.count; i++) uv.set([0.5, (p.getY(i) + 60) / 62], i * 2);
+  for (let i = 0; i < p.count; i++) uv.set([p.getX(i) / 60, (p.getY(i) + 60) / 62], i * 2);
   g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
   g.translate(0, 0, WZ);
   return g;
@@ -613,11 +640,12 @@ const useWorld = () =>
       rail: new THREE.MeshStandardMaterial({color: '#8d877c', roughness: 1}),
       panel: new THREE.MeshStandardMaterial({map: panelTex(), roughness: 0.7}),
       steel: new THREE.MeshStandardMaterial({map: steelTex(), roughness: 0.6, metalness: 0.35, emissive: '#ff9a50', emissiveIntensity: 0}),
-      rubber: new THREE.MeshStandardMaterial({color: '#1d1e20', roughness: 0.45, metalness: 0, emissive: '#ffb347', emissiveIntensity: 0}),
+      rubber: new THREE.MeshStandardMaterial({color: '#141516', roughness: 0.3, metalness: 0, emissive: '#ffb347', emissiveIntensity: 0}),
       clampSteel: new THREE.MeshStandardMaterial({color: '#5d6266', roughness: 0.45, metalness: 0.7}),
       tankWall: new THREE.MeshStandardMaterial({color: '#8f969a', roughness: 0.5, metalness: 0.5, emissive: '#5ab4ff', emissiveIntensity: 0}),
       tankWater: new THREE.MeshStandardMaterial({color: '#2f86b6', roughness: 0.15, transparent: true, opacity: 0.82, depthWrite: false}),
       wface: new THREE.MeshBasicMaterial({map: waterGrad(), transparent: true, opacity: 0.5, depthWrite: false, fog: false, side: THREE.DoubleSide}),
+      rays: new THREE.MeshBasicMaterial({map: raysTex(), transparent: true, opacity: 0.22, depthWrite: false, fog: false, blending: THREE.AdditiveBlending}),
       chamber: new THREE.MeshBasicMaterial({map: waterGrad(), transparent: true, opacity: 0.72, depthWrite: false, fog: false}),
       backWall: new THREE.MeshBasicMaterial({color: '#0f3b4a', fog: false}),
       sea: new THREE.MeshPhysicalMaterial({color: '#24576c', roughness: 0.42, metalness: 0, normalMap: seaNormal(), normalScale: new THREE.Vector2(0.16, 0.16), specularIntensity: 0.55, envMapIntensity: 0.55}),
@@ -937,6 +965,11 @@ const TonnelWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> =
     const me = new THREE.Mesh(new THREE.BufferGeometry(), m.wface);
     me.renderOrder = 6;
     me.frustumCulled = false;
+    const ry = new THREE.Mesh(me.geometry, m.rays);
+    ry.position.z = 0.05;
+    ry.renderOrder = 7;
+    ry.frustumCulled = false;
+    me.add(ry);
     return me;
   }, []);
   const cached = <T extends THREE.Object3D>(key: string, make: () => T): T => {
@@ -1096,6 +1129,8 @@ const TonnelWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> =
     const joined = pull > 0.999;
     wf.geometry.dispose();
     wf.geometry = waterFace(ex, yb, joined);
+    (wf.children[0] as THREE.Mesh).geometry = wf.geometry;
+    (m.rays.map as THREE.Texture).offset.x = t * 0.006;
     // камера между заглушками: вода уходит
     if (joined && drain < 0.999) {
       const ch = cached('chamber', () => {
