@@ -276,23 +276,23 @@ const LOOK = {fog: '#d9d2c4', fogNear: 500, fogFar: 4200, grade: {shadow: '#1d34
 
 type Cam = {pos: [number, number, number]; look: [number, number, number]; fov?: number};
 const CAMS: Record<string, Cam> = {
-  hook0: {pos: [-20, 2.5, -34], look: [0, 12, 0], fov: 50},
-  hook1: {pos: [-26, 4, -40], look: [0, 12.5, 0], fov: 50},
-  kettle: {pos: [-34, 9, -50], look: [0, 12.5, 2]},
+  hook0: {pos: [-36, 3, -22], look: [0, 12, -2], fov: 50},
+  hook1: {pos: [-40, 5, -30], look: [0, 12.5, -1], fov: 50},
+  kettle: {pos: [-46, 10, -40], look: [0, 12.5, 0]},
   wide: {pos: [-75, 34, -105], look: [0, 13, 25]},
   canals: {pos: [62, 40, -70], look: [0, 12, 40]},
   locks: {pos: [70, 16, -48], look: [0, 12, 8]},
-  turn: {pos: [-38, 9, -56], look: [0, 12.5, 0]},
-  gond: {pos: [-13, UP + 6.5, -24], look: [0, UP - 0.5, -3]},
-  hub: {pos: [-12, 15, -30], look: [0, 12.2, -12]},
-  arch0: {pos: [-15, 6.5, -40], look: [0, 0, -10]},
-  arch1: {pos: [-11, 8.5, -30], look: [0, 0, -4]},
-  weigh: {pos: [-42, 14, -62], look: [0, 12.2, 0]},
+  turn: {pos: [-46, 9, -34], look: [0, 12.5, 0]},
+  gond: {pos: [-16, UP + 6, -20], look: [0, UP - 0.5, 0]},
+  hub: {pos: [-18, 15, -28], look: [0, 12.2, -12]},
+  arch0: {pos: [-22, 6, -38], look: [0, 0, -12]},
+  arch1: {pos: [-16, 7.5, -30], look: [0, 0, -6]},
+  weigh: {pos: [-50, 14, -48], look: [0, 12.2, 0]},
   gears: {pos: [-7, 15, -31], look: [0, 12.2, -14.7]},
-  counter: {pos: [-30, 13, -50], look: [0, 12.2, -2]},
-  question: {pos: [-17, 7, -42], look: [0, 5, 0]},
+  counter: {pos: [-36, 13, -44], look: [0, 12.2, -3]},
+  question: {pos: [-30, 7, -38], look: [0, 4, -4]},
   final: {pos: [-95, 30, -125], look: [0, 14, 10]},
-  cover: {pos: [-24, 3.5, -38], look: [0, 12.5, 0], fov: 50},
+  cover: {pos: [-38, 4, -26], look: [0, 12.5, -1], fov: 50},
 };
 const cam = (c: string | Cam) => (typeof c === 'string' ? CAMS[c] ?? CAMS.hook0 : c);
 
@@ -369,8 +369,8 @@ const bladeGeo = (depth: number) => {
   for (let i = 0; i <= 24; i++) {
     const s = i / 24;
     const y = 1.5 + s * (R - 4.6);
-    const cx = 4.8 * Math.sin(Math.PI * s) * (1 - 0.3 * s);
-    const w = lerp(1.9, 1.5, Math.sin(Math.PI * s)) + s * 0.6;
+    const cx = 2.8 * Math.sin(Math.PI * s) * (1 - 0.3 * s);
+    const w = lerp(2.4, 2.0, Math.sin(Math.PI * s)) + s * 0.7;
     left.push(new THREE.Vector2(cx - w, y));
     right.push(new THREE.Vector2(cx + w, y));
   }
@@ -470,8 +470,8 @@ const useWorld = () =>
     const m: Record<string, any> = {
       steel: new THREE.MeshStandardMaterial({color: steelCol, roughness: 0.32, metalness: 0.55, envMapIntensity: 1.0}),
       steelDark: new THREE.MeshStandardMaterial({color: '#8e969c', roughness: 0.4, metalness: 0.6}),
-      gear: new THREE.MeshStandardMaterial({color: '#6f777d', roughness: 0.35, metalness: 0.75, emissive: '#ffb347', emissiveIntensity: 0}),
-      tub: new THREE.MeshStandardMaterial({color: '#e6e8ea', roughness: 0.45, metalness: 0.3, side: THREE.DoubleSide}),
+      gear: new THREE.MeshStandardMaterial({color: '#a4acb2', roughness: 0.35, metalness: 0.6, emissive: '#ffb347', emissiveIntensity: 0}),
+      tub: new THREE.MeshStandardMaterial({color: '#d3d8db', roughness: 0.45, metalness: 0.3, side: THREE.DoubleSide}),
       conc: new THREE.MeshStandardMaterial({map: concreteTex('#c9c3b8', 3, 6), roughness: 0.9}),
       concDark: new THREE.MeshStandardMaterial({map: concreteTex('#a9a397', 5, 6), roughness: 0.95}),
       water: new THREE.MeshPhysicalMaterial({color: '#2f4f4a', roughness: 0.12, metalness: 0, normalMap: seaNormal(), normalScale: new THREE.Vector2(0.12, 0.12), envMapIntensity: 0.9}),
@@ -497,6 +497,8 @@ const useWorld = () =>
     nG.needsUpdate = true;
     nG.repeat.set(3, 12);
     m.waterG.normalMap = nG;
+    m.waterG.color = new THREE.Color('#2a443e');
+    m.waterG.envMapIntensity = 0.45;
 
     const world = new THREE.Group();
     // --- рельеф
@@ -596,14 +598,14 @@ const useWorld = () =>
       return g;
     })), m.steel));
     const idlers = [1, -1].map((s) => {
-      const g = new THREE.Mesh(gearGeo(2.0, 14, 0.7, 0.5), m.gear);
+      const g = new THREE.Mesh(gearGeo(2.0, 15, 0.6, 1.2), m.gear);
       g.position.set(0, s * 6.1, GZ); // в плоскости шестерён
       wheel.add(g);
       return g;
     });
     // кронштейны паразитных шестерён к лопасти
     world.add(wheel);
-    const sun = new THREE.Mesh(gearGeo(3.9, 26, 0.7, 1.8), m.gear);
+    const sun = new THREE.Mesh(gearGeo(3.9, 30, 0.6, 3.1), m.gear);
     sun.position.set(0, AX, GZ);
     world.add(sun);
 
@@ -620,7 +622,7 @@ const useWorld = () =>
       w.renderOrder = 3;
       g.add(w);
       // шестерня гондолы (8 м) и цапфы в кольцах рук
-      const gg = new THREE.Mesh(gearGeo(3.9, 26, 0.7, 1.4), m.gear);
+      const gg = new THREE.Mesh(gearGeo(3.9, 30, 0.6, 3.2), m.gear);
       gg.position.z = GZ;
       g.add(gg);
       for (const z of [-ARMZ, ARMZ]) {
@@ -798,8 +800,9 @@ const KolesoWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> =
         return;
       }
       o.visible = true;
-      const [where, z0, z1] = spec;
-      const z = lerp(z0, z1 ?? z0, easeInOut(clamp01(p)));
+      const [where, z0, z1, ez] = spec;
+      const q = clamp01(p);
+      const z = lerp(z0, z1 ?? z0, ez === 'out' ? 1 - (1 - q) * (1 - q) : ez === 'io' ? easeInOut(q) : q);
       const bob = Math.sin(t * 1.3 + z0) * 0.04;
       if (where === 'A' || where === 'B') {
         const g = where === 'A' ? pa : pb;
