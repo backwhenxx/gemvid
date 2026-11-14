@@ -39,7 +39,7 @@
    "front": 0
   }
  },
- "stillPairs": true,
+ "stillPairs": false,
  "scenes": [
   {
    "type": "tonnel",
