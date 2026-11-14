@@ -589,7 +589,7 @@ const waterFace = (ex: number, yb: number, joined: boolean) => {
   const x1 = pts[pts.length - 1][0];
   pts.push([x1, 0]);
   const floating = yb + H > 0;
-  if (floating) pts.push([ex + L, 0], [ex + L, yb], [ex, yb], [ex, 0]);
+  if (floating) pts.push([ex + L - 1, 0], [ex + L - 1, yb], [ex + 1, yb], [ex + 1, 0]);
   pts.push([x0, 0]);
   s.setFromPoints(pts.map(([x, y]) => new THREE.Vector2(x, y)));
   // вырезы: готовая цепочка; новая секция (если под водой); при стыковке — одна общая прорезь
@@ -602,10 +602,10 @@ const waterFace = (ex: number, yb: number, joined: boolean) => {
     h.closePath();
     s.holes.push(h);
   };
-  if (joined) hole(XL, ex + L, REST_YB + 0.05, REST_YB + H);
+  if (joined) hole(XL, ex + L - 1, REST_YB + 0.05, REST_YB + H);
   else {
-    hole(XL, 0, REST_YB + 0.05, REST_YB + H);
-    if (!floating) hole(ex, ex + L, Math.max(yb, REST_YB + 0.05), Math.min(top, -0.05));
+    hole(XL, -1, REST_YB + 0.05, REST_YB + H);
+    if (!floating) hole(ex + 1, ex + L - 1, Math.max(yb, REST_YB + 0.05), Math.min(top, -0.05));
   }
   const g = new THREE.ShapeGeometry(s);
   const p = g.attributes.position;
@@ -646,7 +646,7 @@ const useWorld = () =>
       tankWater: new THREE.MeshStandardMaterial({color: '#2f86b6', roughness: 0.15, transparent: true, opacity: 0.82, depthWrite: false}),
       wface: new THREE.MeshBasicMaterial({map: waterGrad(), transparent: true, opacity: 0.5, depthWrite: false, fog: false, side: THREE.DoubleSide}),
       rays: new THREE.MeshBasicMaterial({map: raysTex(), transparent: true, opacity: 0.22, depthWrite: false, fog: false, blending: THREE.AdditiveBlending}),
-      chamber: new THREE.MeshBasicMaterial({map: waterGrad(), transparent: true, opacity: 0.72, depthWrite: false, fog: false}),
+      chamber: new THREE.MeshBasicMaterial({map: waterGrad(), transparent: true, opacity: 0.5, depthWrite: false, fog: false}),
       backWall: new THREE.MeshBasicMaterial({color: '#0f3b4a', fog: false}),
       sea: new THREE.MeshPhysicalMaterial({color: '#24576c', roughness: 0.42, metalness: 0, normalMap: seaNormal(), normalScale: new THREE.Vector2(0.16, 0.16), specularIntensity: 0.55, envMapIntensity: 0.55}),
       seaFront: null as any,
