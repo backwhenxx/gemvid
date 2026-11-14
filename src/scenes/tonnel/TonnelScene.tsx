@@ -1147,10 +1147,11 @@ const TonnelWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> =
     // камера между заглушками: вода уходит
     if (joined && drain < 0.999) {
       const ch = cached('chamber', () => {
-        const g = box(0, 1, 0, 1, -11.5, 0);
-        const pp = g.attributes.position;
+        // одна плоскость на срезе, как «стекло» воды (коробка давала двойной тон и скачок при стыковке)
+        const g = new THREE.PlaneGeometry(1, 1);
+        g.translate(0.5, 0.5, WZ);
         const uv = g.attributes.uv as THREE.BufferAttribute;
-        for (let i = 0; i < pp.count; i++) uv.setXY(i, 0.5, 0.4);
+        for (let i = 0; i < uv.count; i++) uv.setXY(i, 0.5, 0.4);
         return new THREE.Mesh(g, m.chamber);
       });
       const top = REST_YB + 1.4 + 6.3 * (1 - drain);
