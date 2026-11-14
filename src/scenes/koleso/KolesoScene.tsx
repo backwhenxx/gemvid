@@ -270,29 +270,29 @@ const AX = R; // высота оси
 const UP = 2 * R; // уровень воды наверху (24,4 м)
 const ARMZ = 13.6;
 const GZ = -14.7; // плоскость шестерён (со стороны бассейна)
-const SUN = new THREE.Vector3(-0.85, 0.32, -0.2).normalize(); // сбоку-сзади камер: без солнца в кадре
+const SUN = new THREE.Vector3(0.85, 0.32, -0.2).normalize(); // сбоку-сзади камер: без солнца в кадре
 const SKY = {top: '#3567b0', mid: '#8fb8e0', horizon: '#ffd7a8', glow: '#fff0d2', glowSize: 6};
 const LOOK = {fog: '#d9d2c4', fogNear: 500, fogFar: 4200, grade: {shadow: '#1d3456', shadowAmt: 0.03, high: '#ffe6c4', highAmt: 0.05, vignette: 0.3, grain: 0.035}};
 
 type Cam = {pos: [number, number, number]; look: [number, number, number]; fov?: number};
 const CAMS: Record<string, Cam> = {
-  hook0: {pos: [-44, 6, 36], look: [0, 12.5, 0], fov: 50},
-  hook1: {pos: [-48, 8, 42], look: [0, 12.5, 0], fov: 50},
-  kettle: {pos: [-56, 12, 50], look: [0, 12.5, 0]},
-  wide: {pos: [-90, 38, 118], look: [0, 10, -20]},
+  hook0: {pos: [44, 6, 36], look: [0, 12.5, 0], fov: 50},
+  hook1: {pos: [48, 8, 42], look: [0, 12.5, 0], fov: 50},
+  kettle: {pos: [56, 12, 50], look: [0, 12.5, 0]},
+  wide: {pos: [90, 38, 118], look: [0, 10, -20]},
   canals: {pos: [70, 40, 70], look: [0, 12, -30]},
   locks: {pos: [66, 18, 46], look: [0, 12, -6]},
   turn: {pos: [42, 10, 54], look: [0, 12.5, 0]},
-  gond: {pos: [-14, 30.4, 24], look: [0, 23.9, 4]},
-  hub: {pos: [-22, 16, 28], look: [0, 12.2, 6]},
-  arch0: {pos: [-22, 6, -38], look: [0, 0, -12]},
-  arch1: {pos: [-16, 7.5, -30], look: [0, 0, -6]},
-  weigh: {pos: [-54, 14, 52], look: [0, 12.2, 0]},
-  gears: {pos: [-7, 15, -31], look: [0, 12.2, -14.7]},
-  counter: {pos: [-36, 13, -44], look: [0, 12.2, -3]},
-  question: {pos: [-30, 7, -38], look: [0, 4, -4]},
-  final: {pos: [-24, 9, -48], look: [0, 6, -2]},
-  cover: {pos: [-44, 6, 36], look: [0, 12.5, 0], fov: 50},
+  gond: {pos: [14, 30.4, 24], look: [0, 23.9, 4]},
+  hub: {pos: [22, 16, 28], look: [0, 12.2, 6]},
+  arch0: {pos: [22, 6, -38], look: [0, 0, -12]},
+  arch1: {pos: [16, 7.5, -30], look: [0, 0, -6]},
+  weigh: {pos: [54, 14, 52], look: [0, 12.2, 0]},
+  gears: {pos: [24, 16, -30], look: [0, 12.2, -14.7]},
+  counter: {pos: [36, 13, -44], look: [0, 12.2, -3]},
+  question: {pos: [30, 7, -38], look: [0, 4, -4]},
+  final: {pos: [24, 9, -48], look: [0, 6, -2]},
+  cover: {pos: [44, 6, 36], look: [0, 12.5, 0], fov: 50},
 };
 const cam = (c: string | Cam) => (typeof c === 'string' ? CAMS[c] ?? CAMS.hook0 : c);
 
