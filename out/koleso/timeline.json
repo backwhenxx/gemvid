@@ -758,7 +758,7 @@
     ],
     "cont": false,
     "post": {
-     "bloom": 0.25
+     "bloom": 0.15
     },
     "b1": [
      "A",
@@ -816,7 +816,7 @@
     ],
     "cont": true,
     "post": {
-     "bloom": 0.25
+     "bloom": 0.15
     },
     "b1": [
      "A",
@@ -878,7 +878,7 @@
     ],
     "cont": true,
     "post": {
-     "bloom": 0.25
+     "bloom": 0.15
     },
     "b1": [
      "A",
@@ -936,7 +936,7 @@
     ],
     "cont": true,
     "post": {
-     "bloom": 0.25
+     "bloom": 0.15
     },
     "b1": [
      "A",
@@ -992,7 +992,7 @@
     ],
     "cont": true,
     "post": {
-     "bloom": 0.25
+     "bloom": 0.15
     },
     "b1": [
      "A",
@@ -1050,7 +1050,7 @@
     ],
     "cont": true,
     "post": {
-     "bloom": 0.25
+     "bloom": 0.15
     },
     "b1": [
      "A",
@@ -1108,7 +1108,7 @@
     ],
     "cont": true,
     "post": {
-     "bloom": 0.25
+     "bloom": 0.15
     },
     "b1": [
      "A",
@@ -1167,7 +1167,7 @@
     ],
     "cont": true,
     "post": {
-     "bloom": 0.25
+     "bloom": 0.15
     },
     "b1": [
      "A",
@@ -1223,7 +1223,7 @@
     ],
     "cont": true,
     "post": {
-     "bloom": 0.25
+     "bloom": 0.15
     },
     "b1": [
      "aq",
@@ -1294,7 +1294,7 @@
     ],
     "cont": true,
     "post": {
-     "bloom": 0.25,
+     "bloom": 0.15,
      "dof": 1.2
     },
     "b1": [
@@ -1352,7 +1352,7 @@
     ],
     "cont": true,
     "post": {
-     "bloom": 0.25
+     "bloom": 0.15
     },
     "b1": [
      "aq",
@@ -1421,7 +1421,7 @@
     ],
     "cont": true,
     "post": {
-     "bloom": 0.25
+     "bloom": 0.15
     },
     "b1": [
      "aq",
@@ -1482,7 +1482,7 @@
     ],
     "cont": true,
     "post": {
-     "bloom": 0.25,
+     "bloom": 0.15,
      "dof": 1
     },
     "b1": [
@@ -1564,7 +1564,7 @@
     ],
     "cont": true,
     "post": {
-     "bloom": 0.25
+     "bloom": 0.15
     },
     "b1": [
      "aq",
@@ -1653,7 +1653,7 @@
     ],
     "cont": true,
     "post": {
-     "bloom": 0.25
+     "bloom": 0.15
     },
     "b1": [
      "aq",
@@ -1718,7 +1718,7 @@
     ],
     "cont": true,
     "post": {
-     "bloom": 0.25
+     "bloom": 0.15
     },
     "b1": [
      "aq",
