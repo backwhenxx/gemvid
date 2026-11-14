@@ -270,7 +270,7 @@ const AX = R; // высота оси
 const UP = 2 * R; // уровень воды наверху (24,4 м)
 const ARMZ = 13.6;
 const GZ = -14.7; // плоскость шестерён (со стороны бассейна)
-const SUN = new THREE.Vector3(-0.55, 0.3, -0.78).normalize();
+const SUN = new THREE.Vector3(-0.85, 0.32, -0.2).normalize(); // сбоку-сзади камер: без солнца в кадре
 const SKY = {top: '#3567b0', mid: '#8fb8e0', horizon: '#ffd7a8', glow: '#fff0d2', glowSize: 6};
 const LOOK = {fog: '#d9d2c4', fogNear: 500, fogFar: 4200, grade: {shadow: '#1d3456', shadowAmt: 0.03, high: '#ffe6c4', highAmt: 0.05, vignette: 0.3, grain: 0.035}};
 
@@ -283,8 +283,8 @@ const CAMS: Record<string, Cam> = {
   canals: {pos: [70, 40, 70], look: [0, 12, -30]},
   locks: {pos: [66, 18, 46], look: [0, 12, -6]},
   turn: {pos: [42, 10, 54], look: [0, 12.5, 0]},
-  gond: {pos: [-16, 30.4, -20], look: [0, 23.9, 0]},
-  hub: {pos: [-18, 15, -28], look: [0, 12.2, -12]},
+  gond: {pos: [-14, 30.4, 24], look: [0, 23.9, 4]},
+  hub: {pos: [-22, 16, 28], look: [0, 12.2, 6]},
   arch0: {pos: [-22, 6, -38], look: [0, 0, -12]},
   arch1: {pos: [-16, 7.5, -30], look: [0, 0, -6]},
   weigh: {pos: [-54, 14, 52], look: [0, 12.2, 0]},
