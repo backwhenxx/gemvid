@@ -276,13 +276,13 @@ const LOOK = {fog: '#d9d2c4', fogNear: 500, fogFar: 4200, grade: {shadow: '#1d34
 
 type Cam = {pos: [number, number, number]; look: [number, number, number]; fov?: number};
 const CAMS: Record<string, Cam> = {
-  hook0: {pos: [-36, 3, -22], look: [0, 12, -2], fov: 50},
-  hook1: {pos: [-40, 5, -30], look: [0, 12.5, -1], fov: 50},
-  kettle: {pos: [-46, 10, -40], look: [0, 12.5, 0]},
+  hook0: {pos: [-46, 4, -40], look: [0, 12.5, 0], fov: 50},
+  hook1: {pos: [-50, 6, -46], look: [0, 12.5, 0], fov: 50},
+  kettle: {pos: [-58, 11, -52], look: [0, 12.5, 0]},
   wide: {pos: [-75, 34, -105], look: [0, 13, 25]},
   canals: {pos: [62, 40, -70], look: [0, 12, 40]},
   locks: {pos: [70, 16, -48], look: [0, 12, 8]},
-  turn: {pos: [-46, 9, -34], look: [0, 12.5, 0]},
+  turn: {pos: [-56, 9, -44], look: [0, 12.5, 0]},
   gond: {pos: [-16, UP + 6, -20], look: [0, UP - 0.5, 0]},
   hub: {pos: [-18, 15, -28], look: [0, 12.2, -12]},
   arch0: {pos: [-22, 6, -38], look: [0, 0, -12]},
@@ -291,8 +291,8 @@ const CAMS: Record<string, Cam> = {
   gears: {pos: [-7, 15, -31], look: [0, 12.2, -14.7]},
   counter: {pos: [-36, 13, -44], look: [0, 12.2, -3]},
   question: {pos: [-30, 7, -38], look: [0, 4, -4]},
-  final: {pos: [-95, 30, -125], look: [0, 14, 10]},
-  cover: {pos: [-38, 4, -26], look: [0, 12.5, -1], fov: 50},
+  final: {pos: [-80, 34, -110], look: [0, 14, 10]},
+  cover: {pos: [-46, 4, -40], look: [0, 12.5, 0], fov: 50},
 };
 const cam = (c: string | Cam) => (typeof c === 'string' ? CAMS[c] ?? CAMS.hook0 : c);
 
@@ -469,7 +469,7 @@ const useWorld = () =>
     const steelCol = '#cfd4d8';
     const m: Record<string, any> = {
       steel: new THREE.MeshStandardMaterial({color: steelCol, roughness: 0.32, metalness: 0.55, envMapIntensity: 1.0}),
-      steelDark: new THREE.MeshStandardMaterial({color: '#8e969c', roughness: 0.4, metalness: 0.6}),
+      steelDark: new THREE.MeshStandardMaterial({color: '#6c757c', roughness: 0.4, metalness: 0.6}),
       gear: new THREE.MeshStandardMaterial({color: '#a4acb2', roughness: 0.35, metalness: 0.6, emissive: '#ffb347', emissiveIntensity: 0}),
       tub: new THREE.MeshStandardMaterial({color: '#d3d8db', roughness: 0.45, metalness: 0.3, side: THREE.DoubleSide}),
       conc: new THREE.MeshStandardMaterial({map: concreteTex('#c9c3b8', 3, 6), roughness: 0.9}),

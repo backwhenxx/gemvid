@@ -45,7 +45,7 @@
    }
   }
  },
- "stillPairs": true,
+ "stillPairs": false,
  "scenes": [
   {
    "type": "koleso",
