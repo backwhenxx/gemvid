@@ -185,29 +185,29 @@ const LOOK = {fog: '#e6d2b8', fogNear: 1400, fogFar: 11000, grade: {shadow: '#1d
 
 type Cam = {pos: [number, number, number]; look: [number, number, number]; fov?: number};
 const CAMS: Record<string, Cam> = {
-  hero0: {pos: [-40, 3.8, 44], look: [60, -4, -12]},
-  hero1: {pos: [-28, 2.2, 32], look: [60, -3.5, -12]},
+  hero0: {pos: [-34, -1.5, 30], look: [40, -3, -12]},
+  hero1: {pos: [-24, -0.8, 22], look: [40, -3, -12]},
   waterline: {pos: [-12, 1.2, 22], look: [8, -2, -8]},
   top: {pos: [30, 55, 95], look: [110, -4, -12]},
-  front: {pos: [120, 14, 80], look: [100, -20, -12]},
-  trench: {pos: [40, -20, 70], look: [30, -36, -14]},
+  front: {pos: [120, 14, 80], look: [100, -14, -12]},
+  trench: {pos: [40, -20, 70], look: [30, -32, -14]},
   secWide: {pos: [-30, -2, 40], look: [80, -6, -12]},
   bulk: {pos: [-8, -3.5, 20], look: [6.6, -4.6, -6]},
   secMid: {pos: [-26, -1, 45], look: [70, -7, -12]},
   tow: {pos: [-50, 30, 100], look: [150, -1, -22]},
   tank: {pos: [36, -1.5, 44], look: [56, -6, -6]},
-  sink: {pos: [-45, -16, 80], look: [80, -24, -12]},
-  sink2: {pos: [-55, -20, 88], look: [80, -30, -12]},
-  gina: {pos: [3.0, -31.5, 13], look: [3.0, -31.5, 0]},
-  joint: {pos: [1.5, -32.5, 15], look: [1.5, -33.2, 0]},
-  gina2: {pos: [0.6, -31.0, 6], look: [0.6, -31.0, 0]},
-  press: {pos: [280, -24, 70], look: [170, -34, -12]},
-  chain: {pos: [-40, -24, 70], look: [-420, -35, -25]},
+  sink: {pos: [-45, -16, 80], look: [80, -20, -12]},
+  sink2: {pos: [-55, -22, 88], look: [80, -27, -12]},
+  gina: {pos: [5.1, -30.9, 6.5], look: [5.1, -30.9, 0]},
+  joint: {pos: [3, -31.6, 14], look: [3, -31.6, 0]},
+  gina2: {pos: [0.4, -30.9, 4.5], look: [0.4, -30.9, 0]},
+  press: {pos: [280, -24, 70], look: [170, -30, -12]},
+  chain: {pos: [-60, -26, 55], look: [-400, -34, -20]},
   ferry: {pos: [-200, 12, 120], look: [-195, -4, -520]},
   inside0: {pos: [-150, -36.2, 3.4], look: [-260, -36.4, -42], fov: 55},
   inside1: {pos: [-205, -36.0, 3.2], look: [-320, -35.4, -44], fov: 55},
-  final: {pos: [-120, 10, 120], look: [-260, -14, -200]},
-  cover: {pos: [-52, 3.2, 70], look: [92, -4, -12]},
+  final: {pos: [-700, 90, 420], look: [-150, -10, -250]},
+  cover: {pos: [-30, -1.2, 27], look: [40, -3, -12]},
 };
 const cam = (c: string | Cam) => (typeof c === 'string' ? CAMS[c] ?? CAMS.hero0 : c);
 
@@ -678,6 +678,8 @@ const useWorld = () =>
       headL: new THREE.MeshBasicMaterial({color: '#fff6dc'}),
       tailL: new THREE.MeshBasicMaterial({color: '#ff3a2a'}),
       lamp: new THREE.MeshBasicMaterial({color: '#ffe9c2'}),
+      mark: new THREE.MeshBasicMaterial({color: '#FFD54A', transparent: true, opacity: 0, depthWrite: false, fog: false}),
+      specks: new THREE.PointsMaterial({color: '#cfe8e0', size: 2.4, sizeAttenuation: false, transparent: true, opacity: 0.35, depthWrite: false, fog: false}),
       arrow: new THREE.MeshBasicMaterial({color: '#f4fbff', transparent: true, opacity: 0, depthWrite: false, fog: false}),
     };
     // ближние (z > 0) море, суша и поплавок понтона прячутся, когда смотрим в разрез
@@ -742,7 +744,7 @@ const useWorld = () =>
     terr(0, 5000, m.groundFront);
 
     // --- срез грунта (z = 0): песок, морена, глина, коренная порода
-    world.add(soilLayer(0, 2.5, m.soil1), soilLayer(2.5, 14, m.soil2), soilLayer(14, 40, m.soil3), soilLayer(40, 140, m.soil4));
+    world.add(soilLayer(0, 2.5, m.soil1), soilLayer(2.5, 14, m.soil2), soilLayer(14, 40, m.soil3), soilLayer(40, 700, m.soil4, -900));
     // щебёночная постель под секциями (−40…−39,2)
     world.add(new THREE.Mesh(box(XL, 900, TRENCH, REST_YB, -26, 0), m.gravel));
     // задняя «стенка» аквариума
@@ -922,6 +924,17 @@ const useWorld = () =>
     as.closePath();
     const arrowG = new THREE.ShapeGeometry(as);
 
+    // взвесь в воде у места стройки
+    const sp = new Float32Array(2400 * 3);
+    for (let i = 0; i < 2400; i++) sp.set([-260 + r() * 560, -39 + r() * 38, WZ + 0.2], i * 3);
+    const spG = new THREE.BufferGeometry();
+    spG.setAttribute('position', new THREE.BufferAttribute(sp, 3));
+    const specks = new THREE.Points(spG, m.specks);
+    specks.renderOrder = 8;
+    world.add(specks);
+    const markRing = new THREE.Mesh(new THREE.TorusGeometry(1, 0.07, 8, 48), m.mark);
+    markRing.renderOrder = 13;
+    world.add(markRing);
     // машины
     const carCols = ['#c9ccd0', '#2a3440', '#8a2c22', '#e8e6e0', '#3b5d7a', '#545a60'].map((c) => new THREE.MeshStandardMaterial({color: c, roughness: 0.35, metalness: 0.5}));
     const cars = Array.from({length: 46}, (_, i) => {
@@ -933,7 +946,7 @@ const useWorld = () =>
       return c;
     });
 
-    return {m, world, E, gina, pontons, tugs, ferry, turbines, seaA, seaB, seaF, foamRing, wakes, arrowG, cars, clipFront, cache: new Map<string, THREE.Object3D>()};
+    return {m, world, specks, markRing, E, gina, pontons, tugs, ferry, turbines, seaA, seaB, seaF, foamRing, wakes, arrowG, cars, clipFront, cache: new Map<string, THREE.Object3D>()};
   }, []);
 
 const useSkyLights = () =>
@@ -1159,6 +1172,13 @@ const TonnelWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> =
         add(a);
       });
 
+    // метка вокруг кольца (верхняя ветка, срез)
+    const mk = range(P.mark ?? 0, p);
+    m.mark.opacity = 0.95 * mk;
+    W0.markRing.visible = mk > 0.01;
+    W0.markRing.position.set(ex - gin / 2, yb + H - 0.75, WZ + 0.3);
+    W0.markRing.scale.set(0.95 * (0.6 + 0.4 * gscale), 0.95, 1);
+    W0.specks.position.set(Math.sin(t * 0.15) * 1.5, Math.sin(t * 0.21) * 0.6, 0);
     // подсветка названных частей
     const hl = P.hl ?? {};
     m.steel.emissiveIntensity = 0.45 * range(hl.bulk, p);
