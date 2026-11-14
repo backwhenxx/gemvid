@@ -276,23 +276,23 @@ const LOOK = {fog: '#d9d2c4', fogNear: 500, fogFar: 4200, grade: {shadow: '#1d34
 
 type Cam = {pos: [number, number, number]; look: [number, number, number]; fov?: number};
 const CAMS: Record<string, Cam> = {
-  hook0: {pos: [-46, 4, -40], look: [0, 12.5, 0], fov: 50},
-  hook1: {pos: [-50, 6, -46], look: [0, 12.5, 0], fov: 50},
-  kettle: {pos: [-58, 11, -52], look: [0, 12.5, 0]},
-  wide: {pos: [-75, 34, -105], look: [0, 13, 25]},
-  canals: {pos: [62, 40, -70], look: [0, 12, 40]},
-  locks: {pos: [70, 16, -48], look: [0, 12, 8]},
-  turn: {pos: [-56, 9, -44], look: [0, 12.5, 0]},
-  gond: {pos: [-16, UP + 6, -20], look: [0, UP - 0.5, 0]},
+  hook0: {pos: [-44, 6, 36], look: [0, 12.5, 0], fov: 50},
+  hook1: {pos: [-48, 8, 42], look: [0, 12.5, 0], fov: 50},
+  kettle: {pos: [-56, 12, 50], look: [0, 12.5, 0]},
+  wide: {pos: [-90, 38, 118], look: [0, 10, -20]},
+  canals: {pos: [70, 40, 70], look: [0, 12, -30]},
+  locks: {pos: [66, 18, 46], look: [0, 12, -6]},
+  turn: {pos: [42, 10, 54], look: [0, 12.5, 0]},
+  gond: {pos: [-16, 30.4, -20], look: [0, 23.9, 0]},
   hub: {pos: [-18, 15, -28], look: [0, 12.2, -12]},
   arch0: {pos: [-22, 6, -38], look: [0, 0, -12]},
   arch1: {pos: [-16, 7.5, -30], look: [0, 0, -6]},
-  weigh: {pos: [-50, 14, -48], look: [0, 12.2, 0]},
+  weigh: {pos: [-54, 14, 52], look: [0, 12.2, 0]},
   gears: {pos: [-7, 15, -31], look: [0, 12.2, -14.7]},
   counter: {pos: [-36, 13, -44], look: [0, 12.2, -3]},
   question: {pos: [-30, 7, -38], look: [0, 4, -4]},
-  final: {pos: [-80, 34, -110], look: [0, 14, 10]},
-  cover: {pos: [-46, 4, -40], look: [0, 12.5, 0], fov: 50},
+  final: {pos: [-24, 9, -48], look: [0, 6, -2]},
+  cover: {pos: [-44, 6, 36], look: [0, 12.5, 0], fov: 50},
 };
 const cam = (c: string | Cam) => (typeof c === 'string' ? CAMS[c] ?? CAMS.hook0 : c);
 
