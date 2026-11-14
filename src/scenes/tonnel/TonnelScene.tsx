@@ -168,7 +168,8 @@ const FAR = 16000;
 const L = 217;
 const H = 9;
 const HW = 21; // половина ширины
-const GINA = 0.6; // вылет резинового кольца
+const GS = 1.6; // кольцо в кадре крупнее натуры, чтобы читалось
+const GINA = 0.6 * GS; // вылет резинового кольца
 const FLOAT_YB = -8.5; // низ секции на плаву (верх +0,5)
 const REST_YB = -39.2; // низ секции на дне (на щебёночной постели)
 const TRENCH = -40;
@@ -184,11 +185,11 @@ const LOOK = {fog: '#e6d2b8', fogNear: 1400, fogFar: 11000, grade: {shadow: '#1d
 
 type Cam = {pos: [number, number, number]; look: [number, number, number]; fov?: number};
 const CAMS: Record<string, Cam> = {
-  hero0: {pos: [330, 9, -120], look: [110, -1, -14]},
-  hero1: {pos: [262, 4, -76], look: [112, 0, -14]},
-  waterline: {pos: [190, 2.2, -46], look: [128, 0, -21]},
-  top: {pos: [112, 130, -175], look: [112, -2, -12]},
-  front: {pos: [112, 70, 175], look: [100, -18, -12]},
+  hero0: {pos: [-80, 6, 92], look: [95, -4, -12]},
+  hero1: {pos: [-46, 2.6, 62], look: [92, -3.5, -12]},
+  waterline: {pos: [-14, 1.2, 24], look: [8, -2, -8]},
+  top: {pos: [40, 92, 150], look: [112, -5, -12]},
+  front: {pos: [150, 22, 128], look: [110, -22, -12]},
   trench: {pos: [70, -12, 105], look: [45, -32, -16]},
   secWide: {pos: [-48, -4, 62], look: [100, -12, -12]},
   bulk: {pos: [-8, -3.5, 20], look: [6.6, -4.6, -6]},
@@ -197,16 +198,16 @@ const CAMS: Record<string, Cam> = {
   tank: {pos: [36, -1.5, 44], look: [56, -6, -6]},
   sink: {pos: [-70, -12, 118], look: [80, -24, -12]},
   sink2: {pos: [-82, -16, 128], look: [80, -28, -12]},
-  gina: {pos: [2.2, -32.5, 9.5], look: [5.2, -34.5, -2]},
-  joint: {pos: [-3, -31.5, 17], look: [1.8, -35, -5]},
-  gina2: {pos: [-0.6, -30.6, 6.4], look: [0.4, -31.2, -1.5]},
+  gina: {pos: [2.8, -29.6, 6.2], look: [5.4, -31.0, -1.5]},
+  joint: {pos: [-2.6, -30.6, 14.5], look: [2.0, -34.2, -5]},
+  gina2: {pos: [-0.9, -30.0, 4.8], look: [0.4, -31.0, -1.2]},
   press: {pos: [305, -22, 96], look: [165, -34, -12]},
-  chain: {pos: [260, -12, 150], look: [-520, -30, -46]},
+  chain: {pos: [110, -22, 62], look: [-320, -35, -22]},
   ferry: {pos: [-190, 9, 125], look: [-420, -6, -470]},
   inside0: {pos: [-150, -36.2, 3.4], look: [-260, -36.4, -42], fov: 55},
   inside1: {pos: [-205, -36.0, 3.2], look: [-320, -35.4, -44], fov: 55},
   final: {pos: [-150, 16, 175], look: [-300, -14, -220]},
-  cover: {pos: [262, 5, -80], look: [110, -1, -14]},
+  cover: {pos: [-52, 3.2, 70], look: [92, -4, -12]},
 };
 const cam = (c: string | Cam) => (typeof c === 'string' ? CAMS[c] ?? CAMS.hero0 : c);
 
@@ -329,11 +330,11 @@ const waterGrad = () => {
   // «стекло» воды на срезе: по мировой высоте (v = (y+60)/62)
   const [c, g] = cv(8, 512);
   const gr = g.createLinearGradient(0, 512, 0, 0);
-  gr.addColorStop(0, '#0b2f3c');
-  gr.addColorStop(0.45, '#14566a');
-  gr.addColorStop(0.85, '#2c8a98');
-  gr.addColorStop(0.97, '#5fb3b6');
-  gr.addColorStop(1, '#8fd0c8');
+  gr.addColorStop(0, '#071f2a');
+  gr.addColorStop(0.45, '#0f3f4e');
+  gr.addColorStop(0.85, '#1f6670');
+  gr.addColorStop(0.97, '#3f8c8c');
+  gr.addColorStop(1, '#6fb0a6');
   g.fillStyle = gr;
   g.fillRect(0, 0, 8, 512);
   const t = new THREE.CanvasTexture(c);
@@ -421,7 +422,7 @@ const GINA_PTS: [number, number][] = [
   [0, -0.26], [0.1, -0.26], [0.16, -0.2], [0.3, -0.17], [0.46, -0.12], [0.57, -0.06], [0.6, 0], [0.57, 0.06], [0.46, 0.12], [0.3, 0.17], [0.16, 0.2], [0.1, 0.26], [0, 0.26],
 ];
 const ginaRun = (len: number) => {
-  const s = new THREE.Shape(GINA_PTS.map(([u, v]) => new THREE.Vector2(-u, v)));
+  const s = new THREE.Shape(GINA_PTS.map(([u, v]) => new THREE.Vector2(-u * GS, v * GS)));
   return new THREE.ExtrudeGeometry(s, {depth: len, bevelEnabled: false, curveSegments: 4});
 };
 const makeGina = (mat: THREE.Material, clamp: THREE.Material) => {
@@ -616,18 +617,18 @@ const useWorld = () =>
       clampSteel: new THREE.MeshStandardMaterial({color: '#5d6266', roughness: 0.45, metalness: 0.7}),
       tankWall: new THREE.MeshStandardMaterial({color: '#8f969a', roughness: 0.5, metalness: 0.5, emissive: '#5ab4ff', emissiveIntensity: 0}),
       tankWater: new THREE.MeshStandardMaterial({color: '#2f86b6', roughness: 0.15, transparent: true, opacity: 0.82, depthWrite: false}),
-      wface: new THREE.MeshBasicMaterial({map: waterGrad(), transparent: true, opacity: 0.6, depthWrite: false, fog: false, side: THREE.DoubleSide}),
+      wface: new THREE.MeshBasicMaterial({map: waterGrad(), transparent: true, opacity: 0.5, depthWrite: false, fog: false, side: THREE.DoubleSide}),
       chamber: new THREE.MeshBasicMaterial({map: waterGrad(), transparent: true, opacity: 0.72, depthWrite: false, fog: false}),
       backWall: new THREE.MeshBasicMaterial({color: '#0f3b4a', fog: false}),
-      sea: new THREE.MeshPhysicalMaterial({color: '#1d5068', roughness: 0.3, metalness: 0, normalMap: seaNormal(), normalScale: new THREE.Vector2(0.32, 0.32), specularIntensity: 0.55, envMapIntensity: 0.55}),
+      sea: new THREE.MeshPhysicalMaterial({color: '#24576c', roughness: 0.42, metalness: 0, normalMap: seaNormal(), normalScale: new THREE.Vector2(0.16, 0.16), specularIntensity: 0.55, envMapIntensity: 0.55}),
       seaFront: null as any,
       ground: new THREE.MeshStandardMaterial({vertexColors: true, roughness: 1}),
       groundFront: null as any,
-      soil1: new THREE.MeshStandardMaterial({color: '#a08c68', roughness: 1, map: cutTex()}),
-      soil2: new THREE.MeshStandardMaterial({color: '#9a7f5e', roughness: 1, map: cutTex()}),
-      soil3: new THREE.MeshStandardMaterial({color: '#6b6058', roughness: 1, map: cutTex()}),
-      soil4: new THREE.MeshStandardMaterial({color: '#4f4b48', roughness: 1, map: cutTex()}),
-      gravel: new THREE.MeshStandardMaterial({color: '#9b978f', roughness: 1, map: cutTex()}),
+      soil1: new THREE.MeshStandardMaterial({color: '#7b6d58', roughness: 1, map: cutTex()}),
+      soil2: new THREE.MeshStandardMaterial({color: '#665848', roughness: 1, map: cutTex()}),
+      soil3: new THREE.MeshStandardMaterial({color: '#4b4540', roughness: 1, map: cutTex()}),
+      soil4: new THREE.MeshStandardMaterial({color: '#363331', roughness: 1, map: cutTex()}),
+      gravel: new THREE.MeshStandardMaterial({color: '#6f6b64', roughness: 1, map: cutTex()}),
       foam: new THREE.MeshBasicMaterial({map: foamTex(), transparent: true, opacity: 0, depthWrite: false, fog: true, polygonOffset: true, polygonOffsetFactor: -4}),
       rope: new THREE.MeshStandardMaterial({color: '#2b2a28', roughness: 0.8, transparent: true}),
       ponton: new THREE.MeshStandardMaterial({color: '#d99a26', roughness: 0.6, metalness: 0.2}),
@@ -658,11 +659,11 @@ const useWorld = () =>
     m.groundFront = new THREE.MeshStandardMaterial({vertexColors: true, roughness: 1, clippingPlanes: [clipLand]});
     const clipFront = new THREE.Plane(new THREE.Vector3(0, 1, 0), 1e4);
     m.pontonFront = new THREE.MeshStandardMaterial({color: '#d99a26', roughness: 0.6, metalness: 0.2, clippingPlanes: [clipFront]});
-    (m.sea.normalMap as THREE.Texture).repeat.set(260, 130);
+    (m.sea.normalMap as THREE.Texture).repeat.set(70, 35);
     const seaN2 = (m.sea.normalMap as THREE.Texture).clone();
     seaN2.needsUpdate = true;
     m.seaFront.normalMap = seaN2;
-    seaN2.repeat.set(260, 130);
+    seaN2.repeat.set(70, 35);
 
     const world = new THREE.Group();
     // --- рельеф: дальняя половина целиком, ближняя — только суша (ниже −1 отрезано)
@@ -790,8 +791,8 @@ const useWorld = () =>
 
     // --- буксиры
     const TUGS: {x: number; z: number; ry: number; line: [number, number, number]}[] = [
-      {x: 300, z: -40, ry: 0.12, line: [L, 3, -18]},
-      {x: 292, z: 10, ry: -0.1, line: [L, 3, -3]},
+      {x: 300, z: -46, ry: 0.12, line: [L, 3, -18]},
+      {x: 292, z: -6, ry: -0.1, line: [L, 3, -3]},
       {x: -55, z: -30, ry: 0.0, line: [0, 3, -16]},
       {x: 120, z: -60, ry: Math.PI / 2, line: [120, 3, -21]},
     ];

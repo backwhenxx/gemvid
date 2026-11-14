@@ -35,7 +35,8 @@
     "cover",
     "cover"
    ],
-   "towLines": 1
+   "towLines": 1,
+   "front": 0
   }
  },
  "stillPairs": true,
@@ -60,7 +61,8 @@
       "len": 2.5,
       "volume": 0.35
      }
-    ]
+    ],
+    "front": 0
    }
   },
   {
@@ -72,7 +74,8 @@
      "waterline"
     ],
     "cont": true,
-    "towLines": 1
+    "towLines": 1,
+    "front": 0
    }
   },
   {
@@ -86,7 +89,8 @@
     "cont": true,
     "towLines": 1,
     "banner": "Секция тоннеля",
-    "bannerAt": 0.35
+    "bannerAt": 0.35,
+    "front": 0
    }
   },
   {
@@ -99,20 +103,7 @@
     ],
     "cont": true,
     "towLines": 1,
-    "front": [
-     [
-      0,
-      1
-     ],
-     [
-      0.35,
-      1
-     ],
-     [
-      0.8,
-      0
-     ]
-    ]
+    "front": 0
    }
   },
   {
