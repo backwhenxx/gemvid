@@ -36,10 +36,13 @@
     "cover"
    ],
    "towLines": 1,
-   "front": 0
+   "front": 0,
+   "post": {
+    "bloom": 0.25
+   }
   }
  },
- "stillPairs": false,
+ "stillPairs": true,
  "scenes": [
   {
    "type": "tonnel",
@@ -62,7 +65,11 @@
       "volume": 0.35
      }
     ],
-    "front": 0
+    "front": 0,
+    "post": {
+     "bloom": 0.25,
+     "dof": 0
+    }
    }
   },
   {
@@ -75,7 +82,11 @@
     ],
     "cont": true,
     "towLines": 1,
-    "front": 0
+    "front": 0,
+    "post": {
+     "bloom": 0.25,
+     "dof": 1.5
+    }
    }
   },
   {
@@ -90,7 +101,11 @@
     "towLines": 1,
     "banner": "Секция тоннеля",
     "bannerAt": 0.35,
-    "front": 0
+    "front": 0,
+    "post": {
+     "bloom": 0.25,
+     "dof": 1.5
+    }
    }
   },
   {
@@ -103,7 +118,11 @@
     ],
     "cont": true,
     "towLines": 1,
-    "front": 0
+    "front": 0,
+    "post": {
+     "bloom": 0.25,
+     "dof": 0
+    }
    }
   },
   {
@@ -118,7 +137,11 @@
     "towLines": 1,
     "front": 0,
     "banner": "Траншея до 40 м",
-    "bannerAt": 0.45
+    "bannerAt": 0.45,
+    "post": {
+     "bloom": 0.25,
+     "dof": 0
+    }
    }
   },
   {
@@ -133,7 +156,11 @@
     "towLines": 1,
     "front": 0,
     "banner": "217 метров",
-    "bannerAt": 0.3
+    "bannerAt": 0.3,
+    "post": {
+     "bloom": 0.25,
+     "dof": 0
+    }
    }
   },
   {
@@ -162,6 +189,10 @@
        1
       ]
      ]
+    },
+    "post": {
+     "bloom": 0.25,
+     "dof": 1.5
     }
    }
   },
@@ -190,7 +221,11 @@
     },
     "banner": "Внутри — воздух",
     "bannerAt": 0.15,
-    "bannerEnd": 0.8
+    "bannerEnd": 0.8,
+    "post": {
+     "bloom": 0.25,
+     "dof": 1.5
+    }
    }
   },
   {
@@ -225,7 +260,11 @@
       "len": 3,
       "volume": 0.3
      }
-    ]
+    ],
+    "post": {
+     "bloom": 0.25,
+     "dof": 0
+    }
    }
   },
   {
@@ -295,7 +334,11 @@
       "len": 3,
       "volume": 0.35
      }
-    ]
+    ],
+    "post": {
+     "bloom": 0.25,
+     "dof": 0
+    }
    }
   },
   {
@@ -343,6 +386,10 @@
        0
       ]
      ]
+    },
+    "post": {
+     "bloom": 0.25,
+     "dof": 0
     }
    }
   },
@@ -368,7 +415,11 @@
     ],
     "front": 0,
     "banner": "14 часов",
-    "bannerAt": 0.35
+    "bannerAt": 0.35,
+    "post": {
+     "bloom": 0.25,
+     "dof": 0
+    }
    }
   },
   {
@@ -422,7 +473,11 @@
       1,
       1
      ]
-    ]
+    ],
+    "post": {
+     "bloom": 0.25,
+     "dof": 1.5
+    }
    }
   },
   {
@@ -504,7 +559,11 @@
       0.25,
       0
      ]
-    ]
+    ],
+    "post": {
+     "bloom": 0.25,
+     "dof": 1.5
+    }
    }
   },
   {
@@ -562,7 +621,11 @@
       1,
       1
      ]
-    ]
+    ],
+    "post": {
+     "bloom": 0.25,
+     "dof": 1.5
+    }
    }
   },
   {
@@ -621,7 +684,11 @@
       0.25,
       0
      ]
-    ]
+    ],
+    "post": {
+     "bloom": 0.25,
+     "dof": 1.5
+    }
    }
   },
   {
@@ -651,7 +718,11 @@
     "front": 0,
     "traffic": 1,
     "banner": "18 км\nДания → Германия",
-    "bannerAt": 0.6
+    "bannerAt": 0.6,
+    "post": {
+     "bloom": 0.25,
+     "dof": 0
+    }
    }
   },
   {
@@ -672,7 +743,11 @@
     "traffic": 1,
     "banner": "Паром — 45 мин\nМашина — 10 мин",
     "bannerAt": 0.4,
-    "bannerSize": 56
+    "bannerSize": 56,
+    "post": {
+     "bloom": 0.25,
+     "dof": 0
+    }
    }
   },
   {
@@ -690,7 +765,11 @@
     "drain": 1,
     "comp": 1,
     "front": 0,
-    "traffic": 1
+    "traffic": 1,
+    "post": {
+     "bloom": 0.25,
+     "dof": 1.5
+    }
    }
   },
   {
@@ -725,7 +804,11 @@
       1
      ]
     ],
-    "traffic": 1
+    "traffic": 1,
+    "post": {
+     "bloom": 0.25,
+     "dof": 1.5
+    }
    }
   }
  ]

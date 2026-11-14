@@ -9,6 +9,7 @@ import type {SceneProps} from '../../Short';
 import {H as SH, W as SW, clamp01, easeInOut, rng} from '../../lib/util';
 import {loadFont} from '@remotion/google-fonts/Comfortaa';
 import {cloudTexture} from '../dam/textures';
+import {Post} from '../../lib/post';
 import {camBetween} from '../../lib/camPath';
 
 const {fontFamily: ROUND} = loadFont('normal', {weights: ['700'], subsets: ['cyrillic', 'latin']});
@@ -1051,6 +1052,7 @@ const TonnelWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> =
       pc.far = FAR;
       pc.updateProjectionMatrix();
     }
+    camera.userData.focus = cp.dist;
     SL.sky.position.copy(camera.position);
     SL.sunS.position.copy(camera.position).addScaledVector(SUN, 1500);
 
@@ -1236,6 +1238,7 @@ export const TonnelScene: React.FC<SceneProps> = ({scene, durationInFrames, life
     <AbsoluteFill>
       <ThreeCanvas width={SW} height={SH} camera={{fov: 45, position: [300, 8, -110], near: 1, far: FAR}} gl={{preserveDrawingBuffer: true, antialias: false}}>
         <TonnelWorld P={P} dur={life} t0={scene.start ?? 0} />
+        <Post opt={P.post} />
       </ThreeCanvas>
       <Grade />
       {P.banner ? (
