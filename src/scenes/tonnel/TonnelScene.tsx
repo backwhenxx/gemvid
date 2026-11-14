@@ -1207,7 +1207,8 @@ export const TonnelScene: React.FC<SceneProps> = ({scene, durationInFrames, life
   const frame = useCurrentFrame();
   const life = lifeIn ?? Math.max(1, durationInFrames - 10);
   const bIn = clamp01((frame - (P.bannerAt ?? 0) * life) / 8);
-  const bOut = P.bannerEnd ? 1 - clamp01((frame - P.bannerEnd * life) / 8) : 1;
+  // плашка гаснет до конца сцены — иначе на склейке она пропадает за один кадр (скачок картинки)
+  const bOut = 1 - clamp01((frame - (P.bannerEnd ?? 1) * life + 8) / 8);
   return (
     <AbsoluteFill>
       <ThreeCanvas width={SW} height={SH} camera={{fov: 45, position: [300, 8, -110], near: 1, far: FAR}} gl={{preserveDrawingBuffer: true, antialias: false}}>
