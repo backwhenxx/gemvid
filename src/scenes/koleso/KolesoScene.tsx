@@ -547,7 +547,7 @@ const useWorld = () =>
     basin.renderOrder = 2;
     world.add(basin);
     // --- опора оси и акведук
-    world.add(new THREE.Mesh(box(-5.5, 5.5, -7, UP - 4.4, 16.2, 23), m.conc));
+    world.add(new THREE.Mesh(box(-3, 3, -7, UP - 4.4, 16.2, 20), m.conc));
     const axle = new THREE.Mesh(new THREE.CylinderGeometry(1.75, 1.75, 31.5, 24), m.steelDark);
     axle.rotation.x = Math.PI / 2;
     axle.position.set(0, AX, 1.2);
