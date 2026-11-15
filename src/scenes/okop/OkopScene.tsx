@@ -285,11 +285,11 @@ const plankTex = (base: string, seed: number, vertical = false) => {
     g.fillStyle = `rgba(${r() > 0.5 ? '255,235,200' : '40,25,10'},${0.05 + r() * 0.08})`;
     if (vertical) g.fillRect(y, 0, 512 / n, 512);
     else g.fillRect(0, y, 512, 512 / n);
-    g.fillStyle = 'rgba(35,22,10,0.55)';
-    if (vertical) g.fillRect(y, 0, 3, 512);
-    else g.fillRect(0, y, 512, 3);
+    g.fillStyle = 'rgba(35,22,10,0.32)';
+    if (vertical) g.fillRect(y, 0, 4, 512);
+    else g.fillRect(0, y, 512, 4);
     for (let k = 0; k < 14; k++) {
-      g.strokeStyle = `rgba(60,38,18,${0.08 + r() * 0.1})`;
+      g.strokeStyle = `rgba(60,38,18,${0.04 + r() * 0.05})`;
       g.lineWidth = 1;
       g.beginPath();
       const o = y + 4 + r() * (512 / n - 8);
@@ -325,11 +325,6 @@ const burlapTex = () => {
   const [c, g] = cv(256, 256);
   g.fillStyle = '#a99067';
   g.fillRect(0, 0, 256, 256);
-  for (let i = 0; i < 256; i += 4) {
-    g.fillStyle = 'rgba(70,52,30,0.12)';
-    g.fillRect(i, 0, 1, 256);
-    g.fillRect(0, i, 256, 1);
-  }
   speckle(g, 0, 0, 256, 256, 260, ['rgba(80,60,40,0.18)', 'rgba(200,180,140,0.15)', 'rgba(90,70,50,0.12)'], 51, [6, 22]);
   return tex(c);
 };
@@ -1080,7 +1075,8 @@ const OkopWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> = (
     // --- вода
     const wl = range(P.water ?? 0, p);
     const wy = -DEPTH + 0.02 + 0.36 * wl;
-    W0.waterTop.visible = W0.waterFront.visible = wl > 0.03;
+    W0.waterTop.visible = W0.waterFront.visible = wl > 0.005;
+    (W0.m.water as THREE.MeshStandardMaterial).opacity = 0.84 * clamp01(wl / 0.25);
     W0.waterTop.position.y = wy;
     W0.waterFront.scale.y = wy + DEPTH;
     W0.waterFront.position.set(0, (wy - DEPTH) / 2, 0.006);
@@ -1102,18 +1098,18 @@ const OkopWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> = (
     const bg = range(P.bags ?? 0, p);
     const mtx = new THREE.Matrix4();
     const q = new THREE.Quaternion();
-    const one = new THREE.Vector3(1, 1, 1);
+    const sc = new THREE.Vector3(1, 1, 1);
     const zero = new THREE.Vector3(0, 0, 0);
     const v = new THREE.Vector3();
     const order = [0, 1, 2, 3, 4];
     W0.rows.forEach((row, ri) => {
       const w0 = order[ri] / 5;
       row.items.forEach((it, j) => {
-        const t0 = w0 + (it.s / PATH_LEN) * 0.14;
-        const e = clamp01((bg - t0) / 0.05);
+        const t0 = w0 + (it.s / PATH_LEN) * 0.1;
+        const e = clamp01((bg - t0) / 0.1);
         q.setFromAxisAngle(new THREE.Vector3(0, 1, 0), it.ry);
-        v.set(it.x, it.y + (1 - e) * (1 - e) * 0.8, it.z);
-        mtx.compose(v, q, e > 0 ? one : zero);
+        v.set(it.x, it.y + (1 - e) * (1 - e) * 0.35, it.z);
+        mtx.compose(v, q, e > 0 ? sc.setScalar(0.4 + 0.6 * easeInOut(e)) : zero);
         row.mesh.setMatrixAt(j, mtx);
       });
       row.mesh.instanceMatrix.needsUpdate = true;
