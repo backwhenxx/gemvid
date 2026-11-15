@@ -30,6 +30,7 @@ import {MayakScene} from './scenes/mayak/MayakScene';
 import {AviaScene} from './scenes/avia/AviaScene';
 import {TonnelScene} from './scenes/tonnel/TonnelScene';
 import {KolesoScene} from './scenes/koleso/KolesoScene';
+import {OkopScene} from './scenes/okop/OkopScene';
 import {WordCaptions} from './components/WordCaptions';
 
 export type SceneProps = {
@@ -69,6 +70,7 @@ const REGISTRY: Record<string, React.FC<SceneProps>> = {
   avia: AviaScene,
   tonnel: TonnelScene,
   koleso: KolesoScene,
+  okop: OkopScene,
 };
 
 // Переход «рост из точки»: новая сцена раскрывается кругом поверх предыдущей. Без кроссфейдов.
