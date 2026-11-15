@@ -43,7 +43,7 @@ const CAMS: Record<string, Cam> = {
   hook1: {pos: [3.5, 3.6, 17], look: [0, 3.4, 0], fov: 50},
   cut: {pos: [-1.5, 0.5, 20], look: [-1.5, -3.6, 0], fov: 50},
   upper: {pos: [-4.2, 0.6, 8.5], look: [-5, -1.0, 0], fov: 50},
-  clay: {pos: [-2, -2.6, 10], look: [-2.5, -4.6, 0], fov: 50},
+  clay: {pos: [-2, -2.2, 13], look: [-2.5, -4.4, 0], fov: 50},
   aqua: {pos: [1.5, -6.5, 10.5], look: [1.0, -8.6, 0], fov: 50},
   wide: {pos: [-40, 28, 75], look: [150, 2, -10], fov: 50},
   hills: {pos: [210, 48, 85], look: [300, 14, -15], fov: 50},
@@ -141,7 +141,7 @@ const rockTex = (base: string, grain: string[], stones: string[], seed: number, 
   const [c, g] = cv(512, 512);
   g.fillStyle = base;
   g.fillRect(0, 0, 512, 512);
-  speckle(g, 512, 512, 90, [grain[0].replace(/[\d.]+\)$/, '0.25)')], seed, [18, 50]);
+  speckle(g, 512, 512, 60, [grain[0].replace(/[\d.]+\)$/, '0.06)')], seed, [12, 30]);
   speckle(g, 512, 512, 9000, grain, seed + 1, [0.8, 2.2]);
   const r = rng(seed + 2);
   for (let i = 0; i < streaks; i++) {
@@ -365,18 +365,18 @@ const rigGeo = (x0: number) => {
 };
 
 // фонтан: капли по баллистике
-const NDROP = 520;
+const NDROP = 900;
 type Fount = {pts: THREE.Points; jet: THREE.Mesh; col: THREE.Mesh; pud: THREE.Mesh; seeds: Float32Array};
 const makeFount = (m: Record<string, any>, seed: number): Fount => {
   const r = rng(seed);
   const seeds = new Float32Array(NDROP * 4);
-  for (let i = 0; i < NDROP; i++) seeds.set([r(), r() * Math.PI * 2, 0.25 + r() * 1.3, 0.72 + r() * 0.28], i * 4);
+  for (let i = 0; i < NDROP; i++) seeds.set([r(), r() * Math.PI * 2, 0.35 + r() * 2.0, 0.7 + r() * 0.3], i * 4);
   const g = new THREE.BufferGeometry();
   g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(NDROP * 3), 3));
   const pts = new THREE.Points(g, m.drop);
   pts.frustumCulled = false;
   pts.renderOrder = 6;
-  const jg = new THREE.CylinderGeometry(0.07, 0.2, 1, 14, 1, true);
+  const jg = new THREE.CylinderGeometry(0.12, 0.24, 1, 14, 1, true);
   jg.translate(0, 0.5, 0);
   const jet = new THREE.Mesh(jg, m.jet);
   jet.renderOrder = 5;
@@ -450,9 +450,9 @@ const useWorld = () =>
       plank: new THREE.MeshStandardMaterial({map: plankTex('#6e5034', 62), roughness: 0.9, side: THREE.DoubleSide}),
       wellWater: new THREE.MeshStandardMaterial({color: '#4f6f78', roughness: 0.15, metalness: 0.1, transparent: true, opacity: 0.88, side: THREE.DoubleSide}),
       waterIn: new THREE.MeshStandardMaterial({color: '#5d9fc4', roughness: 0.1, metalness: 0.1, emissive: '#1d4a66', emissiveIntensity: 0.4, side: THREE.DoubleSide}),
-      jet: new THREE.MeshStandardMaterial({color: '#dff1ff', roughness: 0.1, transparent: true, opacity: 0.55, depthWrite: false, side: THREE.DoubleSide}),
-      drop: new THREE.PointsMaterial({color: '#e6f4ff', size: 0.11, map: dot, transparent: true, depthWrite: false, alphaTest: 0.05}),
-      dirty: new THREE.PointsMaterial({color: '#8a7350', size: 0.12, map: dot, transparent: true, depthWrite: false, alphaTest: 0.05}),
+      jet: new THREE.MeshStandardMaterial({color: '#d6ecfb', emissive: '#4f7d99', emissiveIntensity: 0.25, roughness: 0.1, transparent: true, opacity: 0.78, depthWrite: false, side: THREE.DoubleSide}),
+      drop: new THREE.PointsMaterial({color: '#cfe8fb', size: 0.17, map: dot, transparent: true, depthWrite: false, alphaTest: 0.05}),
+      dirty: new THREE.PointsMaterial({color: '#6b5232', size: 0.22, map: dot, transparent: true, depthWrite: false, alphaTest: 0.05}),
       seep: new THREE.PointsMaterial({color: '#bfe3ff', size: 1.1, map: dot, transparent: true, depthWrite: false, alphaTest: 0.05}),
       puddle: new THREE.MeshStandardMaterial({color: '#7fa6ba', roughness: 0.08, metalness: 0.2, transparent: true, opacity: 0.8, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2}),
       arrow: new THREE.MeshBasicMaterial({color: '#dff3ff', toneMapped: false, transparent: true, opacity: 0.9, side: THREE.DoubleSide, depthTest: false, fog: false}),
@@ -843,7 +843,7 @@ const SkvWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> = ({
       mat.emissive.set(k === 3 ? '#a8502a' : k === 4 ? '#3f86b8' : '#b08a4a');
       mat.emissiveIntensity = 0.35 * hl[k];
     });
-    (W0.m.layers[4] as THREE.MeshStandardMaterial).color.setRGB(lerp(1, 0.62, wet), lerp(1, 0.8, wet), lerp(1, 0.98, wet));
+    (W0.m.layers[4] as THREE.MeshStandardMaterial).color.setRGB(lerp(1, 0.5, wet), lerp(1, 0.72, wet), lerp(1, 1.0, wet));
 
     // --- ведро: опускается в колодец и поднимается
     const bk = range(P.bucket ?? 0, p);
