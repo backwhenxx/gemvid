@@ -841,13 +841,13 @@ const useWorld = () =>
       post.position.set(0, 0.6, -w / 2 - 0.08);
       peri.add(post);
     }
-    peri.position.set(-0.6, -DEPTH + 0.9, -2.5);
+    peri.position.set(-0.6, -DEPTH + 0.93, -2.5); // +3 см над ступенью: дно не совпадает с её верхней гранью
     dyn.add(peri);
     // ход луча: от врага → верхнее зеркало → вниз → нижнее зеркало → к нам
     const rayPath = new THREE.CurvePath<THREE.Vector3>();
     {
-      const yT = -DEPTH + 0.9 + 2.6 - 0.17;
-      const yB = -DEPTH + 0.9 + 0.17;
+      const yT = -DEPTH + 0.93 + 2.6 - 0.17;
+      const yB = -DEPTH + 0.93 + 0.17;
       const pts = [new THREE.Vector3(-7, yT, -2.5), new THREE.Vector3(-0.6, yT, -2.5), new THREE.Vector3(-0.6, yB, -2.5), new THREE.Vector3(0.7, yB, -2.5)];
       for (let i = 0; i < 3; i++) rayPath.add(new THREE.LineCurve3(pts[i], pts[i + 1]));
     }
@@ -1123,7 +1123,7 @@ const OkopWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> = (
     // --- перископ поднимается, луч бежит
     const pr = range(P.peri ?? 0, p);
     W0.peri.visible = pr > 0.01;
-    W0.peri.position.y = -DEPTH + 0.9 - (1 - pr) * 1.2;
+    W0.peri.position.y = -DEPTH + 0.93 - (1 - pr) * 1.2;
     W0.peri.scale.y = 0.55 + 0.45 * pr;
     const rk = range(P.ray ?? 0, p);
     W0.ray.visible = W0.rayHead.visible = rk > 0.01;
