@@ -1,0 +1,762 @@
+{
+ "title": "Почему вода из скважины бьёт сама",
+ "music": false,
+ "whisper": "medium",
+ "captionStyle": "word",
+ "autoOutro": false,
+ "stillPairs": true,
+ "ambience": [
+  {
+   "q": "birds countryside morning",
+   "from": 0,
+   "to": 15,
+   "volume": 0.07
+  },
+  {
+   "q": "water fountain",
+   "from": 1,
+   "to": 15,
+   "volume": 0.05
+  }
+ ],
+ "cover": {
+  "lines": [
+   "Вода бьёт",
+   "*сама*"
+  ],
+  "sub": "почему скважине не нужен насос",
+  "skv": {
+   "cut": 1,
+   "fB": 1,
+   "riseB": 1,
+   "pudB": 0.7,
+   "wet": 1,
+   "dB": 8.6,
+   "dA": 7.6,
+   "post": {
+    "bloom": 0.18
+   },
+   "fA": 1,
+   "riseA": 1,
+   "pudA": 0.6,
+   "cam": [
+    "cover",
+    "cover"
+   ]
+  }
+ },
+ "scenes": [
+  {
+   "type": "skv",
+   "say": "[excited] Пробурили землю — и вода сама бьёт фонтаном. Без насоса.",
+   "props": {
+    "cut": 0,
+    "fB": [
+     0,
+     1,
+     0.46,
+     0.75
+    ],
+    "riseB": [
+     0,
+     1,
+     0.36,
+     0.48
+    ],
+    "pudB": [
+     0,
+     0.3,
+     0.5,
+     1
+    ],
+    "wet": 0,
+    "dB": [
+     7.2,
+     8.6,
+     0,
+     0.42
+    ],
+    "dA": 4.2,
+    "post": {
+     "bloom": 0.18
+    },
+    "cont": false,
+    "cam": [
+     "hook0",
+     "hook1"
+    ],
+    "spinB": [
+     1,
+     0,
+     0.42,
+     0.46
+    ],
+    "sounds": [
+     {
+      "q": "drilling machine",
+      "at": 0.0,
+      "volume": 0.35,
+      "len": 2.5
+     },
+     {
+      "q": "water fountain splash",
+      "at": 0.44,
+      "volume": 0.45,
+      "len": 3
+     }
+    ]
+   }
+  },
+  {
+   "type": "skv",
+   "say": "Как? Режем землю пополам.",
+   "props": {
+    "cut": [
+     0,
+     1,
+     0.05,
+     0.95
+    ],
+    "fB": 1,
+    "riseB": 1,
+    "pudB": [
+     0.3,
+     0.45
+    ],
+    "wet": 0,
+    "dB": 8.6,
+    "dA": 4.2,
+    "post": {
+     "bloom": 0.18
+    },
+    "cam": [
+     "hook1",
+     "cut"
+    ],
+    "sounds": [
+     {
+      "q": "rock sliding",
+      "at": 0.15,
+      "volume": 0.3,
+      "len": 2
+     }
+    ],
+    "cont": true
+   }
+  },
+  {
+   "type": "skv",
+   "say": "Сверху — верховодка: дождь и грязь с полей. Обычный колодец берёт именно её.",
+   "props": {
+    "cut": 1,
+    "fB": 1,
+    "riseB": 1,
+    "pudB": 0.45,
+    "wet": 0,
+    "dB": 8.6,
+    "dA": 4.2,
+    "post": {
+     "bloom": 0.18
+    },
+    "cam": [
+     "cut",
+     "upper"
+    ],
+    "hlUp": [
+     0,
+     1,
+     0,
+     0.3
+    ],
+    "dirty": [
+     0,
+     1,
+     0,
+     0.2
+    ],
+    "bucket": [
+     0,
+     1,
+     0.5,
+     0.95
+    ],
+    "banner": "Верховодка",
+    "bannerAt": 0.08,
+    "bannerEnd": 0.55,
+    "sounds": [
+     {
+      "q": "bucket water splash",
+      "at": 0.9,
+      "volume": 0.35,
+      "len": 1.5
+     }
+    ],
+    "cont": true
+   }
+  },
+  {
+   "type": "skv",
+   "say": "Ниже — толстый слой глины. Вода сквозь неё почти не проходит.",
+   "props": {
+    "cut": 1,
+    "fB": 1,
+    "riseB": 1,
+    "pudB": 0.45,
+    "wet": 0,
+    "dB": 8.6,
+    "dA": 4.2,
+    "post": {
+     "bloom": 0.18
+    },
+    "cam": [
+     "upper",
+     "clay"
+    ],
+    "hlUp": [
+     1,
+     0,
+     0,
+     0.3
+    ],
+    "hlClay": [
+     0,
+     1,
+     0.1,
+     0.4
+    ],
+    "dirty": 1,
+    "bucket": [
+     1,
+     0,
+     0,
+     0.7
+    ],
+    "banner": "Глина\nне пропускает воду",
+    "bannerAt": 0.15,
+    "bannerEnd": 0.95,
+    "cont": true
+   }
+  },
+  {
+   "type": "skv",
+   "say": "А под глиной — песок, пропитанный водой, как губка.",
+   "props": {
+    "cut": 1,
+    "fB": 1,
+    "riseB": 1,
+    "pudB": 0.45,
+    "wet": [
+     0,
+     1,
+     0.25,
+     0.8
+    ],
+    "dB": 8.6,
+    "dA": 4.2,
+    "post": {
+     "bloom": 0.18
+    },
+    "cam": [
+     "clay",
+     "aqua"
+    ],
+    "hlClay": [
+     1,
+     0,
+     0,
+     0.3
+    ],
+    "dirty": [
+     1,
+     0,
+     0,
+     0.3
+    ],
+    "hlAq": [
+     0,
+     1,
+     0.2,
+     0.5
+    ],
+    "banner": "Водоносный песок",
+    "bannerAt": 0.3,
+    "bannerEnd": 0.97,
+    "cont": true
+   }
+  },
+  {
+   "type": "skv",
+   "say": "[curious] Но откуда у неё напор?",
+   "props": {
+    "cut": 1,
+    "fB": 1,
+    "riseB": 1,
+    "pudB": 0.45,
+    "wet": 1,
+    "dB": 8.6,
+    "dA": 4.2,
+    "post": {
+     "bloom": 0.18
+    },
+    "cam": [
+     "aqua",
+     {
+      "pos": [
+       14,
+       4,
+       40
+      ],
+      "look": [
+       45,
+       -6,
+       0
+      ],
+      "fov": 50
+     }
+    ],
+    "hlAq": [
+     1,
+     0.4,
+     0,
+     0.6
+    ],
+    "flow": [
+     0,
+     1,
+     0.2,
+     0.8
+    ],
+    "cont": true
+   }
+  },
+  {
+   "type": "skv",
+   "say": "Этот песок тянется на десятки километров и выходит наружу на холмах. Там в него впитывается дождь.",
+   "props": {
+    "cut": 1,
+    "fB": 1,
+    "riseB": 1,
+    "pudB": 0.45,
+    "wet": 1,
+    "dB": 8.6,
+    "dA": 4.2,
+    "post": {
+     "bloom": 0.18
+    },
+    "cam": [
+     {
+      "pos": [
+       14,
+       4,
+       40
+      ],
+      "look": [
+       45,
+       -6,
+       0
+      ],
+      "fov": 50
+     },
+     "hills"
+    ],
+    "hlAq": 0.4,
+    "flow": 1,
+    "rain": [
+     0,
+     1,
+     0.45,
+     0.7
+    ],
+    "seep": [
+     0,
+     1,
+     0.6,
+     0.95
+    ],
+    "banner": "Десятки километров",
+    "bannerAt": 0.05,
+    "bannerEnd": 0.5,
+    "sounds": [
+     {
+      "q": "heavy rain",
+      "at": 0.5,
+      "volume": 0.35,
+      "len": 3
+     }
+    ],
+    "cont": true
+   }
+  },
+  {
+   "type": "skv",
+   "say": "Получается шланг, который подняли с одного конца.",
+   "props": {
+    "cut": 1,
+    "fB": 1,
+    "riseB": 1,
+    "pudB": 0.45,
+    "wet": 1,
+    "dB": 8.6,
+    "dA": 4.2,
+    "post": {
+     "bloom": 0.18
+    },
+    "cam": [
+     "hills",
+     "hose"
+    ],
+    "hlAq": 0.4,
+    "flow": 1,
+    "rain": 1,
+    "seep": 1,
+    "level": [
+     0,
+     1,
+     0.1,
+     0.9
+    ],
+    "cont": true
+   }
+  },
+  {
+   "type": "skv",
+   "say": "Вода заперта между глиной и давит вверх. Пробиваешь глину...",
+   "props": {
+    "cut": 1,
+    "fB": 1,
+    "riseB": 1,
+    "pudB": 0.45,
+    "wet": 1,
+    "dB": 8.6,
+    "dA": [
+     4.2,
+     6.4,
+     0.5,
+     1
+    ],
+    "post": {
+     "bloom": 0.18
+    },
+    "cam": [
+     "hose",
+     "drillA"
+    ],
+    "hlAq": [
+     0.4,
+     0,
+     0,
+     0.5
+    ],
+    "flow": 1,
+    "rain": [
+     1,
+     0,
+     0,
+     0.3
+    ],
+    "seep": [
+     1,
+     0,
+     0,
+     0.3
+    ],
+    "level": 1,
+    "levelOp": [
+     1,
+     0.75,
+     0,
+     0.5
+    ],
+    "spinA": [
+     0,
+     1,
+     0.45,
+     0.5
+    ],
+    "sounds": [
+     {
+      "q": "drilling machine",
+      "at": 0.5,
+      "volume": 0.35,
+      "len": 3
+     }
+    ],
+    "cont": true
+   }
+  },
+  {
+   "type": "skv",
+   "say": "[dramatically] и она рвётся к высоте тех холмов!",
+   "props": {
+    "cut": 1,
+    "fB": 1,
+    "riseB": 1,
+    "pudB": 0.45,
+    "wet": 1,
+    "dB": 8.6,
+    "dA": [
+     6.4,
+     7.6,
+     0,
+     0.25
+    ],
+    "post": {
+     "bloom": 0.18
+    },
+    "cam": [
+     "drillA",
+     "burstA"
+    ],
+    "flow": 1,
+    "level": 1,
+    "levelOp": 0.75,
+    "spinA": [
+     1,
+     0,
+     0.25,
+     0.3
+    ],
+    "riseA": [
+     0,
+     1,
+     0.18,
+     0.36
+    ],
+    "fA": [
+     0,
+     1,
+     0.34,
+     0.7
+    ],
+    "pudA": [
+     0,
+     0.3,
+     0.4,
+     1
+    ],
+    "sounds": [
+     {
+      "q": "water fountain splash",
+      "at": 0.32,
+      "volume": 0.5,
+      "len": 3
+     }
+    ],
+    "cont": true
+   }
+  },
+  {
+   "type": "skv",
+   "say": "Такие скважины зовут артезианскими — по французской провинции Артуа. Там их бурили ещё в двенадцатом веке.",
+   "props": {
+    "cut": 1,
+    "fB": 1,
+    "riseB": 1,
+    "pudB": [
+     0.45,
+     0.7
+    ],
+    "wet": 1,
+    "dB": 8.6,
+    "dA": 7.6,
+    "post": {
+     "bloom": 0.18
+    },
+    "cam": [
+     "burstA",
+     "orbit"
+    ],
+    "flow": 1,
+    "level": 1,
+    "levelOp": [
+     0.75,
+     0,
+     0,
+     0.4
+    ],
+    "riseA": 1,
+    "fA": 1,
+    "pudA": [
+     0.3,
+     0.6
+    ],
+    "banner": "Артуа · XII век",
+    "bannerAt": 0.35,
+    "bannerEnd": 0.97,
+    "cont": true
+   }
+  },
+  {
+   "type": "skv",
+   "say": "В Париже одну скважину бурили восемь лет — до пятисот сорока восьми метров.",
+   "props": {
+    "cut": 1,
+    "fB": 1,
+    "riseB": 1,
+    "pudB": 0.7,
+    "wet": 1,
+    "dB": 8.6,
+    "dA": 7.6,
+    "post": {
+     "bloom": 0.18
+    },
+    "cam": [
+     "orbit",
+     "deep1"
+    ],
+    "flow": 1,
+    "riseA": 1,
+    "fA": 1,
+    "pudA": 0.6,
+    "ruler": [
+     0,
+     1,
+     0.2,
+     0.9
+    ],
+    "banner": "Париж: 548 м · 8 лет",
+    "bannerAt": 0.25,
+    "bannerEnd": 0.97,
+    "cont": true
+   }
+  },
+  {
+   "type": "skv",
+   "say": "А сама вода в таком слое ползёт от метра до пяти метров в год.",
+   "props": {
+    "cut": 1,
+    "fB": 1,
+    "riseB": 1,
+    "pudB": 0.7,
+    "wet": 1,
+    "dB": 8.6,
+    "dA": 7.6,
+    "post": {
+     "bloom": 0.18
+    },
+    "cam": [
+     "deep1",
+     "flow"
+    ],
+    "flow": 1,
+    "riseA": 1,
+    "fA": 1,
+    "pudA": 0.6,
+    "ruler": [
+     1,
+     0,
+     0,
+     0.4
+    ],
+    "hlAq": [
+     0,
+     0.6,
+     0.3,
+     0.7
+    ],
+    "banner": "1–5 метров в год",
+    "bannerAt": 0.35,
+    "bannerEnd": 0.97,
+    "cont": true
+   }
+  },
+  {
+   "type": "skv",
+   "say": "В Австралии ей — до двух миллионов лет.",
+   "props": {
+    "cut": 1,
+    "fB": 1,
+    "riseB": 1,
+    "pudB": 0.7,
+    "wet": 1,
+    "dB": 8.6,
+    "dA": 7.6,
+    "post": {
+     "bloom": 0.18
+    },
+    "cam": [
+     "flow",
+     "aus"
+    ],
+    "flow": 1,
+    "hlAq": [
+     0.6,
+     0,
+     0.4,
+     1
+    ],
+    "riseA": 1,
+    "fA": 1,
+    "pudA": 0.6,
+    "banner": "2 000 000 лет",
+    "bannerAt": 0.25,
+    "bannerEnd": 0.95,
+    "cont": true
+   }
+  },
+  {
+   "type": "skv",
+   "say": "[warmly] Так что на даче: колодец за неделю — или скважина на сто метров? Колодец дешевле, скважина чище.",
+   "props": {
+    "cut": 1,
+    "fB": 1,
+    "riseB": 1,
+    "pudB": 0.7,
+    "wet": 1,
+    "dB": 8.6,
+    "dA": 7.6,
+    "post": {
+     "bloom": 0.18
+    },
+    "cam": [
+     "aus",
+     "dacha"
+    ],
+    "flow": [
+     1,
+     0,
+     0,
+     0.4
+    ],
+    "riseA": 1,
+    "fA": 1,
+    "pudA": 0.6,
+    "bucket": [
+     0,
+     1,
+     0.55,
+     0.85
+    ],
+    "banner": "Колодец или скважина?",
+    "bannerAt": 0.45,
+    "bannerEnd": 0.97,
+    "cont": true
+   }
+  },
+  {
+   "type": "skv",
+   "say": "Подпишись.",
+   "props": {
+    "cut": 1,
+    "fB": 1,
+    "riseB": 1,
+    "pudB": 0.7,
+    "wet": 1,
+    "dB": 8.6,
+    "dA": 7.6,
+    "post": {
+     "bloom": 0.18
+    },
+    "cam": [
+     "dacha",
+     "final"
+    ],
+    "riseA": 1,
+    "fA": 1,
+    "pudA": 0.6,
+    "bucket": 1,
+    "cont": true
+   }
+  }
+ ]
+}
