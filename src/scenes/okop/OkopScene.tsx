@@ -58,7 +58,7 @@ const CAMS: Record<string, Cam> = {
   aerialBay: {pos: [7, 17, -13], look: [0.5, -1.5, -26]},
   aerialFire: {pos: [9, 15, -6], look: [2.5, -1.5, -15.5]},
   deepHigh: {pos: [-0.5, 3, 37], look: [0, -5.5, -4]},
-  final: {pos: [-0.5, 4, 43], look: [0.5, -5, -4]},
+  final: {pos: [1.5, 2.5, 33], look: [2.5, -5, -4]},
   cover: {pos: [8, 20, 8], look: [1.5, -1.5, -16], fov: 50},
 };
 const cam = (c: string | Cam) => (typeof c === 'string' ? CAMS[c] ?? CAMS.cut : c);
