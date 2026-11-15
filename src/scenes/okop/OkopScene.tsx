@@ -54,11 +54,11 @@ const CAMS: Record<string, Cam> = {
   bags: {pos: [2.4, 1.3, 4.0], look: [-1.0, 0.2, -3.0]},
   step: {pos: [1.4, -0.2, 3.0], look: [-0.6, -1.3, -2.5]},
   peri: {pos: [1.5, 0.2, 2.0], look: [-0.6, -0.2, -2.5]},
-  deep: {pos: [4.6, -4.6, 27], look: [4.6, -4.9, -2]},
+  deep: {pos: [5, -4.5, 24], look: [5, -4.6, -2]},
   aerialBay: {pos: [7, 17, -13], look: [0.5, -1.5, -26]},
   aerialFire: {pos: [9, 15, -6], look: [2.5, -1.5, -15.5]},
-  deepHigh: {pos: [-1, -1.5, 40], look: [0, -4, -4]},
-  final: {pos: [-0.5, 0.5, 46], look: [1, -3.5, -4]},
+  deepHigh: {pos: [-0.5, 3, 37], look: [0, -5.5, -4]},
+  final: {pos: [-0.5, 4, 43], look: [0.5, -5, -4]},
   cover: {pos: [8, 20, 8], look: [1.5, -1.5, -16], fov: 50},
 };
 const cam = (c: string | Cam) => (typeof c === 'string' ? CAMS[c] ?? CAMS.cut : c);
@@ -203,15 +203,16 @@ const speckle = (g: CanvasRenderingContext2D, x0: number, y0: number, w: number,
 };
 // срез земли: v = 1 + y/14 (верх холста — поверхность), u = 8 м на тайл
 const layersTex = () => {
-  const [c, g] = cv(512, 1024);
-  const ppm = 1024 / 14;
+  const [c, g] = cv(512, 2048);
+  const ppm = 2048 / 40;
   const r = rng(5);
   const bands: [number, string][] = [
     [0, '#3f2c1e'],
     [0.38, '#8a5a35'],
     [3.3, '#a77d4b'],
     [5.6, '#5f6b72'],
-    [14.1, '#5f6b72'],
+    [16, '#56636b'],
+    [40.5, '#56636b'],
   ];
   for (let i = 0; i < bands.length - 1; i++) {
     const [d0, col] = bands[i];
@@ -226,10 +227,11 @@ const layersTex = () => {
     g.fill();
   }
   // прожилки и камешки
-  speckle(g, 0, 0, 512, 1024, 9000, ['rgba(0,0,0,0.06)', 'rgba(255,255,255,0.05)', 'rgba(60,40,25,0.07)'], 11, [1, 4]);
-  speckle(g, 0, 0.4 * ppm, 512, 5 * ppm, 160, ['rgba(190,170,140,0.5)', 'rgba(120,110,100,0.5)'], 12, [2, 6]);
-  for (let i = 0; i < 40; i++) {
-    const y = 5.8 * ppm + r() * 8 * ppm;
+  speckle(g, 0, 0, 512, 2048, 14000, ['rgba(0,0,0,0.06)', 'rgba(255,255,255,0.05)', 'rgba(60,40,25,0.07)'], 11, [1, 4]);
+  speckle(g, 0, 0.4 * ppm, 512, 5 * ppm, 110, ['rgba(190,170,140,0.25)', 'rgba(120,110,100,0.3)'], 12, [1.5, 4]);
+  speckle(g, 0, 6 * ppm, 512, 30 * ppm, 70, ['rgba(150,160,165,0.35)', 'rgba(60,66,70,0.35)'], 13, [3, 7]);
+  for (let i = 0; i < 90; i++) {
+    const y = 5.8 * ppm + r() * 34 * ppm;
     g.strokeStyle = `rgba(${r() > 0.5 ? '40,50,58' : '120,132,140'},${0.15 + r() * 0.15})`;
     g.lineWidth = 2 + r() * 4;
     g.beginPath();
@@ -428,7 +430,7 @@ const prep = (g0: THREE.BufferGeometry, topRep = 8) => {
       else {
         const ax = Math.abs(nor.getX(i));
         const az = Math.abs(nor.getZ(i));
-        U.set([(az >= ax ? x : z) / 8, 1 + y / 14], o * 2);
+        U.set([(az >= ax ? x : z) / 8, 1 + y / 40], o * 2);
       }
     }
   });
@@ -609,6 +611,7 @@ const useWorld = () =>
       ray: new THREE.MeshBasicMaterial({color: '#FFD54A', toneMapped: false, transparent: true, opacity: 0.95, depthTest: false}),
       tracer: new THREE.MeshBasicMaterial({color: '#ffcf6a', toneMapped: false, transparent: true, opacity: 0.95}),
       ruler: new THREE.MeshBasicMaterial({color: '#FFD54A', toneMapped: false, transparent: true, opacity: 0.95}),
+      arrowRun: new THREE.MeshBasicMaterial({color: '#ff9f43', toneMapped: false, transparent: true, opacity: 0.92, side: THREE.DoubleSide, depthTest: false, fog: false}),
       arrowUs: new THREE.MeshBasicMaterial({color: '#FFD54A', toneMapped: false, transparent: true, opacity: 0.92, side: THREE.DoubleSide, depthTest: false}),
       arrowThem: new THREE.MeshBasicMaterial({color: '#ff9f43', toneMapped: false, transparent: true, opacity: 0.92, side: THREE.DoubleSide, depthTest: false}),
       lampGlass: new THREE.MeshStandardMaterial({color: '#ffe0a0', emissive: '#ffb050', emissiveIntensity: 2.2}),
@@ -942,7 +945,7 @@ const useWorld = () =>
       return s;
     });
     // стрелки «гонки»: враг бежит к окопу, ты — вверх по лестнице
-    const arrowThem = new THREE.Mesh(flatArrow(3.2, 0.7, 1.5, 1.1), m.arrowThem);
+    const arrowThem = new THREE.Mesh(flatArrow(3.2, 0.7, 1.5, 1.1), m.arrowRun);
     const arrowUs = new THREE.Mesh(flatArrow(1.8, 0.45, 1.0, 0.7), m.arrowUs);
     const arrowFire = new THREE.Mesh(flatArrow(1, 0.5, 1.1, 0.9), m.arrowThem);
     arrowThem.renderOrder = arrowUs.renderOrder = arrowFire.renderOrder = 14;
@@ -1065,7 +1068,7 @@ const OkopWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> = (
       const B: P2 = [(CORR[2][0] + CORR[3][0]) / 2, R_CEIL];
       const L = Math.hypot(B[0] - A[0], B[1] - A[1]);
       const d: P2 = [(B[0] - A[0]) / L, (B[1] - A[1]) / L];
-      const t = clamp01(qd / 0.55) * 1.2;
+      const t = -0.3 + clamp01(qd / 0.55) * 1.5;
       const fr: P2 = [A[0] + d[0] * L * t, A[1] + d[1] * L * t];
       const c1 = qd >= 0.55 ? [] : clipPoly(CORR, (q) => (q[0] - fr[0]) * d[0] + (q[1] - fr[1]) * d[1]);
       const xf = F(R_CEIL) - 0.3 + (R_X1 - F(R_CEIL) + 0.3) * clamp01((qd - 0.55) / 0.45);
@@ -1256,7 +1259,7 @@ const OkopWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> = (
     const rc = P.race ? clamp01((p - P.race[0]) / (P.race[1] - P.race[0])) : -1;
     W0.arrowThem.visible = W0.arrowUs.visible = rc >= 0;
     if (rc >= 0) {
-      W0.arrowThem.position.set(lerp(-17, -5.3, rc), 1.0, 0.3);
+      W0.arrowThem.position.set(lerp(-12, -4.4, rc), 1.3, 1.0);
       const a = polyAt(STAIR, rc * 0.97);
       W0.arrowUs.position.set(a.x, a.y, 0.3);
       W0.arrowUs.rotation.z = a.ang;
