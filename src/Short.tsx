@@ -34,6 +34,7 @@ import {OkopScene} from './scenes/okop/OkopScene';
 import {SkvScene} from './scenes/skv/SkvScene';
 import {OzeroScene} from './scenes/ozero/OzeroScene';
 import {PromScene} from './scenes/prom/PromScene';
+import {LabScene} from './scenes/lab/LabScene';
 import {WordCaptions} from './components/WordCaptions';
 
 export type SceneProps = {
@@ -77,6 +78,7 @@ const REGISTRY: Record<string, React.FC<SceneProps>> = {
   skv: SkvScene,
   ozero: OzeroScene,
   prom: PromScene,
+  lab: LabScene,
 };
 
 // Переход «рост из точки»: новая сцена раскрывается кругом поверх предыдущей. Без кроссфейдов.

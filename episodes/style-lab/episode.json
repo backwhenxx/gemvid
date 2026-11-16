@@ -1,0 +1,18 @@
+{
+ "title": "Проба стиля «Живопись» (не для публикации)",
+ "music": false,
+ "whisper": "medium",
+ "captionStyle": "word",
+ "autoOutro": false,
+ "ambience": [{"q": "birds morning garden", "from": 0, "to": 16, "volume": 0.05}],
+ "scenes": [
+  {"type": "lab", "say": "Почему в погребе всегда плюс четыре?",
+   "props": {"style": "paint", "cam": ["wide", "mid"], "bucket": [0, 0.1]}},
+  {"type": "lab", "say": "На двух метрах глубины земля почти не чувствует ни жары, ни мороза.",
+   "props": {"cont": true, "style": "paint", "cam": ["mid", "cellar"], "banner": "+4 °C\nкруглый год", "bannerAt": 0.3, "bucket": [0.1, 0.35]}},
+  {"type": "lab", "say": "А колодец уходит ещё глубже — до водоносного слоя.",
+   "props": {"cont": true, "style": "paint", "cam": ["cellar", "well"], "bucket": [0.35, 1]}},
+  {"type": "lab", "say": "Подпишись.",
+   "props": {"cont": true, "style": "paint", "cam": ["well", "wellUp"], "bucket": 1}}
+ ]
+}
