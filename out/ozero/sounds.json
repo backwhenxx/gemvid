@@ -1,0 +1,38 @@
+[
+ {
+  "file": "snd/amb_050670ca0c.wav",
+  "q": "winter wind",
+  "title": "winter wind 01c.aiff",
+  "creator": "klangfabrik",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/klangfabrik/sounds/117513"
+ },
+ {
+  "file": "snd/sfx_531255c82e.wav",
+  "q": "ice cracking",
+  "title": "Ice Crack 5.wav",
+  "creator": "ecfike",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/ecfike/sounds/177217"
+ },
+ {
+  "file": "snd/sfx_2b6b393827.wav",
+  "q": "autumn wind leaves",
+  "title": "Autumn leaves falling on forest floor, fly nearby",
+  "creator": "Mjeno",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/Mjeno/sounds/405139"
+ },
+ {
+  "file": "snd/sfx_7e8340bd8a.wav",
+  "q": "water splash",
+  "title": "water splash",
+  "creator": "audiosmedia",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/audiosmedia/sounds/243519"
+ }
+]
