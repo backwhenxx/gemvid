@@ -146,6 +146,22 @@ if (flag('--stills')) {
   const comp = await selectComposition({serveUrl, id: 'Short', inputProps, chromiumOptions: {gl: 'swangle'}, timeoutInMilliseconds: 180000});
   const dir = path.join(outDir, 'stills');
   fs.mkdirSync(dir, {recursive: true});
+  // Проба стиля: episode.json "styleTest": {"scenes": [1, 8], "post": {"paint": 1}} — выбранные сцены в полном размере
+  // дважды: как есть (→ stills.jpg) и с добавкой к post (→ stills_big.jpg).
+  if (ep.styleTest) {
+    const T = ep.styleTest;
+    const scB = scenesS.map((s) => ({...s, props: {...s.props, post: {...(s.props.post ?? {}), ...T.post}}}));
+    const propsB = {timeline: {...timeline, scenes: scB}};
+    for (const n of T.scenes) {
+      const f = Math.round(((n - 1) * SD + SD * 0.7) * 30), nn = String(n).padStart(2, '0');
+      await renderStill({composition: comp, serveUrl, inputProps, frame: f, output: path.join(dir, `a_${nn}.jpg`), imageFormat: 'jpeg', jpegQuality: 92, chromiumOptions: {gl: 'swangle'}, timeoutInMilliseconds: 180000});
+      await renderStill({composition: comp, serveUrl, inputProps: propsB, frame: f, output: path.join(dir, `b_${nn}.jpg`), imageFormat: 'jpeg', jpegQuality: 92, chromiumOptions: {gl: 'swangle'}, timeoutInMilliseconds: 180000});
+      log(`проба стиля: сцена ${n}`);
+    }
+    for (const [pre, out] of [['a_', 'stills.jpg'], ['b_', 'stills_big.jpg']])
+      execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-pattern_type', 'glob', '-i', path.join(dir, `${pre}*.jpg`), '-vf', `tile=${T.scenes.length}x1`, '-frames:v', '1', '-q:v', '2', path.join(outDir, out)], {stdio: 'inherit'});
+    process.exit(0);
+  }
   for (let i = 0; i < scenesS.length; i++) {
     const f = Math.round((i * SD + SD * 0.7) * 30);
     await renderStill({composition: comp, serveUrl, inputProps, frame: f, output: path.join(dir, `${String(i + 1).padStart(2, '0')}.jpg`), imageFormat: 'jpeg', jpegQuality: 80, chromiumOptions: {gl: 'swangle'}, timeoutInMilliseconds: 180000});

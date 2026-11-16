@@ -1,6 +1,7 @@
 import React, {useLayoutEffect, useMemo} from 'react';
 import {AbsoluteFill, useCurrentFrame, useVideoConfig} from 'remotion';
 import {ThreeCanvas} from '@remotion/three';
+import {Post} from '../../lib/post';
 import {useThree} from '@react-three/fiber';
 import * as THREE from 'three';
 import type {SceneProps} from '../../Short';
@@ -649,6 +650,7 @@ export const DamScene: React.FC<SceneProps> = ({scene, durationInFrames}) => {
     <AbsoluteFill>
       <ThreeCanvas width={SW} height={SH} camera={{fov: 45, position: [0, 3, 25], near: 0.5, far: 600}} gl={{preserveDrawingBuffer: true, antialias: false}}>
         <DamWorld P={P} life={life} />
+        <Post opt={P.post} />
       </ThreeCanvas>
       {P.banner ? (
         <div

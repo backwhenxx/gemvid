@@ -1,0 +1,657 @@
+{
+ "title": "Зачем окопы копали зигзагом",
+ "music": false,
+ "whisper": "medium",
+ "captionStyle": "word",
+ "autoOutro": false,
+ "stillPairs": true,
+ "ambience": [
+  {
+   "q": "wind field countryside",
+   "from": 0,
+   "to": 12,
+   "volume": 0.08
+  },
+  {
+   "q": "distant artillery rumble",
+   "from": 0,
+   "to": 12,
+   "volume": 0.07
+  },
+  {
+   "q": "heavy rain falling",
+   "from": 2,
+   "to": 3,
+   "volume": 0.16
+  }
+ ],
+ "cover": {
+  "lines": [
+   "Зачем окоп",
+   "*зигзагом*"
+  ],
+  "sub": "и что под ним на 9 метрах",
+  "okop": {
+   "dig": 1,
+   "r2": 0,
+   "rain": 0,
+   "water": 0.75,
+   "boards": 1,
+   "revet": 1,
+   "bags": 1,
+   "step": 1,
+   "peri": 1,
+   "ray": 0,
+   "dug": 1,
+   "furn": 1,
+   "r9": 0,
+   "fireArrow": 0,
+   "cam": [
+    "cover",
+    "cover"
+   ],
+   "post": {
+    "bloom": 0.2
+   }
+  }
+ },
+ "scenes": [
+  {
+   "type": "okop",
+   "say": "[excited] Солдаты Первой мировой копали окопы зигзагом. И дело не в кривых руках.",
+   "props": {
+    "dig": [
+     0.22,
+     1,
+     0,
+     0.95
+    ],
+    "cam": [
+     "hook0",
+     "hook1"
+    ],
+    "cont": false,
+    "post": {
+     "bloom": 0.15
+    },
+    "at": {
+     "b0": 0.32
+    },
+    "banner": "1914–1918",
+    "bannerAt": 0.12,
+    "bannerEnd": 0.85,
+    "sounds": [
+     {
+      "q": "shovel digging dirt",
+      "at": 0.02,
+      "volume": 0.35,
+      "len": 2.5
+     },
+     {
+      "q": "bomb explosion distant",
+      "at": 0.32,
+      "volume": 0.5,
+      "len": 2.5
+     }
+    ]
+   }
+  },
+  {
+   "type": "okop",
+   "say": "Начнём с простой канавы: два метра в глубину... и сразу проблема.",
+   "props": {
+    "dig": 1,
+    "r2": [
+     0,
+     1,
+     0.45,
+     0.75
+    ],
+    "cam": [
+     "hook1",
+     "cut"
+    ],
+    "cont": true,
+    "post": {
+     "bloom": 0.15
+    },
+    "banner": "2 метра",
+    "bannerAt": 0.5,
+    "sounds": [
+     {
+      "q": "shovel dirt",
+      "at": 0.1,
+      "volume": 0.25,
+      "len": 1.5
+     }
+    ]
+   }
+  },
+  {
+   "type": "okop",
+   "say": "Первый же дождь — и ты по колено в ледяной грязи.",
+   "props": {
+    "dig": 1,
+    "r2": 1,
+    "rain": [
+     0,
+     1,
+     0,
+     0.15
+    ],
+    "water": [
+     0,
+     1,
+     0.1,
+     0.85
+    ],
+    "cam": [
+     "cut",
+     "cutLow"
+    ],
+    "cont": true,
+    "post": {
+     "bloom": 0.15
+    },
+    "sounds": [
+     {
+      "q": "water splash mud",
+      "at": 0.6,
+      "volume": 0.3,
+      "len": 1.5
+     }
+    ]
+   }
+  },
+  {
+   "type": "okop",
+   "say": "Поэтому на дно кладут деревянные решётки на ножках. Вода уходит под них.",
+   "props": {
+    "dig": 1,
+    "r2": [
+     1,
+     0,
+     0,
+     0.2
+    ],
+    "rain": [
+     1,
+     0,
+     0.3,
+     0.7
+    ],
+    "water": [
+     1,
+     0.75,
+     0.6,
+     1
+    ],
+    "boards": [
+     0,
+     1,
+     0.05,
+     0.75
+    ],
+    "cam": [
+     "cutLow",
+     "boards"
+    ],
+    "cont": true,
+    "post": {
+     "bloom": 0.15
+    },
+    "sounds": [
+     {
+      "q": "wooden plank drop",
+      "at": 0.08,
+      "volume": 0.45,
+      "len": 1
+     },
+     {
+      "q": "wooden plank drop",
+      "at": 0.22,
+      "volume": 0.4,
+      "len": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "okop",
+   "say": "Стенки осыпаются — их обшивают досками и плетнём.",
+   "props": {
+    "dig": 1,
+    "r2": 0,
+    "rain": 0,
+    "water": 0.75,
+    "boards": 1,
+    "revet": [
+     0,
+     1,
+     0.2,
+     0.9
+    ],
+    "cam": [
+     "boards",
+     "walls"
+    ],
+    "cont": true,
+    "post": {
+     "bloom": 0.15
+    },
+    "sounds": [
+     {
+      "q": "hammering nails wood",
+      "at": 0.3,
+      "volume": 0.35,
+      "len": 2
+     }
+    ]
+   }
+  },
+  {
+   "type": "okop",
+   "say": "Со стороны врага — бруствер из мешков с землёй. В несколько рядов он держит пулю.",
+   "props": {
+    "dig": 1,
+    "r2": 0,
+    "rain": 0,
+    "water": 0.75,
+    "boards": 1,
+    "revet": 1,
+    "bags": [
+     0,
+     1,
+     0.05,
+     0.7
+    ],
+    "cam": [
+     "walls",
+     "bags"
+    ],
+    "cont": true,
+    "post": {
+     "bloom": 0.15
+    },
+    "at": {
+     "bu1": 0.84
+    },
+    "banner": "Бруствер",
+    "bannerAt": 0.12,
+    "bannerEnd": 0.7,
+    "sounds": [
+     {
+      "q": "sack drop on ground",
+      "at": 0.15,
+      "volume": 0.4,
+      "len": 1
+     },
+     {
+      "q": "sack drop on ground",
+      "at": 0.35,
+      "volume": 0.35,
+      "len": 1
+     },
+     {
+      "q": "bullet impact dirt",
+      "at": 0.84,
+      "volume": 0.5,
+      "len": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "okop",
+   "say": "Вдоль него — ступенька. Встал на неё — и можно стрелять.",
+   "props": {
+    "dig": 1,
+    "r2": 0,
+    "rain": 0,
+    "water": 0.75,
+    "boards": 1,
+    "revet": 1,
+    "bags": 1,
+    "step": [
+     0,
+     1,
+     0.1,
+     0.55
+    ],
+    "cam": [
+     "bags",
+     "step"
+    ],
+    "cont": true,
+    "post": {
+     "bloom": 0.15
+    },
+    "sounds": [
+     {
+      "q": "wood thud",
+      "at": 0.2,
+      "volume": 0.35,
+      "len": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "okop",
+   "say": "Но высунул голову — поймал пулю снайпера. Поэтому смотрят через перископ: внутри два зеркала.",
+   "props": {
+    "dig": 1,
+    "r2": 0,
+    "rain": 0,
+    "water": 0.75,
+    "boards": 1,
+    "revet": 1,
+    "bags": 1,
+    "step": 1,
+    "peri": [
+     0,
+     1,
+     0.38,
+     0.58
+    ],
+    "ray": [
+     0,
+     1,
+     0.62,
+     0.9
+    ],
+    "cam": [
+     "step",
+     "peri"
+    ],
+    "cont": true,
+    "post": {
+     "bloom": 0.15
+    },
+    "at": {
+     "bu2": 0.13
+    },
+    "banner": "2 зеркала",
+    "bannerAt": 0.78,
+    "sounds": [
+     {
+      "q": "bullet flyby whizz",
+      "at": 0.13,
+      "volume": 0.5,
+      "len": 1
+     },
+     {
+      "q": "wood slide",
+      "at": 0.38,
+      "volume": 0.3,
+      "len": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "okop",
+   "say": "[curious] А под окопом — блиндаж. Девять метров земли над головой. Здесь пережидают обстрел.",
+   "props": {
+    "dig": 1,
+    "r2": 0,
+    "rain": 0,
+    "water": 0.75,
+    "boards": 1,
+    "revet": 1,
+    "bags": 1,
+    "step": 1,
+    "peri": 1,
+    "ray": [
+     1,
+     0,
+     0,
+     0.15
+    ],
+    "dug": [
+     0,
+     1,
+     0.12,
+     0.55
+    ],
+    "furn": [
+     0,
+     1,
+     0.5,
+     0.72
+    ],
+    "r9": [
+     0,
+     1,
+     0.45,
+     0.65
+    ],
+    "cam": [
+     "peri",
+     "deep"
+    ],
+    "cont": true,
+    "post": {
+     "bloom": 0.15
+    },
+    "at": {
+     "b1": 0.82
+    },
+    "banner": "9 метров",
+    "bannerAt": 0.5,
+    "bannerEnd": 0.8,
+    "sounds": [
+     {
+      "q": "shovel digging dirt",
+      "at": 0.15,
+      "volume": 0.3,
+      "len": 2.5
+     },
+     {
+      "q": "bomb explosion",
+      "at": 0.82,
+      "volume": 0.6,
+      "len": 2.5
+     }
+    ]
+   }
+  },
+  {
+   "type": "okop",
+   "say": "А зигзаг — вот зачем. Снаряд упал в окоп — осколки летят только до ближайшего поворота.",
+   "props": {
+    "dig": 1,
+    "r2": 0,
+    "rain": 0,
+    "water": 0.75,
+    "boards": 1,
+    "revet": 1,
+    "bags": 1,
+    "step": 1,
+    "peri": 1,
+    "ray": 0,
+    "dug": 1,
+    "furn": 1,
+    "r9": [
+     1,
+     0,
+     0,
+     0.2
+    ],
+    "cam": [
+     "deep",
+     "aerialBay"
+    ],
+    "cont": true,
+    "post": {
+     "bloom": 0.15
+    },
+    "at": {
+     "b2": 0.52,
+     "sh": 0.53
+    },
+    "banner": "Зигзаг",
+    "bannerAt": 0.08,
+    "bannerEnd": 0.45,
+    "sounds": [
+     {
+      "q": "bomb explosion",
+      "at": 0.52,
+      "volume": 0.6,
+      "len": 2.5
+     }
+    ]
+   }
+  },
+  {
+   "type": "okop",
+   "say": "И ворвавшийся враг не простреляет окоп насквозь.",
+   "props": {
+    "dig": 1,
+    "r2": 0,
+    "rain": 0,
+    "water": 0.75,
+    "boards": 1,
+    "revet": 1,
+    "bags": 1,
+    "step": 1,
+    "peri": 1,
+    "ray": 0,
+    "dug": 1,
+    "furn": 1,
+    "r9": 0,
+    "fireArrow": [
+     0,
+     1,
+     0.1,
+     0.35
+    ],
+    "cam": [
+     "aerialBay",
+     "aerialFire"
+    ],
+    "cont": true,
+    "post": {
+     "bloom": 0.15
+    },
+    "at": {
+     "fi": 0.38
+    },
+    "sounds": [
+     {
+      "q": "rifle shot",
+      "at": 0.38,
+      "volume": 0.45,
+      "len": 1
+     },
+     {
+      "q": "rifle shot",
+      "at": 0.46,
+      "volume": 0.4,
+      "len": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "okop",
+   "say": "[dramatically] Но есть подвох. Обстрел затих — и враг уже бежит к тебе. А тебе ещё девять метров вверх по лестнице.",
+   "props": {
+    "dig": 1,
+    "r2": 0,
+    "rain": 0,
+    "water": 0.75,
+    "boards": 1,
+    "revet": 1,
+    "bags": 1,
+    "step": 1,
+    "peri": 1,
+    "ray": 0,
+    "dug": 1,
+    "furn": 1,
+    "r9": 0,
+    "fireArrow": [
+     1,
+     0,
+     0,
+     0.2
+    ],
+    "cam": [
+     "aerialFire",
+     "deepHigh"
+    ],
+    "cont": true,
+    "post": {
+     "bloom": 0.15
+    },
+    "race": [
+     0.4,
+     1.0
+    ],
+    "banner": "Кто быстрее?",
+    "bannerAt": 0.72,
+    "sounds": [
+     {
+      "q": "clock ticking",
+      "at": 0.45,
+      "volume": 0.3,
+      "len": 3
+     }
+    ]
+   }
+  },
+  {
+   "type": "okop",
+   "say": "[confidently] Ты бы где пережидал: в блиндаже или наверху у перископа? Подпишись.",
+   "props": {
+    "dig": 1,
+    "r2": 0,
+    "rain": 0,
+    "water": 0.75,
+    "boards": 1,
+    "revet": 1,
+    "bags": 1,
+    "step": 1,
+    "peri": 1,
+    "ray": 0,
+    "dug": 1,
+    "furn": 1,
+    "r9": 0,
+    "fireArrow": 0,
+    "cam": [
+     "deepHigh",
+     "final"
+    ],
+    "cont": true,
+    "post": {
+     "bloom": 0.15
+    },
+    "race": [
+     -2,
+     -1
+    ],
+    "raceOp": [
+     1,
+     0,
+     0.55,
+     0.8
+    ],
+    "banner": "Блиндаж\nили перископ?",
+    "bannerAt": 0.1,
+    "bannerEnd": 0.75
+   }
+  }
+ ],
+ "styleTest": {
+  "scenes": [
+   1,
+   3,
+   9,
+   11,
+   13
+  ],
+  "post": {
+   "paint": 1
+  }
+ }
+}
