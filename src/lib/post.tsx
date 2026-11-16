@@ -44,8 +44,8 @@ void main(){
   }
   vec4 o = vec4(0.);
   for(int k=0;k<8;k++){ m[k].rgb /= max(m[k].w, 1e-5); s[k] = abs(s[k]/max(m[k].w,1e-5) - m[k].rgb*m[k].rgb);
-    float sg = s[k].r+s[k].g+s[k].b; float w = 1./(1. + pow(8000.*sg, 4.5)); o += vec4(m[k].rgb*w, w); }
-  gl_FragColor = vec4(o.rgb/max(o.w,1e-5), 1.);
+    float sg = s[k].r+s[k].g+s[k].b; float w = 1./(1. + pow(min(8000.*sg, 40.), 4.5)); o += vec4(m[k].rgb*w, w); } // min(): на резких границах веса не должны обнуляться (иначе чёрная кайма)
+  gl_FragColor = vec4(o.rgb/max(o.w,1e-20), 1.);
 }`;
 const P_FIN = /* glsl */ `
 uniform sampler2D tDiffuse; uniform vec2 uRes; uniform float uK; varying vec2 vUv;
