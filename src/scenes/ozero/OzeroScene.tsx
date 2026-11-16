@@ -39,8 +39,8 @@ const range = (v: any, p: number): number => {
 
 type Cam = {pos: [number, number, number]; look: [number, number, number]; fov?: number};
 const CAMS: Record<string, Cam> = {
-  hook0: {pos: [10, 7, 46], look: [0, 0.8, -30], fov: 50},
-  hook1: {pos: [6, 3.2, 30], look: [0, 0.2, -18], fov: 50},
+  hook0: {pos: [5, 1.7, 26], look: [0, 1.6, -40], fov: 50},
+  hook1: {pos: [4, 2.6, 30], look: [0, 0.6, -14], fov: 50},
   cut: {pos: [5, -2, 34], look: [0, -5, 0], fov: 50},
   conv: {pos: [-9, -3, 32], look: [-6, -5.5, 0], fov: 50},
   mix: {pos: [6, -4, 34], look: [2, -6, 0], fov: 50},
@@ -49,7 +49,7 @@ const CAMS: Record<string, Cam> = {
   ice: {pos: [3, 1.6, 17], look: [0, -0.8, 0], fov: 50},
   blanket: {pos: [-8, 5, 34], look: [-4, 0, -8], fov: 50},
   bottom: {pos: [3, -5, 30], look: [0, -8, 0], fov: 50},
-  ghost: {pos: [-45, 6, 78], look: [6, -5, 0], fov: 50},
+  ghost: {pos: [-28, 3, 52], look: [0, -6, 0], fov: 50},
   debate: {pos: [-40, 6, 32], look: [-30, 0.5, -6], fov: 50},
   final: {pos: [-18, 15, 72], look: [0, -2, -12], fov: 50},
   cover: {pos: [5, -1.5, 33], look: [0, -3.5, 0], fov: 50},
@@ -264,8 +264,8 @@ const groundTex = () => {
 const iceTex = () => {
   const [c, g] = cv(512, 256);
   const gr = g.createLinearGradient(0, 0, 0, 256);
-  gr.addColorStop(0, '#e8f6fc');
-  gr.addColorStop(1, '#9fd0e6');
+  gr.addColorStop(0, '#d4ecf5');
+  gr.addColorStop(1, '#78b4d2');
   g.fillStyle = gr;
   g.fillRect(0, 0, 512, 256);
   const r = rng(85);
@@ -420,7 +420,7 @@ const useWorld = () =>
       layers: lay.map((t) => new THREE.MeshStandardMaterial({map: t, roughness: 0.95})),
       water: new THREE.MeshStandardMaterial({vertexColors: true, roughness: 0.6, emissive: '#0c2234', emissiveIntensity: 0.25}),
       waterTop: new THREE.MeshStandardMaterial({color: '#50789a', roughness: 0.08, metalness: 0.25, transparent: true, opacity: 0.94}),
-      ice: new THREE.MeshStandardMaterial({map: iceTex(), roughness: 0.15, metalness: 0.05, transparent: true, opacity: 1, emissive: '#5f9ab8', emissiveIntensity: 0.12}),
+      ice: new THREE.MeshStandardMaterial({map: iceTex(), roughness: 0.15, metalness: 0.05, transparent: true, opacity: 1, emissive: '#5f9ab8', emissiveIntensity: 0.03}),
       iceTop: new THREE.MeshStandardMaterial({color: '#cfe6f0', roughness: 0.2, transparent: true, opacity: 1}),
       snow: new THREE.MeshStandardMaterial({map: snow, roughness: 0.9}),
       spruce: new THREE.MeshStandardMaterial({vertexColors: true, roughness: 1, flatShading: true}),
@@ -521,6 +521,14 @@ const useWorld = () =>
     flakes.frustumCulled = false;
     flakes.renderOrder = 9;
     dyn.add(flakes);
+    // взвесь в воде (на срезе)
+    const NM = 500;
+    const mg = new THREE.BufferGeometry();
+    mg.setAttribute('position', new THREE.BufferAttribute(new Float32Array(NM * 3), 3));
+    const motes = new THREE.Points(mg, new THREE.PointsMaterial({color: '#e6f6ff', size: 0.13, map: dot, transparent: true, opacity: 0.4, depthWrite: false, alphaTest: 0.02}));
+    motes.frustumCulled = false;
+    motes.renderOrder = 7;
+    dyn.add(motes);
     // стрелки перемешивания: колонки, холодные вниз / тёплые вверх
     const arrows: {me: THREE.Mesh; x: number; down: boolean; ph: number}[] = [];
     for (let i = 0; i < 9; i++) {
@@ -544,28 +552,28 @@ const useWorld = () =>
       return sp;
     };
     const labels: Record<string, THREE.Sprite> = {
-      air: label('−30°', '#ffffff', 4, 4.2, 2.4),
+      air: label('−30°', '#ffffff', 3, 3.6, 2.4),
       warm: label('+10°', '#ffcf9a', -6, -3.5, 2.2),
       bot: label('+4°', '#9fdcff', 0, -9.2, 2.6),
       top: label('0°', '#e8f7ff', -9, -1.6, 1.8),
     };
     // «если бы лёд тонул»: плиты падают на дно
     const ghosts = [-36, -24, -12, 0, 12, 24, 36].map((x, i) => {
-      const me = new THREE.Mesh(new THREE.BoxGeometry(9, 0.9, 3.2), m.ghost);
+      const me = new THREE.Mesh(new THREE.BoxGeometry(11, 1.5, 3.2), m.ghost);
       me.userData = {x, d: i * 0.07, rot: (i % 2 ? 1 : -1) * 0.12};
       dyn.add(me);
       return me;
     });
     // путь до берега (жёлтые штрихи по снегу)
     const path = Array.from({length: 22}, (_, i) => {
-      const me = new THREE.Mesh(new THREE.PlaneGeometry(1.4, 0.35), m.path);
+      const me = new THREE.Mesh(new THREE.PlaneGeometry(2.4, 0.7), m.path);
       me.rotation.x = -Math.PI / 2;
-      me.userData.x = -6 - i * 2.2;
+      me.userData.x = -4 - i * 2.3;
       me.renderOrder = 4;
       dyn.add(me);
       return me;
     });
-    return {m, world, water, waterTop, ice, iceTop, snowBand, snowTop, block, flakes, arrows, labels, ghosts, path, capMesh};
+    return {m, motes, world, water, waterTop, ice, iceTop, snowBand, snowTop, block, flakes, arrows, labels, ghosts, path, capMesh};
   }, []);
 
 const useSkyLights = () =>
@@ -685,6 +693,20 @@ const OzWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> = ({P
       g.computeBoundingSphere();
     }
 
+    // --- взвесь
+    {
+      const pos = W0.motes.geometry.attributes.position as THREE.BufferAttribute;
+      const rr = rng(41);
+      for (let i = 0; i < pos.count; i++) {
+        const x = -50 + rr() * 100;
+        const b = Math.min(S(x), wTop);
+        const k = (rr() + sec * 0.012 * (0.5 + rr())) % 1;
+        const y = lerp(b + 0.3, wTop - 0.25, k);
+        pos.setXYZ(i, x + Math.sin(sec * 0.4 + i) * 0.3, y, 0.25);
+        if (wTop - b < 0.8) pos.setXYZ(i, x, -500, 0);
+      }
+      pos.needsUpdate = true;
+    }
     // --- хук: передняя половина
     const cut = range(P.cut ?? 1, p);
     W0.block.visible = cut < 0.999;
