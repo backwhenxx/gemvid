@@ -39,8 +39,8 @@ const range = (v: any, p: number): number => {
 
 type Cam = {pos: [number, number, number]; look: [number, number, number]; fov?: number};
 const CAMS: Record<string, Cam> = {
-  hook0: {pos: [5, 1.7, 26], look: [0, 1.6, -40], fov: 50},
-  hook1: {pos: [4, 2.6, 30], look: [0, 0.6, -14], fov: 50},
+  hook0: {pos: [4, 2.4, 28], look: [0, -0.6, -10], fov: 50},
+  hook1: {pos: [4, -0.5, 32], look: [0, -4, 0], fov: 50},
   cut: {pos: [5, -2, 34], look: [0, -5, 0], fov: 50},
   conv: {pos: [-9, -3, 32], look: [-6, -5.5, 0], fov: 50},
   mix: {pos: [6, -4, 34], look: [2, -6, 0], fov: 50},
@@ -50,7 +50,7 @@ const CAMS: Record<string, Cam> = {
   blanket: {pos: [-8, 5, 34], look: [-4, 0, -8], fov: 50},
   bottom: {pos: [3, -5, 30], look: [0, -8, 0], fov: 50},
   ghost: {pos: [-28, 3, 52], look: [0, -6, 0], fov: 50},
-  debate: {pos: [-40, 6, 32], look: [-30, 0.5, -6], fov: 50},
+  debate: {pos: [-36, 13, 28], look: [-28, 0, -6], fov: 50},
   final: {pos: [-18, 15, 72], look: [0, -2, -12], fov: 50},
   cover: {pos: [5, -1.5, 33], look: [0, -3.5, 0], fov: 50},
 };
@@ -566,7 +566,7 @@ const useWorld = () =>
     });
     // путь до берега (жёлтые штрихи по снегу)
     const path = Array.from({length: 22}, (_, i) => {
-      const me = new THREE.Mesh(new THREE.PlaneGeometry(2.4, 0.7), m.path);
+      const me = new THREE.Mesh(new THREE.PlaneGeometry(2.4, 1.3), m.path);
       me.rotation.x = -Math.PI / 2;
       me.userData.x = -4 - i * 2.3;
       me.renderOrder = 4;
