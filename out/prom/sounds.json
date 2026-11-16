@@ -1,0 +1,47 @@
+[
+ {
+  "file": "snd/amb_050670ca0c.wav",
+  "q": "winter wind",
+  "title": "winter wind 01c.aiff",
+  "creator": "klangfabrik",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/klangfabrik/sounds/117513"
+ },
+ {
+  "file": "snd/sfx_050670ca0c.wav",
+  "q": "winter wind",
+  "title": "Windchime soft",
+  "creator": "Vendarro",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/Vendarro/sounds/399538"
+ },
+ {
+  "file": "snd/sfx_1133df0378.wav",
+  "q": "water flowing pipe",
+  "title": "Water Dripping - KV.mp3",
+  "creator": "Kievinay",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/Kievinay/sounds/512411"
+ },
+ {
+  "file": "snd/sfx_531255c82e.wav",
+  "q": "ice cracking",
+  "title": "Ice Crack 5.wav",
+  "creator": "ecfike",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/ecfike/sounds/177217"
+ },
+ {
+  "file": "snd/sfx_1a67ba0229.wav",
+  "q": "metal crack",
+  "title": "Metal Cracking 2.wav",
+  "creator": "RutgerMuller",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/RutgerMuller/sounds/51263"
+ }
+]
