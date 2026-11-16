@@ -208,6 +208,8 @@ jobs:
         env:
           CHROME_PATH: /usr/bin/google-chrome
         run: node scripts/build.mjs "episodes/${{ needs.prep.outputs.ep }}" --merge
+      - name: Замена кадров-сбоев (чёрные кадры)
+        run: python3 scripts/fixdark.py "out/${{ needs.prep.outputs.ep }}/${{ needs.prep.outputs.ep }}.mp4"
 
       - name: Видео в Releases
         env:
