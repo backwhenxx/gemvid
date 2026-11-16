@@ -152,10 +152,12 @@ if (flag('--stills')) {
     const T = ep.styleTest;
     const scB = scenesS.map((s) => ({...s, props: {...s.props, post: {...(s.props.post ?? {}), ...T.post}}}));
     const propsB = {timeline: {...timeline, scenes: scB}};
+    // у композиции свои «разрешённые» пропсы — для второго варианта её надо выбрать заново
+    const compB = await selectComposition({serveUrl, id: 'Short', inputProps: propsB, chromiumOptions: {gl: 'swangle'}, timeoutInMilliseconds: 180000});
     for (const n of T.scenes) {
       const f = Math.round(((n - 1) * SD + SD * 0.7) * 30), nn = String(n).padStart(2, '0');
       await renderStill({composition: comp, serveUrl, inputProps, frame: f, output: path.join(dir, `a_${nn}.jpg`), imageFormat: 'jpeg', jpegQuality: 92, chromiumOptions: {gl: 'swangle'}, timeoutInMilliseconds: 180000});
-      await renderStill({composition: comp, serveUrl, inputProps: propsB, frame: f, output: path.join(dir, `b_${nn}.jpg`), imageFormat: 'jpeg', jpegQuality: 92, chromiumOptions: {gl: 'swangle'}, timeoutInMilliseconds: 180000});
+      await renderStill({composition: compB, serveUrl, inputProps: propsB, frame: f, output: path.join(dir, `b_${nn}.jpg`), imageFormat: 'jpeg', jpegQuality: 92, chromiumOptions: {gl: 'swangle'}, timeoutInMilliseconds: 180000});
       log(`проба стиля: сцена ${n}`);
     }
     for (const [pre, out] of [['a_', 'stills.jpg'], ['b_', 'stills_big.jpg']])
