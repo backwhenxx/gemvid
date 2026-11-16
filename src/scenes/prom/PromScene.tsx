@@ -86,10 +86,10 @@ const TAPX = [12, 13.5];
 const frostTex = () => {
   const [c, g] = cv(256, 256);
   g.clearRect(0, 0, 256, 256);
-  g.fillStyle = 'rgba(225,240,250,0.55)';
+  g.fillStyle = 'rgba(215,235,250,0.22)';
   g.fillRect(0, 0, 256, 256);
   const r = rng(77);
-  for (let i = 0; i < 260; i++) {
+  for (let i = 0; i < 140; i++) {
     const x = r() * 256;
     const y = r() * 256;
     const s = 3 + r() * 7;
@@ -412,7 +412,7 @@ const useWorld = () =>
       snowOver: new THREE.MeshStandardMaterial({map: snow, roughness: 0.9, transparent: true, opacity: 0, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -3, polygonOffsetUnits: -3}),
       snowBand: new THREE.MeshStandardMaterial({map: snow, roughness: 0.9}),
       layers: lay.map((t) => new THREE.MeshStandardMaterial({map: t, roughness: 0.95})),
-      frost: new THREE.MeshBasicMaterial({map: frostTex(), transparent: true, opacity: 0.85, depthWrite: false, toneMapped: false, fog: false}),
+      frost: new THREE.MeshBasicMaterial({map: frostTex(), transparent: true, opacity: 0.9, depthWrite: false, toneMapped: false, fog: false}),
       pipe: new THREE.MeshStandardMaterial({color: '#4d5f6c', roughness: 0.45, metalness: 0.35, side: THREE.DoubleSide}),
       pipeIn: new THREE.MeshStandardMaterial({color: '#2f3d47', roughness: 0.6, side: THREE.DoubleSide}),
       waterA: new THREE.MeshStandardMaterial({color: '#3f8fc4', roughness: 0.15, emissive: '#16405e', emissiveIntensity: 0.4, side: THREE.DoubleSide}),
@@ -618,9 +618,9 @@ const useWorld = () =>
       return sp;
     };
     const labels: Record<string, THREE.Sprite> = {
-      air: label('−20°', '#ffffff', 0.55),
-      zero: label('0°', '#e8f7ff', 0.42),
-      plus: label('+2°', '#ffcf9a', 0.42),
+      air: label('−20°', '#ffffff', 0.6),
+      zero: label('0°', '#e8f7ff', 0.55),
+      plus: label('+2°', '#ffcf9a', 0.55),
       summer: label('+18°', '#ffd27a', 0.55),
     };
     return {m, world, pipes, frost, FX, snowBand, crack, shards, arrows, ruler, streams, icicle, flakes, labels, capMesh};
@@ -728,7 +728,7 @@ const PromWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> = (
     const frz = [range(P.frzA ?? 1, p), 0];
     const flow = [range(P.flowA ?? 0, p), range(P.flowB ?? 1, p)];
     const wA = W0.m.waterA as THREE.MeshStandardMaterial;
-    wA.color.set('#3f8fc4').lerp(new THREE.Color('#eaf6fc'), frz[0]);
+    wA.color.set('#3f8fc4').lerp(new THREE.Color('#ffffff'), frz[0]);
     wA.emissive.set('#16405e').lerp(new THREE.Color('#4c7f99'), frz[0]);
     // лёд распирает: вода-лёд чуть толще (до стенки)
     const ex = 1 + 0.12 * frz[0];
@@ -736,7 +736,7 @@ const PromWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> = (
     // --- трещина и осколки
     const br = range(P.burst ?? 1, p);
     (W0.m.crack as THREE.MeshBasicMaterial).opacity = clamp01(br * 3);
-    W0.crack.scale.setScalar(0.6 + 1.8 * br);
+    W0.crack.scale.setScalar(0.35 + 0.75 * br);
     {
       const pos = W0.shards.geometry.attributes.position as THREE.BufferAttribute;
       const rr = rng(57);
@@ -781,7 +781,7 @@ const PromWorld: React.FC<{P: Record<string, any>; dur: number; t0: number}> = (
       tick.position.set(2.5, -len, 0.3);
     }
     // --- таблички
-    const lp: Record<string, [number, number]> = {air: [-2.6, 1.1], zero: [-0.3, -F - 0.22], plus: [1.6, PIPE_Y[1] - 0.35], summer: [-1.6, 1.1]};
+    const lp: Record<string, [number, number]> = {air: [-2.6, 1.1], zero: [-0.3, -F - 0.22], plus: [1.6, PIPE_Y[1] - 0.35], summer: [1.4, 0.55]};
     for (const [k, sp] of Object.entries(W0.labels) as [string, THREE.Sprite][]) {
       const v = range(P['lb_' + k] ?? 0, p);
       sp.visible = v > 0.01;
