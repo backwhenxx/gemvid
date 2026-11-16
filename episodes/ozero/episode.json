@@ -1,0 +1,562 @@
+{
+ "title": "Почему озеро не промерзает до дна",
+ "music": false,
+ "whisper": "medium",
+ "captionStyle": "word",
+ "autoOutro": false,
+ "stillPairs": true,
+ "ambience": [
+  {
+   "q": "winter wind",
+   "from": 0,
+   "to": 11,
+   "volume": 0.06
+  }
+ ],
+ "cover": {
+  "lines": [
+   "Подо льдом",
+   "*+4°*"
+  ],
+  "sub": "почему озеро не промерзает до дна",
+  "ozero": {
+   "cut": 1,
+   "win": 1,
+   "ice": 1,
+   "snow": 1,
+   "mix": 1,
+   "strat": 1,
+   "post": {
+    "bloom": 0.18
+   },
+   "cool": 1,
+   "lb_bot": 1,
+   "lb_air": 1,
+   "cam": [
+    "cover",
+    "cover"
+   ]
+  }
+ },
+ "scenes": [
+  {
+   "type": "ozero",
+   "say": "[excited] Снаружи минус тридцать. А подо льдом — плюс четыре. Всю зиму.",
+   "props": {
+    "cut": 0,
+    "win": 1,
+    "ice": 1,
+    "snow": 1,
+    "mix": 1,
+    "strat": 1,
+    "post": {
+     "bloom": 0.18
+    },
+    "cont": false,
+    "cam": [
+     "hook0",
+     "hook1"
+    ],
+    "snowfall": 1,
+    "lb_air": [
+     0,
+     1,
+     0.05,
+     0.2
+    ],
+    "banner": "+4° подо льдом",
+    "bannerAt": 0.5,
+    "bannerEnd": 0.97,
+    "sounds": [
+     {
+      "q": "winter wind snow",
+      "at": 0,
+      "volume": 0.3,
+      "len": 3
+     }
+    ]
+   }
+  },
+  {
+   "type": "ozero",
+   "say": "Почему озеро не промерзает до дна? Режем его пополам.",
+   "props": {
+    "cut": [
+     0,
+     1,
+     0.35,
+     0.95
+    ],
+    "win": 1,
+    "ice": 1,
+    "snow": 1,
+    "mix": 1,
+    "strat": 1,
+    "post": {
+     "bloom": 0.18
+    },
+    "cam": [
+     "hook1",
+     "cut"
+    ],
+    "snowfall": [
+     1,
+     0.4
+    ],
+    "lb_air": [
+     1,
+     0,
+     0,
+     0.3
+    ],
+    "lb_bot": [
+     0,
+     1,
+     0.7,
+     0.95
+    ],
+    "sounds": [
+     {
+      "q": "ice cracking",
+      "at": 0.35,
+      "volume": 0.45,
+      "len": 2
+     }
+    ],
+    "cont": true
+   }
+  },
+  {
+   "type": "ozero",
+   "say": "Осенью вода остывает сверху. Холодная тяжелее — она тонет, а тёплая всплывает.",
+   "props": {
+    "cut": 1,
+    "win": [
+     1,
+     0,
+     0,
+     0.25
+    ],
+    "ice": [
+     1,
+     0,
+     0,
+     0.25
+    ],
+    "snow": [
+     1,
+     0,
+     0,
+     0.2
+    ],
+    "mix": 0,
+    "strat": 0,
+    "post": {
+     "bloom": 0.18
+    },
+    "cam": [
+     "cut",
+     "conv"
+    ],
+    "snowfall": [
+     0.4,
+     0,
+     0,
+     0.2
+    ],
+    "cool": [
+     0,
+     1,
+     0.2,
+     0.5
+    ],
+    "conv": [
+     0,
+     1,
+     0.3,
+     0.5
+    ],
+    "lb_bot": [
+     1,
+     0,
+     0,
+     0.2
+    ],
+    "lb_warm": [
+     0,
+     1,
+     0.1,
+     0.3
+    ],
+    "banner": "Осень",
+    "bannerAt": 0,
+    "bannerEnd": 0.4,
+    "sounds": [
+     {
+      "q": "autumn wind leaves",
+      "at": 0.05,
+      "volume": 0.3,
+      "len": 3
+     }
+    ],
+    "cont": true
+   }
+  },
+  {
+   "type": "ozero",
+   "say": "Так озеро перемешивается, пока везде не станет плюс четыре.",
+   "props": {
+    "cut": 1,
+    "win": 0,
+    "ice": 0,
+    "snow": 0,
+    "mix": [
+     0,
+     1,
+     0.1,
+     0.9
+    ],
+    "strat": 0,
+    "post": {
+     "bloom": 0.18
+    },
+    "cam": [
+     "conv",
+     "mix"
+    ],
+    "cool": 1,
+    "conv": 1,
+    "lb_warm": [
+     1,
+     0,
+     0,
+     0.4
+    ],
+    "lb_bot": [
+     0,
+     1,
+     0.6,
+     0.9
+    ],
+    "cont": true
+   }
+  },
+  {
+   "type": "ozero",
+   "say": "[curious] И тут у воды странность: при плюс четырёх она самая тяжёлая.",
+   "props": {
+    "cut": 1,
+    "win": 0,
+    "ice": 0,
+    "snow": 0,
+    "mix": 1,
+    "strat": 0,
+    "post": {
+     "bloom": 0.18
+    },
+    "cam": [
+     "mix",
+     "dense"
+    ],
+    "cool": 1,
+    "conv": [
+     1,
+     0,
+     0,
+     0.3
+    ],
+    "lb_bot": 1,
+    "banner": "+4° — самая тяжёлая вода",
+    "bannerAt": 0.35,
+    "bannerEnd": 0.97,
+    "cont": true
+   }
+  },
+  {
+   "type": "ozero",
+   "say": "Ещё холоднее — и вода становится легче. Она остаётся наверху и не тонет.",
+   "props": {
+    "cut": 1,
+    "win": [
+     0,
+     0.4
+    ],
+    "ice": 0,
+    "snow": 0,
+    "mix": 1,
+    "strat": [
+     0,
+     1,
+     0.15,
+     0.9
+    ],
+    "post": {
+     "bloom": 0.18
+    },
+    "cam": [
+     "dense",
+     "light"
+    ],
+    "cool": 1,
+    "lb_bot": 1,
+    "lb_top": [
+     0,
+     1,
+     0.5,
+     0.8
+    ],
+    "cont": true
+   }
+  },
+  {
+   "type": "ozero",
+   "say": "При нуле сверху появляется лёд. Он ещё легче — и плавает.",
+   "props": {
+    "cut": 1,
+    "win": [
+     0.4,
+     0.7
+    ],
+    "ice": [
+     0,
+     0.25,
+     0.1,
+     0.6
+    ],
+    "snow": 0,
+    "mix": 1,
+    "strat": 1,
+    "post": {
+     "bloom": 0.18
+    },
+    "cam": [
+     "light",
+     "ice"
+    ],
+    "cool": 1,
+    "lb_bot": 1,
+    "lb_top": [
+     1,
+     0,
+     0,
+     0.3
+    ],
+    "banner": "Лёд легче воды на 9%",
+    "bannerAt": 0.45,
+    "bannerEnd": 0.97,
+    "sounds": [
+     {
+      "q": "ice cracking",
+      "at": 0.2,
+      "volume": 0.35,
+      "len": 2
+     }
+    ],
+    "cont": true
+   }
+  },
+  {
+   "type": "ozero",
+   "say": "А дальше лёд с сугробами работает как одеяло: чем толще, тем медленнее растёт.",
+   "props": {
+    "cut": 1,
+    "win": [
+     0.7,
+     1,
+     0,
+     0.5
+    ],
+    "ice": [
+     0.25,
+     1
+    ],
+    "snow": [
+     0,
+     1,
+     0.2,
+     0.9
+    ],
+    "mix": 1,
+    "strat": 1,
+    "post": {
+     "bloom": 0.18
+    },
+    "cam": [
+     "ice",
+     "blanket"
+    ],
+    "cool": 1,
+    "lb_bot": 1,
+    "snowfall": [
+     0,
+     1,
+     0,
+     0.3
+    ],
+    "banner": "Снег — как одеяло",
+    "bannerAt": 0.3,
+    "bannerEnd": 0.97,
+    "sounds": [
+     {
+      "q": "winter wind snow",
+      "at": 0.1,
+      "volume": 0.3,
+      "len": 3
+     }
+    ],
+    "cont": true
+   }
+  },
+  {
+   "type": "ozero",
+   "say": "Поэтому на дне всю зиму — плюс четыре. Там и зимует вся жизнь озера.",
+   "props": {
+    "cut": 1,
+    "win": 1,
+    "ice": 1,
+    "snow": 1,
+    "mix": 1,
+    "strat": 1,
+    "post": {
+     "bloom": 0.18
+    },
+    "cam": [
+     "blanket",
+     "bottom"
+    ],
+    "cool": 1,
+    "lb_bot": 1,
+    "snowfall": [
+     1,
+     0.5
+    ],
+    "lb_air": [
+     0,
+     1,
+     0.1,
+     0.4
+    ],
+    "cont": true
+   }
+  },
+  {
+   "type": "ozero",
+   "say": "[dramatically] Будь вода обычной — лёд тонул бы. И озеро промерзало бы до самого дна.",
+   "props": {
+    "cut": 1,
+    "win": 1,
+    "ice": 1,
+    "snow": 1,
+    "mix": 1,
+    "strat": 1,
+    "post": {
+     "bloom": 0.18
+    },
+    "cam": [
+     "bottom",
+     "ghost"
+    ],
+    "cool": 1,
+    "snowfall": 0.5,
+    "lb_bot": [
+     1,
+     0,
+     0.8,
+     1
+    ],
+    "lb_air": [
+     1,
+     0,
+     0,
+     0.2
+    ],
+    "ghost": [
+     0,
+     1,
+     0.1,
+     0.85
+    ],
+    "ghostOp": [
+     1,
+     0,
+     0.85,
+     1
+    ],
+    "banner": "Если бы лёд тонул",
+    "bannerAt": 0.05,
+    "bannerEnd": 0.95,
+    "sounds": [
+     {
+      "q": "water splash",
+      "at": 0.25,
+      "volume": 0.35,
+      "len": 1.5
+     }
+    ],
+    "cont": true
+   }
+  },
+  {
+   "type": "ozero",
+   "say": "[warmly] Одного человека выдержит лёд от семи сантиметров. Вот вам восемь — и пятьдесят метров до берега. Пойдёте?",
+   "props": {
+    "cut": 1,
+    "win": 1,
+    "ice": 1,
+    "snow": 1,
+    "mix": 1,
+    "strat": 1,
+    "post": {
+     "bloom": 0.18
+    },
+    "cam": [
+     "ghost",
+     "debate"
+    ],
+    "cool": 1,
+    "snowfall": 0.5,
+    "path": [
+     0,
+     1,
+     0.45,
+     0.85
+    ],
+    "banner": "Лёд 8 см · 50 м до берега",
+    "bannerAt": 0.42,
+    "bannerEnd": 0.97,
+    "sounds": [
+     {
+      "q": "ice cracking",
+      "at": 0.9,
+      "volume": 0.4,
+      "len": 1.5
+     }
+    ],
+    "cont": true
+   }
+  },
+  {
+   "type": "ozero",
+   "say": "Подпишись.",
+   "props": {
+    "cut": 1,
+    "win": 1,
+    "ice": 1,
+    "snow": 1,
+    "mix": 1,
+    "strat": 1,
+    "post": {
+     "bloom": 0.18
+    },
+    "cam": [
+     "debate",
+     "final"
+    ],
+    "cool": 1,
+    "snowfall": 0.5,
+    "path": 1,
+    "cont": true
+   }
+  }
+ ]
+}

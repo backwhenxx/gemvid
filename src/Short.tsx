@@ -32,6 +32,7 @@ import {TonnelScene} from './scenes/tonnel/TonnelScene';
 import {KolesoScene} from './scenes/koleso/KolesoScene';
 import {OkopScene} from './scenes/okop/OkopScene';
 import {SkvScene} from './scenes/skv/SkvScene';
+import {OzeroScene} from './scenes/ozero/OzeroScene';
 import {WordCaptions} from './components/WordCaptions';
 
 export type SceneProps = {
@@ -73,6 +74,7 @@ const REGISTRY: Record<string, React.FC<SceneProps>> = {
   koleso: KolesoScene,
   okop: OkopScene,
   skv: SkvScene,
+  ozero: OzeroScene,
 };
 
 // Переход «рост из точки»: новая сцена раскрывается кругом поверх предыдущей. Без кроссфейдов.
