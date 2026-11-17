@@ -47,6 +47,9 @@ export function build(scene, sky) {
   cutFace(K, LAYERS, (k, x) => B[k](x), X0, X1, [{x0: PX0, x1: PX1, y0: -AS - 0.001, y1: 1}]);
   // камни в щебне и песке на срезе
   { const r = rnd(3); for (let i = 0; i < 90; i++) { const x = lerp(-14, 14, r()), y = lerp(-0.85, -0.38, r()), rr = 0.05 + r() * 0.06; if (Math.abs(x) < 1.0) continue; add(blob(rr, i, 0.25, 1.3, 1.2, 0.8, 0.5, 0), 'stone', x, y, 0.0, {cast: false}); }
+    for (let i = 0; i < 60; i++) { const x = lerp(-2.2, 2.2, r()), y = lerp(-0.86, -0.36, r()), rr = 0.035 + r() * 0.05; if (Math.abs(x) < 0.95 && y > -0.8) continue; add(blob(rr, i + 200, 0.25, 1.3, 1.2, 0.8, 0.5, 0), i % 3 ? 'stone' : 'pebble', x, y, 0.0, {cast: false}); }
+    for (let i = 0; i < 160; i++) { const x = lerp(-14, 14, r()), y = lerp(-0.27, -0.04, r()), rr = 0.012 + r() * 0.02; if (Math.abs(x) < 0.9) continue; add(blob(rr, i + 400, 0.2, 1.3, 1.2, 0.8, 0.4, 0), 'gravel', x, y, 0.0, {cast: false}); }
+    for (let i = 0; i < 40; i++) { const x = lerp(-3, 3, r()), y = lerp(-1.55, -0.95, r()), rr = 0.03 + r() * 0.04; add(blob(rr, i + 600, 0.2, 1.3, 1.2, 0.8, 0.5, 0), 'stone', x, y, 0.0, {cast: false}); }
     for (let i = 0; i < 26; i++) { const x = lerp(-14, 14, r()), y = lerp(-5.5, -2.0, r()), rr = 0.15 + r() * 0.25; add(blob(rr, i + 50, 0.25, 1.3, 1.25, 0.8, 0.5), 'stone', x, y, 0.0, {cast: false, rot: [0, 0, r() * 3]}); } }
 
   // ── дорога: верх асфальта сеткой с вырезом под заплатку; разметка; обочина
