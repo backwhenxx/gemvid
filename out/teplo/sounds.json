@@ -1,0 +1,47 @@
+[
+ {
+  "file": "snd/amb_050670ca0c.wav",
+  "q": "winter wind",
+  "title": "winter wind 01c.aiff",
+  "creator": "klangfabrik",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/klangfabrik/sounds/117513"
+ },
+ {
+  "file": "snd/sfx_050670ca0c.wav",
+  "q": "winter wind",
+  "title": "Windchime soft",
+  "creator": "Vendarro",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/Vendarro/sounds/399538"
+ },
+ {
+  "file": "snd/sfx_094e5589c7.wav",
+  "q": "liquid flowing pipe",
+  "title": "Water Pipe",
+  "creator": "NachtmahrTV",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/NachtmahrTV/sounds/553257"
+ },
+ {
+  "file": "snd/sfx_370357332c.wav",
+  "q": "compressor hum",
+  "title": "Fan motor",
+  "creator": "Rvgerxini",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/Rvgerxini/sounds/518037"
+ },
+ {
+  "file": "snd/sfx_7ba7ed0c8d.wav",
+  "q": "light switch click",
+  "title": "Light Switch Click On and Off",
+  "creator": "SomeoneCool15",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/SomeoneCool15/sounds/423512"
+ }
+]
