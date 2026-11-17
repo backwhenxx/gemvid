@@ -34,7 +34,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: render-${{ github.ref }}
+  group: render-${{ inputs.episode || github.ref }}
   cancel-in-progress: false
 
 env:
