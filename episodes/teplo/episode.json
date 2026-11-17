@@ -1,0 +1,543 @@
+{
+ "title": "Тепло из-под земли: как работает тепловой насос",
+ "music": false,
+ "whisper": "medium",
+ "captionStyle": "word",
+ "autoOutro": false,
+ "stillPairs": true,
+ "ambience": [
+  {
+   "q": "winter wind",
+   "from": 0,
+   "to": 8,
+   "volume": 0.05
+  }
+ ],
+ "cover": {
+  "lines": [
+   "Тепло",
+   "*из-под земли*"
+  ],
+  "sub": "минус 25 — а газа нет",
+  "fs": {
+   "world": "teplo",
+   "cam": [
+    "cover",
+    "cover"
+   ],
+   "tod": "golden",
+   "loop": 1,
+   "flow": 1,
+   "pump": 1,
+   "floor": 1,
+   "smoke": 1,
+   "snow": 0.4,
+   "frost": 1,
+   "warm": 0.4
+  }
+ },
+ "scenes": [
+  {
+   "type": "fs",
+   "say": "[confidently] Минус двадцать пять за окном. А у этого дома нет ни газа, ни печки — и внутри плюс двадцать три.",
+   "props": {
+    "cont": false,
+    "cam": [
+     "hook",
+     "hook2"
+    ],
+    "tod": "morning",
+    "snow": 1,
+    "smoke": 1,
+    "own": 0,
+    "loop": 0,
+    "tags": [
+     {
+      "s": "у соседа топят газом",
+      "t": "nbChim",
+      "dx": 150,
+      "dy": -110,
+      "at": 0.05,
+      "end": 0.5
+     },
+     {
+      "s": "−25 °C",
+      "t": "therm",
+      "dx": 170,
+      "dy": -160,
+      "at": 0.12,
+      "end": 1,
+      "size": 46
+     }
+    ],
+    "banner": "+23 °C\nвнутри",
+    "bannerAt": 0.62,
+    "bannerEnd": 1,
+    "bannerY": 250,
+    "sounds": [
+     {
+      "q": "winter wind",
+      "at": 0,
+      "volume": 0.3,
+      "len": 3
+     }
+    ],
+    "world": "teplo"
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Тепло он берёт... из-под земли.",
+   "props": {
+    "cam": [
+     "hook2",
+     "mid"
+    ],
+    "tod": "morning",
+    "snow": [
+     1,
+     0.3
+    ],
+    "smoke": 1,
+    "loop": 0,
+    "sounds": [
+     {
+      "q": "snow footsteps",
+      "at": 0.1,
+      "volume": 0.25,
+      "len": 1.5
+     }
+    ],
+    "world": "teplo",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[curious] Уже на десяти метрах земля круглый год одинаковая — около плюс восьми. И зимой, и летом.",
+   "props": {
+    "cam": [
+     "mid",
+     "frost"
+    ],
+    "tod": [
+     "morning",
+     "day"
+    ],
+    "snow": 0.3,
+    "smoke": 1,
+    "loop": 0,
+    "frost": [
+     0,
+     1,
+     0,
+     0.35
+    ],
+    "warm": [
+     0,
+     1,
+     0.4,
+     0.75
+    ],
+    "tags": [
+     {
+      "s": "промерзает ~1,5 м",
+      "t": "frost",
+      "dx": 120,
+      "dy": -120,
+      "at": 0.15,
+      "end": 1
+     },
+     {
+      "s": "10 м: +8 °C",
+      "t": "ten",
+      "dx": -260,
+      "dy": 80,
+      "at": 0.45,
+      "end": 1,
+      "size": 44
+     }
+    ],
+    "banner": "+8 °C\nкруглый год",
+    "bannerAt": 0.55,
+    "bannerEnd": 1,
+    "bannerY": 230,
+    "world": "teplo",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Рядом с домом бурят скважину на сто метров и опускают в неё петлю из трубы.",
+   "props": {
+    "cam": [
+     "frost",
+     "deep2"
+    ],
+    "tod": "day",
+    "snow": 0.3,
+    "smoke": 1,
+    "frost": 1,
+    "warm": 1,
+    "loop": [
+     0,
+     1,
+     0.05,
+     0.97
+    ],
+    "tags": [
+     {
+      "s": "100 м",
+      "t": "loopBot",
+      "dx": -200,
+      "dy": -60,
+      "at": 0.8,
+      "end": 1,
+      "size": 46
+     }
+    ],
+    "sounds": [
+     {
+      "q": "drilling machine",
+      "at": 0.05,
+      "volume": 0.22,
+      "len": 2.5
+     }
+    ],
+    "world": "teplo",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "По петле бежит незамерзайка: вниз уходит холодной, наверх возвращается тёплой.",
+   "props": {
+    "cam": [
+     "deep2",
+     "bottom"
+    ],
+    "tod": "day",
+    "smoke": 1,
+    "frost": 1,
+    "warm": 1,
+    "loop": 1,
+    "flow": [
+     0,
+     1,
+     0,
+     0.35
+    ],
+    "tags": [
+     {
+      "s": "100 м",
+      "t": "loopBot",
+      "dx": -200,
+      "dy": -60,
+      "at": 0,
+      "end": 0.3,
+      "size": 46
+     },
+     {
+      "s": "вниз холодная",
+      "t": [
+       2.27,
+       -23.5,
+       0.1
+      ],
+      "dx": -260,
+      "dy": -40,
+      "at": 0.35,
+      "end": 1
+     },
+     {
+      "s": "вверх тёплая",
+      "t": [
+       2.73,
+       -24.5,
+       0.1
+      ],
+      "dx": 230,
+      "dy": 90,
+      "at": 0.6,
+      "end": 1
+     }
+    ],
+    "sounds": [
+     {
+      "q": "liquid flowing pipe",
+      "at": 0.1,
+      "volume": 0.25,
+      "len": 2.5
+     }
+    ],
+    "world": "teplo",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Нагрелась она всего на три градуса. Но в подвале её ждёт тепловой насос — холодильник наоборот.",
+   "props": {
+    "cam": [
+     "bottom",
+     "pump"
+    ],
+    "tod": "day",
+    "smoke": 1,
+    "frost": 1,
+    "warm": [
+     1,
+     0.4
+    ],
+    "loop": 1,
+    "flow": 1,
+    "banner": "+3 °C",
+    "bannerAt": 0.05,
+    "bannerEnd": 0.4,
+    "bannerY": 260,
+    "tags": [
+     {
+      "s": "тепловой насос",
+      "t": "pump",
+      "dx": 160,
+      "dy": -230,
+      "at": 0.62,
+      "end": 1,
+      "size": 44
+     }
+    ],
+    "world": "teplo",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Он забирает это слабое тепло, сжимает газ внутри — и тот раскаляется до плюс пятидесяти.",
+   "props": {
+    "cam": [
+     "pump",
+     "cellar"
+    ],
+    "tod": "day",
+    "smoke": 1,
+    "frost": 1,
+    "warm": 0.4,
+    "loop": 1,
+    "flow": 1,
+    "pump": [
+     0,
+     1,
+     0.2,
+     0.75
+    ],
+    "tags": [
+     {
+      "s": "тепловой насос",
+      "t": "pump",
+      "dx": 160,
+      "dy": -230,
+      "at": 0,
+      "end": 0.4,
+      "size": 44
+     },
+     {
+      "s": "+50 °C",
+      "t": "pump",
+      "dx": 200,
+      "dy": -200,
+      "at": 0.65,
+      "end": 1,
+      "size": 50
+     }
+    ],
+    "sounds": [
+     {
+      "q": "compressor hum",
+      "at": 0.2,
+      "volume": 0.2,
+      "len": 3
+     }
+    ],
+    "world": "teplo",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Горячая вода уходит в тёплый пол.",
+   "props": {
+    "cam": [
+     "cellar",
+     "floor"
+    ],
+    "tod": "day",
+    "smoke": 1,
+    "frost": 1,
+    "warm": 0.4,
+    "loop": 1,
+    "flow": 1,
+    "pump": 1,
+    "floor": [
+     0,
+     1,
+     0,
+     0.7
+    ],
+    "tags": [
+     {
+      "s": "тёплый пол",
+      "t": "floor",
+      "dx": 200,
+      "dy": -170,
+      "at": 0.3,
+      "end": 1,
+      "size": 44
+     }
+    ],
+    "world": "teplo",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[dramatically] Один киловатт из розетки — и четыре киловатта тепла в доме.",
+   "props": {
+    "cam": [
+     "floor",
+     "house"
+    ],
+    "tod": [
+     "day",
+     "golden"
+    ],
+    "smoke": 1,
+    "frost": 1,
+    "warm": 0.4,
+    "loop": 1,
+    "flow": 1,
+    "pump": 1,
+    "floor": 1,
+    "banner": "1 кВт → 4 кВт",
+    "bannerAt": 0.15,
+    "bannerEnd": 1,
+    "bannerY": 250,
+    "bannerSize": 70,
+    "sounds": [
+     {
+      "q": "light switch click",
+      "at": 0.05,
+      "volume": 0.3,
+      "len": 1
+     }
+    ],
+    "world": "teplo",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Три из них насос не производит. Он просто переносит их из-под земли.",
+   "props": {
+    "cam": [
+     "house",
+     "arrow"
+    ],
+    "tod": "golden",
+    "smoke": 1,
+    "frost": 1,
+    "warm": [
+     0.4,
+     1
+    ],
+    "loop": 1,
+    "flow": 1,
+    "pump": 1,
+    "floor": 1,
+    "arrow": [
+     0,
+     1,
+     0.15,
+     0.9
+    ],
+    "tags": [
+     {
+      "s": "3 кВт из земли",
+      "t": [
+       3.8,
+       -12,
+       0.6
+      ],
+      "dx": -250,
+      "dy": 60,
+      "at": 0.55,
+      "end": 1,
+      "size": 44
+     }
+    ],
+    "world": "teplo",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[warmly] Но скважина с насосом стоят больше миллиона рублей. Вы бы поставили такое — или остались на газе?",
+   "props": {
+    "cam": [
+     "arrow",
+     "final"
+    ],
+    "tod": [
+     "golden",
+     "dusk"
+    ],
+    "smoke": 1,
+    "frost": 1,
+    "warm": [
+     1,
+     0.4
+    ],
+    "loop": 1,
+    "flow": 1,
+    "pump": 1,
+    "floor": 1,
+    "arrow": [
+     1,
+     0,
+     0,
+     0.3
+    ],
+    "snow": [
+     0,
+     0.5
+    ],
+    "banner": "насос\nили газ?",
+    "bannerAt": 0.5,
+    "bannerEnd": 1,
+    "bannerY": 230,
+    "world": "teplo",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Подпишись.",
+   "props": {
+    "cam": [
+     "final",
+     "final"
+    ],
+    "tod": "dusk",
+    "smoke": 1,
+    "frost": 1,
+    "warm": 0.4,
+    "loop": 1,
+    "flow": 1,
+    "pump": 1,
+    "floor": 1,
+    "snow": 0.5,
+    "world": "teplo",
+    "cont": true
+   }
+  }
+ ]
+}

@@ -21,6 +21,11 @@ def between(A, B, k):
 
 tsx, epdir = sys.argv[1], sys.argv[2].rstrip('/')
 src = open(tsx, encoding='utf-8').read()
+ep0 = json.load(open(os.path.join(sys.argv[2].rstrip('/'), 'episode.json'), encoding='utf-8'))
+# мир фирменного стиля: камеры лежат в worlds/<world>.ts рядом со сценой
+for w in sorted({sc.get('props', {}).get('world') for sc in ep0['scenes'] if sc.get('props', {}).get('world')}):
+    wf = os.path.join(os.path.dirname(tsx), 'worlds', w + '.ts')
+    if os.path.exists(wf): src += open(wf, encoding='utf-8').read()
 cams = {m[0]: ([float(x) for x in m[1].split(',')], [float(x) for x in m[2].split(',')])
         for m in re.findall(r"(\w+): \{pos: \[([^\]]+)\], look: \[([^\]]+)\]", src)}
 ep = json.load(open(os.path.join(epdir, 'episode.json'), encoding='utf-8'))

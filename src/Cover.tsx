@@ -17,6 +17,7 @@ import {TonnelScene} from './scenes/tonnel/TonnelScene';
 import {KolesoScene} from './scenes/koleso/KolesoScene';
 import {OkopScene} from './scenes/okop/OkopScene';
 import {SkvScene} from './scenes/skv/SkvScene';
+import {FsScene} from './scenes/fs/FsScene';
 import {OzeroScene} from './scenes/ozero/OzeroScene';
 import {PromScene} from './scenes/prom/PromScene';
 import {BrandMark, Grain, Vignette} from './components/Brand';
@@ -24,7 +25,7 @@ import {Accented} from './components/Accented';
 import {BODY, C, SLAM, applyPalette} from './lib/theme';
 
 // Обложка (= первый кадр в ленте): заголовок в верхней трети, под ним мир ролика, низ пустой
-export type CoverSpec = {lines: string[]; sub?: string; bg?: Record<string, any> | null; dam?: Record<string, any>; trench?: Record<string, any>; septic?: Record<string, any>; tower?: Record<string, any>; subway?: Record<string, any>; steam?: Record<string, any>; shanghai?: Record<string, any>; panama?: Record<string, any>; yakh?: Record<string, any>; mayak?: Record<string, any>; avia?: Record<string, any>; tonnel?: Record<string, any>; koleso?: Record<string, any>; okop?: Record<string, any>; skv?: Record<string, any>; ozero?: Record<string, any>; prom?: Record<string, any>};
+export type CoverSpec = {lines: string[]; sub?: string; bg?: Record<string, any> | null; dam?: Record<string, any>; trench?: Record<string, any>; septic?: Record<string, any>; tower?: Record<string, any>; subway?: Record<string, any>; steam?: Record<string, any>; shanghai?: Record<string, any>; panama?: Record<string, any>; yakh?: Record<string, any>; mayak?: Record<string, any>; avia?: Record<string, any>; tonnel?: Record<string, any>; koleso?: Record<string, any>; okop?: Record<string, any>; skv?: Record<string, any>; ozero?: Record<string, any>; prom?: Record<string, any>; fs?: Record<string, any>};
 
 export const Cover: React.FC<{timeline: Timeline; cover: CoverSpec}> = ({timeline, cover}) => {
   applyPalette(timeline.palette);
@@ -40,7 +41,9 @@ export const Cover: React.FC<{timeline: Timeline; cover: CoverSpec}> = ({timelin
   const fs = Math.min(118, Math.floor(940 / (longest * 1.0)));
   return (
     <AbsoluteFill style={{backgroundColor: C.bg}}>
-      {cover.prom ? (
+      {cover.fs ? (
+        <FsScene scene={{type: 'fs', start: 0, end: 10, say: '', props: cover.fs}} prev={null} base={timeline.base} accent={C.accent} durationInFrames={300} />
+      ) : cover.prom ? (
         <PromScene scene={{type: 'prom', start: 0, end: 10, say: '', props: cover.prom}} prev={null} base={timeline.base} accent={C.accent} durationInFrames={300} />
       ) : cover.ozero ? (
         <OzeroScene scene={{type: 'ozero', start: 0, end: 10, say: '', props: cover.ozero}} prev={null} base={timeline.base} accent={C.accent} durationInFrames={300} />
