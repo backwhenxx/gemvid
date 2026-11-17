@@ -224,7 +224,7 @@ export function build(scene, sky) {
     // петля: нижняя точка опускается от поверхности до дна
     const lp = q.loop ?? 1, yb = lerp(YA - 0.3, YBOT, lp);
     for (const [m, y0] of [[wl.legA, YA], [wl.legB, YB]]) { const h = Math.max(0.01, y0 - yb); m.scale.y = h; m.position.y = (y0 + yb) / 2; }
-    wl.u.position.y = yb; wl.weight.position.y = yb - 0.42;
+    wl.u.position.y = yb; wl.weight.position.y = yb - 0.42; wl.weight.visible = wl.u.visible = lp > 0.05;
     // бусины
     const fl = q.flow ?? 0;
     beads.forEach((m, i) => {
