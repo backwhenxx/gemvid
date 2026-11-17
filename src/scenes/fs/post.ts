@@ -148,7 +148,7 @@ export const P = {
       vec3 c = texture2D(tDiffuse, uvb).rgb; c = sat(c, 1.18); c = mix(c, vec3(1.), uWash);
       float pig = fbm(fc/160.+2.); c = mix(c, c*c*1.08, 0.5*pig);
       float bloomy = fbm(fc/75.+11.); c = mix(c, vec3(1.), uBl*smoothstep(.55,.8,bloomy));
-      float e = 0.; for(int i=0;i<4;i++){ float a = float(i)*1.5708; e += edgeAt(uvb + vec2(cos(a),sin(a))*2.5*uS/uRes, 2.2*uS, 0.012, 0.6); } e *= 0.25;
+      float e = edgeAt(uvb, 2.2*uS, 0.012, 0.6);
       c *= 1. - 0.2*e;
       float gran = paperTex(fc); c *= 0.9 + 0.16*gran;
       vec2 q = min(vUv, 1.-vUv); float d = min(q.x, q.y*uRes.y/uRes.x) + (fbm(fc/80.+1.)-.5)*0.075 + (fbm(fc/14.)-.5)*0.012;
@@ -189,10 +189,13 @@ export const P = {
 };
 
 export class Pipeline {
-  constructor(renderer, w, h, near, far) {
+  // ss — сверхвыборка: сцена рисуется в ss× (сглаживание граней), а постобработка идёт в 1× (дёшево)
+  constructor(renderer, w, h, near, far, ss = 1) {
     this.r = renderer; this.w = w; this.h = h; this.near = near; this.far = far;
-    const dt = new THREE.DepthTexture(w, h); dt.type = THREE.UnsignedIntType;
-    this.rtScene = new THREE.WebGLRenderTarget(w, h, { type: THREE.HalfFloatType, depthTexture: dt });
+    const W2 = Math.round(w * ss), H2 = Math.round(h * ss);
+    const dt = new THREE.DepthTexture(W2, H2); dt.type = THREE.UnsignedIntType;
+    this.rtScene = new THREE.WebGLRenderTarget(W2, H2, { type: THREE.HalfFloatType, depthTexture: dt });
+    this.rtScene.texture.minFilter = this.rtScene.texture.magFilter = THREE.LinearFilter;
     this.rtNormal = new THREE.WebGLRenderTarget(w, h);
     const mk = (k) => { const t = new THREE.WebGLRenderTarget(Math.round(w * k), Math.round(h * k)); t.texture.minFilter = t.texture.magFilter = THREE.LinearFilter; return t; };
     this.full = [mk(1), mk(1)]; this.half = [mk(0.5), mk(0.5)];

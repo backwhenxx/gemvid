@@ -51,7 +51,7 @@ const World: React.FC<{P: any; life: number; t0: number}> = ({P, life, t0}) => {
     const w = Wm.build(scene, sky);
     const near = Wm.NEAR ?? 3;
     const camera = new THREE.PerspectiveCamera(40, SW / SH, near, 600);
-    const pipe = new Pipeline(gl, SW * SS, SH * SS, near, 600);
+    const pipe = new Pipeline(gl, SW, SH, near, 600, SS);
     return {scene, sky, setTod, w, camera, pipe, passes: makePasses()};
   }, []);
   useFrame(() => {
