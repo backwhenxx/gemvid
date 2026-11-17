@@ -11,7 +11,7 @@ export const PAL = {
   metal: '#98a3ae', glass: '#ffd27a', cloud: '#fdf8f0', pipe: '#5a8ff0', barrel: '#9a6440', jarA: '#e6a03c',
   jarB: '#c8483a', jarC: '#7fa84a', rope: '#d8c49a', hillFar: '#b9c9d8', hillMid: '#93b79a', white: '#fbf6ec',
   shutter: '#3a8f96', door: '#7a4a30', pebble: '#c3ced4', smoke: '#eeeae4', lamp: '#ffd98a', snow: '#f4f6fa', snowShade: '#dfe6f0',
-  ice: '#cfe8f5', casing: '#59606e', cold: '#4f8fe8', hot: '#f07a3c', warm: '#f2a65a', red: '#d84a3a', dark: '#3a3f4c',
+  ice: '#cfe8f5', casing: '#59606e', asphalt: '#5d6170', gravel: '#9a968e', carBody: '#3f8fc4', glassDark: '#33415a', tyre: '#2e3038', birch: '#ece8e0', cold: '#4f8fe8', hot: '#f07a3c', warm: '#f2a65a', red: '#d84a3a', dark: '#3a3f4c',
 };
 
 // Время суток: солнце, небо, туман, лампы. Все значения плавно смешиваются.
@@ -20,7 +20,7 @@ export const TOD = {
   day: {sun: '#fff0dc', sunI: 2.6, sunPos: [-11, 17, 13], sky: '#dfe9ff', gnd: '#e2c4ac', hemiI: 1.3, top: '#5ea6e6', mid: '#f3e4cf', low: '#f6ead8', fog: '#e9eef2', lamp: 0.4, win: 0.9},
   golden: {sun: '#ffc58a', sunI: 2.7, sunPos: [-15, 9, 12], sky: '#9aa8d6', gnd: '#b89a80', hemiI: 1.3, top: '#4f86c6', mid: '#f0d3ad', low: '#ffe2b8', fog: '#e9d6be', lamp: 0.8, win: 1.4},
   dusk: {sun: '#ffa774', sunI: 1.5, sunPos: [-18, 4, 10], sky: '#7686bd', gnd: '#6e5f6a', hemiI: 1.05, top: '#34558f', mid: '#c4a990', low: '#f0bd8e', fog: '#a9a3ad', lamp: 1.3, win: 2.2},
-  night: {sun: '#a8bcff', sunI: 0.7, sunPos: [10, 16, 9], sky: '#46588c', gnd: '#2c2a36', hemiI: 0.75, top: '#101b38', mid: '#2e4064', low: '#45577a', fog: '#2d3954', lamp: 1.9, win: 3.0},
+  night: {sun: '#a8bcff', sunI: 0.95, sunPos: [10, 16, 9], sky: '#5a6c9e', gnd: '#3a3644', hemiI: 0.95, top: '#101b38', mid: '#2e4064', low: '#45577a', fog: '#2d3954', lamp: 1.9, win: 3.0},
 };
 
 export const mat = (role, hex, o = {}) => {

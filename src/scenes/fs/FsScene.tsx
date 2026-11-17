@@ -13,10 +13,11 @@ import {camBetween, Pose} from '../../lib/camPath';
 import {Pipeline} from './post';
 import {makeRig, passes as makePasses} from './look';
 import * as teplo from './worlds/teplo';
+import * as yama from './worlds/yama';
 
 const {fontFamily: ROUND} = loadFont('normal', {weights: ['700'], subsets: ['cyrillic', 'latin']});
 const {fontFamily: SERIF} = loadSerif('italic', {weights: ['400'], subsets: ['cyrillic', 'latin']});
-const WORLDS: Record<string, any> = {teplo};
+const WORLDS: Record<string, any> = {teplo, yama};
 const SW = 1080;
 const SH = 1920;
 const SS = 2;
@@ -24,7 +25,9 @@ const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
 const ease = (x: number) => x * x * (3 - 2 * x);
 // число или [от, до] или [от, до, p0, p1] — меняется на участке сцены p0..p1
 const range = (v: any, p: number, d = 0) => (Array.isArray(v) ? v[0] + (v[1] - v[0]) * ease(clamp01(v.length > 2 ? (p - v[2]) / Math.max(1e-6, v[3] - v[2]) : p)) : v ?? d);
-const KEYS = ['loop', 'flow', 'frost', 'warm', 'pump', 'floor', 'arrow', 'snow', 'smoke', 'own'];
+// всё числовое в props (кроме служебного) уходит в мир как параметр кадра
+const RESERVED = new Set(['camDur', 'bannerAt', 'bannerEnd', 'bannerY', 'bannerSize']);
+const isNum = (v: any) => typeof v === 'number' || (Array.isArray(v) && v.length > 0 && v.every((x) => typeof x === 'number'));
 
 const poseOf = (W: any, P: any, p: number) => {
   const C: Record<string, Pose> = W.CAMS;
@@ -46,8 +49,9 @@ const World: React.FC<{P: any; life: number; t0: number}> = ({P, life, t0}) => {
     scene.add(sky);
     const setTod = makeRig(scene, sky);
     const w = Wm.build(scene, sky);
-    const camera = new THREE.PerspectiveCamera(40, SW / SH, 3, 600);
-    const pipe = new Pipeline(gl, SW * SS, SH * SS, 3, 600);
+    const near = Wm.NEAR ?? 3;
+    const camera = new THREE.PerspectiveCamera(40, SW / SH, near, 600);
+    const pipe = new Pipeline(gl, SW * SS, SH * SS, near, 600);
     return {scene, sky, setTod, w, camera, pipe, passes: makePasses()};
   }, []);
   useFrame(() => {
@@ -59,10 +63,17 @@ const World: React.FC<{P: any; life: number; t0: number}> = ({P, life, t0}) => {
     cam.fov = c.fov;
     cam.updateProjectionMatrix();
     cam.updateMatrixWorld();
-    const tod = Array.isArray(P.tod) ? P.tod : [P.tod ?? 'day', P.tod ?? 'day'];
-    S.setTod(tod[0], tod[1], ease(clamp01(p)), S.w.lamps, S.w.wins);
+    // время суток: строка или список ключевых точек ['night', 'day', 'night'] — равномерно по сцене (todAt — свои доли)
+    const tod: string[] = Array.isArray(P.tod) ? P.tod : [P.tod ?? 'day'];
+    if (tod.length < 2) S.setTod(tod[0], tod[0], 0, S.w.lamps, S.w.wins);
+    else {
+      const at: number[] = P.todAt ?? tod.map((_, i) => i / (tod.length - 1));
+      let i = 0;
+      while (i < tod.length - 2 && p > at[i + 1]) i++;
+      S.setTod(tod[i], tod[i + 1], ease(clamp01((p - at[i]) / Math.max(1e-6, at[i + 1] - at[i]))), S.w.lamps, S.w.wins);
+    }
     const q: any = {t: t0 + frame / fps};
-    for (const k of KEYS) if (P[k] !== undefined) q[k] = range(P[k], clamp01(p / (P[k + 'Dur'] ?? 1)));
+    for (const k of Object.keys(P)) if (!RESERVED.has(k) && !k.endsWith('Dur') && isNum(P[k])) q[k] = range(P[k], clamp01(p / (P[k + 'Dur'] ?? 1)));
     S.w.animate(q);
     S.pipe.render(S.scene, cam, S.sky, S.passes, q.t, true);
   }, 1);
@@ -73,7 +84,7 @@ const World: React.FC<{P: any; life: number; t0: number}> = ({P, life, t0}) => {
 const Tags: React.FC<{P: any; life: number}> = ({P, life}) => {
   const frame = useCurrentFrame();
   const Wm = WORLDS[P.world ?? 'teplo'];
-  const cam = useMemo(() => new THREE.PerspectiveCamera(40, SW / SH, 3, 600), []);
+  const cam = useMemo(() => new THREE.PerspectiveCamera(40, SW / SH, WORLDS[P.world ?? 'teplo'].NEAR ?? 3, 600), []);
   if (!P.tags?.length) return null;
   const p = clamp01(frame / life);
   const c = poseOf(Wm, P, p);
