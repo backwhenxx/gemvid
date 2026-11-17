@@ -1,0 +1,674 @@
+{
+ "title": "Откуда берутся ямы на дорогах",
+ "music": false,
+ "whisper": "medium",
+ "captionStyle": "word",
+ "autoOutro": false,
+ "stillPairs": true,
+ "ambience": [
+  {
+   "q": "countryside birds morning",
+   "from": 0,
+   "to": 9,
+   "volume": 0.04
+  }
+ ],
+ "cover": {
+  "lines": [
+   "Яму сделала",
+   "*вода*"
+  ],
+  "sub": "асфальту всего год",
+  "fs": {
+   "world": "yama",
+   "cam": [
+    "cover",
+    "cover"
+   ],
+   "tod": "golden",
+   "hole": 1,
+   "puddle": 1
+  }
+ },
+ "scenes": [
+  {
+   "type": "fs",
+   "say": "[confidently] Этому асфальту всего год. А весной в нём снова яма.",
+   "props": {
+    "cont": false,
+    "cam": [
+     "hook",
+     "hook2"
+    ],
+    "tod": "morning",
+    "car": [
+     -14,
+     10
+    ],
+    "hole": 1,
+    "puddle": 1,
+    "tags": [
+     {
+      "s": "асфальту 1 год",
+      "t": [
+       -3,
+       0,
+       -1
+      ],
+      "dx": -60,
+      "dy": -260,
+      "at": 0.05,
+      "end": 0.55
+     }
+    ],
+    "sounds": [
+     {
+      "q": "car passing by",
+      "at": 0.1,
+      "volume": 0.35,
+      "len": 3
+     },
+     {
+      "q": "car suspension bump",
+      "at": 0.5,
+      "volume": 0.4,
+      "len": 1
+     }
+    ],
+    "world": "yama"
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Её проделала... обычная вода.",
+   "props": {
+    "cam": [
+     "hook2",
+     "pit"
+    ],
+    "tod": "morning",
+    "hole": 1,
+    "puddle": 1,
+    "tags": [
+     {
+      "s": "вода",
+      "t": [
+       0.1,
+       -0.4,
+       -0.5
+      ],
+      "dx": 180,
+      "dy": -200,
+      "at": 0.5,
+      "end": 1,
+      "size": 46
+     }
+    ],
+    "sounds": [
+     {
+      "q": "water drip",
+      "at": 0.3,
+      "volume": 0.25,
+      "len": 1.5
+     }
+    ],
+    "world": "yama",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[curious] Дорога — это слоёный пирог: асфальт, под ним щебень, песок и земля.",
+   "props": {
+    "cam": [
+     "pit",
+     "layers"
+    ],
+    "tod": "morning",
+    "hole": 1,
+    "puddle": 1,
+    "tags": [
+     {
+      "s": "асфальт",
+      "t": "asphalt",
+      "dx": 160,
+      "dy": -110,
+      "at": 0.25,
+      "end": 1
+     },
+     {
+      "s": "щебень",
+      "t": "gravel",
+      "dx": 150,
+      "dy": -40,
+      "at": 0.45,
+      "end": 1
+     },
+     {
+      "s": "песок",
+      "t": "sand",
+      "dx": 200,
+      "dy": 40,
+      "at": 0.62,
+      "end": 1
+     },
+     {
+      "s": "земля",
+      "t": "soil",
+      "dx": 120,
+      "dy": 60,
+      "at": 0.8,
+      "end": 1
+     }
+    ],
+    "world": "yama",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Осенью дождь находит в асфальте трещину тоньше волоса — и затекает внутрь.",
+   "props": {
+    "cam": [
+     "layers",
+     "crack"
+    ],
+    "tod": [
+     "morning",
+     "dusk"
+    ],
+    "hole": [
+     1,
+     0,
+     0,
+     0.3
+    ],
+    "puddle": [
+     1,
+     0,
+     0,
+     0.2
+    ],
+    "rain": [
+     0,
+     1,
+     0.15,
+     0.45
+    ],
+    "crack": [
+     0,
+     1,
+     0.35,
+     0.6
+    ],
+    "water": [
+     0,
+     1,
+     0.6,
+     1
+    ],
+    "banner": "осень",
+    "bannerAt": 0.05,
+    "bannerEnd": 0.5,
+    "bannerY": 250,
+    "tags": [
+     {
+      "s": "трещина",
+      "t": "crack",
+      "dx": 170,
+      "dy": -170,
+      "at": 0.5,
+      "end": 1
+     }
+    ],
+    "sounds": [
+     {
+      "q": "rain on road",
+      "at": 0.15,
+      "volume": 0.25,
+      "len": 3
+     }
+    ],
+    "world": "yama",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Ночью мороз. Вода становится льдом и расширяется почти на десятую часть.",
+   "props": {
+    "cam": [
+     "crack",
+     "crack2"
+    ],
+    "tod": [
+     "dusk",
+     "night"
+    ],
+    "rain": [
+     1,
+     0,
+     0,
+     0.3
+    ],
+    "winter": [
+     0,
+     1,
+     0.1,
+     0.8
+    ],
+    "snow": [
+     0,
+     0.8,
+     0.3,
+     0.8
+    ],
+    "crack": 1,
+    "water": 1,
+    "ice": [
+     0,
+     1,
+     0.3,
+     0.8
+    ],
+    "heave": [
+     0,
+     0.3,
+     0.4,
+     0.9
+    ],
+    "banner": "лёд +9 %",
+    "bannerAt": 0.55,
+    "bannerEnd": 1,
+    "bannerY": 250,
+    "sounds": [
+     {
+      "q": "winter wind",
+      "at": 0.05,
+      "volume": 0.25,
+      "len": 3
+     }
+    ],
+    "world": "yama",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Лёд распирает трещину, как клин.",
+   "props": {
+    "cam": [
+     "crack2",
+     "crack"
+    ],
+    "tod": "night",
+    "winter": 1,
+    "snow": 0.8,
+    "crack": [
+     1,
+     1.5
+    ],
+    "water": 1,
+    "ice": 1,
+    "heave": [
+     0.3,
+     0.6
+    ],
+    "lens": [
+     0,
+     0.5
+    ],
+    "tags": [
+     {
+      "s": "лёд",
+      "t": "ice",
+      "dx": -200,
+      "dy": 150,
+      "at": 0.4,
+      "end": 1,
+      "size": 46
+     }
+    ],
+    "sounds": [
+     {
+      "q": "ice cracking",
+      "at": 0.2,
+      "volume": 0.35,
+      "len": 1.5
+     }
+    ],
+    "world": "yama",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Днём оттаял — вода затекла глубже.",
+   "props": {
+    "cam": [
+     "crack",
+     "crack2"
+    ],
+    "tod": [
+     "night",
+     "day"
+    ],
+    "winter": 1,
+    "snow": [
+     0.8,
+     0
+    ],
+    "crack": [
+     1.5,
+     2
+    ],
+    "water": 1,
+    "ice": [
+     1,
+     0,
+     0.2,
+     0.8
+    ],
+    "heave": [
+     0.6,
+     0.5
+    ],
+    "lens": [
+     0.5,
+     0.35
+    ],
+    "sounds": [
+     {
+      "q": "water drip",
+      "at": 0.4,
+      "volume": 0.25,
+      "len": 1.5
+     }
+    ],
+    "world": "yama",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Ночью снова замёрз.",
+   "props": {
+    "cam": [
+     "crack2",
+     "crack"
+    ],
+    "tod": [
+     "day",
+     "night"
+    ],
+    "winter": 1,
+    "snow": [
+     0,
+     0.6
+    ],
+    "crack": 2,
+    "water": 1,
+    "ice": [
+     0,
+     1,
+     0.3,
+     0.9
+    ],
+    "heave": [
+     0.5,
+     0.8
+    ],
+    "lens": [
+     0.35,
+     0.8
+    ],
+    "sounds": [
+     {
+      "q": "ice cracking",
+      "at": 0.5,
+      "volume": 0.35,
+      "len": 1.2
+     }
+    ],
+    "world": "yama",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "И так за зиму — десятки раз.",
+   "props": {
+    "cam": [
+     "crack",
+     "layers"
+    ],
+    "tod": [
+     "night",
+     "day",
+     "night",
+     "day",
+     "night"
+    ],
+    "winter": 1,
+    "snow": 0.6,
+    "crack": 2,
+    "water": 1,
+    "ice": 1,
+    "heave": [
+     0.8,
+     1
+    ],
+    "lens": [
+     0.8,
+     1
+    ],
+    "banner": "десятки раз\nза зиму",
+    "bannerAt": 0.25,
+    "bannerEnd": 1,
+    "bannerY": 250,
+    "world": "yama",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "А весной лёд под асфальтом тает, и под коркой остаётся пустота.",
+   "props": {
+    "cam": [
+     "layers",
+     "side"
+    ],
+    "tod": [
+     "night",
+     "morning"
+    ],
+    "winter": [
+     1,
+     0
+    ],
+    "snow": [
+     0.6,
+     0,
+     0,
+     0.3
+    ],
+    "crack": 2,
+    "water": [
+     1,
+     0.3
+    ],
+    "ice": [
+     1,
+     0,
+     0,
+     0.5
+    ],
+    "heave": 1,
+    "lens": [
+     1,
+     0,
+     0.15,
+     0.7
+    ],
+    "voidA": [
+     0,
+     1,
+     0.3,
+     0.8
+    ],
+    "tags": [
+     {
+      "s": "пустота",
+      "t": "void",
+      "dx": -210,
+      "dy": 170,
+      "at": 0.65,
+      "end": 1,
+      "size": 46
+     }
+    ],
+    "world": "yama",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[dramatically] Проезжает машина — корка ломается. Яма готова.",
+   "props": {
+    "cam": [
+     "side",
+     "hook"
+    ],
+    "tod": "morning",
+    "crack": 2,
+    "water": 0.3,
+    "heave": [
+     1,
+     0,
+     0.5,
+     0.56
+    ],
+    "voidA": [
+     1,
+     0,
+     0.5,
+     0.6
+    ],
+    "car": [
+     -14,
+     12
+    ],
+    "hole": [
+     0,
+     1,
+     0.47,
+     0.62
+    ],
+    "banner": "яма готова",
+    "bannerAt": 0.72,
+    "bannerEnd": 1,
+    "bannerY": 250,
+    "sounds": [
+     {
+      "q": "car passing by",
+      "at": 0.1,
+      "volume": 0.35,
+      "len": 3
+     },
+     {
+      "q": "asphalt crack break",
+      "at": 0.5,
+      "volume": 0.45,
+      "len": 1.2
+     }
+    ],
+    "world": "yama",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Поэтому на юге, где морозов почти нет, дороги живут дольше.",
+   "props": {
+    "cam": [
+     "hook",
+     "wide"
+    ],
+    "tod": [
+     "morning",
+     "golden"
+    ],
+    "hole": 1,
+    "puddle": [
+     0,
+     0.6
+    ],
+    "tags": [
+     {
+      "s": "мало переходов через 0 °C",
+      "t": [
+       -6,
+       2.5,
+       -9
+      ],
+      "dx": 40,
+      "dy": -300,
+      "at": 0.35,
+      "end": 1
+     }
+    ],
+    "world": "yama",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[warmly] Так кто виноват в ямах — погода или те, кто кладёт асфальт?",
+   "props": {
+    "cam": [
+     "wide",
+     "final"
+    ],
+    "tod": [
+     "golden",
+     "dusk"
+    ],
+    "hole": 1,
+    "puddle": 0.6,
+    "car": [
+     -26,
+     26
+    ],
+    "banner": "погода\nили дорожники?",
+    "bannerAt": 0.35,
+    "bannerEnd": 1,
+    "bannerY": 230,
+    "sounds": [
+     {
+      "q": "car passing by",
+      "at": 0.3,
+      "volume": 0.3,
+      "len": 3
+     }
+    ],
+    "world": "yama",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Подпишись.",
+   "props": {
+    "cam": [
+     "final",
+     "final"
+    ],
+    "tod": "dusk",
+    "hole": 1,
+    "puddle": 0.6,
+    "world": "yama",
+    "cont": true
+   }
+  }
+ ]
+}
