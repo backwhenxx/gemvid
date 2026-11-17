@@ -139,13 +139,13 @@ export const P = {
       gl_FragColor = vec4(col, 1.); }` }),
 
   // акварель + карандаш в альбоме
-  watercolor: (o = {}) => ({ u: { uPaper: C3(o.paper ?? '#fbf6ea'), uPencil: C3(o.pencil ?? '#3c3b46'), uBorder: o.border ?? 1 }, f: /* glsl */`
-    uniform vec3 uPaper, uPencil; uniform float uBorder;
+  watercolor: (o = {}) => ({ u: { uPaper: C3(o.paper ?? '#fbf6ea'), uPencil: C3(o.pencil ?? '#3c3b46'), uBorder: o.border ?? 1, uWash: o.wash ?? 0.2, uBl: o.bloomy ?? 0.22 }, f: /* glsl */`
+    uniform vec3 uPaper, uPencil; uniform float uBorder, uWash, uBl;
     void main(){ vec2 fc = vUv*uRes/uS;
       vec2 uvb = vUv + (vec2(fbm(fc/55.), fbm(fc/55.+5.))-.5)*7.*uS/uRes;
-      vec3 c = texture2D(tDiffuse, uvb).rgb; c = sat(c, 1.18); c = mix(c, vec3(1.), 0.2);
+      vec3 c = texture2D(tDiffuse, uvb).rgb; c = sat(c, 1.18); c = mix(c, vec3(1.), uWash);
       float pig = fbm(fc/160.+2.); c = mix(c, c*c*1.08, 0.5*pig);
-      float bloomy = fbm(fc/75.+11.); c = mix(c, vec3(1.), 0.22*smoothstep(.55,.8,bloomy));
+      float bloomy = fbm(fc/75.+11.); c = mix(c, vec3(1.), uBl*smoothstep(.55,.8,bloomy));
       float e = 0.; for(int i=0;i<4;i++){ float a = float(i)*1.5708; e += edgeAt(uvb + vec2(cos(a),sin(a))*2.5*uS/uRes, 2.2*uS, 0.012, 0.6); } e *= 0.25;
       c *= 1. - 0.2*e;
       float gran = paperTex(fc); c *= 0.9 + 0.16*gran;

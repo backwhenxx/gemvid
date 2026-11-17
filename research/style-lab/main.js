@@ -29,7 +29,7 @@ if (st.labels) {
     if (l.a) { l.ln = document.createElementNS(ns, 'path'); l.ln.setAttribute('stroke', ink); l.ln.setAttribute('stroke-width', 2 * k); l.ln.setAttribute('fill', 'none'); svg.appendChild(l.ln); l.dot = document.createElementNS(ns, 'circle'); l.dot.setAttribute('r', 5 * k); l.dot.setAttribute('fill', ink); svg.appendChild(l.dot); }
     l.d = tag(l.s, l.a ? 31 : 33);
   }
-  const head = tag('Рис. 12. Погреб и колодец в разрезе', 35); head.style.left = W / 2 + 'px'; head.style.top = 96 * k + 'px';
+  if (st.labels === 'atlas') { const head = tag('Рис. 12. Погреб и колодец в разрезе', 35); head.style.left = W / 2 + 'px'; head.style.top = 96 * k + 'px'; }
   const v = new THREE.Vector3(), pr = (p) => { v.set(...p).project(world.camera); return [(v.x * 0.5 + 0.5) * W, (1 - (v.y * 0.5 + 0.5)) * H]; };
   labels = () => { for (const l of L) { let [tx, ty] = pr(l.t); const w2 = l.d.offsetWidth / 2 + 14 * k; tx = Math.min(W - w2, Math.max(w2, tx)); l.d.style.left = tx + 'px'; l.d.style.top = ty + 'px'; if (l.a) { const [ax, ay] = pr(l.a); l.ln.setAttribute('d', `M${ax} ${ay} Q${(ax + tx) / 2 + 26 * k} ${(ay + ty) / 2 - 8 * k} ${tx} ${ty}`); l.dot.setAttribute('cx', ax); l.dot.setAttribute('cy', ay); } } };
 }

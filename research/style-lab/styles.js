@@ -199,4 +199,38 @@ export const STYLES = {
     setup(scene, sky) { sun(scene, '#fff0dc', 2.5, [-11, 17, 13], 3); hemi(scene, '#dfe9ff', '#f0c9b0', 1.35); dome(sky, scene, '#8cc7f2', '#fde9d2'); },
     post: () => [P.tonemap({ aces: 0.4 }), P.fxaa(), P.finish({ sat: 1.08, vig: 0.1 })],
   }),
+
+  // 11. Сплав: грани + мягкий вечер + карандаш/акварель без рамки + подписи атласа
+  mix: () => {
+    const lp = STYLES.lowpoly();
+    return {
+      name: 'Сплав', geo: lp.geo, flatNormals: true, labels: 'tags',
+      pal: Object.assign({}, lp.pal, { cloud: '#fbf0e2', glass: '#ffd27a', lamp: '#ffd98a', hillFar: '#b9c9d8', hillMid: '#93b79a', roof: '#d9654a', grass: '#93c160', leaf: '#62a85c', leaf2: '#9ccc6c' }),
+      mat: (role, hex, o) => { const m = fin(new THREE.MeshStandardMaterial({ color: hex, flatShading: true, roughness: 1 }), hex, o); if (o.emissive) m.emissiveIntensity = 1.8; return m; },
+      lampI: 14,
+      setup(scene, sky) {
+        sun(scene, '#ffd2a0', 2.7, [-15, 9, 12], 3); hemi(scene, '#9aa8d6', '#b89a80', 1.3);
+        const rim = new THREE.DirectionalLight('#bcd4ff', 0.45); rim.position.set(12, 8, -12); scene.add(rim);
+        dome(sky, scene, '#4f86c6', '#f0d3ad', [36, 170], '#c7cfd8', '#ffe2b8');
+      },
+      post: () => [P.tonemap({ aces: 0.35, exp: 1.0 }), P.kuwahara({ radius: 4, q: 8, half: true }), P.watercolor({ border: 0, paper: '#fbf5ea', wash: 0.03, bloomy: 0.05 }), P.finish({ sat: 1.06, con: 1.06, sh: [0.0, 0.004, 0.03], hi: [0.03, 0.012, -0.015], canvas: 0.03, vig: 0.2, grain: 0.015 })],
+    };
+  },
+  // 11б. То же днём
+  mixday: () => {
+    const b = STYLES.mix();
+    return Object.assign(b, {
+      name: 'Сплав, день',
+      setup(scene, sky) { sun(scene, '#fff0dc', 2.6, [-11, 17, 13], 3); hemi(scene, '#dfe9ff', '#e2c4ac', 1.3); dome(sky, scene, '#5ea6e6', '#f3e4cf'); },
+    });
+  },
+
+  // 11в. Сплав с мазками: тот же мир, манера «живопись» мягче
+  mixpaint: () => {
+    const b = STYLES.mix();
+    return Object.assign(b, {
+      name: 'Сплав, мазки',
+      post: () => [P.tonemap({ aces: 0.35, exp: 1.02 }), P.kuwahara({ radius: 6, q: 9, half: true }), P.ink({ px: 1.2, op: 0.35, wob: 1.0, self: 1, n: 9 }), P.finish({ sat: 1.04, con: 1.05, sh: [0.0, 0.004, 0.035], hi: [0.03, 0.012, -0.015], emboss: 0.5, canvas: 0.05, grain: 0.025, vig: 0.22 })],
+    });
+  },
 };
