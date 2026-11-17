@@ -25,6 +25,15 @@ const LA = 2.27, LB = 2.73; // ветви петли: холодная вниз,
 const YA = -1.75, YB = -2.15; // горизонтальные трубы к подвалу
 const YBOT = -28.2;
 
+
+// точки для подписей (статичны — подписи считаются до постройки мира)
+const nbChim = (() => { const v = new THREE.Vector3(1.35 * 0.85, 5.95 * 0.85, -0.7 * 0.85).applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.35); return [v.x - 12.5, v.y + S(-12.5, -12) - 0.05, v.z - 12]; })();
+export const T = {
+  therm: [-3.6 + 2.1, 2.0, -0.9], chimney: [-2.25, 5.95, -4.2], nbChim,
+  frost: [-9, -1.0, 0.1], ten: [WX, -4.5, 0.1], loopBot: [WX, YBOT, 0.1], pump: [-2.75, -2.6, -1.05], tank: [-4.75, -2.2, -0.95], floor: [-3.6, -0.53, 0.1],
+  borehole: [WX, -8, 0.1], house: [-3.6, 3.2, -1.0],
+};
+
 export const CAMS = {
   hook: {pos: [1.0, 3.2, 17.5], look: [-6.2, 2.6, -5], fov: 40},
   hook2: {pos: [2.4, 2.6, 15.5], look: [-3.4, 2.2, -3], fov: 40},
@@ -153,7 +162,7 @@ export function build(scene, sky) {
     seg(V(LB, YBOT), V(LB, YB - 0.2)); beadPath.add(new THREE.QuadraticBezierCurve3(V(LB, YB - 0.2), V(LB, YB), V(LB - 0.2, YB)));
     seg(V(LB - 0.2, YB), V(-1.5, YB));
   }
-  const BL = beadPath.getLength(), NB = 150;
+  const BL = beadPath.getLength(), NB = 110;
   const beadMatC = K.M('cold', {emissive: 1, ei: 0.5}), beadMatW = K.M('warm', {emissive: 1, ei: 0.5});
   const beads = []; const bg = new THREE.IcosahedronGeometry(0.085, 0);
   for (let i = 0; i < NB; i++) { const m = new THREE.Mesh(bg, beadMatC); m.castShadow = false; m.visible = false; scene.add(m); beads.push(m); }
@@ -163,7 +172,7 @@ export function build(scene, sky) {
   const frost = (() => {
     const P = [], I = []; let n = 0;
     for (let x = -14; x <= 14.001; x += 0.5) { P.push(x, B[1](x) + 0.02, 0.06, x, -1.6 + 0.12 * Math.sin(x * 0.8), 0.06); }
-    n = P.length / 6; for (let i = 0; i < n - 1; i++) { const a = i * 2; I.push(a, a + 1, a + 2, a + 1, a + 3, a + 2); }
+    n = P.length / 6; for (let i = 0; i < n - 1; i++) { const xm = -14 + i * 0.5 + 0.25; if ((xm > -6.1 && xm < -1.4) || (xm > 1.9 && xm < 3.1)) continue; const a = i * 2; I.push(a, a + 1, a + 2, a + 1, a + 3, a + 2); }
     const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(P, 3)); g.setIndex(I); g.computeVertexNormals();
     const m = new THREE.MeshBasicMaterial({color: '#cfe6ff', transparent: true, opacity: 0, depthWrite: false}); const mesh = new THREE.Mesh(g, m); mesh.renderOrder = 3; scene.add(mesh); return mesh;
   })();
@@ -220,7 +229,7 @@ export function build(scene, sky) {
     const fl = q.flow ?? 0;
     beads.forEach((m, i) => {
       if (fl <= 0.001 || lp < 0.999) { m.visible = false; return; }
-      const u = ((i / NB + t * 0.035) % 1 + 1) % 1; beadPath.getPointAt(u, v); m.position.copy(v);
+      const u = ((i / NB + t * 0.012) % 1 + 1) % 1; beadPath.getPointAt(u, v); m.position.copy(v);
       m.material = u > iBot ? beadMatW : beadMatC; m.visible = i / NB < fl; m.rotation.set(t * 2 + i, i, 0);
     });
     frost.material.opacity = 0.42 * (q.frost ?? 0);
@@ -243,11 +252,5 @@ export function build(scene, sky) {
   };
   animate({t: 0});
 
-  // точки для подписей
-  const T = {
-    therm: [HX + 2.1, 2.0, HZ1 + 0.1], chimney: H.chimney, nbChim: [chim.x, chim.y, chim.z],
-    frost: [-9, -1.0, 0.1], ten: [WX, -4.5, 0.1], loopBot: [WX, YBOT, 0.1], pump: cel.pump, tank: [-4.75, -2.2, -0.95], floor: [-3.6, -0.53, 0.1],
-    borehole: [WX, -8, 0.1], house: [HX, 3.2, HZ1],
-  };
   return {animate, T, wins: K.wins, lamps: K.lamps};
 }
