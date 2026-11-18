@@ -14,10 +14,11 @@ import {Pipeline} from './post';
 import {makeRig, passes as makePasses} from './look';
 import * as teplo from './worlds/teplo';
 import * as yama from './worlds/yama';
+import * as kolodec from './worlds/kolodec';
 
 const {fontFamily: ROUND} = loadFont('normal', {weights: ['700'], subsets: ['cyrillic', 'latin']});
 const {fontFamily: SERIF} = loadSerif('italic', {weights: ['400'], subsets: ['cyrillic', 'latin']});
-const WORLDS: Record<string, any> = {teplo, yama};
+const WORLDS: Record<string, any> = {teplo, yama, kolodec};
 const SW = 1080;
 const SH = 1920;
 const SS = 2;

@@ -1,0 +1,468 @@
+{
+ "title": "Почему колодец копают в конце лета",
+ "music": false,
+ "whisper": "medium",
+ "captionStyle": "word",
+ "autoOutro": false,
+ "stillPairs": true,
+ "ambience": [
+  {
+   "q": "countryside birds morning",
+   "from": 0,
+   "to": 12,
+   "volume": 0.04
+  }
+ ],
+ "cover": {
+  "lines": [
+   "Колодец",
+   "*пересох*"
+  ],
+  "sub": "ошиблись месяцем",
+  "fs": {
+   "world": "kolodec",
+   "cam": [
+    "cover",
+    "cover"
+   ],
+   "tod": "golden",
+   "level": -3.6,
+   "dry": 1,
+   "depth": -3.15
+  }
+ },
+ "scenes": [
+  {
+   "type": "fs",
+   "say": "[confidently] Этот колодец выкопали весной — воды в нём было почти два метра. А в августе он пересох.",
+   "props": {
+    "cont": false,
+    "cam": [
+     "hook",
+     "hook2"
+    ],
+    "tod": [
+     "morning",
+     "golden"
+    ],
+    "level": [
+     -1.2,
+     -3.6,
+     0.5,
+     0.95
+    ],
+    "dry": [
+     0,
+     1,
+     0.5,
+     0.95
+    ],
+    "depth": -3.15,
+    "bucket": [
+     0,
+     1,
+     0,
+     0.4
+    ],
+    "tags": [
+     {
+      "s": "весна: 2 м воды",
+      "t": "waterIn",
+      "dx": -230,
+      "dy": -150,
+      "at": 0.05,
+      "end": 0.45
+     },
+     {
+      "s": "август: сухо",
+      "t": "dry",
+      "dx": -230,
+      "dy": -120,
+      "at": 0.7,
+      "end": 1
+     }
+    ],
+    "sounds": [
+     {
+      "q": "well bucket chain",
+      "at": 0.05,
+      "volume": 0.3,
+      "len": 2.5
+     },
+     {
+      "q": "bucket splash water",
+      "at": 0.38,
+      "volume": 0.35,
+      "len": 1.2
+     }
+    ],
+    "world": "kolodec"
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Ошиблись не с местом... а с месяцем.",
+   "props": {
+    "cam": [
+     "hook2",
+     "cut"
+    ],
+    "tod": "golden",
+    "level": -3.6,
+    "dry": 1,
+    "depth": -3.15,
+    "bucket": [
+     1,
+     0
+    ],
+    "banner": "дело в месяце",
+    "bannerAt": 0.45,
+    "bannerEnd": 1,
+    "bannerY": 250,
+    "sounds": [
+     {
+      "q": "well bucket chain",
+      "at": 0.0,
+      "volume": 0.25,
+      "len": 2
+     }
+    ],
+    "world": "kolodec",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[curious] Под землёй вода стоит в песке, как в губке. Её верхнюю границу называют зеркалом.",
+   "props": {
+    "cam": [
+     "cut",
+     "mirror"
+    ],
+    "tod": [
+     "golden",
+     "day"
+    ],
+    "level": -3.6,
+    "dry": 1,
+    "depth": -3.15,
+    "tags": [
+     {
+      "s": "песок с водой",
+      "t": [
+       -6.5,
+       -4.6,
+       0.05
+      ],
+      "dx": 160,
+      "dy": 120,
+      "at": 0.2,
+      "end": 1
+     },
+     {
+      "s": "зеркало",
+      "t": [
+       -4.5,
+       -3.6,
+       0.05
+      ],
+      "dx": 120,
+      "dy": -160,
+      "at": 0.62,
+      "end": 1,
+      "size": 46
+     }
+    ],
+    "world": "kolodec",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Весной тает снег, идут дожди — и зеркало поднимается почти к самой траве.",
+   "props": {
+    "cam": [
+     "mirror",
+     "cut"
+    ],
+    "tod": [
+     "day",
+     "morning"
+    ],
+    "rain": [
+     0,
+     1,
+     0.05,
+     0.35
+    ],
+    "level": [
+     -3.6,
+     -1.0,
+     0.25,
+     0.95
+    ],
+    "dry": [
+     1,
+     0,
+     0.1,
+     0.8
+    ],
+    "depth": -3.15,
+    "banner": "весна",
+    "bannerAt": 0.05,
+    "bannerEnd": 1,
+    "bannerY": 250,
+    "sounds": [
+     {
+      "q": "rain on grass",
+      "at": 0.05,
+      "volume": 0.25,
+      "len": 3
+     }
+    ],
+    "world": "kolodec",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Летом жара. Воду пьют корни деревьев, она уходит в реки — и зеркало опускается. На метр, а то и на два.",
+   "props": {
+    "cam": [
+     "cut",
+     "roots"
+    ],
+    "tod": [
+     "morning",
+     "day",
+     "golden"
+    ],
+    "rain": [
+     1,
+     0,
+     0,
+     0.15
+    ],
+    "level": [
+     -1.0,
+     -3.6,
+     0.3,
+     0.95
+    ],
+    "dry": [
+     0,
+     1,
+     0.15,
+     0.9
+    ],
+    "depth": -3.15,
+    "banner": "лето",
+    "bannerAt": 0.03,
+    "bannerEnd": 0.45,
+    "bannerY": 250,
+    "tags": [
+     {
+      "s": "корни пьют воду",
+      "t": "roots",
+      "dx": 200,
+      "dy": -160,
+      "at": 0.3,
+      "end": 0.85
+     },
+     {
+      "s": "−2 м",
+      "t": [
+       -6,
+       -3.6,
+       0.05
+      ],
+      "dx": -150,
+      "dy": 120,
+      "at": 0.8,
+      "end": 1,
+      "size": 48
+     }
+    ],
+    "sounds": [
+     {
+      "q": "summer cicadas",
+      "at": 0.05,
+      "volume": 0.15,
+      "len": 3
+     }
+    ],
+    "world": "kolodec",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Весенний колодец кончается выше летней воды. В августе у него сухое дно.",
+   "props": {
+    "cam": [
+     "roots",
+     "well"
+    ],
+    "tod": "golden",
+    "level": -3.6,
+    "dry": 1,
+    "depth": -3.15,
+    "tags": [
+     {
+      "s": "дно колодца",
+      "t": [
+       2.2,
+       -3.15,
+       0.05
+      ],
+      "dx": 220,
+      "dy": -120,
+      "at": 0.25,
+      "end": 1
+     },
+     {
+      "s": "летняя вода",
+      "t": [
+       0.4,
+       -3.6,
+       0.05
+      ],
+      "dx": -230,
+      "dy": 140,
+      "at": 0.45,
+      "end": 1
+     }
+    ],
+    "banner": "сухо",
+    "bannerAt": 0.72,
+    "bannerEnd": 1,
+    "bannerY": 250,
+    "world": "kolodec",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[dramatically] Поэтому опытные копают в конце лета — когда вода ниже всего.",
+   "props": {
+    "cam": [
+     "well",
+     "wellDeep"
+    ],
+    "tod": "golden",
+    "level": -3.6,
+    "dry": 1,
+    "depth": [
+     -3.15,
+     -4.95,
+     0.15,
+     0.9
+    ],
+    "banner": "копают в августе",
+    "bannerAt": 0.45,
+    "bannerEnd": 1,
+    "bannerY": 250,
+    "sounds": [
+     {
+      "q": "shovel digging sand",
+      "at": 0.15,
+      "volume": 0.35,
+      "len": 2.5
+     }
+    ],
+    "world": "kolodec",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Докопал до неё в августе — значит, вода будет в колодце круглый год.",
+   "props": {
+    "cam": [
+     "wellDeep",
+     "cut"
+    ],
+    "tod": [
+     "golden",
+     "morning"
+    ],
+    "level": [
+     -3.6,
+     -1.2,
+     0.35,
+     1
+    ],
+    "dry": [
+     1,
+     0,
+     0.35,
+     1
+    ],
+    "depth": -4.95,
+    "tags": [
+     {
+      "s": "вода круглый год",
+      "t": [
+       1.8,
+       -2.6,
+       0.05
+      ],
+      "dx": -240,
+      "dy": -160,
+      "at": 0.65,
+      "end": 1
+     }
+    ],
+    "sounds": [
+     {
+      "q": "water filling",
+      "at": 0.35,
+      "volume": 0.25,
+      "len": 2
+     }
+    ],
+    "world": "kolodec",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[warmly] А для дома что надёжнее: колодец или скважина?",
+   "props": {
+    "cam": [
+     "cut",
+     "final"
+    ],
+    "tod": [
+     "morning",
+     "golden"
+    ],
+    "level": -1.2,
+    "dry": 0,
+    "depth": -4.95,
+    "banner": "колодец\nили скважина?",
+    "bannerAt": 0.35,
+    "bannerEnd": 1,
+    "bannerY": 230,
+    "world": "kolodec",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Подпишись.",
+   "props": {
+    "cam": [
+     "final",
+     "final"
+    ],
+    "tod": "golden",
+    "level": -1.2,
+    "dry": 0,
+    "depth": -4.95,
+    "world": "kolodec",
+    "cont": true
+   }
+  }
+ ]
+}

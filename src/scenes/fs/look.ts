@@ -11,7 +11,7 @@ export const PAL = {
   metal: '#98a3ae', glass: '#ffd27a', cloud: '#fdf8f0', pipe: '#5a8ff0', barrel: '#9a6440', jarA: '#e6a03c',
   jarB: '#c8483a', jarC: '#7fa84a', rope: '#d8c49a', hillFar: '#b9c9d8', hillMid: '#93b79a', white: '#fbf6ec',
   shutter: '#3a8f96', door: '#7a4a30', pebble: '#c3ced4', smoke: '#eeeae4', lamp: '#ffd98a', snow: '#f4f6fa', snowShade: '#dfe6f0',
-  ice: '#cfe8f5', casing: '#7c8496', asphalt: '#5d6170', gravel: '#9a968e', carBody: '#3f8fc4', glassDark: '#33415a', tyre: '#2e3038', birch: '#ece8e0', cold: '#4f8fe8', hot: '#f07a3c', warm: '#f2a65a', red: '#d84a3a', dark: '#3a3f4c',
+  ice: '#cfe8f5', casing: '#7c8496', asphalt: '#5d6170', gravel: '#9a968e', carBody: '#3f8fc4', glassDark: '#33415a', tyre: '#2e3038', birch: '#ece8e0', concreteCut: '#9c968c', bucket: '#7a8ea0', cold: '#4f8fe8', hot: '#f07a3c', warm: '#f2a65a', red: '#d84a3a', dark: '#3a3f4c',
 };
 
 // Время суток: солнце, небо, туман, лампы. Все значения плавно смешиваются.
