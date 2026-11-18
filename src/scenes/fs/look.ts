@@ -65,5 +65,5 @@ export const passes = () => [
   P.tonemap({aces: 0.35, exp: 1.0}),
   P.kuwahara({radius: 4, q: 8, half: true}),
   P.watercolor({border: 0, paper: '#fbf5ea', wash: 0.03, bloomy: 0.05}),
-  P.finish({sat: 1.06, con: 1.06, sh: [0.0, 0.004, 0.03], hi: [0.03, 0.012, -0.015], canvas: 0.03, vig: 0.2, grain: 0.015}),
+  P.finish({sat: 1.06, con: 1.06, sh: [0.0, 0.004, 0.03], hi: [0.03, 0.012, -0.015], canvas: 0, vig: 0.18, grain: 0.008}),
 ];

@@ -146,11 +146,11 @@ export const P = {
     void main(){ vec2 fc = vUv*uRes/uS;
       vec2 uvb = vUv + (vec2(fbm(fc/55.), fbm(fc/55.+5.))-.5)*7.*uS/uRes;
       vec3 c = texture2D(tDiffuse, uvb).rgb; c = sat(c, 1.18); c = mix(c, vec3(1.), uWash);
-      float pig = fbm(fc/160.+2.); c = mix(c, c*c*1.08, 0.5*pig);
+      float pig = fbm(fc/160.+2.); c = mix(c, c*c*1.08, 0.1*pig); // пятна пигмента — едва заметно (Денис 18.11: «потёртость»)
       float bloomy = fbm(fc/75.+11.); c = mix(c, vec3(1.), uBl*smoothstep(.55,.8,bloomy));
       float e = edgeAt(uvb, 2.2*uS, 0.012, 0.6);
       c *= 1. - 0.2*e;
-      float gran = paperTex(fc); c *= 0.9 + 0.16*gran;
+      float gran = paperTex(fc); c *= 0.975 + 0.04*gran; // зерно бумаги — мягко
       vec2 q = min(vUv, 1.-vUv); float d = min(q.x, q.y*uRes.y/uRes.x) + (fbm(fc/80.+1.)-.5)*0.075 + (fbm(fc/14.)-.5)*0.012;
       float m = mix(1., smoothstep(0.03, 0.062, d), uBorder);
       float rim = smoothstep(0.03,0.062,d)*(1.-smoothstep(0.062,0.11,d))*uBorder; c *= 1.-0.12*rim;

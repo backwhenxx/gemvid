@@ -28,7 +28,7 @@ const ease = (x: number) => x * x * (3 - 2 * x);
 // число или [от, до] или [от, до, p0, p1] — меняется на участке сцены p0..p1
 const range = (v: any, p: number, d = 0) => (Array.isArray(v) ? v[0] + (v[1] - v[0]) * ease(clamp01(v.length > 2 ? (p - v[2]) / Math.max(1e-6, v[3] - v[2]) : p)) : v ?? d);
 // всё числовое в props (кроме служебного) уходит в мир как параметр кадра
-const RESERVED = new Set(['camDur', 'bannerAt', 'bannerEnd', 'bannerY', 'bannerSize']);
+const RESERVED = new Set(['camDur', 'bannerAt', 'bannerEnd', 'bannerY', 'bannerSize', 'rank', 'rankAt', 'rankY', 'rankSize']);
 const isNum = (v: any) => typeof v === 'number' || (Array.isArray(v) && v.length > 0 && v.every((x) => typeof x === 'number'));
 
 const poseOf = (W: any, P: any, p: number) => {
@@ -117,20 +117,26 @@ const Tags: React.FC<{P: any; life: number}> = ({P, life}) => {
       {P.tags.map((tg: any, i: number) => {
         const op = clamp01((frame - (tg.at ?? 0) * life) / 8) * (1 - clamp01((frame - (tg.end ?? 1) * life + 8) / 8));
         if (op <= 0) return null;
-        const [ax, ay] = pr(tg.t);
-        const lx = Math.min(SW - 60, Math.max(60, ax + (tg.dx ?? 0)));
-        const ly = ay + (tg.dy ?? 0);
+        // точка-якорь всегда в кадре (слои тянутся вбок — сдвиг по x остаётся на том же слое);
+        // ярлык целиком внутри кадра и не на строке субтитров (y≈1120)
+        const [ax0, ay0] = pr(tg.t);
+        const ax = Math.min(SW - 110, Math.max(110, ax0));
+        const ay = Math.min(SH - 260, Math.max(220, ay0));
         const line = tg.dx !== undefined || tg.dy !== undefined;
-        const fs = tg.size ?? 40;
-        const w = tg.s.length * fs * 0.48 + 40;
-        const bx = Math.min(SW - 24 - w, Math.max(24, lx - w / 2));
+        const fs = tg.size ?? 46;
+        const w = Math.min(SW - 120, tg.s.length * fs * 0.56 + 48);
+        const h = fs * 1.5;
+        const bx = Math.min(SW - 60 - w, Math.max(60, ax + (tg.dx ?? 0) - w / 2));
+        let ly = Math.min(SH - 300, Math.max(240, ay + (tg.dy ?? 0)));
+        if (ly > 1020 && ly < 1230) ly = ly < 1125 ? 1020 : 1230;
+        const lx = Math.min(bx + w - 20, Math.max(bx + 20, ax + (tg.dx ?? 0)));
         return (
           <g key={i} opacity={op}>
             {line ? <path d={`M${ax} ${ay} Q${(ax + lx) / 2 + 24} ${(ay + ly) / 2 - 10} ${lx} ${ly}`} stroke="#3b2a1c" strokeWidth={3} fill="none" /> : null}
             {line ? <circle cx={ax} cy={ay} r={7} fill="#3b2a1c" /> : null}
-            <rect x={bx + 4} y={ly - fs * 0.78 + 5} width={w} height={fs * 1.5} fill="rgba(59,42,28,0.35)" />
-            <rect x={bx} y={ly - fs * 0.78} width={w} height={fs * 1.5} fill="#f6ecd2" stroke="#3b2a1c" strokeWidth={2.5} />
-            <text x={bx + w / 2} y={ly + fs * 0.22} textAnchor="middle" fontFamily={SERIF} fontStyle="italic" fontSize={fs} fill="#3b2a1c">{tg.s}</text>
+            <rect x={bx + 4} y={ly - fs * 0.78 + 5} width={w} height={h} fill="rgba(59,42,28,0.35)" />
+            <rect x={bx} y={ly - fs * 0.78} width={w} height={h} fill="#f6ecd2" stroke="#3b2a1c" strokeWidth={2.5} />
+            <text x={bx + w / 2} y={ly + fs * 0.22} textAnchor="middle" fontFamily={SERIF} fontStyle="italic" fontSize={fs} fill="#3b2a1c" textLength={w - 40} lengthAdjust="spacingAndGlyphs">{tg.s}</text>
           </g>
         );
       })}
@@ -150,6 +156,19 @@ export const FsScene: React.FC<SceneProps> = ({scene, durationInFrames, life: li
         <World P={P} life={life} t0={scene.start ?? 0} />
       </ThreeCanvas>
       <Tags P={P} life={life} />
+      {P.rank !== undefined ? (
+        // топ: номер места и название пункта (бумажный ярлык в стиле подписей)
+        <div style={{position: 'absolute', left: 48, right: 48, top: P.rankY ?? 170, display: 'flex', alignItems: 'center', gap: 22, opacity: clamp01((frame - (P.rankAt ?? 0) * life) / 8), transform: `translateY(${(1 - clamp01((frame - (P.rankAt ?? 0) * life) / 10)) * -30}px)`}}>
+          <div style={{flex: '0 0 auto', width: 168, height: 168, borderRadius: 84, background: '#f6ecd2', border: '5px solid #3b2a1c', boxShadow: '6px 7px 0 rgba(59,42,28,0.35)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: ROUND, fontWeight: 700, fontSize: 104, color: '#c8483a', lineHeight: 1}}>
+            {P.rank}
+          </div>
+          {P.rankTitle ? (
+            <div style={{background: '#f6ecd2', border: '4px solid #3b2a1c', boxShadow: '6px 7px 0 rgba(59,42,28,0.35)', padding: '10px 22px', fontFamily: SERIF, fontStyle: 'italic', fontSize: P.rankSize ?? 52, lineHeight: 1.1, color: '#3b2a1c', maxWidth: 760}}>
+              {P.rankTitle}
+            </div>
+          ) : null}
+        </div>
+      ) : null}
       {P.banner ? (
         <div style={{position: 'absolute', left: 50, right: 50, top: P.bannerY ?? 300, display: 'flex', justifyContent: 'center', opacity: bIn * bOut, transform: `scale(${0.85 + 0.15 * bIn})`}}>
           <div style={{textAlign: 'center', fontFamily: ROUND, fontWeight: 700, fontSize: P.bannerSize ?? 62, lineHeight: 1.15, whiteSpace: 'pre-line', color: '#FFD54A', WebkitTextStroke: '8px #2a1f00', paintOrder: 'stroke fill', textTransform: 'uppercase', padding: '14px 30px', borderRadius: 28, background: 'rgba(10,22,34,0.55)'}}>
