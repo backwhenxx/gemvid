@@ -1,0 +1,458 @@
+{
+ "title": "Почему пруд на песке уходит за ночь",
+ "music": false,
+ "whisper": "medium",
+ "captionStyle": "word",
+ "autoOutro": false,
+ "stillPairs": true,
+ "tail": 3.0,
+ "ambience": [
+  {
+   "q": "summer evening crickets",
+   "from": 0,
+   "to": 10,
+   "volume": 0.04
+  }
+ ],
+ "cover": {
+  "lines": [
+   "Пруд ушёл",
+   "*за ночь*"
+  ],
+  "sub": "куда делась вода",
+  "fs": {
+   "world": "prud",
+   "cam": [
+    "cover",
+    "cover"
+   ],
+   "tod": "golden",
+   "level": -0.6,
+   "seep": 1,
+   "wet": 0.8
+  }
+ },
+ "scenes": [
+  {
+   "type": "fs",
+   "say": "[confidently] Вечером пруд налили до краёв. А утром — пустая яма.",
+   "props": {
+    "cont": false,
+    "cam": [
+     "hook",
+     "hook2"
+    ],
+    "tod": [
+     "golden",
+     "dusk",
+     "night",
+     "morning"
+    ],
+    "level": {
+     "k": [
+      -0.7,
+      -0.1,
+      -0.1,
+      -1.45
+     ],
+     "at": [
+      0,
+      0.3,
+      0.45,
+      0.95
+     ]
+    },
+    "hose": {
+     "k": [
+      1,
+      1,
+      0
+     ],
+     "at": [
+      0,
+      0.3,
+      0.33
+     ]
+    },
+    "seep": [
+     0,
+     1,
+     0.45,
+     0.6
+    ],
+    "wet": [
+     0,
+     1,
+     0.45,
+     0.95
+    ],
+    "lilies": 0,
+    "tags": [
+     {
+      "s": "вечер",
+      "t": "pond",
+      "dx": -200,
+      "dy": -260,
+      "at": 0.02,
+      "end": 0.4,
+      "size": 46
+     },
+     {
+      "s": "утро",
+      "t": "pond",
+      "dx": -200,
+      "dy": -260,
+      "at": 0.75,
+      "end": 1,
+      "size": 46
+     }
+    ],
+    "banner": "пусто",
+    "bannerAt": 0.82,
+    "bannerEnd": 1,
+    "bannerY": 250,
+    "sounds": [
+     {
+      "q": "garden hose water",
+      "at": 0.0,
+      "volume": 0.3,
+      "len": 2.5
+     }
+    ],
+    "world": "prud"
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Вода никуда не утекла... она ушла вниз.",
+   "props": {
+    "cam": [
+     "hook2",
+     "cut"
+    ],
+    "tod": "morning",
+    "level": -1.45,
+    "wet": 1,
+    "seep": [
+     1,
+     0.4
+    ],
+    "tags": [
+     {
+      "s": "вода ушла в песок",
+      "t": "wet",
+      "dx": -220,
+      "dy": 140,
+      "at": 0.4,
+      "end": 1
+     }
+    ],
+    "world": "prud",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[curious] Под газоном здесь песок. Между песчинками щели — и вода проваливается в них, как в сито.",
+   "props": {
+    "cam": [
+     "cut",
+     "sand"
+    ],
+    "tod": [
+     "morning",
+     "dusk"
+    ],
+    "level": [
+     -1.45,
+     -0.1,
+     0,
+     0.3
+    ],
+    "wet": [
+     1,
+     0.3,
+     0,
+     0.3
+    ],
+    "seep": [
+     0.4,
+     1,
+     0.2,
+     0.5
+    ],
+    "tags": [
+     {
+      "s": "песок",
+      "t": "sand",
+      "dx": 150,
+      "dy": -120,
+      "at": 0.15,
+      "end": 1,
+      "size": 46
+     }
+    ],
+    "sounds": [
+     {
+      "q": "water trickle",
+      "at": 0.3,
+      "volume": 0.25,
+      "len": 2.5
+     }
+    ],
+    "world": "prud",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "За ночь — на полметра. Прямо к грунтовой воде.",
+   "props": {
+    "cam": [
+     "sand",
+     "cut"
+    ],
+    "tod": [
+     "dusk",
+     "night"
+    ],
+    "level": [
+     -0.1,
+     -0.6
+    ],
+    "wet": [
+     0.3,
+     1
+    ],
+    "seep": 1,
+    "banner": "−0,5 м за ночь",
+    "bannerAt": 0.1,
+    "bannerEnd": 1,
+    "bannerY": 250,
+    "tags": [
+     {
+      "s": "грунтовая вода",
+      "t": "table",
+      "dx": 150,
+      "dy": 120,
+      "at": 0.5,
+      "end": 1
+     }
+    ],
+    "world": "prud",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Чтобы пруд держал воду, дно мажут глиной.",
+   "props": {
+    "cam": [
+     "cut",
+     "clay"
+    ],
+    "tod": [
+     "night",
+     "day"
+    ],
+    "level": [
+     -0.6,
+     -1.45,
+     0,
+     0.35
+    ],
+    "wet": 1,
+    "seep": [
+     1,
+     0,
+     0,
+     0.3
+    ],
+    "clay": [
+     0,
+     1,
+     0.35,
+     1
+    ],
+    "tags": [
+     {
+      "s": "глина",
+      "t": "lining",
+      "dx": 180,
+      "dy": -160,
+      "at": 0.6,
+      "end": 1,
+      "size": 46
+     }
+    ],
+    "sounds": [
+     {
+      "q": "shovel digging soil",
+      "at": 0.35,
+      "volume": 0.35,
+      "len": 2
+     }
+    ],
+    "world": "prud",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Её частички в тысячу раз мельче песчинок и слипаются в плотный слой.",
+   "props": {
+    "cam": [
+     "clay",
+     "close"
+    ],
+    "tod": "day",
+    "level": -1.45,
+    "wet": [
+     1,
+     0.4
+    ],
+    "clay": 1,
+    "pack": [
+     0,
+     1,
+     0.4,
+     0.9
+    ],
+    "banner": "в 1000 раз\nмельче песка",
+    "bannerAt": 0.1,
+    "bannerEnd": 1,
+    "bannerY": 230,
+    "world": "prud",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Слой мятой глины в две ладони толщиной — и вода больше не уходит. Этот приём называют глиняным замком.",
+   "props": {
+    "cam": [
+     "close",
+     "hook"
+    ],
+    "tod": [
+     "day",
+     "golden"
+    ],
+    "level": [
+     -1.45,
+     -0.1,
+     0.1,
+     0.65
+    ],
+    "hose": {
+     "k": [
+      0,
+      1,
+      1,
+      0
+     ],
+     "at": [
+      0.08,
+      0.12,
+      0.6,
+      0.65
+     ]
+    },
+    "wet": [
+     0.4,
+     0
+    ],
+    "clay": 1,
+    "pack": 1,
+    "lilies": [
+     0,
+     1,
+     0.7,
+     1
+    ],
+    "tags": [
+     {
+      "s": "20 см глины",
+      "t": "lining",
+      "dx": 200,
+      "dy": -150,
+      "at": 0.05,
+      "end": 0.55
+     }
+    ],
+    "banner": "глиняный замок",
+    "bannerAt": 0.68,
+    "bannerEnd": 1,
+    "bannerY": 250,
+    "sounds": [
+     {
+      "q": "garden hose water",
+      "at": 0.12,
+      "volume": 0.3,
+      "len": 2.5
+     }
+    ],
+    "world": "prud",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[dramatically] Так строили пруды и плотины сотни лет — без плёнки и бетона.",
+   "props": {
+    "cam": [
+     "hook",
+     "wide"
+    ],
+    "tod": "golden",
+    "level": -0.1,
+    "clay": 1,
+    "pack": 1,
+    "lilies": 1,
+    "world": "prud",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[warmly] А вы бы делали пруд по-старому, на глине, или стелили плёнку?",
+   "props": {
+    "cam": [
+     "wide",
+     "final"
+    ],
+    "tod": [
+     "golden",
+     "dusk"
+    ],
+    "level": -0.1,
+    "clay": 1,
+    "pack": 1,
+    "lilies": 1,
+    "banner": "глина\nили плёнка?",
+    "bannerAt": 0.3,
+    "bannerEnd": 1,
+    "bannerY": 230,
+    "world": "prud",
+    "cont": true
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Подпишись.",
+   "props": {
+    "cam": [
+     "final",
+     "final"
+    ],
+    "tod": "dusk",
+    "level": -0.1,
+    "clay": 1,
+    "pack": 1,
+    "lilies": 1,
+    "world": "prud",
+    "cont": true
+   }
+  }
+ ]
+}

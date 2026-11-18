@@ -15,10 +15,11 @@ import {makeRig, passes as makePasses} from './look';
 import * as teplo from './worlds/teplo';
 import * as yama from './worlds/yama';
 import * as kolodec from './worlds/kolodec';
+import * as prud from './worlds/prud';
 
 const {fontFamily: ROUND} = loadFont('normal', {weights: ['700'], subsets: ['cyrillic', 'latin']});
 const {fontFamily: SERIF} = loadSerif('italic', {weights: ['400'], subsets: ['cyrillic', 'latin']});
-const WORLDS: Record<string, any> = {teplo, yama, kolodec};
+const WORLDS: Record<string, any> = {teplo, yama, kolodec, prud};
 const SW = 1080;
 const SH = 1920;
 const SS = 2;
@@ -75,6 +76,17 @@ const World: React.FC<{P: any; life: number; t0: number}> = ({P, life, t0}) => {
     }
     const q: any = {t: t0 + frame / fps};
     for (const k of Object.keys(P)) if (!RESERVED.has(k) && !k.endsWith('Dur') && isNum(P[k])) q[k] = range(P[k], clamp01(p / (P[k + 'Dur'] ?? 1)));
+    // ключевые точки: {k: [значения], at: [доли сцены]} — плавно по участкам
+    for (const k of Object.keys(P)) {
+      const v = P[k];
+      if (v && typeof v === 'object' && !Array.isArray(v) && Array.isArray(v.k)) {
+        const at: number[] = v.at ?? v.k.map((_: number, i: number) => i / (v.k.length - 1));
+        let i = 0;
+        while (i < v.k.length - 2 && p > at[i + 1]) i++;
+        const f = ease(clamp01((p - at[i]) / Math.max(1e-6, at[i + 1] - at[i])));
+        q[k] = p <= at[0] ? v.k[0] : p >= at[at.length - 1] ? v.k[v.k.length - 1] : v.k[i] + (v.k[i + 1] - v.k[i]) * f;
+      }
+    }
     S.w.animate(q);
     S.pipe.render(S.scene, cam, S.sky, S.passes, q.t, true);
   }, 1);
