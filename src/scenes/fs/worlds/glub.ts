@@ -34,12 +34,12 @@ export const T = {
 };
 export const CAMS = {
   hook: {pos: [12.6, -30.8, 8.5], look: [10.6, -32.6, 0], fov: 40},
-  over: {pos: [2.0, 2.4, 34], look: [1.5, -5.0, 0], fov: 40},
-  metro: {pos: [-5.8, -2.0, 10.5], look: [-7.5, -3.4, 0], fov: 40},
-  cave: {pos: [-1.0, -9.0, 13], look: [-2.6, -10.8, 0], fov: 40},
-  mine: {pos: [3.8, -15.5, 12], look: [2.6, -17.6, 0], fov: 40},
-  sdt: {pos: [7.8, -25.5, 11], look: [6.4, -27.4, 0], fov: 40},
-  kola: {pos: [12.0, -30.6, 10], look: [10.6, -32.4, 0], fov: 40},
+  over: {pos: [2.0, 3.0, 26], look: [1.5, -1.5, -3], fov: 40},
+  metro: {pos: [-5.6, -1.2, 14], look: [-7.0, -2.6, 0], fov: 40},
+  cave: {pos: [-1.4, -5.2, 24], look: [-2.6, -6.2, 0], fov: 40},
+  mine: {pos: [3.6, -9.0, 30], look: [2.8, -9.6, 0], fov: 40},
+  sdt: {pos: [7.4, -14.0, 42], look: [6.4, -14.6, 0], fov: 40},
+  kola: {pos: [11.4, -16.6, 46], look: [10.6, -17.2, 0], fov: 40},
   wide: {pos: [4.0, -12, 58], look: [2.0, -15, 0], fov: 40},
   cover: {pos: [5.0, -10, 46], look: [2.0, -14, 0], fov: 40},
 };
@@ -55,9 +55,9 @@ export function build(scene, sky) {
 
   // камни по слоям; глубже — темнее и горячее
   {
-    const r = rnd(17), near = (x, y) => [P5, P4, P3, P2, P1].some((p) => Math.abs(x - p.x) < 1.6 && y > p.y - 1.5);
-    for (let i = 0, n = 0; i < 3000 && n < 140; i++) {
-      const x = lerp(-20, 22, r()), y = lerp(-40, -1.6, r()), rr = 0.2 + r() * 0.45 * (1 + -y / 40);
+    const r = rnd(17), near = (x, y) => [P5, P4, P3, P2, P1].some((p) => Math.abs(x - p.x) < 2.8 && y > p.y - 3.5) || (Math.abs(x - P3.x - 1.6) < 2.6 && Math.abs(y - P3.y) < 2.2) || (Math.abs(x - P5.x - 0.5) < 3.2 && Math.abs(y - P5.y) < 2.4);
+    for (let i = 0, n = 0; i < 3000 && n < 90; i++) {
+      const x = lerp(-20, 22, r()), y = lerp(-40, -1.6, r()), rr = 0.35 + r() * 0.4 * (1 + -y / 40);
       if (near(x, y)) continue;
       const role = y > -9.5 ? 'stone' : y > -23 ? 'granite' : y > -31 ? 'basalt' : 'deep';
       add(blob(rr, n * 2.3 + 1, 0.28, 1.3, 1.4, 0.75, 0.45), role, x, y, 0.02, {cast: false, rot: [0, 0, r() * 3]}); n++;
@@ -119,7 +119,7 @@ export function build(scene, sky) {
   shaft('s2', P2.x, P2.y, 0.22); shaft('s1', P1.x, P1.y, 0.24);
   const bit2 = cyl(0.17, 0.05, 0.4, 'metal', P2.x, 0, 0.09, {seg: 8, cast: false, mat: {emissive: 1, ei: 0.2}});
   const bit1 = cyl(0.18, 0.05, 0.42, 'metal', P1.x, 0, 0.09, {seg: 8, cast: false, mat: {emissive: 1, ei: 0.2}});
-  const glow = new THREE.Mesh(new THREE.CircleGeometry(1.2, 24), new THREE.MeshBasicMaterial({color: '#ff9a4a', transparent: true, opacity: 0, depthWrite: false})); glow.position.set(P1.x, P1.y, 0.05); glow.renderOrder = 6; scene.add(glow);
+  const glow = new THREE.Mesh(new THREE.CircleGeometry(2.2, 28), new THREE.MeshBasicMaterial({color: '#ff9a4a', transparent: true, opacity: 0, depthWrite: false})); glow.position.set(P1.x, P1.y, 0.05); glow.renderOrder = 6; scene.add(glow);
 
   // поверхность: деревья, ели, домики, облака
   for (const [x, z, s] of [[-12, -4, 1.4], [-15, -7, 1.6], [13.5, -5, 1.4], [16, -8, 1.7], [-4, -9, 1.5], [8.5, -10, 1.6], [0, -13, 1.7], [-19, -14, 1.9], [20, -15, 1.8]]) fir(x, S(x, z) - 0.05, z, s, false);
@@ -132,10 +132,10 @@ export function build(scene, sky) {
     const t = q.t;
     clouds.forEach((g, i) => { g.userData.x0 ??= g.position.x; g.position.x = g.userData.x0 + t * (0.2 + 0.05 * i); });
     smokes.forEach((f) => f(t, 0.6));
-    shafts.s5(q.s5 ?? 0); const sv5 = (q.s5 ?? 0) > 0.98; st.visible = sv5; train.visible = sv5;
-    train.position.x = P5.x - 1.6 + ((t * 0.9) % 6.0) - 1.2; train.visible = sv5 && train.position.x > P5.x - 1.6 && train.position.x < P5.x + 1.2;
-    const c4 = q.s4 ?? 0; caveMesh.m.geometry.setDrawRange(0, Math.floor(caveMesh.n * c4 / 6) * 6); caveMesh.m.visible = c4 > 0.005; pool.visible = c4 > 0.98; caveG.children.forEach((m, i) => { if (i > 1) m.visible = c4 > 0.98; });
-    const y3 = shafts.s3(q.s3 ?? 0), s3d = (q.s3 ?? 0) > 0.98; drift.visible = s3d; cage.position.y = s3d ? lerp(P3.y + 0.4, -1, 0.5 + 0.5 * Math.cos(t * 0.5)) : y3 + 0.35; cage.visible = (q.s3 ?? 0) > 0.02;
+    shafts.s5(q.s5 ?? 0); const g5 = sm(((q.s5 ?? 0) - 0.7) / 0.3), sv5 = g5 > 0.01; st.visible = sv5; st.scale.set(Math.max(0.001, g5), 1, 1); st.position.x = (P5.x - 1.6) * (1 - g5);
+    train.position.x = P5.x - 1.6 + ((t * 0.9) % 6.0) - 1.2; train.visible = g5 > 0.99 && train.position.x > P5.x - 1.6 && train.position.x < P5.x + 1.2;
+    const c4 = q.s4 ?? 0; caveMesh.m.geometry.setDrawRange(0, Math.floor(caveMesh.n * c4 / 6) * 6); caveMesh.m.visible = c4 > 0.005; const g4 = sm((c4 - 0.85) / 0.15); pool.visible = g4 > 0.01; pool.scale.set(1.2 * Math.max(0.001, g4), 0.55 * Math.max(0.001, g4), 1); caveG.children.forEach((m, i) => { if (i > 1) { m.visible = g4 > 0.01; m.scale.setScalar(Math.max(0.001, g4)); } });
+    const y3 = shafts.s3(q.s3 ?? 0), g3 = sm(((q.s3 ?? 0) - 0.75) / 0.25), s3d = g3 > 0.99; drift.visible = g3 > 0.01; drift.scale.x = Math.max(0.001, g3); drift.position.x = P3.x + 1.6 * g3; cage.position.y = s3d ? lerp(P3.y + 0.4, -1, 0.5 + 0.5 * Math.cos(t * 0.5)) : y3 + 0.35; cage.visible = (q.s3 ?? 0) > 0.02;
     carts.forEach((g, i) => { g.visible = s3d; g.position.set(P3.x + 0.6 + ((t * 0.35 + i * 1.4) % 2.8), P3.y + 0.08, 0.09); });
     const y2 = shafts.s2(q.s2 ?? 0); bit2.position.y = y2 + 0.2; bit2.rotation.y = t * 6; bit2.visible = (q.s2 ?? 0) > 0.01;
     const y1 = shafts.s1(q.s1 ?? 0); bit1.position.y = y1 + 0.21; bit1.rotation.y = t * 6; bit1.visible = (q.s1 ?? 0) > 0.01;
