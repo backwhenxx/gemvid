@@ -1,0 +1,47 @@
+[
+ {
+  "file": "snd/sfx_6d4e2b0113.wav",
+  "q": "drilling machine",
+  "title": "Futuristic Drill Machine",
+  "creator": "IENBA",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/IENBA/sounds/611356"
+ },
+ {
+  "file": "snd/sfx_4af0b76ba5.wav",
+  "q": "subway train arriving",
+  "title": "Subway train arriving ambiance.wav",
+  "creator": "itinerantmonk108",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/itinerantmonk108/sounds/612661"
+ },
+ {
+  "file": "snd/sfx_fcdb55320c.wav",
+  "q": "water drip cave",
+  "title": "cave 02",
+  "creator": "rucisko",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/rucisko/sounds/343741"
+ },
+ {
+  "file": "snd/sfx_b392a07d45.wav",
+  "q": "mine cart rails",
+  "title": "minecart.wav",
+  "creator": "wmquincy101",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/wmquincy101/sounds/351382"
+ },
+ {
+  "file": "snd/sfx_418a74d49a.wav",
+  "q": "deep rumble",
+  "title": "Train Passing By 15 Pitch Change Deep Rumble with Horn.mp3",
+  "creator": "FunWithSound",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/FunWithSound/sounds/591883"
+ }
+]
