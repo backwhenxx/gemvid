@@ -16,10 +16,11 @@ import * as teplo from './worlds/teplo';
 import * as yama from './worlds/yama';
 import * as kolodec from './worlds/kolodec';
 import * as prud from './worlds/prud';
+import * as glub from './worlds/glub';
 
 const {fontFamily: ROUND} = loadFont('normal', {weights: ['700'], subsets: ['cyrillic', 'latin']});
 const {fontFamily: SERIF} = loadSerif('italic', {weights: ['400'], subsets: ['cyrillic', 'latin']});
-const WORLDS: Record<string, any> = {teplo, yama, kolodec, prud};
+const WORLDS: Record<string, any> = {teplo, yama, kolodec, prud, glub};
 const SW = 1080;
 const SH = 1920;
 const SS = 2;
