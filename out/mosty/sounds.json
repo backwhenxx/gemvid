@@ -1,0 +1,38 @@
+[
+ {
+  "file": "snd/amb_eb9aa82c62.wav",
+  "q": "mountain wind",
+  "title": "mountain wind heavy strong gusts Swiss Alps.flac",
+  "creator": "kyles",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/kyles/sounds/454092"
+ },
+ {
+  "file": "snd/sfx_66f9bd8e52.wav",
+  "q": "river flowing",
+  "title": "River flow in Okutama.MP3",
+  "creator": "macdaddyno1",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/macdaddyno1/sounds/349388"
+ },
+ {
+  "file": "snd/sfx_5f59fdb49c.wav",
+  "q": "metal clank",
+  "title": "machete on wood cabinet metal clank clunk.wav",
+  "creator": "rsellick",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/rsellick/sounds/545548"
+ },
+ {
+  "file": "snd/sfx_e1c6548b49.wav",
+  "q": "car passing",
+  "title": "Car passing by.wav",
+  "creator": "hinzebeat",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/hinzebeat/sounds/171447"
+ }
+]
