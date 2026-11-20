@@ -36,7 +36,7 @@ export const CAMS = {
   b5: cam(-34), b4: cam(-17), b3: cam(0), b2: cam(17), b1: cam(34),
   top1: {pos: [44, 7, 20], look: [33, -2, ZB], fov: 40},
   wide: {pos: [26, -3, 72], look: [22, -8, ZB], fov: 40},
-  cover: {pos: [30, -4, 78], look: [26, -8, ZB], fov: 40},
+  cover: {pos: [40, -6, 62], look: [34, -9.5, ZB], fov: 40},
 };
 
 export function build(scene, sky) {
