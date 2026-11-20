@@ -10,14 +10,14 @@ const B = [(x) => S(x, 0), (x) => S(x, 0) - 0.3, (x) => S(x, 0) - 1.4 - 0.1 * Ma
 const LAYERS = ['grass', 'soil', 'clay', 'rock', 'deep'];
 const Z = -7;
 export const FALLS = [
-  {key: 'w5', x: -24, h: 896 * K},
-  {key: 'w4', x: -12, h: 900 * K, sea: true},
-  {key: 'w3', x: 0, h: 914 * K, tiers: 3},
-  {key: 'w2', x: 12, h: 948 * K, ice: true},
-  {key: 'w1', x: 24, h: 979 * K, mist: true},
+  {key: 'w5', x: -24, h: 896 * K, rock: 'cliff5'},
+  {key: 'w4', x: -12, h: 900 * K, sea: true, rock: 'cliff4'},
+  {key: 'w3', x: 0, h: 914 * K, tiers: 3, rock: 'cliff3'},
+  {key: 'w2', x: 12, h: 948 * K, ice: true, rock: 'cliff2'},
+  {key: 'w1', x: 24, h: 979 * K, mist: true, rock: 'cliff1'},
 ];
 const lip = (f) => [f.x, f.h + 0.2, Z + 3.1];
-export const T = {w5: lip(FALLS[0]), w4: lip(FALLS[1]), w3: lip(FALLS[2]), w2: lip(FALLS[3]), w1: lip(FALLS[4]), mist: [24, 2.5, Z + 3.4], niagara: [31, 1.4, Z + 4.5], sea: [-12, 0.2, Z + 5]};
+export const T = {w5: lip(FALLS[0]), w4: lip(FALLS[1]), w3: lip(FALLS[2]), w2: lip(FALLS[3]), w1: lip(FALLS[4]), mist: [24, 2.5, Z + 3.4], niagara: [32.5, 1.4, Z + 4.5], sea: [-12, 0.2, Z + 5]};
 const cam = (x, y, d) => ({pos: [x + 5, y + 1.5, d], look: [x, y, Z], fov: 40});
 export const CAMS = {
   hook: {pos: [29, 6, 30], look: [24, 7.5, Z], fov: 40},
@@ -25,11 +25,11 @@ export const CAMS = {
   w5: cam(-24, 9.6, 36), w4: cam(-12, 9.6, 36), w3: cam(0, 9.8, 36), w2: cam(12, 10, 36), w1: cam(24, 10.2, 38),
   niag: {pos: [33, 7, 34], look: [26, 6.5, Z], fov: 40},
   wide: {pos: [8, 5, 60], look: [4, 13.5, Z], fov: 40},
-  cover: {pos: [27, 9, 46], look: [18, 10, Z], fov: 40},
+  cover: {pos: [18, 8, 80], look: [10, 12, Z], fov: 40},
 };
 
 export function build(scene, sky) {
-  const Kt = makeKit(scene, {grass: '#7fbf5a', soil: '#7d5a44', clay: '#c98a5c', rock: '#8a8fa6', leaf: '#4f9c4e', leaf2: '#86c25c', cliff: '#b07f62'});
+  const Kt = makeKit(scene, {grass: '#7fbf5a', soil: '#7d5a44', clay: '#c98a5c', rock: '#8a8fa6', leaf: '#4f9c4e', leaf2: '#86c25c', cliff: '#b07f62', cliff5: '#a8866a', cliff4: '#7f8a66', cliff3: '#b39478', cliff2: '#8d8a94', cliff1: '#a8674a'});
   const {add, box, cyl, blob, tree, fir, cloud, smoke} = Kt;
   cutFace(Kt, LAYERS, (k, x) => B[k](x), -60, 60, []);
   ground(Kt, S, 'grass', -60, 60, -40, 1.2);
@@ -45,7 +45,8 @@ export function build(scene, sky) {
     const g = new THREE.ExtrudeGeometry(sh, {depth: f.h, bevelEnabled: false, steps: 6});
     const p = g.attributes.position; for (let i = 0; i < p.count; i++) { const z = p.getZ(i), u = z / f.h, lv = Math.round(u * 6), k = (1.1 - 0.1 * u) * (lv % 2 ? 1.035 : 1); p.setX(i, p.getX(i) * k); p.setY(i, p.getY(i) * k); }
     g.computeVertexNormals();
-    add(g, 'cliff', f.x, -0.2, Z, {rot: [-Math.PI / 2, 0, 0]});
+    add(g, f.rock, f.x, -0.2, Z, {rot: [-Math.PI / 2, 0, 0]});
+    if (f.sea) for (let i = 0; i < 14; i++) { const a = (i / 14 - 0.5) * 2.6, yy = 1.5 + r() * (f.h - 3); if (Math.abs(Math.sin(a) * 4.6) < 1.4) continue; add(blob(0.55 + r() * 0.35, i + 70, 0.2, 1.5), i % 2 ? 'leaf' : 'leaf2', f.x + Math.sin(a) * 4.6, yy, Z + Math.cos(a) * 3.2, {}); }
     const top = new THREE.Mesh(new THREE.CylinderGeometry(4.0, 4.2, 0.25, 14), Kt.M('leaf')); top.scale.set(1, 1, 0.7); top.position.set(f.x, f.h - 0.05, Z); scene.add(top);
     for (let i = 0; i < 5; i++) add(blob(0.55 + r() * 0.3, i + f.x, 0.2, 1.5), i % 2 ? 'leaf2' : 'leaf', f.x + (r() - 0.5) * 6, f.h + 0.3, Z + (r() - 0.5) * 3.2, {});
     if (f.tiers) for (let k = 1; k < f.tiers; k++) { const y = f.h * (1 - k / f.tiers); add(blob(1.0, k + 40, 0.18, 1.3, 2.6, 0.55, 1.3), 'cliff', f.x, y, Z + 3.5, {}); add(blob(0.5, k + 45, 0.2, 1.5), 'leaf', f.x - 1.9, y + 0.45, Z + 3.4, {}); add(blob(0.4, k + 47, 0.2, 1.5), 'leaf2', f.x + 2.0, y + 0.4, Z + 3.3, {}); }
@@ -74,10 +75,10 @@ export function build(scene, sky) {
   { const sea = new THREE.Mesh(new THREE.PlaneGeometry(9, 4), Kt.M('water', {water: 1, opacity: 0.9, smooth: true})); sea.geometry.rotateX(-Math.PI / 2); sea.position.set(-12, 0.12, -2.6); sea.renderOrder = 5; scene.add(sea); }
   // лёд на макушке Тугелы
   const iceG = new THREE.Group(); scene.add(iceG);
-  { const f = FALLS[3]; add(new THREE.CylinderGeometry(1.3, 1.5, 0.3, 10), 'ice', f.x, f.h + 0.05, Z + 2.6, {parent: iceG, cast: false}); for (let i = 0; i < 9; i++) add(new THREE.ConeGeometry(0.1, 0.6 + hash3(i, 2, 3) * 0.5, 5), 'ice', f.x - 1.0 + i * 0.25, f.h - 0.35, Z + 3.45, {parent: iceG, rot: [Math.PI, 0, 0], cast: false}); }
+  { const f = FALLS[3]; add(new THREE.CylinderGeometry(2.2, 2.4, 0.35, 12), 'snow', f.x, f.h + 0.1, Z + 2.2, {parent: iceG, cast: false}); for (let i = 0; i < 14; i++) add(new THREE.ConeGeometry(0.16, 1.0 + hash3(i, 2, 3) * 1.2, 5), 'ice', f.x - 2.0 + i * 0.3, f.h - 0.55, Z + 3.5, {parent: iceG, rot: [Math.PI, 0, 0], cast: false}); }
   // Ниагара для сравнения: 57 м ≈ 1,1 ед.
   const niag = new THREE.Group(); scene.add(niag);
-  { const x = 31, zz = Z + 4.2; box(3.0, 1.15, 0.8, 'cliff', x, 0.55, zz - 0.4, {parent: niag, r: 0.05}); const m = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 1.1), new THREE.MeshBasicMaterial({color: '#cfeaf8', transparent: true, opacity: 0.9, depthWrite: false})); m.position.set(x, 0.55, zz + 0.05); m.renderOrder = 6; niag.add(m); }
+  { const x = 32.5, zz = Z + 4.2; box(5.4, 1.15, 0.8, 'cliff', x, 0.55, zz - 0.4, {parent: niag, r: 0.05}); const m = new THREE.Mesh(new THREE.PlaneGeometry(5.0, 1.1), new THREE.MeshBasicMaterial({color: '#cfeaf8', transparent: true, opacity: 0.9, depthWrite: false})); m.position.set(x, 0.55, zz + 0.05); m.renderOrder = 6; niag.add(m); }
 
   // джунгли у подножий
   { const r = rnd(9); for (let i = 0; i < 40; i++) { const x = lerp(-38, 38, r()), z = lerp(Z - 6, -1.5, r()); if (FALLS.some((f) => Math.abs(f.x - x) < 5.5 && z < Z + 4.5 && z > Z - 4)) continue; tree(x, S(x, z) - 0.05, z, 0.9 + r() * 0.6, 0.55 + r() * 0.3, i + 300); } }
