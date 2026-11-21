@@ -1,0 +1,371 @@
+{
+ "title": "Почему на крыше растут сосульки",
+ "music": false,
+ "whisper": "medium",
+ "captionStyle": "word",
+ "autoOutro": false,
+ "stillPairs": true,
+ "ambience": [
+  {
+   "q": "winter wind",
+   "from": 0,
+   "to": 55,
+   "volume": 0.04
+  }
+ ],
+ "cover": {
+  "lines": [
+   "Сосульки",
+   "*растит сам дом*"
+  ],
+  "sub": "а не мороз",
+  "fs": {
+   "world": "sosul",
+   "cam": [
+    "cover",
+    "cover"
+   ],
+   "tod": "golden",
+   "heat": 1,
+   "melt": 1,
+   "ice": 1,
+   "dam": 1,
+   "leak": 1
+  }
+ },
+ "scenes": [
+  {
+   "type": "fs",
+   "say": "[confidently] Сосульки на крыше растут не от мороза. Их выращивает сам дом.",
+   "props": {
+    "cam": [
+     "hook",
+     "hook2"
+    ],
+    "tod": "morning",
+    "ice": 0.6,
+    "world": "sosul",
+    "cont": false,
+    "tags": [
+     {
+      "s": "сосульки",
+      "t": "eave",
+      "dx": 220,
+      "dy": 240,
+      "at": 0.35,
+      "end": 1
+     }
+    ],
+    "sounds": [
+     {
+      "q": "water dripping",
+      "at": 0.1,
+      "volume": 0.2,
+      "len": 2.5
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Вот обычный дом зимой. Сверху снег, под крышей — чердак.",
+   "props": {
+    "cam": [
+     "hook2",
+     "house"
+    ],
+    "tod": "morning",
+    "ice": 0.6,
+    "world": "sosul",
+    "cont": true,
+    "camDur": 0.6,
+    "tags": [
+     {
+      "s": "снег",
+      "t": "roof",
+      "dx": -200,
+      "dy": -170,
+      "at": 0.45,
+      "end": 1
+     },
+     {
+      "s": "чердак",
+      "t": "attic",
+      "dx": 230,
+      "dy": -260,
+      "at": 0.65,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Из комнат вверх уходит тепло. Чердак греется, и кровля над ним становится теплее нуля.",
+   "props": {
+    "cam": [
+     "house",
+     "attic"
+    ],
+    "tod": [
+     "morning",
+     "day"
+    ],
+    "ice": 0.6,
+    "heat": [
+     0,
+     1,
+     0.15,
+     0.55
+    ],
+    "world": "sosul",
+    "cont": true,
+    "camDur": 0.6,
+    "tags": [
+     {
+      "s": "на улице −8 °C",
+      "t": "out",
+      "dx": 150,
+      "dy": -200,
+      "at": 0.45,
+      "end": 1
+     },
+     {
+      "s": "кровля +1 °C",
+      "t": "roof",
+      "dx": -150,
+      "dy": -220,
+      "at": 0.72,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Снег тает снизу — прямо в мороз. Вода бежит под снегом к краю крыши.",
+   "props": {
+    "cam": [
+     "attic",
+     "slope"
+    ],
+    "tod": "day",
+    "ice": 0.6,
+    "heat": 1,
+    "melt": [
+     0,
+     1,
+     0.1,
+     0.65
+    ],
+    "world": "sosul",
+    "cont": true,
+    "camDur": 0.6,
+    "tags": [
+     {
+      "s": "талая вода",
+      "t": "water",
+      "dx": 200,
+      "dy": 230,
+      "at": 0.5,
+      "end": 1
+     }
+    ],
+    "sounds": [
+     {
+      "q": "water trickle",
+      "at": 0.4,
+      "volume": 0.18,
+      "len": 2.5
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "А край висит над улицей. Там холодно — и вода замерзает. Капля за каплей вырастает сосулька.",
+   "props": {
+    "cam": [
+     "slope",
+     "eave"
+    ],
+    "tod": "day",
+    "heat": 1,
+    "melt": 1,
+    "ice": [
+     0.6,
+     1,
+     0.35,
+     0.95
+    ],
+    "world": "sosul",
+    "cont": true,
+    "camDur": 0.5,
+    "tags": [
+     {
+      "s": "свес: −8 °C",
+      "t": "eave",
+      "dx": 220,
+      "dy": -260,
+      "at": 0.4,
+      "end": 1
+     }
+    ],
+    "sounds": [
+     {
+      "q": "water drop",
+      "at": 0.6,
+      "volume": 0.2,
+      "len": 1.5
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[curious] Иногда у края намерзает ледяной вал. Вода за ним стоит и просачивается под кровлю — на потолке пятно.",
+   "props": {
+    "cam": [
+     "eave",
+     "stain"
+    ],
+    "tod": [
+     "day",
+     "golden"
+    ],
+    "heat": 1,
+    "melt": 1,
+    "ice": 1,
+    "dam": [
+     0,
+     1,
+     0.05,
+     0.4
+    ],
+    "leak": [
+     0,
+     1,
+     0.6,
+     0.9
+    ],
+    "world": "sosul",
+    "cont": true,
+    "camDur": 0.5,
+    "tags": [
+     {
+      "s": "ледяной вал",
+      "t": "dam",
+      "dx": -150,
+      "dy": -230,
+      "at": 0.3,
+      "end": 1
+     },
+     {
+      "s": "пятно",
+      "t": "stain",
+      "dx": 220,
+      "dy": -180,
+      "at": 0.82,
+      "end": 1
+     }
+    ],
+    "sounds": [
+     {
+      "q": "ice cracking",
+      "at": 0.15,
+      "volume": 0.2,
+      "len": 1.5
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "У соседа крыша холодная: толстый утеплитель на полу чердака и продухи. Снег лежит, сосулек нет.",
+   "props": {
+    "cam": [
+     "stain",
+     "neigh"
+    ],
+    "tod": "golden",
+    "heat": 1,
+    "melt": 1,
+    "ice": 1,
+    "dam": 1,
+    "leak": 1,
+    "world": "sosul",
+    "cont": true,
+    "camDur": 0.45,
+    "tags": [
+     {
+      "s": "утеплитель",
+      "t": "insul",
+      "dx": -150,
+      "dy": -250,
+      "at": 0.55,
+      "end": 1
+     },
+     {
+      "s": "продухи",
+      "t": "vent",
+      "dx": -100,
+      "dy": 230,
+      "at": 0.72,
+      "end": 1
+     },
+     {
+      "s": "снег лежит",
+      "t": "nsnow",
+      "dx": -120,
+      "dy": -200,
+      "at": 0.86,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[warmly] Выходит, сосульки — это дом, который греет улицу. А у вас на крыше они есть?",
+   "props": {
+    "cam": [
+     "neigh",
+     "both"
+    ],
+    "tod": [
+     "golden",
+     "dusk"
+    ],
+    "heat": 1,
+    "melt": 1,
+    "ice": 1,
+    "dam": 1,
+    "leak": 1,
+    "world": "sosul",
+    "cont": true,
+    "banner": "сосульки = утечка тепла",
+    "bannerAt": 0.1,
+    "bannerEnd": 1,
+    "bannerY": 230
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Подпишись.",
+   "props": {
+    "cam": [
+     "both",
+     "both"
+    ],
+    "tod": "dusk",
+    "heat": 1,
+    "melt": 1,
+    "ice": 1,
+    "dam": 1,
+    "leak": 1,
+    "world": "sosul",
+    "cont": true
+   }
+  }
+ ]
+}
