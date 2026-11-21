@@ -1,0 +1,47 @@
+[
+ {
+  "file": "snd/amb_050670ca0c.wav",
+  "q": "winter wind",
+  "title": "winter wind 01c.aiff",
+  "creator": "klangfabrik",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/klangfabrik/sounds/117513"
+ },
+ {
+  "file": "snd/sfx_219d91191b.wav",
+  "q": "water dripping",
+  "title": "Water Dripping on Water.aif",
+  "creator": "ftpalad",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/ftpalad/sounds/119938"
+ },
+ {
+  "file": "snd/sfx_d4b1bea91f.wav",
+  "q": "water trickle",
+  "title": "Water Trickling Ambience-old1.wav",
+  "creator": "Bird_man",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/Bird_man/sounds/316778"
+ },
+ {
+  "file": "snd/sfx_c23db48d6d.wav",
+  "q": "water drop",
+  "title": "Single Water Drop",
+  "creator": "paespedro",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/paespedro/sounds/174718"
+ },
+ {
+  "file": "snd/sfx_531255c82e.wav",
+  "q": "ice cracking",
+  "title": "Ice Crack 5.wav",
+  "creator": "ecfike",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/ecfike/sounds/177217"
+ }
+]
