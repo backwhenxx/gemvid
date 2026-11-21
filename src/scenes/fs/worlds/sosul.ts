@@ -86,9 +86,10 @@ export function build(scene, sky) {
     for (const x of [-1.6, 0, 1.6]) { const m = new THREE.Mesh(g, new THREE.MeshBasicMaterial({color: '#e8853f', transparent: true, opacity: 0, depthWrite: false})); m.position.set(x, 0, 0.05); m.renderOrder = 8; scene.add(m); arrows.push(m); } }
   // талая вода: синяя прослойка между кровлей и снегом слева + капли, бегущие к свесу
   const melt = [];
-  for (const s of [-1, 1]) { const g = new THREE.Group(); g.position.set(0, 0, 0); scene.add(g);
-    const sh = new THREE.Shape(); const xa = s * 0.3, xb = s * (HA + OV - 0.2); sh.moveTo(xa, roofTop(xa) + 0.025); sh.lineTo(xb, roofTop(xb) + 0.025); sh.lineTo(xb, roofTop(xb) + 0.095); sh.lineTo(xa, roofTop(xa) + 0.095); sh.closePath();
-    const m = add(new THREE.ExtrudeGeometry(sh, {depth: DEP, bevelEnabled: false}), 'iceWater', 0, 0, ZF - DEP, {parent: g, cast: false}); melt.push(g); }
+  for (const s of [-1, 1]) { const N = 8; for (let k = 0; k < N; k++) {
+    const xa = s * lerp(0.3, HA + OV - 0.2, k / N), xb = s * lerp(0.3, HA + OV - 0.2, (k + 1) / N), sh = new THREE.Shape();
+    sh.moveTo(xa, roofTop(xa) + 0.025); sh.lineTo(xb, roofTop(xb) + 0.025); sh.lineTo(xb, roofTop(xb) + 0.095); sh.lineTo(xa, roofTop(xa) + 0.095); sh.closePath();
+    const m = add(new THREE.ExtrudeGeometry(sh, {depth: DEP, bevelEnabled: false}), 'iceWater', 0, 0, ZF - DEP, {cast: false}); m.userData.k = (k + 0.5) / N; melt.push(m); } }
   const drops = []; for (let i = 0; i < 10; i++) drops.push(add(new THREE.SphereGeometry(0.075, 8, 6), 'iceWater', 0, 0, 0.04, {cast: false}));
   // сосульки по обоим свесам левого дома
   const icicles = [];
@@ -122,7 +123,7 @@ export function build(scene, sky) {
     smk.forEach((f) => f(t, 1));
     warmMat.opacity = 0.32 * heat;
     arrows.forEach((m, i) => { const u = ((t * 0.35 + i * 0.33) % 1 + 1) % 1; m.position.y = 1.4 + u * 2.6; m.material.opacity = 0.75 * heat * Math.sin(Math.PI * u); m.visible = heat > 0.01; });
-    melt.forEach((g, i) => { g.visible = mlt > 0.01; g.scale.set(Math.max(0.001, mlt), 1, 1); });
+    melt.forEach((m) => { m.visible = mlt > m.userData.k; });
     drops.forEach((m, i) => { const s = i % 2 ? 1 : -1, u = ((t * 0.22 + i * 0.19) % 1 + 1) % 1, x = s * lerp(0.5, HA + OV - 0.25, u); m.position.set(x, roofTop(x) + 0.06, 0.03); m.visible = mlt > 0.3; });
     icicles.forEach((m) => { const L = m.userData.L * sm(ic) + 0.001; m.scale.set(Math.max(0.2, sm(ic)), L, Math.max(0.2, sm(ic))); m.visible = ic > 0.01; });
     tipDrops.forEach((m, i) => { const s = i % 2 ? 1 : -1, u = ((t * 0.6 + i * 0.25) % 1 + 1) % 1, x = s * (HA + OV - 0.12), y0 = roofBot(HA + OV) - 1.4 * sm(ic); m.position.set(x, y0 - u * (y0 - 0.2), ZF - 0.25 - (i >> 1) * 1.44); m.visible = ic > 0.2 && mlt > 0.3 && u < 0.97; });
