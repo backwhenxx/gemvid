@@ -1,0 +1,38 @@
+[
+ {
+  "file": "snd/amb_0ea1636a43.wav",
+  "q": "lake shore waves",
+  "title": "a luxurious Yacht driving through the sea",
+  "creator": "florianreichelt",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/florianreichelt/sounds/457565"
+ },
+ {
+  "file": "snd/sfx_723f7fbffa.wav",
+  "q": "lake water lapping",
+  "title": "pool-lap.mp3",
+  "creator": "JoneagleX",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/JoneagleX/sounds/119001"
+ },
+ {
+  "file": "snd/sfx_ab9e34cc37.wav",
+  "q": "water filling",
+  "title": "stock-water-filling-01.flac",
+  "creator": "pbimal",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/pbimal/sounds/535960"
+ },
+ {
+  "file": "snd/sfx_531255c82e.wav",
+  "q": "ice cracking",
+  "title": "Ice Crack 5.wav",
+  "creator": "ecfike",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/ecfike/sounds/177217"
+ }
+]
