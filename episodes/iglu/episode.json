@@ -1,0 +1,346 @@
+{
+ "title": "Как устроен иглу",
+ "music": false,
+ "whisper": "medium",
+ "captionStyle": "word",
+ "autoOutro": false,
+ "stillPairs": true,
+ "ambience": [
+  {
+   "q": "arctic wind",
+   "from": 0,
+   "to": 50,
+   "volume": 0.04
+  }
+ ],
+ "cover": {
+  "lines": [
+   "Снаружи −45°",
+   "*внутри до +16°*"
+  ],
+  "sub": "как устроен иглу",
+  "fs": {
+   "world": "iglu",
+   "cam": [
+    "cover",
+    "cover"
+   ],
+   "tod": "golden",
+   "lamp": 1,
+   "warm": 1,
+   "cold": 1,
+   "glaze": 1
+  }
+ },
+ "scenes": [
+  {
+   "type": "fs",
+   "say": "[confidently] Снаружи минус сорок пять. А в этом снежном доме — до плюс шестнадцати. И никакой печки.",
+   "props": {
+    "cam": [
+     "hook",
+     "hook2"
+    ],
+    "tod": "morning",
+    "world": "iglu",
+    "cont": false,
+    "banner": "−45° снаружи\nдо +16° внутри",
+    "bannerAt": 0.25,
+    "bannerEnd": 1,
+    "bannerY": 230,
+    "tags": [
+     {
+      "s": "−45 °C",
+      "t": "out",
+      "dx": 160,
+      "dy": 220,
+      "at": 0.08,
+      "end": 0.6
+     }
+    ],
+    "sounds": [
+     {
+      "q": "cold wind blowing",
+      "at": 0.0,
+      "volume": 0.2,
+      "len": 3
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Это иглу. Его складывают из снежных блоков, а снег полон воздуха — он греет, как пуховик.",
+   "props": {
+    "cam": [
+     "hook2",
+     "wall"
+    ],
+    "tod": "morning",
+    "world": "iglu",
+    "cont": true,
+    "camDur": 0.55,
+    "tags": [
+     {
+      "s": "снежные блоки",
+      "t": "wall",
+      "dx": -180,
+      "dy": -230,
+      "at": 0.4,
+      "end": 1
+     },
+     {
+      "s": "воздух в снегу = утеплитель",
+      "t": "wall",
+      "dx": 60,
+      "dy": 250,
+      "at": 0.7,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Внутри горит лампа, и греют тела. Тёплый воздух поднимается вверх — к лежанке.",
+   "props": {
+    "cam": [
+     "wall",
+     "lamp"
+    ],
+    "tod": [
+     "morning",
+     "day"
+    ],
+    "lamp": [
+     0,
+     1,
+     0.05,
+     0.25
+    ],
+    "warm": [
+     0,
+     1,
+     0.35,
+     0.9
+    ],
+    "world": "iglu",
+    "cont": true,
+    "camDur": 0.5,
+    "tags": [
+     {
+      "s": "лампа-жирник",
+      "t": "lamp",
+      "dx": 200,
+      "dy": 200,
+      "at": 0.2,
+      "end": 1
+     },
+     {
+      "s": "тёплый воздух",
+      "t": "warm",
+      "dx": -60,
+      "dy": -240,
+      "at": 0.6,
+      "end": 1
+     },
+     {
+      "s": "лежанка",
+      "t": "bed",
+      "dx": -120,
+      "dy": 220,
+      "at": 0.82,
+      "end": 1
+     }
+    ],
+    "sounds": [
+     {
+      "q": "match strike",
+      "at": 0.06,
+      "volume": 0.2,
+      "len": 1.5
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[curious] Главный секрет — вход. Он ниже лежанки. Холодный воздух тяжёлый: он стекает вниз и стоит у входа, как вода в яме.",
+   "props": {
+    "cam": [
+     "lamp",
+     "tunnel"
+    ],
+    "tod": "day",
+    "lamp": 1,
+    "warm": 1,
+    "cold": [
+     0,
+     1,
+     0.35,
+     0.85
+    ],
+    "world": "iglu",
+    "cont": true,
+    "camDur": 0.45,
+    "tags": [
+     {
+      "s": "вход ниже лежанки",
+      "t": "door",
+      "dx": -120,
+      "dy": -240,
+      "at": 0.22,
+      "end": 1
+     },
+     {
+      "s": "холодный воздух",
+      "t": "cold",
+      "dx": 120,
+      "dy": 230,
+      "at": 0.55,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Ещё трюк: лампу разжигают пожарче. Стены чуть подтаивают и схватываются ледяной коркой — дом становится крепче.",
+   "props": {
+    "cam": [
+     "tunnel",
+     "glaze"
+    ],
+    "tod": [
+     "day",
+     "golden"
+    ],
+    "lamp": 1,
+    "warm": 1,
+    "cold": 1,
+    "flare": [
+     0,
+     1,
+     0.05,
+     0.3
+    ],
+    "glaze": [
+     0,
+     1,
+     0.35,
+     0.85
+    ],
+    "world": "iglu",
+    "cont": true,
+    "camDur": 0.5,
+    "tags": [
+     {
+      "s": "ледяная корка",
+      "t": "glaze",
+      "dx": -120,
+      "dy": -230,
+      "at": 0.6,
+      "end": 1
+     }
+    ],
+    "sounds": [
+     {
+      "q": "fire crackling",
+      "at": 0.1,
+      "volume": 0.18,
+      "len": 2.5
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Получается, холод тут не выгоняют. Его просто кладут ниже себя.",
+   "props": {
+    "cam": [
+     "glaze",
+     "wide"
+    ],
+    "tod": "golden",
+    "lamp": 1,
+    "warm": 1,
+    "cold": 1,
+    "glaze": 1,
+    "flare": [
+     1,
+     0,
+     0,
+     0.4
+    ],
+    "world": "iglu",
+    "cont": true,
+    "camDur": 0.6,
+    "tags": [
+     {
+      "s": "тепло — вверху",
+      "t": "warm",
+      "dx": -40,
+      "dy": -250,
+      "at": 0.3,
+      "end": 1
+     },
+     {
+      "s": "холод — внизу",
+      "t": "cold",
+      "dx": 80,
+      "dy": 230,
+      "at": 0.5,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[warmly] А вы бы переночевали в иглу при минус сорока?",
+   "props": {
+    "cam": [
+     "wide",
+     "night"
+    ],
+    "tod": [
+     "golden",
+     "dusk",
+     "night"
+    ],
+    "lamp": 1,
+    "warm": 1,
+    "cold": 1,
+    "glaze": 1,
+    "world": "iglu",
+    "cont": true,
+    "todAt": [
+     0,
+     0.5,
+     1
+    ],
+    "banner": "ночь в иглу при −40°?",
+    "bannerAt": 0.2,
+    "bannerEnd": 1,
+    "bannerY": 230
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Подпишись.",
+   "props": {
+    "cam": [
+     "night",
+     "night"
+    ],
+    "tod": "night",
+    "lamp": 1,
+    "warm": 1,
+    "cold": 1,
+    "glaze": 1,
+    "world": "iglu",
+    "cont": true
+   }
+  }
+ ]
+}
