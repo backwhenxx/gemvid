@@ -1,0 +1,38 @@
+[
+ {
+  "file": "snd/amb_b664f6424c.wav",
+  "q": "arctic wind",
+  "title": "air tone arctic wind blowing, distant water tone Quaqtaq, Nunavik.flac",
+  "creator": "kyles",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/kyles/sounds/450143"
+ },
+ {
+  "file": "snd/sfx_928e0913ff.wav",
+  "q": "cold wind blowing",
+  "title": "Howling Wind",
+  "creator": "Kodack",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/Kodack/sounds/256862"
+ },
+ {
+  "file": "snd/sfx_a68240bfa4.wav",
+  "q": "match strike",
+  "title": "Match - Strike and Light 02.wav",
+  "creator": "JarredGibb",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/JarredGibb/sounds/248236"
+ },
+ {
+  "file": "snd/sfx_14ece4818c.wav",
+  "q": "fire crackling",
+  "title": "Fire Crackling",
+  "creator": "AntumDeluge",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/AntumDeluge/sounds/188038"
+ }
+]
