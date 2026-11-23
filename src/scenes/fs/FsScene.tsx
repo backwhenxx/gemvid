@@ -24,10 +24,11 @@ import * as sosul from './worlds/sosul';
 import * as ozera from './worlds/ozera';
 import * as iglu from './worlds/iglu';
 import * as nebo from './worlds/nebo';
+import * as pech from './worlds/pech';
 
 const {fontFamily: ROUND} = loadFont('normal', {weights: ['700'], subsets: ['cyrillic', 'latin']});
 const {fontFamily: SERIF} = loadSerif('italic', {weights: ['400'], subsets: ['cyrillic', 'latin']});
-const WORLDS: Record<string, any> = {teplo, yama, kolodec, prud, glub, derev, vodopad, mosty, sosul, ozera, iglu, nebo};
+const WORLDS: Record<string, any> = {teplo, yama, kolodec, prud, glub, derev, vodopad, mosty, sosul, ozera, iglu, nebo, pech};
 const SW = 1080;
 const SH = 1920;
 const SS = 2;

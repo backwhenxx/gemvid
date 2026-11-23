@@ -1,0 +1,369 @@
+{
+ "title": "Как устроена кирпичная печь",
+ "music": false,
+ "whisper": "medium",
+ "captionStyle": "word",
+ "autoOutro": false,
+ "stillPairs": true,
+ "ambience": [
+  {
+   "q": "winter wind house",
+   "from": 0,
+   "to": 55,
+   "volume": 0.035
+  }
+ ],
+ "cover": {
+  "lines": [
+   "Топят раз —",
+   "*греет сутки*"
+  ],
+  "sub": "как устроена кирпичная печь",
+  "fs": {
+   "world": "pech",
+   "cam": [
+    "cover",
+    "cover"
+   ],
+   "tod": "golden",
+   "fire": 1,
+   "gas": 1,
+   "heat": 1,
+   "maze": 0
+  }
+ },
+ "scenes": [
+  {
+   "type": "fs",
+   "say": "[confidently] Эту печь топят один раз в день. А тепло от неё идёт почти сутки.",
+   "props": {
+    "cam": [
+     "hook",
+     "hook2"
+    ],
+    "tod": "morning",
+    "fire": 1,
+    "world": "pech",
+    "cont": false,
+    "banner": "топят раз —\nгреет сутки",
+    "bannerAt": 0.15,
+    "bannerEnd": 1,
+    "bannerY": 230,
+    "sounds": [
+     {
+      "q": "fireplace crackling",
+      "at": 0.0,
+      "volume": 0.22,
+      "len": 3
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Железная печка остывает почти сразу, как прогорят дрова. А эта — нет.",
+   "props": {
+    "cam": [
+     "hook2",
+     "stove"
+    ],
+    "tod": "morning",
+    "fire": 1,
+    "world": "pech",
+    "cont": true,
+    "camDur": 0.6,
+    "tags": [
+     {
+      "s": "кирпичная печь",
+      "t": "stove",
+      "dx": -180,
+      "dy": -240,
+      "at": 0.5,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Внутри у неё не пустая коробка, а лабиринт.",
+   "props": {
+    "cam": [
+     "stove",
+     "stoveB"
+    ],
+    "tod": "morning",
+    "fire": 1,
+    "maze": [
+     0,
+     1,
+     0.15,
+     0.6
+    ],
+    "world": "pech",
+    "cont": true,
+    "tags": [
+     {
+      "s": "лабиринт",
+      "t": "maze",
+      "dx": -220,
+      "dy": -230,
+      "at": 0.45,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Дрова горят жарко и быстро. Но дым не уходит сразу в трубу.",
+   "props": {
+    "cam": [
+     "stoveB",
+     "stove"
+    ],
+    "tod": [
+     "morning",
+     "day"
+    ],
+    "fire": 1,
+    "maze": [
+     1,
+     0,
+     0.6,
+     1
+    ],
+    "gas": [
+     0,
+     1,
+     0.15,
+     0.45
+    ],
+    "world": "pech",
+    "cont": true,
+    "tags": [
+     {
+      "s": "топка",
+      "t": "fire",
+      "dx": -200,
+      "dy": 200,
+      "at": 0.1,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[curious] Он петляет по каналам: вверх, вниз и снова вверх. И по пути отдаёт жар кирпичу.",
+   "props": {
+    "cam": [
+     "stove",
+     "stove"
+    ],
+    "tod": "day",
+    "fire": 1,
+    "gas": 1,
+    "heat": [
+     0,
+     0.7,
+     0.3,
+     1
+    ],
+    "world": "pech",
+    "cont": true,
+    "tags": [
+     {
+      "s": "жар уходит в кирпич",
+      "t": "hot",
+      "dx": -200,
+      "dy": -230,
+      "at": 0.55,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "В трубу уходит уже остывший дым. А почти тонна кирпича раскалена.",
+   "props": {
+    "cam": [
+     "stove",
+     "chim"
+    ],
+    "tod": "day",
+    "fire": 1,
+    "gas": 1,
+    "heat": [
+     0.7,
+     1,
+     0,
+     0.8
+    ],
+    "world": "pech",
+    "cont": true,
+    "camDur": 0.6,
+    "tags": [
+     {
+      "s": "в трубу — остывший дым",
+      "t": "chim",
+      "dx": -230,
+      "dy": -150,
+      "at": 0.35,
+      "end": 1
+     },
+     {
+      "s": "≈ 1 т кирпича",
+      "t": "mass",
+      "dx": -200,
+      "dy": 240,
+      "at": 0.7,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Огонь погас — и тут важно вовремя закрыть заслонку. Иначе тепло просто вытянет в трубу.",
+   "props": {
+    "cam": [
+     "chim",
+     "chimB"
+    ],
+    "tod": [
+     "day",
+     "golden"
+    ],
+    "fire": [
+     1,
+     0,
+     0.05,
+     0.3
+    ],
+    "gas": 1,
+    "heat": 1,
+    "damper": [
+     0,
+     1,
+     0.5,
+     0.8
+    ],
+    "world": "pech",
+    "cont": true,
+    "tags": [
+     {
+      "s": "заслонка",
+      "t": "damper",
+      "dx": -200,
+      "dy": -200,
+      "at": 0.45,
+      "end": 1
+     }
+    ],
+    "sounds": [
+     {
+      "q": "metal latch",
+      "at": 0.72,
+      "volume": 0.2,
+      "len": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Заслонка закрыта, и кирпич медленно отдаёт тепло дому. Часами — до самой ночи и утра.",
+   "props": {
+    "cam": [
+     "chimB",
+     "room"
+    ],
+    "tod": [
+     "golden",
+     "dusk",
+     "night"
+    ],
+    "heat": 1,
+    "damper": 1,
+    "warm": [
+     0,
+     1,
+     0.2,
+     0.5
+    ],
+    "clock": [
+     0,
+     1,
+     0.2,
+     1
+    ],
+    "world": "pech",
+    "cont": true,
+    "camDur": 0.6,
+    "todAt": [
+     0,
+     0.55,
+     1
+    ],
+    "tags": [
+     {
+      "s": "тепло — в дом",
+      "t": "room",
+      "dx": 150,
+      "dy": -220,
+      "at": 0.45,
+      "end": 1
+     },
+     {
+      "s": "часы идут…",
+      "t": "clock",
+      "dx": 180,
+      "dy": 200,
+      "at": 0.7,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[warmly] А у вас дома — печь или батарея? Что уютнее?",
+   "props": {
+    "cam": [
+     "room",
+     "night"
+    ],
+    "tod": "night",
+    "heat": 1,
+    "damper": 1,
+    "warm": 1,
+    "clock": 1,
+    "world": "pech",
+    "cont": true,
+    "banner": "печь или батарея?",
+    "bannerAt": 0.2,
+    "bannerEnd": 1,
+    "bannerY": 230
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Подпишись.",
+   "props": {
+    "cam": [
+     "night",
+     "night"
+    ],
+    "tod": "night",
+    "heat": 1,
+    "damper": 1,
+    "warm": 1,
+    "clock": 1,
+    "world": "pech",
+    "cont": true
+   }
+  }
+ ]
+}
