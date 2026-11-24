@@ -26,10 +26,11 @@ import * as iglu from './worlds/iglu';
 import * as nebo from './worlds/nebo';
 import * as pech from './worlds/pech';
 import * as bashni from './worlds/bashni';
+import * as pogreb from './worlds/pogreb';
 
 const {fontFamily: ROUND} = loadFont('normal', {weights: ['700'], subsets: ['cyrillic', 'latin']});
 const {fontFamily: SERIF} = loadSerif('italic', {weights: ['400'], subsets: ['cyrillic', 'latin']});
-const WORLDS: Record<string, any> = {teplo, yama, kolodec, prud, glub, derev, vodopad, mosty, sosul, ozera, iglu, nebo, pech, bashni};
+const WORLDS: Record<string, any> = {teplo, yama, kolodec, prud, glub, derev, vodopad, mosty, sosul, ozera, iglu, nebo, pech, bashni, pogreb};
 const SW = 1080;
 const SH = 1920;
 const SS = 2;

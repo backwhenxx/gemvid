@@ -1,0 +1,303 @@
+{
+ "title": "Как устроен погреб",
+ "music": false,
+ "whisper": "medium",
+ "captionStyle": "word",
+ "autoOutro": false,
+ "stillPairs": true,
+ "ambience": [
+  {
+   "q": "countryside ambience",
+   "from": 0,
+   "to": 55,
+   "volume": 0.035
+  }
+ ],
+ "cover": {
+  "lines": [
+   "Холодильник",
+   "*без розетки*"
+  ],
+  "sub": "как устроен погреб",
+  "fs": {
+   "world": "pogreb",
+   "cam": [
+    "cover",
+    "cover"
+   ],
+   "tod": "day",
+   "air": 1
+  }
+ },
+ "scenes": [
+  {
+   "type": "fs",
+   "say": "[confidently] Холодильник, который работает без розетки. Это погреб.",
+   "props": {
+    "cam": [
+     "hook",
+     "wide"
+    ],
+    "tod": "day",
+    "air": 0,
+    "world": "pogreb",
+    "cont": false,
+    "camDur": 0.8,
+    "tags": [
+     {
+      "s": "погреб",
+      "t": "cellar",
+      "dx": 200,
+      "dy": -250,
+      "at": 0.55,
+      "end": 1
+     }
+    ],
+    "banner": "холодильник\nбез розетки",
+    "bannerAt": 0.05,
+    "bannerEnd": 1,
+    "bannerY": 230
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Наверху летом плюс тридцать, зимой минус тридцать. А тут — от нуля до плюс четырёх круглый год.",
+   "props": {
+    "cam": [
+     "wide",
+     "surf"
+    ],
+    "tod": [
+     "day",
+     "morning"
+    ],
+    "winter": [
+     0,
+     1,
+     0.35,
+     0.6
+    ],
+    "world": "pogreb",
+    "cont": true,
+    "camDur": 0.6,
+    "tags": [
+     {
+      "s": "лето: +30 °C",
+      "t": "top",
+      "dx": 150,
+      "dy": -200,
+      "at": 0.05,
+      "end": 0.38
+     },
+     {
+      "s": "зима: −30 °C",
+      "t": "top",
+      "dx": 150,
+      "dy": -200,
+      "at": 0.55,
+      "end": 1
+     },
+     {
+      "s": "0…+4 °C круглый год",
+      "t": "cellar",
+      "dx": 150,
+      "dy": 220,
+      "at": 0.72,
+      "end": 1
+     }
+    ],
+    "sounds": [
+     {
+      "q": "winter wind",
+      "at": 0.45,
+      "volume": 0.15,
+      "len": 2.5
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Секрет в глубине. Земля как огромное одеяло: на глубине трёх метров температура почти не меняется.",
+   "props": {
+    "cam": [
+     "surf",
+     "deep"
+    ],
+    "tod": "morning",
+    "winter": 1,
+    "world": "pogreb",
+    "cont": true,
+    "camDur": 0.6,
+    "tags": [
+     {
+      "s": "3 м: температура почти постоянна",
+      "t": "deep",
+      "dx": 160,
+      "dy": -200,
+      "at": 0.5,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[curious] Но главное — две трубы. Одна опускается почти до пола: по ней внутрь стекает холодный воздух.",
+   "props": {
+    "cam": [
+     "deep",
+     "pipeIn"
+    ],
+    "tod": [
+     "morning",
+     "day"
+    ],
+    "winter": 1,
+    "air": [
+     0,
+     1,
+     0.35,
+     0.6
+    ],
+    "world": "pogreb",
+    "cont": true,
+    "camDur": 0.5,
+    "tags": [
+     {
+      "s": "приток — до пола",
+      "t": "floor",
+      "dx": 200,
+      "dy": -180,
+      "at": 0.5,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Другая начинается под потолком: тёплый и сырой воздух поднимается и уходит в неё. Воздух ходит по кругу сам.",
+   "props": {
+    "cam": [
+     "pipeIn",
+     "pipeOut"
+    ],
+    "tod": "day",
+    "winter": 1,
+    "air": 1,
+    "world": "pogreb",
+    "cont": true,
+    "camDur": 0.5,
+    "tags": [
+     {
+      "s": "вытяжка — от потолка",
+      "t": "ceil",
+      "dx": -200,
+      "dy": 200,
+      "at": 0.35,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "И ещё правило: яблоки держат подальше от картошки. Они выделяют газ этилен, и от него картошка быстрее портится. Поэтому яблоки заворачивают в бумагу.",
+   "props": {
+    "cam": [
+     "pipeOut",
+     "apples"
+    ],
+    "tod": [
+     "day",
+     "golden"
+    ],
+    "winter": 1,
+    "air": 1,
+    "eth": [
+     0,
+     1,
+     0.2,
+     0.45
+    ],
+    "wrap": [
+     0,
+     1,
+     0.82,
+     0.95
+    ],
+    "world": "pogreb",
+    "cont": true,
+    "camDur": 0.4,
+    "tags": [
+     {
+      "s": "яблоки",
+      "t": "apples",
+      "dx": 160,
+      "dy": -220,
+      "at": 0.12,
+      "end": 1
+     },
+     {
+      "s": "этилен",
+      "t": "apples",
+      "dx": -220,
+      "dy": -140,
+      "at": 0.4,
+      "end": 1
+     },
+     {
+      "s": "картошка",
+      "t": "potato",
+      "dx": -160,
+      "dy": 220,
+      "at": 0.55,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[warmly] А у вас есть погреб? Или всё в холодильнике?",
+   "props": {
+    "cam": [
+     "apples",
+     "end"
+    ],
+    "tod": [
+     "golden",
+     "dusk"
+    ],
+    "winter": 1,
+    "air": 1,
+    "eth": 1,
+    "wrap": 1,
+    "world": "pogreb",
+    "cont": true,
+    "banner": "погреб или холодильник?",
+    "bannerAt": 0.2,
+    "bannerEnd": 1,
+    "bannerY": 230
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Подпишись.",
+   "props": {
+    "cam": [
+     "end",
+     "end"
+    ],
+    "tod": "dusk",
+    "winter": 1,
+    "air": 1,
+    "eth": 1,
+    "wrap": 1,
+    "world": "pogreb",
+    "cont": true
+   }
+  }
+ ]
+}
