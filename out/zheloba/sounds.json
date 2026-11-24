@@ -1,0 +1,29 @@
+[
+ {
+  "file": "snd/amb_83b1a69837.wav",
+  "q": "ocean waves calm",
+  "title": "Calm Ocean Breeze Simulation",
+  "creator": "ALLANZ10D",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/ALLANZ10D/sounds/235428"
+ },
+ {
+  "file": "snd/sfx_dff377a36b.wav",
+  "q": "underwater rumble",
+  "title": "Thunder rumbling, underwater, outdoors_Thunder rumbling.aif",
+  "creator": "carroll27",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/carroll27/sounds/151854"
+ },
+ {
+  "file": "snd/sfx_da8e3b6162.wav",
+  "q": "sonar ping",
+  "title": "Submarine sonar ping",
+  "creator": "therealdeevee",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/therealdeevee/sounds/653896"
+ }
+]
