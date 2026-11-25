@@ -1,0 +1,29 @@
+[
+ {
+  "file": "snd/amb_e069598af7.wav",
+  "q": "airport ambience",
+  "title": "airport ambience",
+  "creator": "Lowcat_Sound",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/Lowcat_Sound/sounds/535074"
+ },
+ {
+  "file": "snd/sfx_b333f5e3d7.wav",
+  "q": "jet engine idle",
+  "title": "Idle F-22 Jet Plane.flac",
+  "creator": "qubodup",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/qubodup/sounds/187734"
+ },
+ {
+  "file": "snd/sfx_7e8340bd8a.wav",
+  "q": "water splash",
+  "title": "water splash",
+  "creator": "audiosmedia",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/audiosmedia/sounds/243519"
+ }
+]
