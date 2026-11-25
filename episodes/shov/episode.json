@@ -1,0 +1,358 @@
+{
+ "title": "Почему мост летом длиннее",
+ "music": false,
+ "whisper": "medium",
+ "captionStyle": "word",
+ "autoOutro": false,
+ "stillPairs": true,
+ "ambience": [
+  {
+   "q": "river flowing gentle",
+   "from": 0,
+   "to": 55,
+   "volume": 0.035
+  }
+ ],
+ "cover": {
+  "lines": [
+   "Летом мост",
+   "*длиннее*"
+  ],
+  "sub": "зачем на въезде «зубья»",
+  "fs": {
+   "world": "shov",
+   "cam": [
+    "cover",
+    "cover"
+   ],
+   "tod": "day",
+   "heat": 0.4
+  }
+ },
+ "scenes": [
+  {
+   "type": "fs",
+   "say": "[confidently] Этот мост летом длиннее, чем зимой. И он к этому готов.",
+   "props": {
+    "cam": [
+     "hook",
+     "wide"
+    ],
+    "tod": "day",
+    "heat": {
+     "k": [
+      -1,
+      -1,
+      1
+     ],
+     "at": [
+      0,
+      0.15,
+      0.75
+     ]
+    },
+    "world": "shov",
+    "cont": false,
+    "camDur": 0.8,
+    "tags": [
+     {
+      "s": "зима",
+      "t": "therm",
+      "dx": -160,
+      "dy": -150,
+      "at": 0.0,
+      "end": 0.3
+     },
+     {
+      "s": "лето",
+      "t": "therm",
+      "dx": -160,
+      "dy": -150,
+      "at": 0.6,
+      "end": 1
+     }
+    ],
+    "banner": "летом мост длиннее",
+    "bannerAt": 0.05,
+    "bannerEnd": 1,
+    "bannerY": 230
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Сталь на жаре расширяется. Километр стали на каждые десять градусов вытягивается на двенадцать сантиметров.",
+   "props": {
+    "cam": [
+     "wide",
+     "steel"
+    ],
+    "tod": "day",
+    "heat": 1,
+    "world": "shov",
+    "cont": true,
+    "camDur": 0.6,
+    "tags": [
+     {
+      "s": "стальной пролёт",
+      "t": "deck",
+      "dx": -150,
+      "dy": -200,
+      "at": 0.2,
+      "end": 1
+     }
+    ],
+    "banner": "1 км стали, +10° → +12 см",
+    "bannerAt": 0.4,
+    "bannerEnd": 1,
+    "bannerY": 230
+   }
+  },
+  {
+   "type": "fs",
+   "say": "А между зимой и летом разница — несколько десятков градусов. Значит, мост «гуляет» на десятки сантиметров.",
+   "props": {
+    "cam": [
+     "steel",
+     "wide"
+    ],
+    "tod": [
+     "day",
+     "morning",
+     "day"
+    ],
+    "heat": {
+     "k": [
+      1,
+      -1,
+      1
+     ],
+     "at": [
+      0.05,
+      0.45,
+      0.9
+     ]
+    },
+    "world": "shov",
+    "cont": true,
+    "camDur": 0.6,
+    "todAt": [
+     0,
+     0.45,
+     0.9
+    ],
+    "tags": [
+     {
+      "s": "сдвиг в кадре увеличен",
+      "t": "deck",
+      "dx": 0,
+      "dy": -260,
+      "at": 0.5,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[curious] Если закрепить его жёстко с двух сторон — его выгнет, а опоры начнёт ломать.",
+   "props": {
+    "cam": [
+     "wide",
+     "bend"
+    ],
+    "tod": "golden",
+    "heat": 1,
+    "bend": {
+     "k": [
+      0,
+      1
+     ],
+     "at": [
+      0.3,
+      0.6
+     ]
+    },
+    "world": "shov",
+    "cont": true,
+    "camDur": 0.5,
+    "tags": [
+     {
+      "s": "выгнет",
+      "t": "bend",
+      "dx": 0,
+      "dy": -220,
+      "at": 0.6,
+      "end": 1
+     },
+     {
+      "s": "трещины в опорах",
+      "t": "pier",
+      "dx": -120,
+      "dy": 200,
+      "at": 0.75,
+      "end": 1
+     }
+    ],
+    "sounds": [
+     {
+      "q": "metal creak",
+      "at": 0.55,
+      "volume": 0.2,
+      "len": 2
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Поэтому один конец закреплён, а второй стоит на катках.",
+   "props": {
+    "cam": [
+     "bend",
+     "roll"
+    ],
+    "tod": "golden",
+    "heat": {
+     "k": [
+      1,
+      -1
+     ],
+     "at": [
+      0.4,
+      1
+     ]
+    },
+    "bend": {
+     "k": [
+      1,
+      0
+     ],
+     "at": [
+      0,
+      0.25
+     ]
+    },
+    "world": "shov",
+    "cont": true,
+    "camDur": 0.5,
+    "tags": [
+     {
+      "s": "закреплён",
+      "t": "fixed",
+      "dx": -150,
+      "dy": -200,
+      "at": 0.15,
+      "end": 0.5
+     },
+     {
+      "s": "катки",
+      "t": "roll",
+      "dx": -150,
+      "dy": -200,
+      "at": 0.6,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "А на въезде — вот такие стальные зубья. Летом они сходятся, зимой расходятся. Колёса едут по ним и щели не замечают.",
+   "props": {
+    "cam": [
+     "roll",
+     "joint"
+    ],
+    "tod": [
+     "golden",
+     "day"
+    ],
+    "heat": {
+     "k": [
+      -1,
+      1,
+      -1,
+      1
+     ],
+     "at": [
+      0,
+      0.4,
+      0.7,
+      0.95
+     ]
+    },
+    "world": "shov",
+    "cont": true,
+    "camDur": 0.4,
+    "tags": [
+     {
+      "s": "деформационный шов",
+      "t": "joint",
+      "dx": -160,
+      "dy": -240,
+      "at": 0.3,
+      "end": 1
+     }
+    ],
+    "sounds": [
+     {
+      "q": "car driving over bridge joint",
+      "at": 0.8,
+      "volume": 0.18,
+      "len": 1.5
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Такие швы есть почти на каждом большом мосту.",
+   "props": {
+    "cam": [
+     "joint",
+     "wide"
+    ],
+    "tod": "day",
+    "heat": 1,
+    "world": "shov",
+    "cont": true,
+    "camDur": 0.8
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[warmly] Вы замечали эти зубья, когда проезжали по мосту? Пишите, на каком.",
+   "props": {
+    "cam": [
+     "wide",
+     "end"
+    ],
+    "tod": [
+     "day",
+     "dusk"
+    ],
+    "heat": 1,
+    "world": "shov",
+    "cont": true,
+    "banner": "замечали эти зубья?",
+    "bannerAt": 0.2,
+    "bannerEnd": 1,
+    "bannerY": 230
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Подпишись.",
+   "props": {
+    "cam": [
+     "end",
+     "end"
+    ],
+    "tod": "dusk",
+    "heat": 1,
+    "world": "shov",
+    "cont": true
+   }
+  }
+ ]
+}
