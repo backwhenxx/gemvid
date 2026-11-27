@@ -40,11 +40,11 @@ function hgt(P, u, th, x, z, g, slide) {
   return y;
 }
 // цвет точки стены: пласт по высоте, поверхность — свой грунт
-const cTmp = new THREE.Color(), cG = new THREE.Color();
+const cTmp = new THREE.Color(), cG = new THREE.Color(), cGn = new THREE.Color();
 function colAt(P, x, y, out) {
-  if (y > -0.22) return out.set(P.gnd);
   let k = 0; while (k < NL - 1 && y < layTop(k + 1, x)) k++;
-  out.set(P.lay[k]); const n = 0.92 + 0.16 * hash3(Math.round(x * 2), Math.round(y * 3), 7); out.multiplyScalar(n); return out;
+  out.set(P.lay[k]); const n = 0.92 + 0.16 * hash3(Math.round(x * 2), Math.round(y * 3), 7); out.multiplyScalar(n);
+  return out.lerp(cGn.set(P.gnd), 1 - sm((-y - 0.04) / 0.7));
 }
 
 export const T = Object.fromEntries([
