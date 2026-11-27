@@ -34,10 +34,11 @@ import * as krylo from './worlds/krylo';
 import * as merzlota from './worlds/merzlota';
 import * as vodbash from './worlds/vodbash';
 import * as karst from './worlds/karst';
+import * as lift from './worlds/lift';
 
 const {fontFamily: ROUND} = loadFont('normal', {weights: ['700'], subsets: ['cyrillic', 'latin']});
 const {fontFamily: SERIF} = loadSerif('italic', {weights: ['400'], subsets: ['cyrillic', 'latin']});
-const WORLDS: Record<string, any> = {teplo, yama, kolodec, prud, glub, derev, vodopad, mosty, sosul, ozera, iglu, nebo, pech, bashni, pogreb, zheloba, shov, krylo, merzlota, vodbash, katok, karst};
+const WORLDS: Record<string, any> = {teplo, yama, kolodec, prud, glub, derev, vodopad, mosty, sosul, ozera, iglu, nebo, pech, bashni, pogreb, zheloba, shov, krylo, merzlota, vodbash, katok, karst, lift};
 const SW = 1080;
 const SH = 1920;
 const SS = 2;
