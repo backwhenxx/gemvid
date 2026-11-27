@@ -1,0 +1,478 @@
+{
+ "title": "Как появляются провалы",
+ "music": false,
+ "whisper": "medium",
+ "captionStyle": "word",
+ "autoOutro": false,
+ "stillPairs": true,
+ "ambience": [
+  {
+   "q": "light rain",
+   "from": 0,
+   "to": 14,
+   "volume": 0.04
+  },
+  {
+   "q": "suburban birds ambience",
+   "from": 14,
+   "to": 58,
+   "volume": 0.03
+  }
+ ],
+ "cover": {
+  "lines": [
+   "Пустота",
+   "*под газоном*"
+  ],
+  "sub": "как появляются провалы",
+  "fs": {
+   "world": "karst",
+   "cam": [
+    "cover",
+    "cover"
+   ],
+   "tod": "golden",
+   "cave": 1,
+   "dry": 1,
+   "up": 0.7
+  }
+ },
+ "scenes": [
+  {
+   "type": "fs",
+   "say": "[tense] Это обычный газон во Флориде. А под ним — пустота размером с дом.",
+   "props": {
+    "world": "karst",
+    "cam": [
+     "hook",
+     "wide"
+    ],
+    "cont": false,
+    "camDur": 1,
+    "tod": "day",
+    "cave": 0.6,
+    "rain": 0.7,
+    "tags": [
+     {
+      "s": "газон",
+      "t": "lawn",
+      "dx": -180,
+      "dy": -260,
+      "at": 0.08,
+      "end": 0.6
+     },
+     {
+      "s": "пустота",
+      "t": "cave",
+      "dx": 200,
+      "dy": -200,
+      "at": 0.5,
+      "end": 1
+     }
+    ],
+    "banner": "под газоном —\nпустота",
+    "bannerAt": 0.05,
+    "bannerY": 230
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Как земля проваливается за одну ночь? Смотрим в разрез.",
+   "props": {
+    "world": "karst",
+    "cam": [
+     "wide",
+     "layers"
+    ],
+    "cont": true,
+    "tod": "day",
+    "cave": 0.6,
+    "rain": [
+     0.7,
+     0.2
+    ],
+    "banner": "провал за одну ночь?",
+    "bannerAt": 0.05,
+    "bannerY": 230
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Сверху песок и глина, а ниже — известняк.",
+   "props": {
+    "world": "karst",
+    "cam": [
+     "layers",
+     "layers2"
+    ],
+    "cont": true,
+    "tod": "day",
+    "cave": 0.6,
+    "rain": 0.2,
+    "tags": [
+     {
+      "s": "песок",
+      "t": "sand",
+      "dx": 220,
+      "dy": -160,
+      "at": 0.05,
+      "end": 1
+     },
+     {
+      "s": "глина",
+      "t": "clay",
+      "dx": 240,
+      "dy": 120,
+      "at": 0.3,
+      "end": 1
+     },
+     {
+      "s": "известняк",
+      "t": "lime",
+      "dx": 220,
+      "dy": 180,
+      "at": 0.6,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Дождь просачивается вниз и становится слабой кислотой.",
+   "props": {
+    "world": "karst",
+    "cam": [
+     "layers2",
+     "rain"
+    ],
+    "cont": true,
+    "tod": "day",
+    "cave": 0.6,
+    "rain": [
+     0.2,
+     1,
+     0,
+     0.4
+    ],
+    "tags": [
+     {
+      "s": "слабая кислота",
+      "t": "sand",
+      "dx": 230,
+      "dy": -220,
+      "at": 0.5,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "За тысячи лет она растворяет известняк, как сахар. Под землёй растёт пещера.",
+   "props": {
+    "world": "karst",
+    "cam": [
+     "rain",
+     "cave"
+    ],
+    "cont": true,
+    "tod": "day",
+    "cave": [
+     0.6,
+     1,
+     0.25,
+     1
+    ],
+    "rain": [
+     1,
+     0.3
+    ],
+    "banner": "тысячи лет",
+    "bannerAt": 0.1,
+    "bannerY": 230,
+    "tags": [
+     {
+      "s": "пещера",
+      "t": "cave",
+      "dx": 220,
+      "dy": -260,
+      "at": 0.6,
+      "end": 1
+     }
+    ],
+    "sounds": [
+     {
+      "q": "water dripping cave",
+      "at": 0.4,
+      "volume": 0.12,
+      "len": 3
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Пока в пещере стоит вода, она держит потолок.",
+   "props": {
+    "world": "karst",
+    "cam": [
+     "cave",
+     "cave2"
+    ],
+    "cont": true,
+    "tod": "day",
+    "cave": 1,
+    "rain": 0.3,
+    "tags": [
+     {
+      "s": "вода держит свод",
+      "t": "water",
+      "dx": -260,
+      "dy": -240,
+      "at": 0.25,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[serious] Но приходит засуха или рядом качают воду из скважин. Вода уходит.",
+   "props": {
+    "world": "karst",
+    "cam": [
+     "cave2",
+     "well"
+    ],
+    "cont": true,
+    "tod": [
+     "day",
+     "golden"
+    ],
+    "cave": 1,
+    "rain": [
+     0.3,
+     0,
+     0,
+     0.3
+    ],
+    "pump": [
+     0,
+     1,
+     0.3,
+     0.5
+    ],
+    "dry": [
+     0,
+     1,
+     0.45,
+     1
+    ],
+    "tags": [
+     {
+      "s": "скважина",
+      "t": "pump",
+      "dx": 230,
+      "dy": -200,
+      "at": 0.35,
+      "end": 1
+     }
+    ],
+    "banner": "уровень воды падает",
+    "bannerAt": 0.6,
+    "bannerY": 230,
+    "sounds": [
+     {
+      "q": "water pump motor",
+      "at": 0.35,
+      "volume": 0.12,
+      "len": 3
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "И песок сыплется в пустоту. Дыра ползёт вверх.",
+   "props": {
+    "world": "karst",
+    "cam": [
+     "well",
+     "chim"
+    ],
+    "cont": true,
+    "tod": "golden",
+    "cave": 1,
+    "dry": 1,
+    "pump": [
+     1,
+     0,
+     0,
+     0.5
+    ],
+    "up": [
+     0,
+     0.65,
+     0.15,
+     1
+    ],
+    "sounds": [
+     {
+      "q": "sand pouring",
+      "at": 0.1,
+      "volume": 0.15,
+      "len": 2.5
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "А сверху ровная трава. Пока не остаётся тонкая корка.",
+   "props": {
+    "world": "karst",
+    "cam": [
+     "chim",
+     "crust"
+    ],
+    "cont": true,
+    "tod": "golden",
+    "cave": 1,
+    "dry": 1,
+    "up": [
+     0.65,
+     1,
+     0,
+     0.8
+    ],
+    "crack": [
+     0,
+     1,
+     0.6,
+     1
+    ],
+    "tags": [
+     {
+      "s": "тонкая корка",
+      "t": "crust",
+      "dx": -240,
+      "dy": -300,
+      "at": 0.55,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[shouting] И земля уходит за минуты!",
+   "props": {
+    "world": "karst",
+    "cam": [
+     "crust",
+     "fall"
+    ],
+    "cont": true,
+    "tod": "golden",
+    "cave": 1,
+    "dry": 1,
+    "up": 1,
+    "crack": 1,
+    "fall": [
+     0,
+     0.75,
+     0.1,
+     1
+    ],
+    "sounds": [
+     {
+      "q": "rock collapse rumble",
+      "at": 0.05,
+      "volume": 0.5,
+      "len": 3
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[serious] В восемьдесят первом в Уинтер-Парке такая воронка выросла шириной больше ста метров и проглотила дом, бассейн и машины.",
+   "props": {
+    "world": "karst",
+    "cam": [
+     "fall",
+     "top"
+    ],
+    "cont": true,
+    "tod": [
+     "golden",
+     "golden"
+    ],
+    "cave": 1,
+    "dry": 1,
+    "up": 1,
+    "crack": 1,
+    "fall": [
+     0.75,
+     1,
+     0,
+     0.3
+    ],
+    "banner": "Уинтер-Парк, 1981:\nбольше 100 м",
+    "bannerAt": 0.15,
+    "bannerY": 230,
+    "tags": [
+     {
+      "s": "дом, бассейн, машины",
+      "t": "hole",
+      "dx": 220,
+      "dy": -300,
+      "at": 0.6,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[curious] А вы купили бы дом вдвое дешевле там, где такое бывает?",
+   "props": {
+    "world": "karst",
+    "cam": [
+     "top",
+     "end"
+    ],
+    "cont": true,
+    "tod": [
+     "golden",
+     "dusk"
+    ],
+    "cave": 1,
+    "dry": 1,
+    "up": 1,
+    "fall": 1,
+    "banner": "дом за полцены\nнад известняком?",
+    "bannerAt": 0.2,
+    "bannerY": 230
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Подпишись.",
+   "props": {
+    "world": "karst",
+    "cam": [
+     "end",
+     "end"
+    ],
+    "cont": true,
+    "tod": "dusk",
+    "cave": 1,
+    "dry": 1,
+    "up": 1,
+    "fall": 1
+   }
+  }
+ ]
+}
