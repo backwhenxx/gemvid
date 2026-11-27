@@ -38,7 +38,7 @@ export const CAMS = {
   houses: {pos: [7, 5, 30], look: [4, 3, -3], fov: 40},
   ruler: {pos: [-9, 15, 54], look: [-11, 15.5, 0], fov: 40},
   line: {pos: [10, 22, 76], look: [10, 22, -4], fov: 40},
-  ny: {pos: [30, 18, 44], look: [23, 20, -4], fov: 40},
+  ny: {pos: [28.5, 18, 37], look: [23, 20, -4], fov: 40},
   roof: {pos: [29, 41.5, 12], look: [23.6, 39.6, -7], fov: 40},
   final: {pos: [2, 20, 86], look: [6, 17, -5], fov: 40},
   cover: {pos: [-3.5, 27, 26], look: [-8, 26, 0], fov: 40},
@@ -146,7 +146,7 @@ export function build(scene, sky) {
   const nyImp = new THREE.Group(); nyImp.position.set(21.6, 0.55, NY.z1 + 1.02); scene.add(nyImp);
   cyl(0.3, 0.3, 0.04, 'white', 0, 0, 0, {parent: nyImp, rot: [Math.PI / 2, 0, 0], seg: 12, cast: false});
   for (let i = 0; i < 4; i++) box(0.5, 0.08, 0.05, 'pumpB', 0, 0, 0.03, {parent: nyImp, rot: [0, 0, i * Math.PI / 4], r: 0.01, cast: false});
-  const pNy = pipe([[21.6, 1.0, NY.z1 + 0.5], [21.6, H0 + 1.0, NY.z1 + 0.5], [21.6, H0 + 1.0, RT.z], [RT.x - 0.8, H0 + 1.0, RT.z], [RT.x - 0.8, RT.y + 0.5, RT.z]], 0.14, 'iron', {bend: 0.4});
+  const pNy = pipe([[21.6, 1.0, NY.z1 + 0.5], [21.6, H0 + 1.0, NY.z1 + 0.5], [21.6, H0 + 1.0, RT.z], [RT.x - 0.8, H0 + 1.0, RT.z], [RT.x - 0.8, RT.y + 0.5, RT.z]], 0.2, 'iron', {bend: 0.4});
 
   // ── капли воды в трубах (бусины): точки по кривой со смещением к зрителю
   const dGeo = new THREE.IcosahedronGeometry(0.17, 0), dMat = K.M('drop');
@@ -154,7 +154,7 @@ export function build(scene, sky) {
     return (t, on, ymax = 1e9) => L.forEach((m, i) => { const u = ((t + i / n) % 1 + 1) % 1, p = curve.getPointAt(u); m.position.set(p.x, p.y, p.z + dz); m.visible = on > 0.02 && i / n < on * 1.2 && p.y <= ymax; }); };
   const sIn = stream(pIn.userData.curve, 70, 0.3), sOut = stream(pOut.userData.curve, 110, 0.34);
   const sBr = branches.map((b) => stream(b.userData.curve, 6, 0.22, 0.8));
-  const sNy = stream(pNy.userData.curve, 46, 0.18, 0.8);
+  const sNy = stream(pNy.userData.curve, 46, 0.3, 1.5);
   // струи из колонок: дуги
   const jets = taps.map(([x, y, z]) => { const L = []; for (let i = 0; i < 10; i++) L.push(add(dGeo, 'drop', 0, 0, 0, {material: dMat, cast: false}));
     return (t, on) => L.forEach((m, i) => { const u = ((t * 1.4 + i / 10) % 1 + 1) % 1; m.position.set(x + u * 1.3, y + 0.45 * u - 1.4 * u * u, z); m.scale.setScalar(0.8); m.visible = on > 0.05; }); });
