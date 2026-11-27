@@ -24,9 +24,9 @@ export const CAMS = {
   wide: {pos: [0, 0.4, 25], look: [0, -1.9, -1.5], fov: 40},
   layers: {pos: [-2.6, -2.2, 14], look: [-2.8, -3.0, -0.5], fov: 40},
   layers2: {pos: [-2.2, -2.5, 13.4], look: [-2.6, -3.3, -0.5], fov: 40},
-  cave2: {pos: [0.6, -5.4, 16], look: [0.3, -6.3, -0.5], fov: 40},
+  cave2: {pos: [0.7, -3.4, 20], look: [0.4, -4.7, -0.5], fov: 40},
   rain: {pos: [-1.2, 2.2, 17], look: [-0.8, -1.4, -1.5], fov: 40},
-  cave: {pos: [0.2, -5.0, 17.5], look: [0, -6.0, -0.5], fov: 40},
+  cave: {pos: [0.2, -3.6, 21.5], look: [0, -4.9, -0.5], fov: 40},
   well: {pos: [-2.4, -2.8, 16.5], look: [-2.2, -4.0, -0.5], fov: 40},
   chim: {pos: [0.2, -3.0, 15], look: [0, -3.8, -0.5], fov: 40},
   crust: {pos: [0.6, 1.6, 16.5], look: [0.5, -1.0, -1.2], fov: 40},
@@ -138,7 +138,7 @@ export function build(scene, sky) {
     const put = (m, arr) => { const at = m.geometry.attributes.position; at.array.fill(0); at.array.set(arr.slice(0, MAXV)); at.needsUpdate = true; m.geometry.setDrawRange(0, Math.min(arr.length, MAXV) / 3); };
     plug.forEach((m, k) => put(m, P[k])); put(pileM, PP);
     const topMax = Math.max(vd(0)?.[2] ?? -8, -8);
-    back.scale.set(2 * w + 1.0, topMax + 0.5 - (-8.9), 1); back.position.set(0, (topMax + 0.5 + -8.9) / 2, -0.8); back.visible = h > 0.08;
+    back.scale.set(2 * w + 1.0, topMax + 0.5 - (-8.9), 1); back.position.set(0, (topMax + 0.5 + -8.9) / 2, -0.8); back.visible = true;
     // земля
     for (const i of gIdx) { const x = gBase[i * 3], z = gBase[i * 3 + 2]; gpos.array[i * 3 + 1] = gBase[i * 3 + 1] - fl * D * bowl(x, z); }
     gpos.needsUpdate = true; gg.computeVertexNormals();
