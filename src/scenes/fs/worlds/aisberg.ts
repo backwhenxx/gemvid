@@ -128,7 +128,7 @@ export function build(scene, sky) {
   // мелкие льдины вокруг
   const floes = [];
   { const r = rnd(11); const inside = (x, z) => BERGS.some((b) => Math.abs(x - b.x) < b.W / 2 + 3 && z < 4 && z > -b.L - 34) || (x > -60 && x < -40 && z < 4 && z > -70);
-    for (let i = 0, n = 0; i < 900 && n < 70; i++) { const x = lerp(-100, 100, r()), z = lerp(8, -120, r()); if (inside(x, z)) continue; const rr = 0.3 + r() * 0.9;
+    for (let i = 0, n = 0; i < 900 && n < 70; i++) { const x = lerp(-100, 100, r()), z = lerp(-2.5, -120, r()); if (inside(x, z)) continue; const rr = 0.3 + r() * 0.9;
       floes.push(add(blob(rr, 200 + n, 0.25, 1.3, 1.4, 0.45, 1.2), r() < 0.5 ? 'snow' : 'ice', x, 0.04, z, {cast: false, rot: [0, r() * 3, 0]})); n++; } }
   const clouds = [cloud(sky, -40, 22, -120, 4.0, 51), cloud(sky, 0, 26, -140, 4.5, 52), cloud(sky, 40, 21, -110, 3.4, 53), cloud(sky, 80, 25, -130, 4.2, 54), cloud(sky, -90, 24, -150, 5, 55)];
 
