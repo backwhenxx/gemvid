@@ -1,0 +1,492 @@
+{
+ "title": "Холодильник без розетки",
+ "music": false,
+ "whisper": "medium",
+ "captionStyle": "word",
+ "autoOutro": false,
+ "stillPairs": true,
+ "ambience": [
+  {
+   "q": "arctic wind",
+   "from": 0,
+   "to": 62,
+   "volume": 0.03
+  }
+ ],
+ "cover": {
+  "lines": [
+   "Холодильник",
+   "*без розетки*"
+  ],
+  "sub": "124 000 трубок держат нефтепровод",
+  "fs": {
+   "world": "merzlota",
+   "cam": [
+    "cover",
+    "cover"
+   ],
+   "tod": "morning",
+   "season": -1,
+   "flow": 1
+  }
+ },
+ "scenes": [
+  {
+   "type": "fs",
+   "say": "[confident] Эти трубки — холодильники. Без розетки, без мотора. И их сто двадцать четыре тысячи.",
+   "props": {
+    "cam": [
+     "hook",
+     "cover"
+    ],
+    "tod": "morning",
+    "world": "merzlota",
+    "cont": false,
+    "camDur": 0.9,
+    "truck": 1,
+    "season": -1,
+    "flow": 1,
+    "tags": [
+     {
+      "s": "термотрубка",
+      "t": "fins",
+      "dx": -170,
+      "dy": -160,
+      "at": 0.15,
+      "end": 1
+     }
+    ],
+    "banner": "124 000 холодильников без розетки",
+    "bannerAt": 0.35,
+    "bannerEnd": 1,
+    "bannerY": 230
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Они стоят на нефтепроводе через Аляску: тысяча двести восемьдесят семь километров, и больше половины поднято на сваи.",
+   "props": {
+    "cam": [
+     "cover",
+     "line"
+    ],
+    "tod": "morning",
+    "world": "merzlota",
+    "cont": true,
+    "camDur": 0.7,
+    "truck": 1,
+    "season": -1,
+    "flow": 1,
+    "banner": "Аляска: 1287 км, больше половины — на сваях",
+    "bannerAt": 0.3,
+    "bannerEnd": 1,
+    "bannerY": 230
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Под ними — вечная мерзлота. По сути это лёд, склеенный с грунтом.",
+   "props": {
+    "cam": [
+     "line",
+     "wide"
+    ],
+    "tod": "morning",
+    "world": "merzlota",
+    "cont": true,
+    "camDur": 0.6,
+    "truck": 1,
+    "season": -1,
+    "flow": 1,
+    "tags": [
+     {
+      "s": "вечная мерзлота",
+      "t": "perma",
+      "dx": -60,
+      "dy": -200,
+      "at": 0.45,
+      "end": 1
+     },
+     {
+      "s": "лёд",
+      "t": "ice",
+      "dx": -120,
+      "dy": 140,
+      "at": 0.7,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[serious] А нефть в трубе тёплая. Растопит мерзлоту — свая уйдёт вниз, и трубу перекосит.",
+   "props": {
+    "cam": [
+     "wide",
+     "thaw"
+    ],
+    "tod": [
+     "morning",
+     "day"
+    ],
+    "world": "merzlota",
+    "cont": true,
+    "camDur": 0.45,
+    "truck": 1,
+    "season": {
+     "k": [
+      -1,
+      1
+     ],
+     "at": [
+      0,
+      0.3
+     ]
+    },
+    "flow": {
+     "k": [
+      1,
+      0
+     ],
+     "at": [
+      0,
+      0.2
+     ]
+    },
+    "thaw": {
+     "k": [
+      0,
+      1
+     ],
+     "at": [
+      0.4,
+      0.9
+     ]
+    },
+    "todAt": [
+     0,
+     0.3
+    ],
+    "tags": [
+     {
+      "s": "нефть тёплая",
+      "t": "pipe",
+      "dx": -80,
+      "dy": -200,
+      "at": 0.05,
+      "end": 0.4
+     },
+     {
+      "s": "оттаяло",
+      "t": "thaw",
+      "dx": 120,
+      "dy": 160,
+      "at": 0.65,
+      "end": 1
+     },
+     {
+      "s": "перекосит",
+      "t": "sag",
+      "dx": -60,
+      "dy": -200,
+      "at": 0.8,
+      "end": 1
+     }
+    ],
+    "sounds": [
+     {
+      "q": "metal creak",
+      "at": 0.8,
+      "volume": 0.18,
+      "len": 2
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[curious] Поэтому в сваи вставили запаянные трубки с аммиаком.",
+   "props": {
+    "cam": [
+     "thaw",
+     "cut"
+    ],
+    "tod": [
+     "day",
+     "morning"
+    ],
+    "world": "merzlota",
+    "cont": true,
+    "camDur": 0.55,
+    "truck": 1,
+    "season": {
+     "k": [
+      1,
+      -1
+     ],
+     "at": [
+      0.2,
+      0.6
+     ]
+    },
+    "flow": {
+     "k": [
+      0,
+      1
+     ],
+     "at": [
+      0.6,
+      0.9
+     ]
+    },
+    "thaw": {
+     "k": [
+      1,
+      0
+     ],
+     "at": [
+      0.55,
+      0.85
+     ]
+    },
+    "todAt": [
+     0.2,
+     0.6
+    ],
+    "tags": [
+     {
+      "s": "трубка с аммиаком",
+      "t": "pile",
+      "dx": -200,
+      "dy": -120,
+      "at": 0.6,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Зимой земля теплее воздуха.",
+   "props": {
+    "cam": [
+     "cut",
+     "bottom"
+    ],
+    "tod": "morning",
+    "world": "merzlota",
+    "cont": true,
+    "camDur": 0.95,
+    "truck": 1,
+    "season": -1,
+    "flow": 1,
+    "tags": [
+     {
+      "s": "земля теплее",
+      "t": "perma",
+      "dx": -40,
+      "dy": -180,
+      "at": 0.3,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Аммиак внизу закипает, пар летит вверх, рёбра отдают тепло морозу — и капли стекают обратно.",
+   "props": {
+    "cam": [
+     "bottom",
+     "top"
+    ],
+    "tod": "morning",
+    "world": "merzlota",
+    "cont": true,
+    "camDur": 0.85,
+    "truck": 1,
+    "season": -1,
+    "flow": 1,
+    "tags": [
+     {
+      "s": "кипит",
+      "t": "bottom",
+      "dx": -180,
+      "dy": -80,
+      "at": 0.0,
+      "end": 0.35
+     },
+     {
+      "s": "тепло — в мороз",
+      "t": "fins",
+      "dx": -190,
+      "dy": -120,
+      "at": 0.6,
+      "end": 1
+     }
+    ],
+    "sounds": [
+     {
+      "q": "water boiling bubbles",
+      "at": 0.05,
+      "volume": 0.12,
+      "len": 2
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "И так всю зиму: земля вокруг сваи промерзает всё глубже.",
+   "props": {
+    "cam": [
+     "top",
+     "cut"
+    ],
+    "tod": "morning",
+    "world": "merzlota",
+    "cont": true,
+    "camDur": 0.5,
+    "truck": 1,
+    "season": -1,
+    "flow": 1,
+    "freeze": {
+     "k": [
+      0,
+      1
+     ],
+     "at": [
+      0.3,
+      1
+     ]
+    },
+    "tags": [
+     {
+      "s": "промёрзло",
+      "t": "ice",
+      "dx": -150,
+      "dy": 150,
+      "at": 0.7,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[excited] А летом? Наверху тепло, пар больше не остывает — и трубка выключается сама. Холод она пускает только в одну сторону.",
+   "props": {
+    "cam": [
+     "cut",
+     "top"
+    ],
+    "tod": [
+     "morning",
+     "day"
+    ],
+    "world": "merzlota",
+    "cont": true,
+    "camDur": 0.5,
+    "truck": 1,
+    "season": {
+     "k": [
+      -1,
+      1
+     ],
+     "at": [
+      0,
+      0.25
+     ]
+    },
+    "flow": {
+     "k": [
+      1,
+      0
+     ],
+     "at": [
+      0.3,
+      0.6
+     ]
+    },
+    "freeze": 1,
+    "todAt": [
+     0,
+     0.25
+    ],
+    "tags": [
+     {
+      "s": "выключилась",
+      "t": "fins",
+      "dx": -190,
+      "dy": -120,
+      "at": 0.6,
+      "end": 1
+     }
+    ],
+    "banner": "летом трубка выключается сама",
+    "bannerAt": 0.55,
+    "bannerEnd": 1,
+    "bannerY": 230
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Без электричества. Почти полвека.",
+   "props": {
+    "cam": [
+     "top",
+     "line"
+    ],
+    "tod": [
+     "day",
+     "golden"
+    ],
+    "world": "merzlota",
+    "cont": true,
+    "camDur": 0.9,
+    "truck": 1,
+    "season": 1,
+    "flow": 0,
+    "freeze": 1,
+    "todAt": [
+     0,
+     0.9
+    ],
+    "banner": "почти 50 лет без электричества",
+    "bannerAt": 0.1,
+    "bannerEnd": 1,
+    "bannerY": 230
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Как думаете, что сдастся первым: трубка, свая или сама мерзлота? Подпишись.",
+   "props": {
+    "cam": [
+     "line",
+     "end"
+    ],
+    "tod": [
+     "golden",
+     "dusk"
+    ],
+    "world": "merzlota",
+    "cont": true,
+    "camDur": 0.8,
+    "truck": 1,
+    "season": 1,
+    "flow": 0,
+    "freeze": 1,
+    "todAt": [
+     0,
+     1
+    ],
+    "banner": "трубка, свая или мерзлота?",
+    "bannerAt": 0.15,
+    "bannerEnd": 1,
+    "bannerY": 230
+   }
+  }
+ ]
+}
