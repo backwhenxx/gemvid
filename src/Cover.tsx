@@ -103,7 +103,7 @@ export const Cover: React.FC<{timeline: Timeline; cover: CoverSpec}> = ({timelin
       <Vignette />
       <Grain />
       <div style={{transform: 'scale(1.25)', transformOrigin: '0 0', position: 'absolute', inset: 0}}>
-        <BrandMark />
+        {/* знак канала убран 27.11 */}
       </div>
     </AbsoluteFill>
   );

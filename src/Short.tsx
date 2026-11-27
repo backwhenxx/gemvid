@@ -127,7 +127,7 @@ export const Short: React.FC<{timeline: Timeline}> = ({timeline}) => {
 
       <Vignette />
       <Grain />
-      {timeline.brand === false ? null : <BrandUntil until={outro ? outro.start : 1e9} />}
+      {/* знак «ШТА?!» убран (Денис 27.11: ферма из 5 каналов) */}
       {timeline.captionStyle === 'word' ? (
         <WordCaptions words={timeline.words} />
       ) : (

@@ -324,7 +324,7 @@ const total = scenes[scenes.length - 1].end;
 
 // ---------- звуки ----------
 await makeSfx();
-const sfx = [{file: 'sfx/tuk.wav', at: 0.05, volume: 0.5}];
+const sfx = []; // стартовый «тук/бульк» убран (Денис 27.11)
 scenes.forEach((s, i) => {
   if (i === 0) return;
   if (s.type === 'outro') {
