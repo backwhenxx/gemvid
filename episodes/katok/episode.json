@@ -1,0 +1,441 @@
+{
+ "title": "Как устроен лёд хоккейной арены",
+ "music": false,
+ "whisper": "medium",
+ "captionStyle": "word",
+ "autoOutro": false,
+ "stillPairs": true,
+ "ambience": [
+  {
+   "q": "winter wind light",
+   "from": 0,
+   "to": 60,
+   "volume": 0.03
+  }
+ ],
+ "cover": {
+  "lines": [
+   "Лёд на катке",
+   "*красят*"
+  ],
+  "sub": "а снизу — греют",
+  "fs": {
+   "world": "katok",
+   "cam": [
+    "cover",
+    "cover"
+   ],
+   "tod": "golden",
+   "paint": 0.7,
+   "ice": 0.6,
+   "lines": 0,
+   "brine": 1,
+   "heat": 1
+  }
+ },
+ "scenes": [
+  {
+   "type": "fs",
+   "say": "[confidently] Лёд на хоккее белый не сам по себе. Его красят!",
+   "props": {
+    "cam": [
+     "hook",
+     "top"
+    ],
+    "tod": "golden",
+    "world": "katok",
+    "cont": false,
+    "paint": {
+     "k": [
+      0,
+      1
+     ],
+     "at": [
+      0,
+      0.85
+     ]
+    },
+    "ice": 0.45,
+    "lines": 0,
+    "camDur": 0.9,
+    "banner": "лёд красят",
+    "bannerAt": 0.05,
+    "bannerEnd": 1,
+    "bannerY": 230,
+    "sounds": [
+     {
+      "q": "spray paint",
+      "at": 0.05,
+      "volume": 0.15,
+      "len": 2
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Под ним — целый слоёный пирог. Разрежем каток пополам.",
+   "props": {
+    "cam": [
+     "top",
+     "cut"
+    ],
+    "tod": "golden",
+    "world": "katok",
+    "cont": true,
+    "paint": 1,
+    "ice": 0.45,
+    "lines": 0,
+    "camDur": 0.8,
+    "tags": [
+     {
+      "s": "слоёный пирог",
+      "t": "slab",
+      "dx": -150,
+      "dy": -230,
+      "at": 0.55,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Сам лёд — меньше четырёх сантиметров. Его наливают слоями тоньше миллиметра.",
+   "props": {
+    "cam": [
+     "cut",
+     "ice"
+    ],
+    "tod": "golden",
+    "world": "katok",
+    "cont": true,
+    "paint": 1,
+    "ice": {
+     "k": [
+      0.45,
+      0.7
+     ],
+     "at": [
+      0.4,
+      0.95
+     ]
+    },
+    "lines": 0,
+    "camDur": 0.7,
+    "tags": [
+     {
+      "s": "лёд",
+      "t": "ice",
+      "dx": -140,
+      "dy": -220,
+      "at": 0.1,
+      "end": 0.6
+     },
+     {
+      "s": "слои в разрезе увеличены",
+      "t": "paint",
+      "dx": 0,
+      "dy": 260,
+      "at": 0.55,
+      "end": 1
+     }
+    ],
+    "banner": "лёд — меньше 4 см",
+    "bannerAt": 0.15,
+    "bannerEnd": 1,
+    "bannerY": 230
+   }
+  },
+  {
+   "type": "fs",
+   "say": "После пары слоёв — больше тысячи литров белой краски, потом разметка, и снова вода.",
+   "props": {
+    "cam": [
+     "ice",
+     "top"
+    ],
+    "tod": "golden",
+    "world": "katok",
+    "cont": true,
+    "paint": 1,
+    "ice": {
+     "k": [
+      0.7,
+      1
+     ],
+     "at": [
+      0.65,
+      1
+     ]
+    },
+    "lines": {
+     "k": [
+      0,
+      1
+     ],
+     "at": [
+      0.4,
+      0.75
+     ]
+    },
+    "camDur": 0.6,
+    "tags": [
+     {
+      "s": "белая краска",
+      "t": "paint",
+      "dx": 120,
+      "dy": -230,
+      "at": 0.05,
+      "end": 0.45
+     }
+    ],
+    "banner": "1100 литров краски",
+    "bannerAt": 0.1,
+    "bannerEnd": 1,
+    "bannerY": 230,
+    "sounds": [
+     {
+      "q": "water hose spray",
+      "at": 0.75,
+      "volume": 0.12,
+      "len": 2
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Под льдом — бетонная плита, в ней километры труб. По ним гонят рассол, минус девять градусов.",
+   "props": {
+    "cam": [
+     "top",
+     "brine"
+    ],
+    "tod": [
+     "golden",
+     "dusk"
+    ],
+    "world": "katok",
+    "cont": true,
+    "brine": {
+     "k": [
+      0,
+      1
+     ],
+     "at": [
+      0.35,
+      0.6
+     ]
+    },
+    "camDur": 0.6,
+    "tags": [
+     {
+      "s": "холодильная установка",
+      "t": "chiller",
+      "dx": 120,
+      "dy": -260,
+      "at": 0.45,
+      "end": 1
+     },
+     {
+      "s": "рассол −9 °C",
+      "t": "brine",
+      "dx": 120,
+      "dy": 230,
+      "at": 0.6,
+      "end": 1
+     }
+    ],
+    "banner": "до 8 км труб",
+    "bannerAt": 0.25,
+    "bannerEnd": 1,
+    "bannerY": 230,
+    "sounds": [
+     {
+      "q": "compressor hum",
+      "at": 0.4,
+      "volume": 0.1,
+      "len": 3
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[curious] А теперь странное. Ниже — утеплитель, а под ним… подогрев.",
+   "props": {
+    "cam": [
+     "brine",
+     "deep"
+    ],
+    "tod": "dusk",
+    "world": "katok",
+    "cont": true,
+    "brine": 1,
+    "heat": {
+     "k": [
+      0,
+      1
+     ],
+     "at": [
+      0.6,
+      0.85
+     ]
+    },
+    "camDur": 0.6,
+    "tags": [
+     {
+      "s": "утеплитель",
+      "t": "ins",
+      "dx": -150,
+      "dy": -260,
+      "at": 0.35,
+      "end": 1
+     },
+     {
+      "s": "подогрев",
+      "t": "heat",
+      "dx": 150,
+      "dy": 230,
+      "at": 0.7,
+      "end": 1
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Если грунт под катком промёрзнет, вода в нём станет льдом, раздуется — и вздыбит плиту.",
+   "props": {
+    "cam": [
+     "deep",
+     "heave"
+    ],
+    "tod": "dusk",
+    "world": "katok",
+    "cont": true,
+    "brine": 1,
+    "heat": {
+     "k": [
+      1,
+      0
+     ],
+     "at": [
+      0,
+      0.15
+     ]
+    },
+    "heave": {
+     "k": [
+      0,
+      1
+     ],
+     "at": [
+      0.35,
+      0.95
+     ]
+    },
+    "camDur": 0.5,
+    "tags": [
+     {
+      "s": "лёд в грунте",
+      "t": "lens",
+      "dx": 0,
+      "dy": 260,
+      "at": 0.6,
+      "end": 1
+     }
+    ],
+    "banner": "если не греть",
+    "bannerAt": 0.1,
+    "bannerEnd": 1,
+    "bannerY": 230,
+    "sounds": [
+     {
+      "q": "ice cracking",
+      "at": 0.8,
+      "volume": 0.2,
+      "len": 2
+     }
+    ]
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Трещины — и арену можно закрывать. Поэтому сверху каток морозят, а снизу греют. Одновременно.",
+   "props": {
+    "cam": [
+     "heave",
+     "cut"
+    ],
+    "tod": "dusk",
+    "world": "katok",
+    "cont": true,
+    "brine": 1,
+    "heave": {
+     "k": [
+      1,
+      1,
+      0
+     ],
+     "at": [
+      0,
+      0.3,
+      0.65
+     ]
+    },
+    "heat": {
+     "k": [
+      0,
+      1
+     ],
+     "at": [
+      0.35,
+      0.55
+     ]
+    },
+    "camDur": 0.9,
+    "banner": "сверху холод, снизу тепло",
+    "bannerAt": 0.45,
+    "bannerEnd": 1,
+    "bannerY": 230
+   }
+  },
+  {
+   "type": "fs",
+   "say": "[warmly] А как думаете, без чего каток сломается быстрее: без рассола, утеплителя или подогрева? Пишите.",
+   "props": {
+    "cam": [
+     "cut",
+     "end"
+    ],
+    "tod": "dusk",
+    "world": "katok",
+    "cont": true,
+    "brine": 1,
+    "heat": 1,
+    "camDur": 0.9,
+    "banner": "без чего сломается быстрее?",
+    "bannerAt": 0.15,
+    "bannerEnd": 1,
+    "bannerY": 230
+   }
+  },
+  {
+   "type": "fs",
+   "say": "Подпишись.",
+   "props": {
+    "cam": [
+     "end",
+     "end"
+    ],
+    "tod": "dusk",
+    "world": "katok",
+    "cont": true,
+    "brine": 1,
+    "heat": 1
+   }
+  }
+ ]
+}
