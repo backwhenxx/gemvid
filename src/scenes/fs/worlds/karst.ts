@@ -121,8 +121,8 @@ export function build(scene, sky) {
     const w = lerp(1.8, 3.4, cv), h = lerp(1.6, 3.1, cv) * (1 - sm(fl * 1.3)), upE = up * (1 - fl), wc = 1.8 + 0.6 * upE, ytc = lerp(-6.2, -0.45, upE), hp = 1.5 * up * (1 - sm(fl * 1.3));
     const sag = (x) => fl * D * bowl(x);
     const bnd = (k, x) => (k <= 3 ? base(k, x) - sag(x) * (k === 0 ? 1 : 1 - 0.15 * k) : base(k, x));
-    const vd = (x) => { if (Math.abs(x) >= w) return null; const u = x / w, vb = -8.4 + 0.35 * u * u; let vt = vb + h * Math.pow(Math.max(0, 1 - u * u), 0.55);
-      if (Math.abs(x) < wc && upE > 0.01) { const v = x / wc; const ct = ytc - (1.0 + 0.6 * upE) * v * v, kk = 2.0, hh = Math.max(kk - Math.abs(vt - ct), 0) / kk; vt = Math.max(vt, ct) + hh * hh * kk * 0.25; }
+    const vd = (x) => { if (Math.abs(x) >= w || (h < 0.02 && upE < 0.003)) return null; const u = x / w, vb = -8.4 + 0.35 * u * u; let vt = vb + h * Math.pow(Math.max(0, 1 - u * u), 0.55);
+      if (Math.abs(x) < wc) { const v = x / wc; const ct = vb + (ytc - (1.0 + 0.6 * upE) * v * v - vb) * sm(upE / 0.3), kk = 2.0, hh = Math.max(kk - Math.abs(vt - ct), 0) / kk; vt = Math.max(vt, ct) + hh * hh * kk * 0.25 * sm(upE / 0.3); }
       vt = Math.min(vt, bnd(0, x) - 0.3);
       const pt = Math.min(vt, vb + Math.max(0, hp * (1 - Math.abs(x) / 1.7))); return [vb, pt, vt]; };
     const cols = []; for (let x = -XH; x < XH - 1e-6; x += 0.1) cols.push(+x.toFixed(3)); cols.push(XH);
@@ -138,7 +138,7 @@ export function build(scene, sky) {
     const put = (m, arr) => { const at = m.geometry.attributes.position; at.array.fill(0); at.array.set(arr.slice(0, MAXV)); at.needsUpdate = true; m.geometry.setDrawRange(0, Math.min(arr.length, MAXV) / 3); };
     plug.forEach((m, k) => put(m, P[k])); put(pileM, PP);
     const topMax = Math.max(vd(0)?.[2] ?? -8, -8);
-    back.scale.set(2 * w + 1.0, topMax + 0.5 - (-8.9), 1); back.position.set(0, (topMax + 0.5 + -8.9) / 2, -0.8); back.visible = true;
+    back.scale.set(2 * w + 1.0, topMax + 0.5 - (-8.9), 1); back.position.set(0, (topMax + 0.5 + -8.9) / 2, -0.8); back.visible = !(h < 0.02 && upE < 0.003);
     // земля
     for (const i of gIdx) { const x = gBase[i * 3], z = gBase[i * 3 + 2]; gpos.array[i * 3 + 1] = gBase[i * 3 + 1] - fl * D * bowl(x, z); }
     gpos.needsUpdate = true; gg.computeVertexNormals();
