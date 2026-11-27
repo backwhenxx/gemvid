@@ -1,0 +1,6 @@
+# генерируется sync.sh и локальной копией three
+lib/
+kit.js
+look.js
+post.js
+worlds/
