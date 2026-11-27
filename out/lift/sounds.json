@@ -1,0 +1,65 @@
+[
+ {
+  "file": "snd/amb_1414975d5a.wav",
+  "q": "city traffic ambience",
+  "title": "Hamburg City Traffic Ambience",
+  "creator": "Kinoton",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/Kinoton/sounds/352152"
+ },
+ {
+  "file": "snd/sfx_15d0eba97e.wav",
+  "q": "metal scraping screech",
+  "title": "screeching train.wav",
+  "creator": "cognito perceptu",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/cognito%20perceptu/sounds/95067"
+ },
+ {
+  "file": "snd/sfx_9f10dc17eb.wav",
+  "q": "elevator ding",
+  "title": "Elevator Ding",
+  "creator": "collierhs_colinlib",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/collierhs_colinlib/sounds/588718"
+ },
+ {
+  "file": "snd/sfx_ca6cf3a53b.wav",
+  "q": "electric motor hum",
+  "title": "electric toothbrush.aiff",
+  "creator": "adeluc4",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/adeluc4/sounds/125335"
+ },
+ {
+  "file": "snd/sfx_028c34564e.wav",
+  "q": "metal brake screech",
+  "title": "squeeks raw.wav",
+  "creator": "esperar",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/esperar/sounds/170799"
+ },
+ {
+  "file": "snd/sfx_cd2ba7080f.wav",
+  "q": "axe chop wood",
+  "title": "Chopping wood 02",
+  "creator": "micahlg",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/micahlg/sounds/421929"
+ },
+ {
+  "file": "snd/sfx_5e93b9bfa3.wav",
+  "q": "crowd applause",
+  "title": "Small Crowd Applause 1",
+  "creator": "snakebarney",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/snakebarney/sounds/138113"
+ }
+]
