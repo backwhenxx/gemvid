@@ -1,0 +1,29 @@
+[
+ {
+  "file": "snd/sfx_012c406013.wav",
+  "q": "sparkle chime",
+  "title": "GLEAM-GLOW-SFX-CHIME.wav",
+  "creator": "newagesoup",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/newagesoup/sounds/351408"
+ },
+ {
+  "file": "snd/sfx_28d07799e2.wav",
+  "q": "jungle birds ambience",
+  "title": "Howler monkey and other monkey or bird.wav",
+  "creator": "sethlind",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/sethlind/sounds/332718"
+ },
+ {
+  "file": "snd/sfx_c206ed1ded.wav",
+  "q": "wind gust",
+  "title": "Wind Gust",
+  "creator": "crashoverride6",
+  "license": "cc0",
+  "source": "freesound",
+  "landing": "https://freesound.org/people/crashoverride6/sounds/146932"
+ }
+]
