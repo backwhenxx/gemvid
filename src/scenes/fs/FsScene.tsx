@@ -29,6 +29,7 @@ import * as bashni from './worlds/bashni';
 import * as pogreb from './worlds/pogreb';
 import * as zheloba from './worlds/zheloba';
 import * as karery from './worlds/karery';
+import * as kratery from './worlds/kratery';
 import * as aisberg from './worlds/aisberg';
 import * as volna from './worlds/volna';
 import * as shov from './worlds/shov';
@@ -41,7 +42,7 @@ import * as lift from './worlds/lift';
 
 const {fontFamily: ROUND} = loadFont('normal', {weights: ['700'], subsets: ['cyrillic', 'latin']});
 const {fontFamily: SERIF} = loadSerif('italic', {weights: ['400'], subsets: ['cyrillic', 'latin']});
-const WORLDS: Record<string, any> = {teplo, yama, kolodec, prud, glub, derev, vodopad, mosty, sosul, ozera, iglu, nebo, pech, bashni, pogreb, zheloba, shov, krylo, merzlota, vodbash, katok, karst, lift, karery, aisberg, volna};
+const WORLDS: Record<string, any> = {teplo, yama, kolodec, prud, glub, derev, vodopad, mosty, sosul, ozera, iglu, nebo, pech, bashni, pogreb, zheloba, shov, krylo, merzlota, vodbash, katok, karst, lift, karery, aisberg, volna, kratery};
 const SW = 1080;
 const SH = 1920;
 const SS = 2;
