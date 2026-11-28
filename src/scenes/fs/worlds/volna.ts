@@ -150,8 +150,9 @@ export function build(scene, sky) {
     sh.closePath();
     const g = new THREE.ExtrudeGeometry(sh, {depth: 4.75, bevelEnabled: false, steps: 1}); g.rotateX(-Math.PI / 2);
     add(g, 'concrete', f.cx, -3.4, 0, {});
-    const over = mk(24 * 2, FM, 7); over.geometry.setIndex(gridIdx(23, 1));
-    const flood = mk(9 * 21, FM, 7); flood.geometry.setIndex(gridIdx(8, 20));
+    const FO = new THREE.MeshStandardMaterial({color: '#b8e0f4', roughness: 1, side: THREE.DoubleSide});
+    const over = mk(24 * 2, FO, 0); over.geometry.setIndex(gridIdx(23, 1));
+    const flood = mk(9 * 21, FO, 0); flood.geometry.setIndex(gridIdx(8, 20));
     const houses = []; const r = rnd(77);
     for (let k = 0; k < 9; k++) {
       const z = -19.5 - k * 1.25 - r() * 0.4, u = (k % 3 - 1) * 0.95 + (r() - 0.5) * 0.3, x = f.cx + u, y = S(x, z), g = new THREE.Group(); g.position.set(x, y - 0.02, z); g.rotation.y = r() * 0.6 - 0.3; scene.add(g);
@@ -173,7 +174,7 @@ export function build(scene, sky) {
   // ── Трейси-Арм: ледник в вершине фьорда + льдины; лайнер
   {
     const f = F[3];
-    add(blob(1, 300, 0.15, 1.3, 3.6, 1.3, 1.6, 1), 'ice', f.cx, 0.2, -27.4, {});
+    add(blob(1, 300, 0.12, 1.3, 5.2, 1.1, 0.9, 1), 'ice', f.cx, 0.15, -27.6, {});
   }
   const floes = []; { const r = rnd(12); for (let k = 0; k < 6; k++) floes.push({m: add(blob(0.25 + r() * 0.25, 310 + k, 0.25, 1.3, 1.4, 0.6, 1.1), 'ice', 0, 0, 0, {}), u: (r() - 0.5) * 2.6, z: -10 - r() * 16, i: 3}); }
   const ship = (() => {
@@ -256,9 +257,9 @@ export function build(scene, sky) {
     // Вайонт: вода через гребень и вниз по долине
     { const p = q.f4 ?? 0, f = F[1], ov = sm((p - 0.42) / 0.12) * (1 - sm((p - 0.72) / 0.15)), fl = sm((p - 0.48) / 0.3);
       const a = dam.over.geometry.attributes.position; dam.over.visible = ov > 0.01; let n = 0;
-      if (dam.over.visible) { for (let r = 0; r <= 1; r++) for (let k = 0; k <= 23; k++) { const u = lerp(-4.6, 4.6, k / 23), th = Math.asin(u / 7), zc = -21 + 7 * Math.cos(th); const crest = 1.35 + 1.2 * ov, z = r ? zc - 0.6 - 1.6 * ov : zc + 0.1, y = r ? -0.9 : crest; a.setXYZ(n++, f.cx + u, y, z); } a.needsUpdate = true; dam.over.geometry.computeVertexNormals(); }
+      if (dam.over.visible) { for (let r = 0; r <= 1; r++) for (let k = 0; k <= 23; k++) { const u = lerp(-4.6, 4.6, k / 23), th = Math.asin(u / 7), zc = -21 + 7 * Math.cos(th); const crest = 1.35 + 1.2 * ov, z = r ? zc - 0.6 - 1.6 * ov : zc + 0.1, y = r ? -0.9 : crest; a.setXYZ(n++, f.cx + u, y, z); } a.needsUpdate = true; dam.over.geometry.computeVertexNormals(); dam.over.geometry.computeBoundingSphere(); }
       const b = dam.flood.geometry.attributes.position; dam.flood.visible = fl > 0.01; n = 0; const L = 19 * fl;
-      if (dam.flood.visible) { for (let j = 0; j <= 20; j++) for (let k = 0; k <= 8; k++) { const u = lerp(-4.2, 4.2, k / 8), z = -14.6 - L * j / 20; b.setXYZ(n++, f.cx + u, -0.82 + 0.25 * (1 - j / 20) * (1 - sm((p - 0.8) / 0.2)), z); } b.needsUpdate = true; dam.flood.geometry.computeVertexNormals(); }
+      if (dam.flood.visible) { for (let j = 0; j <= 20; j++) for (let k = 0; k <= 8; k++) { const u = lerp(-4.2, 4.2, k / 8), z = -14.6 - L * j / 20; b.setXYZ(n++, f.cx + u, -0.82 + 0.25 * (1 - j / 20) * (1 - sm((p - 0.8) / 0.2)), z); } b.needsUpdate = true; dam.flood.geometry.computeVertexNormals(); dam.flood.geometry.computeBoundingSphere(); }
       for (const h of dam.houses) { const k = sm((L - (-14.6 - h.z)) / 1.2); h.g.visible = k < 0.98; h.g.scale.set(1, Math.max(0.001, 1 - k), 1); h.g.rotation.z = k * 0.8; } }
     plumeF(t, q.plume ?? 1);
     // льдины, лодки качаются на горбе
