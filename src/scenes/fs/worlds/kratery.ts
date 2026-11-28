@@ -34,7 +34,7 @@ function hgt(P, u, th, x, z, g, s) {
   if (u > 1) y += 0.1 * (vnoise(x * 0.15, 3, z * 0.15) - 0.5) * sm((u - 1) / 0.2) * sm((TW - Math.abs(x - P.cx)) / 4) * sm((z - TZ) / 4);
   if (s.bur > 0) y = lerp(y, 0.02 * (vnoise(x * 0.3, 5, z * 0.3) - 0.5), sm(s.bur) * (1 - sm((u - 1.6) / 0.1)));
   if (s.er > 0) {
-    const arc = sm((th - AR0) / 0.12) * sm((AR1 - th) / 0.12), ye = 1.3 * Math.exp(-(((u - 0.45) / 0.09) ** 2)) * arc + 0.06 * (vnoise(x * 0.2, 7, z * 0.2) - 0.5) * sm((u - 0.05) / 0.1);
+    const arc = sm((th - AR0) / 0.12) * sm((AR1 - th) / 0.12), ye = 2.2 * Math.exp(-(((u - 0.45) / 0.12) ** 2)) * arc + 0.06 * (vnoise(x * 0.2, 7, z * 0.2) - 0.5) * sm((u - 0.05) / 0.1);
     y = lerp(y, ye, sm(s.er));
   }
   return y;
@@ -43,8 +43,10 @@ const cTmp = new THREE.Color(), cG = new THREE.Color(), cGn = new THREE.Color();
 function colAt(P, x, y, out) {
   let k = 0; while (k < NL - 1 && y < layTop(k + 1, x)) k++;
   out.set(P.lay[k]); const n = 0.93 + 0.14 * hash3(Math.round(x * 2), Math.round(y * 3), 7); out.multiplyScalar(n);
-  return out.lerp(cGn.set(P.gnd), 1 - sm((-y - 0.03) / 0.35));
+  return out.lerp(gblend(x, cGn), 1 - sm((-y - 0.03) / 0.35));
 }
+const cB2 = new THREE.Color();
+function gblend(x, out) { let a = PITS[0], b = PITS[0]; for (let i = 0; i < 4; i++) if (x >= PITS[i].cx) { a = PITS[i]; b = PITS[i + 1]; } if (x >= PITS[4].cx) a = b = PITS[4]; const t = a === b ? 0 : sm((x - a.cx - 28) / 24); return out.set(a.gnd).lerp(cB2.set(b.gnd), t); }
 const LK = (P) => -P.d + 0.4;   // уровень озера Маникуагана
 
 export const T = Object.fromEntries([
@@ -128,7 +130,7 @@ export function build(scene, sky) {
   };
 
   // ── земля вокруг ряда, цвет плавно между регионами
-  const gcol = (x) => { let a = PITS[0], b = PITS[0]; for (let i = 0; i < 4; i++) if (x >= PITS[i].cx) { a = PITS[i]; b = PITS[i + 1]; } if (x >= PITS[4].cx) a = b = PITS[4]; const t = a === b ? 0 : sm((x - a.cx - 28) / 24); return cTmp.set(a.gnd).lerp(cG.set(b.gnd), t).clone(); };
+  const gcol = (x) => gblend(x, new THREE.Color());
   { const P = [], C = [], rows = [[TZ, -110], [-110, -460]];
     const quad = (x0, x1, z0, z1) => { const c0 = gcol(x0), c1 = gcol(x1); for (const [x, z, c] of [[x0, z0, c0], [x1, z0, c1], [x1, z1, c1], [x0, z0, c0], [x1, z1, c1], [x0, z1, c0]]) { P.push(x, 0, z); C.push(c.r, c.g, c.b); } };
     for (let x = -460; x < 460; x += 6) { for (const [z0, z1] of rows) quad(x, x + 6, z0, z1); if (x < -200 || x >= 200) quad(x, x + 6, 0, TZ); }
