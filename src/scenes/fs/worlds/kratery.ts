@@ -7,15 +7,15 @@
 import * as THREE from 'three';
 import {makeKit, rnd, sm, lerp, hash3, vnoise} from '../kit';
 
-const DEEP = -20, TW = 40, TZ = -70;
+const DEEP = -70, TW = 40, TZ = -70;
 export const PITS = [
-  {key: 'k5', n: '5', cx: -160, r: 5.3, d: 1.4, e: 0.05, ph: 0.4, gnd: '#7f9a68', lay: ['#a08a6a', '#8c7a66', '#7a7468', '#6a6a70', '#5c5c66'], hill: '#5d7a5c'},   // Маникуаган
-  {key: 'k4', n: '4', cx: -80, r: 6.25, d: 1.6, e: 0.06, ph: 1.1, gnd: '#b4ad84', lay: ['#a69a7c', '#958a74', '#80796f', '#6c6a6e', '#5a5a64'], hill: '#8a8a70'},  // Попигай
-  {key: 'k3', n: '3', cx: 0, r: 8.1, d: 2.0, e: 0.14, ph: 2.0, gnd: '#8c9e6c', lay: ['#9a8a70', '#857866', '#757070', '#626470', '#555764'], hill: '#6c8062'},     // Садбери (вытянут)
-  {key: 'k2', n: '2', cx: 80, r: 11.25, d: 2.6, e: 0.04, ph: 0.2, gnd: '#6f9a50', lay: ['#d8cba6', '#c4b48e', '#a89c84', '#857f7a', '#66666e'], hill: '#5f8a4c'},  // Чиксулуб
-  {key: 'k1', n: '1', cx: 160, r: 18.75, d: 3.6, e: 0.05, ph: 1.6, gnd: '#c6ad76', lay: ['#b98e62', '#a07a58', '#8a7a6a', '#6f6c6e', '#5a5a62'], hill: '#a8946a'}, // Вредефорт
+  {key: 'k5', n: '5', cx: -160, r: 5.3, d: 2.4, e: 0.05, ph: 0.4, gnd: '#7f9a68', lay: ['#a08a6a', '#8c7a66', '#7a7468', '#6a6a70', '#5c5c66'], hill: '#5d7a5c'},   // Маникуаган
+  {key: 'k4', n: '4', cx: -80, r: 6.25, d: 2.8, e: 0.06, ph: 1.1, gnd: '#b4ad84', lay: ['#a69a7c', '#958a74', '#80796f', '#6c6a6e', '#5a5a64'], hill: '#8a8a70'},  // Попигай
+  {key: 'k3', n: '3', cx: 0, r: 8.1, d: 3.4, e: 0.14, ph: 2.0, gnd: '#8c9e6c', lay: ['#9a8a70', '#857866', '#757070', '#626470', '#555764'], hill: '#6c8062'},     // Садбери (вытянут)
+  {key: 'k2', n: '2', cx: 80, r: 11.25, d: 4.4, e: 0.04, ph: 0.2, gnd: '#6f9a50', lay: ['#d8cba6', '#c4b48e', '#a89c84', '#857f7a', '#66666e'], hill: '#5f8a4c'},  // Чиксулуб
+  {key: 'k1', n: '1', cx: 160, r: 18.75, d: 6.0, e: 0.05, ph: 1.6, gnd: '#c6ad76', lay: ['#b98e62', '#a07a58', '#8a7a6a', '#6f6c6e', '#5a5a62'], hill: '#a8946a'}, // Вредефорт
 ];
-const LT = [0, -0.7, -1.6, -2.7, -4.0, -5.6, -8, -12, DEEP], NL = 8;
+const LT = [0, -1.0, -2.4, -4.0, -6.0, -8.6, -12.5, -19, DEEP], NL = 8;
 for (const P of PITS) P.lay.push('#7d7468', '#6c6a78', '#77685a');
 const layTop = (k, x) => (k === 0 ? 1e9 : k >= NL ? DEEP : LT[k] + 0.14 * Math.sin(0.09 * x + k * 1.7) + 0.08 * Math.sin(0.23 * x + k));
 const rr = (P, th) => P.r * (1 + P.e * Math.cos(2 * (th - P.ph)) + 0.03 * Math.sin(3 * th + P.ph));
@@ -34,7 +34,7 @@ function hgt(P, u, th, x, z, g, s) {
   if (u > 1) y += 0.1 * (vnoise(x * 0.15, 3, z * 0.15) - 0.5) * sm((u - 1) / 0.2) * sm((TW - Math.abs(x - P.cx)) / 4) * sm((z - TZ) / 4);
   if (s.bur > 0) y = lerp(y, 0.02 * (vnoise(x * 0.3, 5, z * 0.3) - 0.5), sm(s.bur) * (1 - sm((u - 1.6) / 0.1)));
   if (s.er > 0) {
-    const arc = sm((th - AR0) / 0.12) * sm((AR1 - th) / 0.12), ye = 0.5 * Math.exp(-(((u - 0.45) / 0.09) ** 2)) * arc + 0.06 * (vnoise(x * 0.2, 7, z * 0.2) - 0.5) * sm((u - 0.05) / 0.1);
+    const arc = sm((th - AR0) / 0.12) * sm((AR1 - th) / 0.12), ye = 1.3 * Math.exp(-(((u - 0.45) / 0.09) ** 2)) * arc + 0.06 * (vnoise(x * 0.2, 7, z * 0.2) - 0.5) * sm((u - 0.05) / 0.1);
     y = lerp(y, ye, sm(s.er));
   }
   return y;
@@ -45,7 +45,7 @@ function colAt(P, x, y, out) {
   out.set(P.lay[k]); const n = 0.93 + 0.14 * hash3(Math.round(x * 2), Math.round(y * 3), 7); out.multiplyScalar(n);
   return out.lerp(cGn.set(P.gnd), 1 - sm((-y - 0.03) / 0.35));
 }
-const LK = (P) => -P.d + 0.24;   // уровень озера Маникуагана
+const LK = (P) => -P.d + 0.4;   // уровень озера Маникуагана
 
 export const T = Object.fromEntries([
   ...PITS.map((P) => [P.key + 'c', [P.cx - P.r * 0.3, -P.d + 0.15, -P.r * 0.35]]),
@@ -54,13 +54,13 @@ export const T = Object.fromEntries([
   ['bur', [80 - 2, -1.3, 0.2]], ['jungle', [80 + 3, 0.2, -6]], ['arc', [160 + 18.75 * 0.45 * Math.cos(1.4 * Math.PI), 0.4, 18.75 * 0.45 * Math.sin(1.4 * Math.PI)]],
   ['stack', [8.1 * 1.9 * Math.cos(1.62 * Math.PI), 2.2, 8.1 * 1.9 * Math.sin(1.62 * Math.PI)]],
 ]);
-const camP = (P, D, lx = 0) => { const ly = -P.d * 0.3, lz = -P.r * 0.4; return {pos: [P.cx + lx + 0.05 * D, ly + 0.5 * D, lz + 0.86 * D], look: [P.cx + lx, ly, lz], fov: 40}; };
+const camP = (P, D, lx = 0) => { const ly = -P.d * 0.35, lz = -P.r * 0.4; return {pos: [P.cx + lx + 0.04 * D, ly + 0.27 * D, lz + 0.96 * D], look: [P.cx + lx, ly, lz], fov: 40}; };
 export const CAMS = {
-  hook: camP(PITS[4], 92), hook2: camP(PITS[4], 112, 2),
-  k5: camP(PITS[0], 30), k4: camP(PITS[1], 34), k3: camP(PITS[2], 44), k2: camP(PITS[3], 58), k1: camP(PITS[4], 96),
-  k5a: camP(PITS[0], 36, -1), k2a: camP(PITS[3], 50, 1),
-  end: {pos: [196, 44, 74], look: [120, -2, -14], fov: 40},
-  cover: {pos: [190, 38, 70], look: [150, -2, -10], fov: 40},
+  hook: camP(PITS[4], 84), hook2: camP(PITS[4], 104, 2),
+  k5: camP(PITS[0], 28), k4: camP(PITS[1], 32), k3: camP(PITS[2], 42), k2: camP(PITS[3], 56), k1: camP(PITS[4], 92),
+  k5a: camP(PITS[0], 34, -1), k2a: camP(PITS[3], 50, 1), k4a: camP(PITS[1], 26, -1), k3a: camP(PITS[2], 36, 1), k1a: camP(PITS[4], 84, 1),
+  end: {pos: [214, 16, 62], look: [130, -4, -22], fov: 40},
+  cover: {pos: [168, 26, 84], look: [160, -3, -8], fov: 40},
 };
 
 export function build(scene, sky) {
@@ -185,7 +185,7 @@ export function build(scene, sky) {
     const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.computeVertexNormals();
     const m = new THREE.Mesh(g, new THREE.MeshStandardMaterial({color: pal.water, roughness: 0.35, side: THREE.DoubleSide})); m.receiveShadow = true; scene.add(m); return m; })();
   // камни-болиды со шлейфом пыли
-  const bolides = PITS.map((P, i) => { const g = new THREE.Group(); scene.add(g); const s = 0.35 + P.r * 0.035;
+  const bolides = PITS.map((P, i) => { const g = new THREE.Group(); scene.add(g); const s = 0.5 + P.r * 0.05;
     add(blob(s, 400 + i, 0.3, 1.3), 'rockA', 0, 0, 0, {parent: g, cast: true});
     const trail = []; for (let j = 1; j <= 7; j++) trail.push(add(blob(s * (1 - j * 0.09), 410 + j, 0.2, 1.4), j < 2 ? 'trailA' : 'smoke', 0, 0, 0, {parent: g, cast: false, recv: false}));
     const dir = new THREE.Vector3(0.55, 0.78, -0.3).normalize(); trail.forEach((m, j) => m.position.copy(dir).multiplyScalar(s * 1.5 * (j + 1)));
