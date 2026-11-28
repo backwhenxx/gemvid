@@ -6,3 +6,4 @@ out/**/*.wav
 __pycache__/
 *.pyc
 .DS_Store
+research/style-lab/fsh/out/
